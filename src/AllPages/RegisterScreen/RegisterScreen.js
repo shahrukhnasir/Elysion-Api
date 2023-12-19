@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import TopLayout from "../../components/TopLayout/TopLayout";
 import { SignUpHandler } from "../../Service/AuthService";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 const RegisterScreen = () => {
   const router = useRouter();
   const [passwordType, setPasswordType] = useState("password");

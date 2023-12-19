@@ -5,7 +5,7 @@ import { BsEye, BsEyeSlash } from "react-icons/bs";
 import Shadow from "../../components/Shadow/Shadow";
 import TopLayout from "../../components/TopLayout/TopLayout";
 import { useDispatch } from "react-redux";
-import {  OtpNewPasswordHandler } from "../../Service/AuthService";
+import { OtpNewPasswordHandler } from "../../Service/AuthService";
 import { useRouter } from "next/router";
 const CreateNewPasswordScreen = () => {
   const dispatch = useDispatch();
@@ -96,7 +96,7 @@ const CreateNewPasswordScreen = () => {
             <div className="col-lg-5" id={styles.form_Section}>
               <div className="row pt-3">
                 <h1 className={styles.FormHeading}>Create New Password</h1>
-                
+
                 <div className="col-lg-12">
                   <div className={styles.eyeIconContainer}>
                     <input
@@ -107,18 +107,16 @@ const CreateNewPasswordScreen = () => {
                       name="otp"
                       className={`${styles.inputField} form-control`}
                     />
-
-                   
                   </div>
                   <div className="pb-2">
-                      {error && chatFields.otp.length <= 0 ? (
-                        <span className={styles.warning}>
-                          OTP can't be Empty!
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                    {error && chatFields.otp.length <= 0 ? (
+                      <span className={styles.warning}>
+                        OTP can't be Empty!
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
 
                 <div className="col-lg-12">
@@ -131,18 +129,16 @@ const CreateNewPasswordScreen = () => {
                       name="email"
                       className={`${styles.inputField} form-control`}
                     />
-
-                   
                   </div>
                   <div className="pb-2">
-                      {error && chatFields.email.length <= 0 ? (
-                        <span className={styles.warning}>
-                          Email can't be Empty!
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                    {error && chatFields.email.length <= 0 ? (
+                      <span className={styles.warning}>
+                        Email can't be Empty!
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
                 <div className="col-lg-12">
                   <div className={styles.eyeIconContainer}>
@@ -154,22 +150,21 @@ const CreateNewPasswordScreen = () => {
                       name="password"
                       className={`${styles.inputField} form-control`}
                     />
-                    
+
                     <span className={styles.eyeIcon} onClick={togglePassword}>
                       {passwordType === "password" ? <BsEyeSlash /> : <BsEye />}
                     </span>
                   </div>
-                 
                 </div>
                 <div className="pb-2">
-                      {error && chatFields.password.length <= 0 ? (
-                        <span className={styles.warning}>
-                          Password can't be Empty!
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                  {error && chatFields.password.length <= 0 ? (
+                    <span className={styles.warning}>
+                      Password can't be Empty!
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </div>
 
                 <div className="col-lg-12">
                   <div className={styles.eyeIconContainer}>
@@ -181,7 +176,7 @@ const CreateNewPasswordScreen = () => {
                       name="confirmPassword"
                       className={`${styles.inputField} form-control`}
                     />
-                   
+
                     <span
                       className={styles.eyeIcon}
                       onClick={toggleConfirmPassword}
@@ -194,14 +189,14 @@ const CreateNewPasswordScreen = () => {
                     </span>
                   </div>
                   <div className="pb-2">
-                      {error && chatFields.confirmPassword.length <= 0 ? (
-                        <span className={styles.warning}>
-                          Confirm Password can't be Empty!
-                        </span>
-                      ) : (
-                        ""
-                      )}
-                    </div>
+                    {error && chatFields.confirmPassword.length <= 0 ? (
+                      <span className={styles.warning}>
+                        Confirm Password can't be Empty!
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
               </div>
               {!loading ? (
@@ -217,7 +212,6 @@ const CreateNewPasswordScreen = () => {
                   label="Submiting..."
                 />
               )}
-          
             </div>
           </div>
         </div>

@@ -1,7 +1,9 @@
 import Swal from "sweetalert2";
 import { ForgotPassword, Login, OtpChangePassword, SignUp } from "../network/Network";
 import { setAuthToken } from "../Redux/Auth/authSlice";
-// Login Service//////////////
+
+
+//👇Login Service//////////////✔🤞
 
 export const LoginHandler = (data, setLoading, setChatFields, router, dispatch) => () => {
     try {
@@ -59,8 +61,7 @@ export const LoginHandler = (data, setLoading, setChatFields, router, dispatch) 
     }
   };
 
-  
-// Register Services//////////
+//👇Register Services//////////
 export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
   
   try {
@@ -120,8 +121,7 @@ export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
   }
 };
 
-
-  //Forgot Password Service////////////
+//👇Forgot Password Service////////////
 
   export const ForgotPasswordHandler = (data, setLoading, setChatFields, router) => () => {
     try {
@@ -174,7 +174,7 @@ export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
     }
   };
 
-  //OTP New Password Change Service/////////
+//👇OTP New Password Change Service/////////
   export const OtpNewPasswordHandler = (data, setLoading, setChatFields, router) => async () => {
     try {
       const res = await OtpChangePassword(data);
