@@ -217,6 +217,7 @@ const Footer = () => {
 											<Link href="https://www.facebook.com/elysionhealth?mibextid=LQQJ4d%20Can">
 												<FaFacebookF className={styles.icon} />
 											</Link>
+											
 										</div>
 									</li>
 									<li className="text-white">
