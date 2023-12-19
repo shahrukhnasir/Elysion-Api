@@ -1,0 +1,217 @@
+.learnMore {
+    text-decoration: none !important;
+    color: #1c3247;
+    font-family: var(--main-font-regular); 
+    font-size: 12px;
+    padding-top: 20px;
+    background-image: linear-gradient(
+        to right,
+        #45B5C7,
+        #45B5C7 50%,
+        #000 50%
+      );
+      background-size: 200% 100%;
+      background-position: -100%;
+      display: inline-block;
+      padding: 5px 0;
+      position: relative;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.3s ease-in-out;
+    }
+.learnMore:before{
+    content: '';
+    background: #45B5C7;
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    transition: all 0.3s ease-in-out;
+  }
+.linkBtn {
+    text-decoration: none;
+}
+
+#mainCardBody h1 {
+    color: #1c3247;
+}
+
+#mainCardBody p {
+    color: #1c3247;
+}
+
+.viewBtn {
+    display: flex;
+}
+
+#mainCardBody:hover {
+    box-shadow: #45B5C7 0px 0px, #45B5C7 0px 10px;
+    cursor: pointer;
+    transform: translateY(-10px);
+}
+
+#mainCardBody:hover h1 {
+    color: #1c3247 !important;
+}
+
+#mainCardBody:hover .learnMore {
+    background-position: 0;
+   }
+   #mainCardBody:hover .learnMore::before{
+    width: 100%;
+  }
+#mainCardBody:hover p {
+    color: #1c3247 !important;
+}
+
+#mainCardBody {
+    max-width: 389px;
+    height: 239px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 18px 0px;
+    transition: all 1s;
+}
+
+.innerCardBody {
+    width: 300px;
+    height: 165px;
+}
+
+.mainHeader {
+    height: 75px;
+    width: 340px;
+}
+
+.mainHeader>h1 {
+    font-family: var(--main-font-regular); 
+    font-size: 24px !important;
+    color: #1c3247;
+}
+
+.desc {
+    width: 242px;
+    height: 51px;
+    overflow: hidden;
+}
+
+.desc p {
+    font-family: var(--main-font-regular); 
+    font-size: 12px;
+    color: #1c3247;
+}
+
+.buttonSec {
+    width: 75px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+}
+
+@media (min-width: 200px) and (max-width: 390px) {
+    #mainCardBody {
+        width: 100% !important;
+        margin: 5px auto !important;
+    }
+
+    .innerCardBody {
+        width: 100% !important;
+        padding: 2px;
+    }
+
+    .mainHeader {
+        height: 50px !important;
+        width: 100% !important;
+        text-align: start !important;
+    }
+
+    .mainHeader>h1 {
+        font-size: 18px !important;
+    }
+
+    .desc {
+        width: 100% !important;
+        height: 90px !important;
+        overflow: hidden;
+        text-align: start !important;
+        padding: 0px 10px !important;
+    }
+
+    .buttonSec {
+        width: 100% !important;
+        height: 50px !important;
+        display: flex;
+        align-items: center !important;
+        justify-content: space-evenly;
+    }
+
+    .mainHeader {
+        text-align: center !important;
+    }
+
+    .mainTitle {
+        text-align: center !important;
+    }
+}
+
+@media (min-width: 540px) and (max-width: 991px) {
+    #mainCardBody {
+        width: 100% !important;
+        margin: 25px auto !important;
+    }
+
+    .innerCardBody {
+        width: 100% !important;
+        padding: 2px;
+    }
+
+    .mainHeader {
+        height: 90px !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    .desc {
+        width: 100% !important;
+        height: 40px !important;
+        overflow: hidden;
+        text-align: center !important;
+        padding: 0px 40px !important;
+    }
+
+    .buttonSec {
+        width: 100% !important;
+        height: 50px !important;
+        display: flex;
+        align-items: center !important;
+        justify-content: space-evenly;
+    }
+
+    .mainHeader {
+        text-align: center !important;
+    }
+
+    .mainTitle {
+        text-align: center !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    #mainCardBody {
+        width: 300px !important;
+    }
+
+    .innerCardBody {
+        width: 265px !important;
+        padding: 2px;
+    }
+
+    .mainHeader {
+        height: 90px !important;
+        width: 240px !important;
+    }
+}

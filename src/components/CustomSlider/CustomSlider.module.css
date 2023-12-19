@@ -1,0 +1,115 @@
+.leftArrow {
+    cursor: pointer;
+    position: absolute;
+    left: -3rem;
+    bottom: 12rem;
+}
+
+.rightArrow {
+    cursor: pointer;
+    position: absolute;
+    right: 0rem;
+    bottom: 12rem;
+}
+
+.container {
+    width: 100%;
+}
+
+.slickSlider {
+    width: 100%;
+}
+
+.activeftslick__dots {
+    background-image: url("/images/sliderDot2.png");
+    height: 6px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+@keyframes loading {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+.ftslick__dots {
+    background-image: url("/images/sliderdots.png");
+
+    height: 6px;
+    width: 100%;
+    /* @include toRem(height, 6);
+  @include toRem(width, 33); */
+    /* // background-position-x: right; */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.slick-dots {
+    width: 100%;
+
+
+}
+
+.li {
+    /* @include toRem(width, 14);
+    @include toRem(margin-top, 0);
+    @include toRem(margin-bottom, 0);
+    @include toRem(margin-left, 2);
+    @include toRem(margin-right, 2); */
+    width: 100% !important;
+    margin: 0 2px;
+    transition: width 0.3s ease-in-out;
+}
+
+.slick-dots .slick-active {
+    width: 100%;
+    /* @include toRem(width, 56); */
+    transition: width 0.3s ease-in-out;
+}
+
+.slick-dots .slick-active .ftslick__dots {
+    width: 100%;
+    /* @include toRem(width, 56); */
+    top: 0px;
+    /* // overflow: hidden; */
+}
+
+
+@media (min-width: 280px) and (max-width: 390px) {
+    .leftArrow {
+        cursor: pointer;
+        position: absolute;
+        left: -1rem;
+        bottom: 12rem;
+    }
+    
+    .rightArrow {
+        cursor: pointer;
+        position: absolute;
+        right: -1rem;
+        bottom: 12rem;
+    }
+  }
+  @media (min-width: 390px) and (max-width: 540px) {
+    .leftArrow {
+        cursor: pointer;
+        position: absolute;
+        left: -1rem;
+        bottom: 12rem;
+    }
+    
+    .rightArrow {
+        cursor: pointer;
+        position: absolute;
+        right: -1rem;
+        bottom: 12rem;
+    }
+  }

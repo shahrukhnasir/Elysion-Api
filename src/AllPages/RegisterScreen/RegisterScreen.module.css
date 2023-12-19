@@ -1,0 +1,339 @@
+.TopSection {
+    background-color: #1c3247;
+    height: 400px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+
+
+}
+
+.warning {
+   font-family: var(--main-font-regular);
+    color: rgb(207, 34, 34);
+    font-size: 12px;
+    padding: 0px 0px 12px 16px
+}
+
+.FormSectionImage {
+    width: 115%;
+}
+
+.mainHeading {
+    font-family: var(--main-font-regular);
+    font-size: 40px;
+    color: white;
+    padding-top: 120px;
+    padding-bottom: 20px;
+    text-transform: capitalize;
+}
+
+.FormHeading {
+    font-family: var(--main-font-regular);
+    font-size: 40px;
+    color: #1c3247;
+    padding-top: 150px;
+    padding-bottom: 10px;
+}
+
+.FormDesc {
+   font-family: var(--main-font-regular);
+    font-size: 12px;
+    color: #030606;
+    margin-bottom: 20px;
+}
+
+.eyeIconContainer {
+    display: flex;
+    position: relative;
+}
+
+.eyeIcon {
+    position: absolute;
+    top: 6px;
+    right: 23px;
+    font-size: 20px;
+    color: #9D9D9D;
+}
+
+.labelCheckBox {
+    font-size: 12px;
+   font-family: var(--main-font-regular);
+    color: #000;
+    margin: 5px 0px;
+}
+.labelCheckBox span:hover{
+    color: #000;
+
+}
+
+.FromBtn>button {
+    width: 100% !important;
+    height: 46px !important;
+   font-family: var(--main-font-regular);
+}
+.FormLink > button:hover {
+    width: 100% !important;
+    height: 46px !important;
+}
+.FormLink {
+    color: #1c3247;
+    font-family: "Poppins-Medium";
+    font-size: 13px;
+    padding: 0px 5px;
+}
+
+
+.TopDesc {
+   font-family: var(--main-font-regular);
+    font-size: 12px;
+    color: white;
+    margin-bottom: 0px;
+}
+
+.Desc {
+   font-family: var(--main-font-regular);
+    font-size: 13px;
+    color: black;
+    margin-bottom: 25px;
+    text-align: justify;
+    padding: 0px 50px 0px 0px;
+}
+
+.BackImgSection {
+    height: 400px;
+    width: 110%;
+    background: url('/images/signup.png');
+    background-position: top;
+    background-repeat: no-repeat;
+    position: relative;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    left: 80px;
+    z-index: 2;
+
+}
+
+.labelCheckBox {
+    font-size: 13px;
+   font-family: var(--main-font-regular);
+    color: #000;
+    padding: 5px 0px 10px 5px;
+}
+
+.inputSection {
+    display: flex;
+    justify-content: space-between;
+}
+
+.inputField {
+    border-radius: 51px;
+    padding: 13px 30px;
+    border: 2px solid #1c3247;
+   font-family: var(--main-font-regular);
+    /* color: #9D9D9D; */
+    font-size: 14px;
+    margin-bottom: 12px;
+    background-color: #F9F9F9;
+
+}
+
+.inputPawsrd{
+    border-radius: 51px;
+    padding: 10px 50px 10px 30px;
+    border: 2px solid #1c3247;
+   font-family: var(--main-font-regular);
+    /* color: #9D9D9D; */
+    font-size: 14px;
+    margin-bottom: 12px;
+    background-color: #F9F9F9;
+}
+.inputPawsrd::placeholder{
+    color: #9D9D9D !important;
+   font-family: var(--main-font-regular);
+    font-size: 12px;
+}
+.inputField::placeholder{
+    color: #9D9D9D !important;
+   font-family: var(--main-font-regular);
+    font-size: 12px;
+}
+.textArea {
+    border-radius: 20px;
+    padding: 13px 30px;
+    border: 2px solid #1c3247;
+   font-family: var(--main-font-regular);
+    color: #9D9D9D;
+    font-size: 14px;
+    background-color: #F9F9F9;
+}
+#form_Section{
+    padding-right: 50px;
+}
+/*Shadow  */
+.setShaowRight {
+    position: relative;
+    top: 400px;
+    left: 115%; 
+
+}
+
+@media (min-width: 200px) and (max-width:992px) {
+    .BackImgSection {
+        height: 400px;
+        width: 100% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        left: 0px !important;
+        z-index: 2;
+        margin: 50px 0px;
+
+    }
+
+
+
+    .TopSection {
+        background-color: #1c3247;
+        height: 100%;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        position: relative;
+        bottom: 20px;
+
+
+    }
+
+    .FormSectionImage {
+        width: 100% !important;
+    }
+
+    .FormHeading {
+        font-size: 25px !important;
+        text-align: center !important;
+        padding-top: 40px !important;
+
+    }
+    .FormDesc {
+        font-size: 12px;
+        text-align: center !important;
+
+    }
+    #form_Section{
+        padding: 5px !important;
+
+    }
+}
+
+@media (min-width: 992px) and (max-width:1050px) {
+    .BackImgSection {
+        height: 400px;
+        width: 100% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 33px !important;
+        z-index: 2;
+
+    }
+}
+
+@media (min-width: 1050px) and (max-width:1100px) {
+    .BackImgSection {
+        height: 400px;
+        width: 113% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 1px !important;
+        z-index: 2;
+
+    }
+}
+
+
+@media (min-width: 1100px) and (max-width:1150px) {
+    .BackImgSection {
+        height: 400px;
+        width: 118% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 10px !important;
+        z-index: 2;
+
+    }
+}
+
+@media (min-width: 1150px) and (max-width:1200px) {
+    .BackImgSection {
+        height: 400px;
+        width: 114% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 45px !important;
+        z-index: 2;
+
+    }
+}
+
+@media (min-width: 1200px) and (max-width:1250px) {
+    .BackImgSection {
+
+        height: 400px;
+        width: 100% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 53px !important;
+        z-index: 2;
+
+
+    }
+}
+
+@media (min-width: 1250px) and (max-width:1300px) {
+    .BackImgSection {
+        height: 400px;
+        width: 112% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 0px !important;
+        z-index: 2;
+
+    }
+}
+
+@media (min-width: 1300px) and (max-width:1350px) {
+    .BackImgSection {
+        height: 400px;
+        width: 110% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 42px !important;
+        z-index: 2;
+
+    }
+}

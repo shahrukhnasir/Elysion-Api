@@ -1,0 +1,272 @@
+.ProfileTopSection {
+    background-color: #EEEEEE;
+    height: 120px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+    
+
+
+}
+
+.Title{
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Title >h2{
+    font-family: var(--main-font-regular);
+    color: #1C3247;
+    font-size: 26px;
+}
+/*  */
+
+.inputField {
+    border-radius: 51px;
+    padding: 13px 30px;
+    border: 2px solid #1c3247;
+    font-family: var(--main-font-regular);
+    color: #9D9D9D;
+    font-size: 14px;
+    margin-bottom: 12px;
+    background-color: #F9F9F9;
+
+}
+
+.inputFieldAdres {
+    border-radius: 51px;
+    padding: 13px 30px;
+    border: 2px solid #1c3247;
+    font-family: var(--main-font-regular);
+    color: #9D9D9D;
+    font-size: 14px;
+    margin-bottom: 12px;
+    background-color: #F9F9F9;
+    position: relative;
+
+}
+.optional{
+    position: relative;
+    bottom: 50px;
+    left: 430px;
+    color: #1c3247;
+    font-family: var(--main-font-regular);
+
+}
+
+.warning{
+    font-family: var(--main-font-regular);
+    color: rgb(207, 34, 34);  
+    font-size: 12px;
+    padding: 0px 0px 15px 16px
+}
+
+.cartHeading{
+    font-size: 18px;
+    font-family: var(--main-font-regular);
+    color: #1c3247;
+}
+.checkLabel{
+    font-size: 12px;
+    font-family: var(--main-font-regular);
+    color: #030303;
+}
+.cartDetails{
+    font-size: 22px;
+    font-family: var(--main-font-regular);
+    color: #030303;
+}
+
+.cartImage{
+    display: flex;
+    justify-content: flex-end;
+}
+.labelInput{
+    font-family: var(--main-font-regular);
+    color: #172233;
+    font-size: 14px;
+    padding: 10px 0px 10px 0px;
+}
+
+.cartButton >button{
+width: 100% !important;
+}
+.cartButton{
+    padding: 20px 0px;
+    }
+
+    /* last */
+    .tCheckBoxText{
+        font-size: 12px;
+        font-family: var(--main-font-regular);
+        color: #9D9D9D;
+        padding-top: 10px;
+    }
+    
+    .tCondition{
+        font-size: 12px;
+        font-family: var(--main-font-regular);
+        color: #1c3247;
+        padding-top: 10px;
+        text-decoration: underline;
+    }
+
+    .checkOutLast{
+text-align: end;
+    }
+
+    /* card */
+
+
+/* Card */
+.cardTopHeading {
+    font-size: 24px;
+    font-family: var(--main-font-regular);
+    color: #1c3247;
+    text-align: start;
+    padding: 10px 0px;
+}
+
+.card {
+    background-color: #F9F9F9;
+    max-width: 365px;
+    border: 2px solid #1c3247;
+    border-radius: 20px;
+    padding: 10px 30px;
+    margin: 65px 0px 8px 135px;
+
+
+}
+
+.cardTitle {
+    font-size: 16px;
+    font-family: var(--main-font-regular);
+    color: #1B3146;
+    margin-top: 20px;
+
+}
+
+.cardDetail {
+    font-size: 16px;
+    font-family: var(--main-font-regular);
+    color: #9AA3AC;
+    text-align: end;
+    margin-top: 20px;
+
+
+}
+
+.cardPara {
+    font-size: 18px;
+    font-family: var(--main-font-regular);
+    color: black;
+}
+
+.cardTextBlue {
+    font-size: 18px;
+    font-family: var(--main-font-regular);
+    color: #1c3247;
+    padding-top: 10px;
+}
+
+.cardLastPrice {
+    padding-top: 10px;
+    font-size: 18px;
+    font-family: var(--main-font-regular);
+    color: #1B3146;
+    text-transform: uppercase;
+    text-align: end;
+}
+
+.cardPara {
+    font-size: 13px;
+    font-family: var(--main-font-regular);
+    color: black;
+    padding-bottom: 10px;
+}
+
+.pName{
+  font-family: var(--main-font-regular);
+  font-size: 16px;
+  color: #1B3146;
+  padding: 0px 10px;
+}
+.signIn{
+    font-size: 12px;
+    font-family: var(--main-font-regular);
+    color: #1c3247;
+}
+
+/* Card */
+    /* card */
+    @media (min-width: 200px) and (max-width:992px){
+        .optional{
+            position: relative;
+            bottom: 50px;
+            left: 240px;
+            color: #1c3247;
+            font-family: var(--main-font-regular);
+        
+        }
+        .rowReverse{
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: space-between;
+            align-content: flex-end;
+            flex-wrap: wrap;
+        }
+        .checkOutLast {
+            text-align: center;
+            padding-top: 20px;
+            margin-bottom: 20px;
+        }
+        .cardDetail {
+       
+            text-align: start;
+            margin-top: 20px;
+            padding-left: 10px;
+        }
+        .cardLastPrice {
+            text-align: start;
+            
+        }
+    }
+    @media (min-width: 992px) and (max-width:1100px){
+        .optional{
+            position: relative;
+            bottom: 50px;
+            left: 240px;
+            color: #1c3247;
+            font-family: var(--main-font-regular);
+        
+        }
+    }
+    @media (min-width: 1100px) and (max-width:1200px){
+        .optional{
+            position: relative;
+            bottom: 50px;
+            left: 250px;
+            color: #1c3247;
+            font-family: var(--main-font-regular);
+        
+        }
+    }
+    @media (min-width: 1200px) and (max-width:1400px){
+        .optional{
+            position: relative;
+            bottom: 50px;
+            left: 330px;
+            color: #1c3247;
+            font-family: var(--main-font-regular);
+        
+        }
+    }
+
+    @media (min-width: 100px) and (max-width:992px){
+        .card {
+            margin: 50px auto !important;
+        }
+    }

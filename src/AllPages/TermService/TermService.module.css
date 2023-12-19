@@ -1,0 +1,62 @@
+
+.mainHeading {
+  font-family: var(--main-font-regular);
+  font-size: 40px;
+  color: #1c3247;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+.list li{
+  font-family: var(--main-font-regular);
+  font-size: 15px;
+  color: black;
+}
+.Desc {
+  font-family: var(--main-font-regular);
+  font-size: 15px;
+  color: black;
+  text-transform: capitalize;
+  text-align: justify;
+}
+
+.subContainer {
+  flex-direction: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+
+}
+
+.subHeading {
+  font-family: var(--main-font-regular);
+  font-size: 28px;
+  color: #1c3247;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-transform: capitalize;
+}
+
+.para {
+  font-family: var(--main-font-regular);
+  font-size: 15px;
+  color: black;
+}
+
+/* Shadow */
+.setShaowRight {
+  position: relative;
+  top: 200px;
+  left: 133%;
+}
+
+/*  */
+@media (min-width: 200px) and (max-width: 992px) {
+  .mainHeading {
+    font-size: 25px;
+}
+.subHeading{
+  font-size: 22px;
+}
+}
+

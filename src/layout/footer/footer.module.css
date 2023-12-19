@@ -1,0 +1,228 @@
+.footerContainer {
+  background-color: #1c3247;
+}
+.decs {
+  font-family:"Poppins-Regular" !important;
+  font-size: 14px;
+  color: #F3F2EE;
+  padding-top: 20px;
+  text-align: start;
+  word-wrap: break-word;
+  max-width: 300px;
+}
+
+.QuikHeading {
+  font-family: var(--main-font-regular);
+  color: #F3F2EE;
+  font-size: 19px;
+  padding-bottom: 20px;
+}
+.LinkSec > li {
+  list-style: none;
+  color: #F3F2EE;
+  padding: 0px;
+  padding: 0px 0px 12px 0px;
+}
+.footerLink {
+  color: #F3F2EE;
+  font-family: "Poppins-Regular" !important;
+  font-size: 14px !important;
+}
+.footerLink:hover {
+  color: #45B5C7 ;
+  font-family: "Poppins-Regular" !important;
+  
+}
+
+
+.inputField {
+  border-radius: 51px;
+  padding: 12px 20px;
+  border: 2px solid #1c3247;
+  font-family: "Poppins-Regular" !important;
+  color: #9d9d9d;
+  font-size: 14px;
+  width: 97%;
+  margin-bottom: 15px;
+}
+.firstSection {
+  margin: 0px 0px 0px 37px;
+  max-width: 250px;
+}
+.secoundSection {
+  padding: 50px 0px 0px 0px;
+}
+.thirdSection {
+  padding: 100px 0px 0px 0px;
+}
+
+.fourthSection {
+  padding: 50px 0px 0px 0px;
+}
+
+.GeneralButton {
+  background-color: #F3F2EE;
+  color: #1c3247;
+  width: 97%;
+  height: 45px;
+  border-radius: 25px;
+  border: none;
+  font-family: var(--main-font-regular);
+  font-size: 13px;
+}
+
+.GeneralButton:hover{
+  background: #F3F2EE;
+  color: #1c3247;
+  border: 1px solid  #1c3247 !important;
+  width: 97%;
+  height: 45px;
+  border-radius: 25px;
+  border: none;
+  font-family: var(--main-font-regular);
+  font-size: 13px;
+  transition: all 1s;
+}
+
+.line {
+  color: #F3F2EE;
+  border: -2.1rem solid #F3F2EE;
+  opacity: 1;
+  margin-left: 37px;
+}
+
+.copyRight {
+  font-size: 11px;
+  font-family: var(--main-font-regular);
+  color: #F3F2EE;
+  margin: 0px;
+  padding: 10px 0px;
+}
+.rouded {
+  background-color: #F3F2EE;
+  width: 25px;
+  height: 25px;
+  border-radius: 50px;
+  margin-bottom: 10px;
+}
+.icon {
+  color: #1c3247;
+  font-size: 19px;
+  padding: 0px 0px 2px 6px;
+}
+.iconsSection {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 140px 0px 0px 0px;
+}
+.warning {
+  font-family: var(--main-font-regular);
+  color: rgb(207, 34, 34);
+  font-size: 12px;
+  padding: 0px 0px 12px 16px
+}
+@media (min-width: 200px) and (max-width: 992px) {
+  .iconsSection {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    list-style: none;
+    padding: 50px 0px 0px 0px;
+  }
+  .line {
+    margin: 0px !important;
+  }
+  .firstSection {
+    margin: 0px !important;
+  }
+
+  .secoundSection {
+    padding: 0px;
+  }
+  .thirdSection {
+    padding: 0px;
+  }
+  .fourthSection {
+    padding: 0px;
+  }
+
+  .copyRight {
+    margin: 0px !important;
+  }
+  .iconsSection {
+    padding: 20px 0px 0px 0px;
+  }
+  .QuikHeading {
+    padding-bottom: 5px;
+  }
+  #container {
+    padding-top: 0px;
+  }
+
+  .decs {
+    font-size: 10px;
+
+}
+.LinkSec > li {
+  list-style: none;
+  padding: 0px !important;
+}
+
+.QuikHeading{
+  font-family: var(--main-font-regular);
+  color: #F3F2EE;
+  font-size: 14px !important;
+  padding-bottom: 10px !important;
+}
+}
+
+
+
+/*  */
+
+
+/* 
+.section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 60rem;
+  overflow: hidden;
+  background-color: #fff;
+  min-height: 37rem;
+  border-radius: 5px;
+}
+.form_group {
+  display: grid;
+  gap: 0.3rem;
+}
+.form_group aside {
+  background-image: url(https://media.istockphoto.com/id/1205460056/photo/email-background-concept-on-blue-background-3d-rendering.jpg?b=1&s=612x612&w=0&k=20&c=_NHcxoaTPpdB6cFmpnSpWrlSdrgoIQxoRk-ImaL1QaU=);
+}
+.form_group form {
+  padding: 2rem;
+  display: grid;
+  gap: 1.5rem;
+  align-items: end;
+  align-content: center;
+}
+.form_group .input {
+  border: 2px solid #ecebf3;
+  padding: 12px 8px;
+}
+.form_group label {
+  text-transform: capitalize;
+  color: #666;
+}
+.form_group .input {
+  border-radius: 5px;
+}
+.btn {
+  background-color: #090817;
+  color: #dcdbe4;
+  padding: 1.3rem;
+  font-family: inherit;
+  border: none;
+  margin-top: 1.3rem;
+  font-size: 0.9em;
+} */

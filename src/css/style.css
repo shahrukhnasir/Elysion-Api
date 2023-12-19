@@ -1,0 +1,132 @@
+/* / Mobile Header Start Here / */
+.mobileheader {
+	background: #1c3247 ;
+	position: fixed;
+	right: 0;
+	top: 0;
+	width: 30%;
+	height: 100%;
+	z-index: 9;
+	padding: 30px 30px;
+	transform: translateX(150%);
+	transition: 0.7s;
+}
+
+.mobileheader .inner-box {
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+.mobileheader .inner-box .menu-inner {
+	height: 400px;
+	overflow-y: scroll;
+	width: 100%;
+	padding-right: 20px;
+}
+
+.mobileheader .inner-box .menu-inner::-webkit-scrollbar {
+	width: 0.1em;
+	background-color: #1c3247 ;
+}
+.mobileheader .inner-box .menu-inner::-webkit-scrollbar-thumb {
+	background: darkgrey;
+}
+
+.mobileheader.active {
+	transform: translateX(0%);
+}
+
+.mobileheader ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.mobileheader .cancel {
+	position: absolute;
+	top: 35px;
+	right: 20px;
+	z-index: 2;
+}
+
+.mobileheader .cancel button {
+	background: transparent;
+	color: #fff;
+	font-size: 25px;
+	border: 0;
+	padding: 0;
+}
+
+.mobileheader ul li {
+	margin-bottom: 10px;
+}
+
+.mobileheader ul li a {
+	font-family: "Vietnam-light";
+}
+
+.mobileheader li {
+	list-style: none;
+}
+
+.mobileheader .language-tarnslator {
+	margin-top: 20px;
+}
+
+.mobileheader .action-btns {
+	margin-top: 20px;
+}
+
+.mobileheader .action-btns ul {
+	display: flex;
+}
+
+.mobileheader .action-btns ul li {
+	margin-right: 15px;
+}
+.mobileheader .menu-items .menu-link {
+	color: #fff;
+	font-family: "Poppins-Regular";
+}
+.mobileheader .menu-items {
+	margin: 13px 0;
+}
+.mobileheader .menu-items .accordion-item {
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	margin: 15px 0;
+}
+.mobileheader .menu-items .accordion-item .accordion-button {
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	padding: 0;
+	color: #fff;
+	font-family: "Poppins-Regular";
+	box-shadow: none;
+}
+.mobileheader .menu-items .accordion-item .accordion-button::after {
+	filter: brightness(0) invert(1);
+}
+.mobileheader
+	.menu-items
+	.accordion-item
+	.accordion-body
+	.menu-items
+	.menu-link {
+	font-size: 14px;
+}
+.mobileheader .menu-items .accordion-item .accordion-body {
+	padding: 5px 10px;
+}
+.mobileheader .menu-items .accordion-item .accordion-body .menu-items {
+	margin-bottom: 15px;
+}
+@media (max-width: 768px) {
+	.mobileheader {
+		width: 100%;
+	}
+}
+/* / Mobile Header End Here / */

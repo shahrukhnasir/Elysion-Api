@@ -1,0 +1,243 @@
+/*  */
+
+.mainCardBody {
+  max-width: 389px;
+  height: 407px;
+  margin: 18px 0px;
+  border-top-left-radius: 15px !important;
+  border-top-right-radius: 15px !important;
+  transition: all 0.5s ease-in-out;
+  font-family: var(--main-font-regular);
+
+}
+.innerCardBody {
+  width: 388px;
+  height: 243px;
+  border-top-left-radius: 15px !important;
+  transition: all 0.3s ease-in-out 0.1s;
+}
+
+.innerCardBody img {
+  border-top-left-radius: 15px !important;
+  border-top-right-radius: 15px !important;
+  height: 100% !important;
+  width: 100% !important;
+
+}
+
+/* Bouncing animation Start */
+.footerBody :hover {
+  transform: scale(1.5) translateY(20px);
+  /* animation: bouncing 0.5s .3s;  */
+}
+
+.footerBody :hover {
+  transform: scale(1);
+}
+
+@keyframes bouncing {
+
+  from,
+  to {
+      transform: scale(1, 1);
+  }
+
+  25% {
+      transform: scale(0.9, 1.1);
+  }
+
+  50% {
+      transform: scale(1.1, 0.9);
+  }
+
+  75% {
+      transform: scale(0.95, 1.05);
+  }
+}
+
+/* Bouncing animation End*/
+.footerBody {
+
+  width: 388px;
+  height: 164px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  background-color: #F6F6F6;
+  border-bottom-left-radius: 15px !important;
+  border-bottom-right-radius: 15px !important;
+}
+
+.footerInner {
+  width: 340px;
+  height: 106px;
+}
+
+
+.mainHeader {
+  width: 340px;
+  height: 45px;
+
+}
+
+.mainHeader>h1 {
+  font-family: "EncodeSansExpanded-Regular";
+  font-size: 17px !important;
+  color: #1c3247;
+  text-transform: capitalize;
+
+}
+
+.desc {
+  width: 340px;
+  height: 18px;
+}
+
+.desc p {
+  font-family: "Poppins-Regular";
+  font-size: 12px;
+  color: #000000;
+}
+
+.buttonSec {
+  width: 90px;
+  height: 62px;
+  display: flex;
+  align-items: center;
+}
+
+.learnMore {
+  text-decoration: none !important;
+  color: #1c3247;
+  font-family: "Poppins-Regular";
+  font-size: 14px;
+  padding-top: 20px;
+
+}
+
+.linkBtn {
+  text-decoration: none;
+}
+
+@media (min-width: 200px) and (max-width: 992px) {
+
+  #mainCardBody {
+      width: 100% !important;
+
+  }
+
+  .mainCardBody {
+      margin: 10px auto !important;
+  }
+
+
+  .desc {
+      width: 250px;
+      height: 30px;
+  }
+
+  .desc p {
+      font-family: "Poppins-Regular";
+      font-size: 10px;
+      color: #000000;
+  }
+
+  .innerCardBody {
+      width: 100%;
+      height: 180px !important;
+  }
+
+  .mainHeader {
+      width: 250px;
+      height: 30px !important;
+  }
+
+  .mainHeader>h1 {
+      font-family: "EncodeSansExpanded-Regular";
+      font-size: 14px !important;
+      color: #0A3029;
+
+  }
+
+  .footerBody {
+
+      width: 100% !important;
+      height: 160px !important;
+      padding: 0px 10px !important;
+  }
+
+  .footerInner {
+      width: 100% !important;
+      height: 90px !important;
+
+  }
+
+}
+
+
+@media (min-width: 992px) and (max-width: 1200px) {
+
+  #mainCardBody {
+      width: 300px !important;
+  }
+
+
+  .desc {
+      width: 250px;
+      height: 40px;
+  }
+
+  .desc p {
+      font-family: "Poppins-Regular";
+      font-size: 10px;
+      color: #000000;
+  }
+
+  .innerCardBody {
+      width: 100%;
+      height: 178px;
+  }
+
+  .mainHeader {
+      width: 100% !important;
+      height: 30px !important;
+  }
+
+  .mainHeader>h1 {
+      font-family: "EncodeSansExpanded-Regular";
+      font-size: 14px !important;
+      color: #0A3029;
+
+  }
+
+  .footerBody {
+
+      width: 100% !important;
+      height: 149px !important;
+      padding: 10px 15px;
+  }
+
+}
+
+@media (min-width: 1200px) and (max-width: 1400px) {
+
+  #mainCardBody {
+      width: 300px !important;
+  }
+
+  .innerCardBody {
+      width: 100%;
+      height: 240px !important;
+  }
+
+
+  .footerBody {
+
+      width: 100% !important;
+      height: 180px !important;
+      padding: 10px 24px;
+  }
+
+}

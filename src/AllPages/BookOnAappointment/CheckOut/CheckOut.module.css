@@ -1,0 +1,237 @@
+.inputField {
+    border-radius: 51px;
+    padding: 13px 30px;
+    border: 2px solid #1c3247;
+    font-family: var(--main-font-regular);
+    color: #9D9D9D;
+    font-size: 14px;
+    margin-bottom: 12px;
+    background-color: #F9F9F9;
+
+}
+
+.cartImage {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.warning {
+    font-family: var(--main-font-regular);
+    color: rgb(207, 34, 34);
+    font-size: 12px;
+    padding: 0px 0px 12px 16px
+}
+
+.mainHeading {
+    font-family: "EncodeSansExpanded-Regular";
+    font-size: 25px;
+    color: #1C3247;
+    padding-bottom: 20px;
+}
+
+.cartHeading {
+    font-family: "EncodeSansExpanded-Regular";
+    font-size: 25px;
+    color: #1C3247;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* Card */
+.cardTopHeading {
+    font-size: 24px;
+    font-family: "EncodeSansExpanded-Regular";
+    color: #1c3247;
+    text-align: start;
+    padding: 10px 0px;
+}
+
+.card {
+    background-color: #F9F9F9;
+    max-width: 365px;
+    border: 2px solid #1c3247;
+    border-radius: 20px;
+    padding: 10px 30px;
+    margin: 185px 0px 8px 230px;
+
+
+}
+
+.cardTitle {
+    font-size: 14px;
+    font-family: var(--main-font-regular);
+    color: #000000;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+}
+
+.cardDetail {
+    font-size: 16px;
+    font-family: var(--main-font-regular);
+    color: #9AA3AC;
+    text-align: end;
+
+}
+
+.cardPara {
+    font-size: 15px;
+    font-family: var(--main-font-regular);
+    color: black;
+}
+
+.cardTextBlue {
+    font-size: 18px;
+    font-family: "Poppins-Medium";
+    color: #1c3247;
+    padding-top: 10px;
+}
+
+.cardLastPrice {
+    padding-top: 10px;
+    font-size: 16px;
+    font-family: "EncodeSansExpanded-Regular";
+    color: #1B3146;
+    text-transform: uppercase;
+    text-align: end;
+}
+
+.cardPara {
+    font-size: 13px;
+    font-family: var(--main-font-regular);
+    color: black;
+    padding-bottom: 10px;
+}
+
+/* Card */
+
+/* alert */
+
+.alert {
+    background-color: #F6F5F9;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 10px;
+    max-width: 361px;
+    margin: 0px 0px 8px 230px;
+}
+
+.alertText {
+    color: #676C97;
+    font-size: 12px;
+    font-family: var(--main-font-regular);
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+
+}
+
+.alertImage>img {
+    width: 27px;
+    height: 27px;
+}
+
+.tCheckBoxText {
+    font-size: 12px;
+    font-family: var(--main-font-regular);
+    color: #9D9D9D;
+    padding-top: 10px;
+}
+
+.tCondition {
+    font-size: 12px;
+    font-family: var(--main-font-regular);
+    color: #1c3247;
+    padding-top: 10px;
+    text-decoration: underline;
+}
+
+.checkOutBtn {
+    text-align: end;
+    margin: 0px 35px 0px 0px;
+}
+
+.checkOut>button {
+    width: 40% !important;
+}
+@media (min-width: 200px)and (max-width: 540px) {
+    .rowReverse {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        align-content: flex-end;
+        flex-wrap: wrap;
+    }
+
+    .card {
+        max-width: 100% !important;
+        margin: auto !important;
+    }
+
+    .alert {
+        margin: auto;
+    }
+
+    .checkOutBtn {
+        text-align: center;
+        margin: auto;
+        padding-top: 30px;
+    }
+
+    .cardDetail{
+
+        text-align: start;
+        padding-left: 10px;
+    }
+    .cardLastPrice{
+
+        text-align: start;
+    }
+    .cartImage {
+        display: flex;
+        justify-content: center;
+    }
+}
+@media (min-width: 540px)and (max-width: 786px) {
+    .rowReverse {
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        align-content: flex-end;
+        flex-wrap: wrap;
+    }
+
+    .card {
+        max-width: 100% !important;
+        margin: auto !important;
+    }
+
+    .alert {
+        margin: auto;
+    }
+
+    .checkOutBtn {
+        text-align: center;
+        margin: auto;
+        padding-top: 30px;
+    }
+}
+
+@media (min-width: 786px) and (max-width: 992px) {
+
+
+    .card {
+        max-width: 100% !important;
+        margin: auto !important;
+    }
+
+    .alert {
+        margin: auto;
+    }
+
+    .checkOutBtn {
+        text-align: center;
+        margin: auto;
+        padding-top: 30px;
+    }
+}

@@ -1,0 +1,144 @@
+/* Select Flied */
+
+.Label {
+  font-size: 12px;
+  font-family: var(--main-font-regular);
+  color: black;
+}
+
+.selectField {
+  border-radius: 51px;
+  padding: 13px 30px;
+  border: 2px solid #1c3247;
+  font-family: var(--main-font-regular);
+  color: #9d9d9d;
+  font-size: 12px;
+  margin-bottom: 12px;
+  background-color: #f9f9f9;
+}
+
+.optionField {
+  border-radius: 51px;
+  background-color: #ffffff;
+  border: 2px solid #1c3247 !important;
+  font-family: var(--main-font-regular);
+  color: #9d9d9d;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+/* Select Flied */
+
+.cardTopHeading {
+  font-size: 18px;
+  font-family: "EncodeSansExpanded-Regular";
+  color: black;
+  margin: 20px 0px;
+}
+
+/* Card */
+
+.card {
+  background-color: #f9f9f9;
+  max-width: 360px;
+  height: 300px;
+  border: 2px solid #1c3247;
+  border-radius: 20px;
+  padding: 25px 20px 25px 20px;
+}
+
+.cardTitle {
+  font-size: 13px;
+  font-family: "EncodeSansExpanded-Regular";
+  color: black;
+  text-transform: uppercase;
+  padding-bottom: 10px;
+}
+
+.cardDetail {
+  font-size: 13px;
+  font-family: var(--main-font-regular);
+  color: black;
+}
+
+.cardPara {
+  font-size: 15px;
+  font-family: var(--main-font-regular);
+  color: black;
+}
+
+.cardTextBlue {
+  font-size: 15px;
+  font-family: "Poppins-Medium";
+  color: #1c3247;
+  text-transform: uppercase;
+  padding-top: 10px;
+}
+
+.cardLastPrice {
+  padding-top: 10px;
+  font-size: 16px;
+  font-family: "EncodeSansExpanded-Regular";
+  color: #1b3146;
+  text-transform: uppercase;
+  text-align: end;
+}
+
+.cardPara {
+  font-size: 13px;
+  font-family: var(--main-font-regular);
+  color: black;
+  padding-bottom: 10px;
+}
+
+/* Card */
+@media (min-width: 200px) and (max-width: 540px) {
+  .card {
+    margin: auto !important;
+    height: 400px;
+  }
+
+  #nextBtn{
+    display: flex;
+    justify-content: flex-end !important;
+    float: right;
+  }
+ 
+}
+
+.cardDetail {
+  font-size: 13px;
+  font-family: var(--main-font-regular);
+  color: black;
+  padding-left: 10px;
+}
+
+.cardLastPrice {
+  text-align: start;
+}
+
+@media (min-width: 540px) and (max-width: 786px) {
+  .card {
+    margin: auto !important;
+    height: 400px;
+  }
+  
+  #nextBtn{
+    display: flex;
+    justify-content: flex-end !important;
+    float: right;
+  }
+}
+
+@media (min-width: 786px) and (max-width: 992px) {
+  .card {
+    margin: auto !important;
+    height: 400px;
+  }
+  
+  #nextBtn{
+    display: flex;
+    justify-content: flex-end !important;
+    float: right;
+  }
+}

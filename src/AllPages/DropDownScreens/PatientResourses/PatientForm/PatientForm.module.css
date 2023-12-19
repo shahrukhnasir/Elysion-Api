@@ -1,0 +1,23 @@
+.subHeading{
+   font-family: var(--main-font-regular);
+    font-size: 25px;
+    color: #1B3146;
+}
+
+.para{
+   font-family: var(--main-font-regular);
+    font-size: 15px;
+    color: black;
+}
+
+.importText{
+   font-family: var(--main-font-regular);
+    font-size: 13px;
+    color: #000;
+}
+.bold{
+   font-family: var(--main-font-regular);
+    font-weight: 900;
+    font-size: 16px;
+    color: #1B3146;
+}

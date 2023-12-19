@@ -1,0 +1,262 @@
+.AppointmentContainer {
+    width: 800px;
+}
+
+.TopCatSection {
+    margin-top: 30px;
+}
+
+.cardTitle {
+    font-size: 27px;
+    color: #1c3247;
+    font-family: var(--main-font-regular);
+    margin-bottom: 0px;
+    margin-left: 10px;
+}
+
+.cardText {
+    color: #1B3146;
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.cardBody {
+    padding: 10px 0px;
+}
+
+#filterBox {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.filterBtn {
+    font-family: var(--main-font-regular);
+    background: transparent;
+    font-size: 13px;
+    padding: 5px 20px;
+    border: 1px solid #B5B5B5;
+    border-radius: 25px;
+    margin: 5px 5px;
+    width: 100%;
+    height: 50px;
+    color: #B5B5B5;
+
+}
+
+.filterBtnActive {
+
+    font-family: var(--main-font-regular);
+    background: #1B3146;
+    font-size: 13px;
+    color: white;
+    padding: 5px 20px;
+    border: 1px solid #707070;
+    border-radius: 25px;
+    margin: 5px 5px;
+    width: 100%;
+    height: 50px;
+
+
+}
+.clearWishList{
+    color: #1c3247;
+    text-decoration: underline;
+    font-family: "VisbySemibold";
+    font-size: 14px;
+
+}
+#tableOuterBody {
+    border: 1px solid #E5E5E5;
+    border-radius: 50px !important;
+    -wekit-border-radius: 50px !important;
+}
+
+.TSection {
+    padding: 20px;
+    background-color: #EEEEEE;
+    border-radius: 20px !important;
+}
+
+.tHead {
+    font-size: 12px;
+    color: #000000;
+    font-family: "TomatoGrotesk-Medium";
+    text-align: center;
+    text-transform: uppercase;
+    padding: 10px 30px !important;
+
+}
+
+.tData {
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    padding: 10px;
+    padding: 20px 10px !important;
+    text-align: center;
+
+}
+
+.dataStatusBtn {
+    font-family: var(--main-font-regular);
+    border: none;
+    background: #E1EDFE;
+    border-radius: 39px;
+    font-size: 12px;
+    padding: 12px 24px !important;
+    margin: 5px;
+    text-align: center;
+}
+
+
+#dataActionBtn {
+    font-family: var(--main-font-regular);
+    border: 1px solid black;
+    background: transparent;
+    border-radius: 39px;
+    font-size: 12px;
+    padding: 12px 24px !important;
+    margin: 5px;
+    text-align: center;
+}
+
+.crossIcon {
+    font-size: 20px;
+    color: #EF5D61;
+    margin-top: 15px;
+}
+
+
+.closeBtn {
+    position: absolute;
+    right: -2%;
+    top: -6%;
+    background-color: #575755;
+    color: wheat;
+    border-radius: 50px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.btnClose {
+    color: #fff !important;
+    opacity: 1;
+    font-size: 20px;
+    cursor: pointer;
+
+}
+
+.modalBoody {
+    padding: 30px 50px;
+}
+
+.modalTittle {
+
+    font-size: 20px;
+    font-family: var(--main-font-regular);
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.modalId {
+    font-size: 18px;
+    font-family: var(--main-font-regular);
+    color: #1c3247;
+}
+
+.modalDetail {
+    font-family: "TomatoGrotesk-Medium";
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-left: 10px;
+    padding: 10px 0px;
+}
+
+.modalText{
+    font-family: var(--main-font-regular);
+    color: #1F2C35;
+    /* text-transform: uppercase; */
+    font-size: 12px;
+    margin-left: 10px;
+    padding: 10px 0px;
+}
+.modalDesc{
+    font-family: var(--main-font-regular);
+    color: #000000;
+    font-size: 12px;
+    padding: 10px 0px;
+}
+
+
+/* End Box */
+#infoBox{
+    background-color: #E1EDFE;
+    border-radius: 10px;
+    max-width: 300px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px 10px;
+
+ 
+
+}
+.extraInfoText{
+font-size: 12px;
+color: #575755;
+font-family: var(--main-font-regular);
+padding: 5px 0px;
+}
+
+.extraInfoId{
+    font-size: 12px;
+    color: #575755;
+    font-family: var(--main-font-regular); 
+    padding: 5px 0px;
+}
+
+.contactNum{
+    color: #1c3247;
+    font-size: 12px;
+    font-family: "VisbySemibold"; 
+}
+
+.contactIcon{
+    color: #1c3247;
+    font-size: 18px;
+    font-family: "VisbySemibold"; 
+}
+@media (min-width: 200px) and (max-width: 992px) {
+    .AppointmentContainer {
+        width: 100% !important;
+        overflow-x: auto;
+    }
+
+    #dataActionBtn {
+        font-size: 10px !important;
+        padding: 8px 5px !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1100px) {
+    .AppointmentContainer {
+        width: 700px !important;
+        overflow-x: auto;
+    }
+
+    #dataActionBtn {
+        font-size: 10px !important;
+        padding: 8px 5px !important;
+    }
+}
+
+
+@media (min-width: 1100px) and (max-width: 1200px) {
+    .AppointmentContainer {
+        width: 800px !important;
+        overflow-x: auto;
+    }
+}

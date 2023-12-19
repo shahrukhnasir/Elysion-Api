@@ -1,0 +1,312 @@
+#mainHeroContainer {
+	background-color: #ffff;
+	/* position: relative; */
+	background: rgb(2, 0, 36);
+	background: linear-gradient(45deg,
+			rgba(18, 59, 81, 0) 0%,
+			rgba(0, 0, 0, 0.020045518207282953) 55%,
+			rgb(234, 244, 250) 77%);
+	overflow-x: hidden !important;
+}
+
+#rowMiniBox {
+	display: flex;
+	justify-content: center;
+}
+
+#rowMiniBox #col {
+	display: flex;
+	justify-content: center;
+}
+
+.mainHeroContainer .div {
+	background-color: #f4f4f4;
+}
+
+.mainHeading {
+	font-family: var(--main-font-regular);
+	font-size: 40px;
+	color: #1c3247;
+}
+
+.rightSec {
+	/* padding: 120px 0px 0px 0px; */
+	padding: 0px 0px 0px 0px;
+}
+
+.mainDescription {
+	font-family: var(--main-font-regular);
+	font-size: 14px;
+	padding: 10px 0px;
+}
+
+.affiliations h6 {
+	font-family: var(--main-font-bold);
+	font-size: 16px;
+	text-transform: capitalize;
+	color: #1c3247;
+}
+
+.affiliations ul li {
+	font-family: var(--main-font-regular);
+	font-size: 14px;
+}
+/* 
+.DocSection {
+	position: relative;
+	width: 100%;
+} */
+
+.meetDocImage img {
+	width: 100%;
+   height: auto;
+}
+
+.box {
+	background: #f3f2ee;
+	width: 220px;
+	height: 100px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	border-radius: 10px;
+	font-family: "Poppins-Regular";
+	font-size: 16px;
+	color: #1c3247;
+	padding: 0 10px;
+	cursor: pointer;
+	transition: transform 0.3s ease;
+}
+
+.box:hover {
+	transform: translateY(-20px);
+	color: #fff;
+	background-color: #1c3247;
+}
+
+.icon {
+	color: #1c3247;
+	width: 40px;
+	height: 40px;
+	margin-bottom: 10px;
+}
+
+.iconPlus {
+	color: #1c3247;
+	width: 35px;
+	height: 35px;
+	margin-bottom: 10px;
+}
+
+.points {
+	font-family: "Poppins-Regular";
+	font-size: 18px;
+	color: #464444;
+	padding-left: 16px;
+}
+
+@media (min-width: 280px) and (max-width: 390px) {
+	.meetDocImage img {
+		width: 100% !important;
+		height: 100%;
+	}
+
+	.mainHeading {
+		font-family: var(--main-font-regular);
+		font-size: 25px;
+	}
+
+	.br {
+		display: none;
+	}
+
+	.mainDescription {
+		text-align: justify;
+	}
+
+	.points {
+		font-size: 10px !important;
+		padding-left: 8px;
+	}
+
+	.iconPlus {
+		margin-bottom: 0px !important;
+		width: 15px !important;
+		height: 15px !important;
+	}
+
+	.icon {
+		width: 15px !important;
+		height: 15px !important;
+		margin-bottom: 0px !important;
+	}
+
+	.learnBtn {
+		display: flex;
+		justify-content: flex-end;
+		float: right;
+	}
+
+	.box {
+		background: #f3f2ee;
+		width: 100px;
+		height: 50px;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		border-radius: 10px;
+		font-family: "Poppins-Regular";
+		font-size: 12px !important;
+		color: #1c3247;
+		padding: 0 10px;
+		cursor: pointer;
+	}
+
+	.rightSec {
+		padding: 20px 0px 0px 0px;
+	}
+
+	#row {
+		display: flex;
+		flex-direction: column-reverse;
+
+	}
+
+}
+
+@media (min-width: 390px) and (max-width: 540px) {
+	.meetDocImage img {
+		width: 100% !important;
+		height: 100%;
+	}
+
+	.mainHeading {
+		font-family: var(--main-font-regular);
+		font-size: 25px;
+	}
+
+	.br {
+		display: none;
+	}
+
+	.mainDescription {
+		text-align: justify;
+	}
+
+	.points {
+		font-size: 12px !important;
+	}
+
+	#row {
+		display: flex;
+		flex-direction: column-reverse;
+	}
+
+	.rightSec {
+		padding: 20px 0px 0px 0px;
+	}
+}
+
+@media (min-width: 540px) and (max-width:992px) {
+	.meetDocImage img {
+		width: 100% !important;
+		height: 100%;
+	}
+
+	#row {
+		display: flex;
+		flex-direction: column-reverse;
+
+	}
+
+	.rightSec {
+		padding: 30px 0px 0px 0px;
+	}
+}
+
+@media (min-width: 992px) and (max-width: 1050px) {
+	.meetDocImage img {
+		width: 100% !important;
+		height: 100%;
+	}
+
+	/* .DocSection {
+		width: 124% !important;
+		margin-top: 110px;
+	} */
+
+	.HeroSection_box__z8zAM {
+		left: 32% !important;
+	}
+}
+
+@media (min-width: 1200px) and (max-width: 1300px) {
+	/* .DocSection {
+		width: 122% !important;
+	} */
+
+	.icon {
+		width: 30px !important;
+		height: 30px !important;
+	}
+
+	.iconPlus {
+		width: 25px !important;
+		height: 25px !important;
+	}
+
+	.points {
+		font-size: 16px;
+	}
+}
+
+@media (min-width: 100px) and (max-width: 992px) {
+	.meetDocImage img {
+		width: 100% !important;
+		height: 100%;
+	}
+
+	/* .DocSection {
+		position: relative;
+		width: 100%;
+	} */
+
+	.points {
+		font-size: 16px;
+	}
+
+	.br {
+		display: none !important;
+	}
+
+	#rowMiniBox {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap !important;
+	}
+
+	.ProvidingBestMedicalServices_box___7NHU {
+		background: #f3f2ee;
+		width: 100px !important;
+		height: 30px;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		border-radius: 5px;
+		font-family: "Poppins-Regular";
+		font-size: 11px !important;
+		color: #1c3247;
+		padding: 0 10px;
+		cursor: pointer;
+	}
+}
+
+@media (min-width: 992px) and (max-width:1300px) {
+	.meetDocImage img {
+		width: 100% !important;
+		height: 100% !important;
+	}
+}

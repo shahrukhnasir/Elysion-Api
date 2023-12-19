@@ -1,0 +1,123 @@
+/* Header */
+.ProfileTopSection {
+    background-color: #EEEEEE;
+    height: 120px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+
+
+}
+
+.Title {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Title>h2 {
+    font-family: var(--main-font-regular);
+    color: #1C3247;
+    font-size: 26px;
+}
+
+/* Header */
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.topHeading {
+    font-size: 51px;
+    font-family: var(--main-font-regular);
+    color: #1c3247;
+    text-align: center;
+    margin: 0px;
+    padding-bottom: 10px;
+}
+
+.topSubDecs {
+    font-size: 18px;
+    font-family: var(--main-font-regular);
+    color: #1B3146;
+    text-align: center;
+    margin-bottom: 20px;
+
+}
+
+/* Card */
+
+.card {
+    background-color: #F9F9F9;
+    max-width: 497px;
+    border: 2px solid #1c3247;
+    border-radius: 20px;
+    padding: 40px 50px 40px 50px;
+}
+
+@media (min-width: 280px)and (max-width: 350px) {
+    
+    
+    .card{
+        max-width: 500px;
+        height: 500px;
+    }
+    .appoit_id {
+        padding-bottom: 10px;
+        padding-left: 10px;
+    }
+
+    .cardDetail{
+        padding-left: 10px;
+    }
+    .cardLastPrice{
+        text-align: start;
+    }
+}
+@media (min-width: 350px)and (max-width: 540px) {
+    
+    
+    .card{
+        max-width: 500px;
+        height: 320px;
+    }
+    .appoit_id {
+        padding-bottom: 10px;
+        padding-left: 10px;
+    }
+
+    .cardDetail{
+        padding-left: 10px;
+    }
+    .cardLastPrice{
+        text-align: start;
+    }
+}
+@media (min-width: 540px)and (max-width: 786px) {
+    .card{
+        max-width: 500px;
+        height: 300px;
+    }
+    .appoit_id {
+        padding-bottom: 10px;
+        padding-left: 10px;
+    }
+
+    .cardDetail{
+        padding-left: 10px;
+    }
+    .cardLastPrice{
+        text-align: start;
+    }
+}
+
+@media (min-width: 786px) and (max-width: 992px) {
+
+.card{
+    max-width: 500px;
+    height: 300px;
+}
+    
+}

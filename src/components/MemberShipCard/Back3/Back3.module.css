@@ -1,0 +1,123 @@
+.cardBody {
+  background-color: #1c3247;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  overflow: hidden;
+
+}
+
+
+.carTitle {
+  font-family: var(--main-font-regular);
+  font-size: 18px !important;
+  color: white;
+}
+
+.flipcardfront {
+  background-color: #1c3247;
+  color: white;
+  border-radius: 20px !important;
+  height: 100%;
+}
+
+/* sCROLL */
+
+.pricingListOverFlow {
+  height: 210px !important;
+  /* overflow-y: scroll; */
+}
+
+.pricingListOverFlow::-webkit-scrollbar {
+  width: 10px !important;
+}
+
+.pricingListOverFlow::-webkit-scrollbar-track {
+  background: #D1D1D1 !important;
+  border-radius: 50px !important;
+}
+
+.pricingListOverFlow::-webkit-scrollbar-thumb {
+  background-color: #575755;
+  border-radius: 50px !important;
+  height: 150px !important;
+  width: 100% !important;
+  border: 1px solid #D1D1D1;
+}
+
+.pricingListOverFlow li {
+  font-size: 14px;
+  text-align: start;
+
+}
+
+/* Scroll eND */
+.SubTitle {
+  font-family: var(--main-font-regular);
+  font-size: 10px !important;
+  color: white;
+}
+
+.card3SmText {
+  font-family: var(--main-font-regular);
+  font-size: 18px !important;
+  color: white;
+  position: absolute;
+  top: 24%;
+  left: 26%;
+}
+
+
+.BigText {
+  font-family: var(--main-font-semibold);
+  font-size: 60px !important;
+  color: white;
+}
+
+.pricingListOverFlow {
+  list-style-image: url('../../../../public/images/pluslight.png');
+  padding: 0px;
+  text-align: start;
+  padding: 20px;
+  overflow-y: scroll;
+  height: 200px;
+
+}
+
+.lightBtn>button {
+  background-color: #ffff;
+  color: #1c3247;
+}
+
+@media (min-width: 200px) and (max-width: 300px) {
+  .card3SmText {
+    font-family: var(--main-font-regular);
+    font-size: 18px !important;
+    color: white;
+    position: absolute;
+    top: 24%;
+    left: 10%;
+  }
+}
+
+@media (min-width: 300px) and (max-width: 350px) {
+  .card3SmText {
+    font-family: var(--main-font-regular);
+    font-size: 18px !important;
+    color: white;
+    position: absolute;
+    top: 20%;
+    left: 22%;
+  }
+}
+
+@media (min-width: 350px) and (max-width: 540px) {
+  .card3SmText {
+    font-family: var(--main-font-regular);
+    font-size: 18px !important;
+    color: white;
+    position: absolute;
+    top: 24%;
+    left: 23%;
+  }
+}

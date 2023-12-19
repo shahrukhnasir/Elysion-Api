@@ -1,0 +1,321 @@
+.ProfileTopSection {
+    background-color: #EEEEEE;
+    height: 120px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+    
+
+
+}
+.plan{
+
+    display: flex;
+    flex-direction: row !important;
+    justify-content: flex-end !important;
+    border-radius: 51px;
+    background-color: #F9F9F9;
+    border: 2px solid #1c3247;
+    padding: 13px 30px;
+}
+.plan::before{
+    content: "Select Membership Plan :";
+    position: relative;
+    right: 125px !important;
+    top: 6px;
+    font-family: var(--main-font-medium);
+    color: #495B6B;
+    font-size: 14px;
+}
+.checkbox input[type="checkbox"]{
+    background-color: #1C3247;
+}
+.checkbox input:checked {
+    border-color: red;
+    background-color:red;
+}
+.Title{
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Title >h2{
+    font-family: var(--main-font-regular);
+    color: #1C3247;
+    font-size: 26px;
+}
+/*  */
+
+.inputField {
+    border-radius: 51px;
+    padding: 13px 30px;
+    background-color: #F9F9F9;
+    border: 2px solid #1c3247;
+    font-family: var(--main-font-regular);
+    color: #9D9D9D;
+    font-size: 14px;
+    margin-bottom: 12px;
+
+}
+
+.warning{
+    font-family: var(--main-font-regular);
+    color: rgb(207, 34, 34);  
+    font-size: 12px;
+    padding: 0px 0px 15px 16px
+}
+
+.cartHeading{
+    font-size: 22px;
+    font-family: var(--main-font-regular);
+    color: #1C3247;
+}
+.checkLabel{
+    font-size: 12px;
+    font-family: var(--main-font-regular);
+    color: #030303;
+}
+.cartDetails{
+    font-size: 22px;
+    font-family: var(--main-font-regular);
+    color: #1C3247;
+}
+
+.cartImage{
+    display: flex;
+    justify-content: flex-end;
+}
+.labelInput{
+    font-family: var(--main-font-regular);
+    color: #172233;
+    font-size: 14px;
+    padding: 10px 0px 10px 0px;
+}
+
+.cartButton >button{
+width: 100% !important;
+}
+.cartButton{
+    padding: 20px 0px;
+    }
+
+    /* last */
+    .tCheckBoxText{
+        font-size: 12px;
+        font-family: var(--main-font-regular);
+        color: #9D9D9D;
+        padding-top: 10px;
+    }
+    
+    .tCondition{
+        font-size: 12px;
+        font-family: var(--main-font-regular);
+        color: #1c3247;
+        padding-top: 10px;
+        text-decoration: underline;
+    }
+
+    .checkOutLast{
+text-align: end;
+    }
+
+    .month{
+        font-size: 10px;
+        font-family: var(--main-font-medium);
+        color: #575755;
+        padding:9px 15px 0px 0px;
+    }
+
+    .annual{
+        font-size: 10px;
+        font-family: var(--main-font-medium);
+        color: #575755;
+        padding:9px 0px 0px 15px;
+    }
+    /* card */
+
+
+/* Card */
+.cardTopHeading {
+    font-size: 24px;
+    font-family: var(--main-font-regular);
+    color: #1c3247;
+    text-align: start;
+    padding: 10px 0px;
+}
+
+.card {
+    background-color: #F9F9F9;
+    max-width: 365px;
+    border: 2px solid #1c3247;
+    border-radius: 20px;
+    padding: 10px 30px;
+    margin: 70px 0px 8px 135px;
+
+
+}
+
+.cardTitle {
+    font-size: 16px;
+    font-family: var(--main-font-regular);
+    color: #1B3146;
+    margin-top: 10px;
+    text-wrap: nowrap;
+
+}
+
+.cardDetail {
+    font-size: 16px;
+    font-family: var(--main-font-regular);
+    color: #9AA3AC;
+    text-align: end;
+    margin-top: 10px;
+    text-wrap: nowrap;
+
+
+}
+
+.cardPara {
+    font-size: 18px;
+    font-family: var(--main-font-regular);
+    color: black;
+}
+
+.cardTextBlue {
+    font-size: 18px;
+    font-family: var(--main-font-regular);
+    color: #1c3247;
+    padding-top: 10px;
+}
+
+.cardLastPrice {
+    padding-top: 10px;
+    font-size: 18px;
+    font-family: var(--main-font-regular);
+    color: #1B3146;
+    text-transform: uppercase;
+    text-align: end;
+}
+
+.cardPara {
+    font-size: 13px;
+    font-family: var(--main-font-regular);
+    color: black;
+    padding-bottom: 10px;
+}
+
+.pName{
+  font-family: var(--main-font-regular);
+  font-size: 16px;
+  color: #1B3146;
+  padding: 0px 10px;
+}
+
+/* Card */
+    /* card */
+
+
+    /* ALert */
+    
+.alert{
+    background-color: #F6F5F9;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 10px;
+    max-width: 361px;
+    margin: auto !important;
+}
+
+.alertText{
+    color: #676C97;
+    font-size: 12px;
+    font-family: var(--main-font-regular);
+    display: flex;
+    align-items: center;
+    padding: 0px 5px;
+
+}
+
+.alertImage> img{
+width: 27px;
+height:27px;
+}
+@media (min-width: 200px) and (max-width:540PX) {
+    .plan::before {
+        content: "Select Membership Plan :";
+        position: relative;
+        right: 0px!important;
+        top: 6px;
+        font-family: var(--main-font-medium);
+        color: #495B6B;
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 200px) and (max-width:992px){
+  
+    .rowReverse{
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        align-content: flex-end;
+        flex-wrap: wrap;
+    }
+    .card{
+        margin: auto !important;
+    }
+
+    .cardDetail {
+        text-align: start;
+        padding-left: 10px;
+        margin-top: 10px;
+       
+    }
+    .cardLastPrice {
+
+        text-align: start;
+    }
+    .checkOutLast {
+        text-align: center !important;
+        padding-top: 20px !important;
+    }
+}
+@media (min-width: 992px)and (max-width:1200px) {
+    .plan::before{
+        content: "Select Membership Plan :";
+        position: relative;
+        right: 28px !important;
+        top: 6px;
+        font-family: var(--main-font-medium);
+        color: #495B6B;
+        font-size: 10px;
+    }
+}
+
+@media (min-width: 1200px)and (max-width:1300px) {
+    .plan::before{
+        content: "Select Membership Plan :";
+        position: relative;
+        right: 75px !important;
+        top: 6px;
+        font-family: var(--main-font-medium);
+        color: #495B6B;
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 1300px)and (max-width:1400px) {
+    .plan::before{
+        content: "Select Membership Plan :";
+        position: relative;
+        right: 60px  !important;
+        top: 6px;
+        font-family: var(--main-font-medium);
+        color: #495B6B;
+        font-size: 14px;
+    }
+}

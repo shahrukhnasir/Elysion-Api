@@ -1,0 +1,208 @@
+/* Top Product Bar */
+.ProfileTopSection {
+    background-color: #EEEEEE;
+    height: 120px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+
+
+}
+
+.Title{
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Title >h2{
+    font-family: var(--main-font-regular);
+    color: #1C3247;
+    font-size: 26px;
+}
+
+/* pagination */
+
+.paginationSec {
+    display: flex; 
+    float: right;
+
+}
+
+.pagination {
+    border: none;
+}
+
+.pageLink {
+    border: none !important;
+    color: black;
+}
+
+.pageLink:focus {
+    color: white;
+    background-color: #1c3247;
+    border-radius: 5px;
+}
+/* Shop  Sidebar*/
+
+.SideBarMenu {
+    /* border: 1px solid #D5D5D6; */
+    padding: 10px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 10px 0px;
+    list-style: none;
+}
+#filterMenu{
+    color: #000000;
+    padding: 4px 15px;
+    font-family: var(--main-font-medium);
+    font-size: 13px;
+    background-color: #F6F6F6 !important;
+    border-left: none;
+    border-right: none;
+    /* border-bottom: 1px solid #CFCFCF !important; */
+    cursor: pointer;
+    border-bottom-left-radius: 10px;
+    
+}
+
+.activeBar {
+    color: #19244B;
+    padding: 12px 15px;
+    font-family: var(--main-font-medium);
+    font-size: 13px;
+    background-color: #1c3247 !important;
+
+
+}
+
+.filterBtnActive {
+
+    color: #1c3247 !important;
+    padding: 12px 15px;
+    font-family: var(--main-font-medium);
+    font-size: 13px;
+    background-color: #F6F6F6 !important;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #CFCFCF !important;
+
+
+
+}
+
+
+
+.filterBtn {
+    color: #000000;
+    padding: 12px 15px;
+    font-family: var(--main-font-medium);
+    font-size: 13px;
+    background-color: #F6F6F6 !important;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #CFCFCF !important;
+
+}
+
+.filterField {
+    border-radius: 51px;
+    padding: 10px 30px;
+    border: 1px solid #d3d3d3;
+    font-family: "Poppins-Regular";
+    color: #bbbbbb;
+    font-size: 14px;
+    margin-bottom: 12px;
+    margin-top: 12px;
+    background-color: white;
+
+}
+
+.search_sec ::placeholder {
+    color: #1c3247 !important;
+    font-family: "Poppins-Regular";
+    font-size: 12px;
+}
+
+.search_sec{
+    position: relative;
+    background-color: #F9F9F9;
+    border: none;
+}
+
+.filterIcon{
+    position: absolute;
+    top: 31px;
+    right: 38px;
+    width: 16px;
+    height: 16px;
+}
+
+
+@media (min-width:200px) and (max-width:415px){
+    .SideBarMenu {
+        /* border: 1px solid #D5D5D6; */
+        padding: 10px;
+        border-radius: 10px;
+        width: 100% !important;
+        margin: auto !important;
+        list-style: none;
+    }
+    .filterField{
+        padding: 10px !important;
+    }
+    .paginationSec {
+        display: flex; 
+       justify-content: center !important;
+    
+    }
+}
+@media (min-width:415px) and (max-width:540px){
+    .SideBarMenu {
+        /* border: 1px solid #D5D5D6; */
+        padding: 10px;
+        border-radius: 10px;
+        width: 300px;
+        margin: auto !important;
+        list-style: none;
+    }
+    .paginationSec {
+        display: flex; 
+       justify-content: center !important;
+    
+    }
+}
+
+@media (min-width:540px) and (max-width:768px){
+    .SideBarMenu {
+        /* border: 1px solid #D5D5D6; */
+        padding: 10px;
+        border-radius: 10px;
+        width: 300px;
+        margin: auto !important;
+        list-style: none;
+    }
+    .paginationSec {
+        display: flex; 
+       justify-content: center !important;
+    
+    }
+}
+
+
+@media (min-width: 768px) and (max-width:1200px){
+
+
+    .SideBarMenu {
+
+        width: 100%;
+
+
+}
+.filterField{
+    font-size: 8px !important;
+}
+}

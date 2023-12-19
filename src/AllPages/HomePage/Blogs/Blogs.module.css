@@ -1,0 +1,97 @@
+#blogContainer {
+  background-color: #575755;
+  position: relative;
+}
+
+.mainHeading {
+  font-family: var(--main-font-regular);
+  font-size: 40px;
+  color: white;
+  padding-top: 50px;
+  text-transform: capitalize;
+}
+.mainTitle {
+  color: white;
+  font-family: var(--main-font-regular);
+  font-size: 14px;
+}
+
+.card {
+  max-width: 400px;
+  border-radius: 14px;
+  border: none !important;
+  margin: 50px 0px;
+}
+.cardImage {
+  width: 100%;
+}
+
+.cardBody {
+  background-color: #d9dce6;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 25px;
+}
+
+.carTitle {
+  font-family: var(--main-font-regular);
+  font-size: 15px !important;
+  color: #0a3029;
+}
+
+.cardDesc {
+  font-family: var(--main-font-regular);
+  font-size: 12px;
+  color: #000000;
+  margin-bottom: 0px;
+}
+.learnMore {
+  text-decoration: none !important;
+  color: #0a3029;
+  font-family: var(--main-font-regular);
+  font-size: 12px;
+  padding: 0px;
+}
+
+.linkBtn {
+  text-decoration: none;
+}
+
+.viewBtn {
+  display: flex;
+  margin-left: 74%;
+}
+
+
+@media (min-width: 280px) and (max-width: 390px) {
+    .mainHeading{
+        font-size: 22px;
+       }
+    
+       .mainTitle {
+       
+        font-family: var(--main-font-regular);
+        font-size: 12px;
+        text-align: justify;
+        width: 100%;
+    }
+  }
+  @media (min-width: 390px) and (max-width: 540px) {
+   .mainHeading{
+    font-size: 25px;
+   }
+  
+   .mainTitle {
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    text-align: justify;
+    width: 100%;
+  }
+  }
+
+@media (min-width: 200px) and (max-width: 992px) {
+  .viewBtn {
+    display: flex;
+   justify-content: flex-end !important;
+  }
+}

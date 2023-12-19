@@ -1,0 +1,171 @@
+/* Header */
+.ProfileTopSection {
+    background-color: #EEEEEE;
+    height: 120px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+
+
+}
+
+.Title {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Title>h2 {
+    font-family: var(--main-font-regular);
+    color: #1C3247;
+    font-size: 26px;
+}
+
+/* Header */
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.topHeading {
+    font-size: 44px;
+    font-family: var(--main-font-regular);
+    color: #1c3247;
+    text-align: center;
+    margin: 0px;
+}
+
+.topSubDecs {
+    font-size: 13px;
+    font-family: var(--main-font-regular);
+    color: #1B3146;
+    text-align: center;
+    margin-bottom: 20px;
+
+}
+
+/* Card */
+
+.card {
+    background-color: #F9F9F9;
+    max-width: 360px;
+    height: 330px;
+    border: 2px solid #1c3247;
+    border-radius: 20px;
+    padding: 25px 20px 25px 20px;
+}
+
+.cardTitle {
+    font-size: 13px;
+    font-family: var(--main-font-regular);
+    color: black;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+}
+
+.cardDetail {
+    font-size: 13px;
+    font-family: var(--main-font-regular);
+    color: black;
+
+}
+
+.cardPara {
+    font-size: 15px;
+    font-family: var(--main-font-regular);
+    color: black;
+}
+
+.cardTextBlue {
+    font-size: 15px;
+    font-family: "Poppins-Medium";
+    color: #1c3247;
+    text-transform: uppercase;
+    padding-top: 10px;
+}
+
+
+.appoit_id {
+    font-size: 15px;
+    font-family: var(--main-font-regular);
+    color: #1c3247;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+}
+
+.appoint_text_id {
+    font-size: 15px;
+    font-family: var(--main-font-regular);
+    color: #1c3247;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+
+}
+
+.cardLastPrice {
+    padding-top: 10px;
+    font-size: 16px;
+    font-family: var(--main-font-regular);
+    color: #1B3146;
+    text-transform: uppercase;
+    text-align: end;
+}
+
+.cardPara {
+    font-size: 13px;
+    font-family: var(--main-font-regular);
+    color: black;
+    padding-bottom: 10px;
+}
+
+/* Card */
+
+
+
+@media (min-width: 200px)and (max-width: 540px) {
+    
+    
+    .card{
+        max-width: 500px;
+        height: 500px;
+    }
+    .appoit_id {
+        padding-bottom: 10px;
+        padding-left: 10px;
+    }
+
+    .cardDetail{
+        padding-left: 10px;
+    }
+    .cardLastPrice{
+        text-align: start;
+    }
+}
+@media (min-width: 540px)and (max-width: 786px) {
+    .card{
+        max-width: 500px;
+        height: 450px;
+    }
+    .appoit_id {
+        padding-bottom: 10px;
+        padding-left: 10px;
+    }
+
+    .cardDetail{
+        padding-left: 10px;
+    }
+    .cardLastPrice{
+        text-align: start;
+    }
+}
+
+@media (min-width: 786px) and (max-width: 992px) {
+
+.card{
+    max-width: 500px;
+    height: 450px;
+}
+    
+}

@@ -1,0 +1,588 @@
+#mainHeroContainer {
+	height: 730px;
+	width: 100% !important;
+	background-image: url("../../../../public/images/herosection/Eh_landing.webp");
+	/* background-image: url("../../../../public/images/herosection/FInal_landing.webp"); */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.mainHeroContainer .div {
+	background-color: #f4f4f4;
+}
+
+.mainHeading {
+	font-family: var(--main-font-regular);
+	color: #f3f2ee !important;
+	display: flex;
+	justify-content: flex-end;
+	flex-direction: column;
+	font-weight: normal;
+	letter-spacing: 1.2px;
+}
+
+.mainHeading div {
+	text-align: end;
+}
+
+.mainHeadingInner {
+	text-transform: uppercase;
+	font-family: var(--main-font-regular);
+	font-size: 5vw;
+}
+
+.HeadingSm {
+	font-family: var(--main-font-regular);
+	font-size: 2vw;
+	text-transform: capitalize;
+}
+.HeadingBig{
+	font-family: var(--main-font-regular);
+	font-size: 45px;
+	text-transform: capitalize;
+}
+.heroButton>button {
+	padding: 0px 20px !important;
+	width: 190px !important;
+}
+
+.hr {
+	width: 70%;
+	height: 1px;
+	margin-left: auto;
+	/* margin-right: auto; */
+	background-color: #f3f2ee !important;
+	border: 0px none;
+	opacity: 1;
+}
+
+.details p {
+	font-family: "EncodeSansExpanded-Medium";
+	font-size: 13px;
+	padding-bottom: 20px;
+	word-spacing: 2px;
+	color: #f3f2ee !important;
+	text-align: end;
+}
+
+.HeroImageContainer {
+	height: 700px;
+	border-radius: 30px;
+}
+
+
+
+
+
+.box {
+	width: 340px !important;
+	height: 0px !important;
+	position: absolute;
+	bottom: 75px;
+	border: none;
+	left: 37%;
+	box-shadow: -9px 25px 41px -33px rgba(0, 0, 0, 0.25);
+	/* z-index: 999; */
+	background-color: white !important;
+	border-radius: 10px;
+}
+
+.lastest-box {
+	border: none;
+	border-radius: 10px;
+	z-index: 2;
+}
+
+.boxTittle {
+	font-family: var(--main-font-regular);
+	font-size: 14px;
+	color: #1c3247;
+}
+
+.boxDetails {
+	font-family: var(--main-font-regular);
+	font-size: 16px;
+	color: black;
+}
+
+.freeCon {
+	display: flex;
+	justify-content: end;
+}
+
+/* modal */
+#modal {
+	background-color: transparent !important;
+	width: 100%;
+	margin: auto;
+	border: navajowhite;
+	overflow: auto;
+}
+
+@media (min-width: 280px) and (max-width: 390px) {
+	.br {
+		display: none;
+	}
+	.mainHeading{
+		color: #ffffffff !important;
+
+	}
+
+	#mainHeroContainer {
+		background: url("../../../../public/images/herosection/mobile-hero-img.webp");
+		width: 100% !important;
+		height: 500px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		position: relative;
+	}
+	.mainHeading div {
+		text-align: start !important;
+	}
+	.hr {
+		margin-left: 0 !important;
+		margin-right: auto;
+	}
+	.details p {
+
+		text-align: start;
+	}
+	.freeCon {
+		display: flex;
+		justify-content: start;
+	}
+	#mainHeroContainer:before {
+		content: '';
+		background: #0000005e;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.heroHeading{
+		position: relative;
+		top:150px;
+	}
+
+	.mainHeadingInner {
+		text-transform: uppercase;
+		font-family: var(--main-font-regular);
+		font-size: 25px !important;
+	}
+
+	.HeadingSm {
+		font-family: var(--main-font-regular);
+		font-size: 18px !important;
+	}
+	.HeadingBig {
+		font-family: var(--main-font-regular);
+		font-size: 18px !important;
+	}
+
+	.heroButton {
+		display: flex;
+		justify-content: center;
+	}
+}
+
+@media (min-width: 390px) and (max-width: 540px) {
+	.br {
+		display: none;
+	}
+	.mainHeading{
+		color: #ffffffff !important;
+
+	}
+
+	#mainHeroContainer {
+		background: url("../../../../public/images/herosection/mobile-hero-img.webp");
+		width: 100% !important;
+		height: 500px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		position: relative;
+	}
+	.mainHeading div {
+		text-align: start !important;
+	}
+	.hr {
+		margin-left: 0 !important;
+		margin-right: auto;
+	}
+	.details p {
+
+		text-align: start;
+	}
+	.freeCon {
+		display: flex;
+		justify-content: start;
+	}
+	#mainHeroContainer:before {
+		content: '';
+		background: #0000005e;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.heroHeading{
+		position: relative;
+		top:150px;
+	}
+
+	.mainHeadingInner {
+		text-transform: uppercase;
+		font-family: var(--main-font-regular);
+		font-size: 25px !important;
+	}
+
+	.HeadingSm {
+		font-family: var(--main-font-regular);
+		font-size: 20px !important;
+	}
+
+	.heroButton {
+		display: flex;
+		justify-content: center;
+	}
+	.HeadingBig {
+		font-family: var(--main-font-regular);
+		font-size: 18px !important;
+	}
+}
+
+@media (min-width: 540px) and (max-width: 600px) {
+	.HeadingBig {
+		font-family: var(--main-font-regular);
+		font-size: 30px !important;
+	}
+	.br {
+		display: none;
+	}
+	.mainHeading{
+		color: #ffffffff !important;
+
+	}
+
+	#mainHeroContainer {
+		background: url("../../../../public/images/herosection/mobile-hero-img.webp");
+		width: 100% !important;
+		height: 500px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		position: relative;
+	}
+	.mainHeading div {
+		text-align: start !important;
+	}
+	.hr {
+		margin-left: 0 !important;
+		margin-right: auto;
+	
+	}
+	.details p {
+
+		text-align: start;
+	}
+	.freeCon {
+		display: flex;
+		justify-content: start;
+	}
+	#mainHeroContainer:before {
+		content: '';
+		background: #0000005e;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.heroHeading{
+		position: relative;
+		top:150px;
+	}
+
+	.mainHeadingInner {
+		text-transform: uppercase;
+		font-family: var(--main-font-regular);
+		font-size: 25px !important;
+	}
+
+	.HeadingSm {
+		font-family: var(--main-font-regular);
+		font-size: 20px !important;
+	}
+
+	.heroButton {
+		display: flex;
+		justify-content: center;
+	}
+}
+
+@media (min-width: 600px) and (max-width: 991px) {
+	.HeadingBig {
+		font-family: var(--main-font-regular);
+		font-size: 30px !important;
+	}
+	.br {
+		display: none;
+	}
+	.mainHeading{
+		color: #ffffffff !important;
+
+	}
+
+	#mainHeroContainer {
+		background: url("../../../../public/images/herosection/tablet-hero-img.webp");
+		width: 100% !important;
+		height: 500px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		position: relative;
+	}
+	.mainHeading div {
+		text-align: start !important;
+	}
+	.hr {
+		margin-left: 0 !important;
+		margin-right: auto;
+		width: 50% !important;
+	}
+	.details p {
+
+		text-align: start;
+	}
+	.freeCon {
+		display: flex;
+		justify-content: start;
+	}
+	#mainHeroContainer:before {
+		content: '';
+		background: #0000005e;
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.heroHeading{
+		position: relative;
+		top:150px;
+	}
+
+	.mainHeadingInner {
+		text-transform: uppercase;
+		font-family: var(--main-font-regular);
+		font-size: 25px !important;
+	}
+
+	.HeadingSm {
+		font-family: var(--main-font-regular);
+		font-size: 20px !important;
+	}
+
+	.heroButton {
+		display: flex;
+		justify-content: center;
+	}
+
+}
+
+@media (min-width: 992px) and (max-width: 1050px) {
+	.HeadingBig {
+		font-family: var(--main-font-regular);
+		font-size: 28px !important;
+	}
+	#mainHeroContainer {
+		height: 600px !important;
+		width: 100% !important;
+		background-image: url("../../../../public/images/herosection/Elysion_landing_page.webp");
+		/* background-image: url("../../../../public/images/herosection/FInal_landing.webp"); */
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	.heroSectionImage {
+		width: 109% !important;
+	}
+
+	.EmbedMap {
+		position: absolute;
+		width: 100%;
+		border-radius: 30px;
+		width: 94% !important;
+	}
+
+	.box {
+		width: 314px !important;
+	}
+}
+
+@media (min-width: 1050px) and (max-width: 1100px) {
+	.HeadingBig {
+		font-family: var(--main-font-regular);
+		font-size: 30px !important;
+	}
+	.heroSectionImage {
+		width: 109% !important;
+	}
+	#mainHeroContainer {
+		height: 600px !important;
+		width: 100% !important;
+		background-image: url("../../../../public/images/herosection/Elysion_landing_page.webp");
+		/* background-image: url("../../../../public/images/herosection/FInal_landing.webp"); */
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+}
+
+@media (min-width: 1100px) and (max-width: 1400px) {
+	.HeadingBig {
+		font-family: var(--main-font-regular);
+		font-size: 32px !important;
+	}
+	
+	#mainHeroContainer {
+		height: 700px !important;
+		width: 100% !important;
+		background-image: url("../../../../public/images/herosection/Elysion_landing_page.webp");
+		/* background-image: url("../../../../public/images/herosection/FInal_landing.webp"); */
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+	
+}
+@media (min-width: 1400px) and (max-width: 1500px) {
+	.HeadingBig {
+		font-family: var(--main-font-regular);
+		font-size: 38px !important;
+	}
+	
+
+}
+@media (min-width: 1200px) and (max-width: 1300px) {
+
+	.heroSectionImage {
+		width: 100% !important;
+	}
+
+	.EmbedMap {
+		position: absolute;
+		width: 100%;
+		border-radius: 30px;
+		width: 88% !important;
+	}
+
+	.box {
+		width: 340px !important;
+		height: 0px !important;
+		position: absolute;
+		bottom: 75px;
+		border: none;
+		left: 0;
+		box-shadow: -9px 25px 41px -33px rgba(0, 0, 0, 0.25);
+		z-index: 2;
+		background-color: white !important;
+		border-radius: 10px;
+	}
+}
+
+@media (min-width: 1200px) and (max-width: 1300px) {
+	.heroSectionImage {
+		width: 100% !important;
+	}
+}
+
+@media (min-width: 200px) and (max-width: 375px) {
+	.heroSectionImage {
+		width: 100%;
+		height: 272px !important;
+		background-size: contain !important;
+		border-radius: 0px;
+	}
+
+	.HeroImageContainer {
+		height: 420px !important;
+		border-radius: 30px;
+	}
+
+	.box {
+		width: 100% !important;
+		height: 0px !important;
+		position: absolute;
+		bottom: 30px;
+		border: none;
+		left: 0;
+		box-shadow: -9px 25px 41px -33px rgba(0, 0, 0, 0.25);
+		background-color: white !important;
+		border-radius: 10px;
+	}
+
+	.box>#card {
+		border: none;
+		border-radius: 10px;
+		text-align: center;
+		padding: 20px;
+		margin-bottom: 20px;
+	}
+
+	.br {
+		display: none !important;
+	}
+
+	.rounded img {
+		width: 50px !important;
+		height: 50px !important;
+	}
+}
+
+@media (min-width: 375px) and (max-width: 600px) {
+	.heroSectionImage {
+		width: 100%;
+		height: 300px !important;
+		background-size: contain !important;
+	}
+
+	.HeroImageContainer {
+		height: 450px !important;
+		border-radius: 30px;
+	}
+
+	.box {
+		width: 100% !important;
+		height: 0px !important;
+		position: absolute;
+		bottom: 0px;
+		border: none;
+		left: 0;
+		box-shadow: -9px 25px 41px -33px rgba(0, 0, 0, 0.25);
+		background-color: white !important;
+		border-radius: 10px;
+	}
+
+	.box>#card {
+		border: none;
+		border-radius: 10px;
+		text-align: center;
+		padding: 20px;
+		margin-bottom: 20px;
+	}
+
+	.br {
+		display: none !important;
+	}
+
+	.rounded img {
+		width: 50px !important;
+		height: 50px !important;
+	}
+}

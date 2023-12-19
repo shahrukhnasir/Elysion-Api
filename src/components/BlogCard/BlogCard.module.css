@@ -1,0 +1,103 @@
+#frontCard {
+    width: 350px;
+    height: 350px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    background-color: #D9DCE6;
+    border-radius: 15px !important;
+    margin: 20px 10px;
+  }
+  
+  .cardImage {
+    width: 100%;
+    margin: auto;
+  
+  }
+  .img{
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+  }
+  .desc {
+    padding: 10px;
+  }
+  
+  .desc p {
+    font-family: var(--main-font-bold);
+    text-transform: capitalize;
+    font-size: 13px;
+    overflow-y: hidden;
+    height: 18px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  #backCard {
+    width: 350px;
+    height: 350px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background-color: #D9DCE6;
+    border-bottom-left-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+    border-top-left-radius: 15px !important;
+    border-top-right-radius: 15px !important;
+    margin: 20px 10px;
+  }
+  #backCard h6{
+    font-family: var(--main-font-bold);
+    text-transform: capitalize;
+    font-size: 15px;
+    padding: 10px;
+  }
+  .backDesc{
+    padding: 20px;
+    overflow-y: scroll;
+    height: 250px;
+  }
+  .backDesc p{
+    font-family: var(--main-font-regular);
+    text-transform: capitalize;
+    font-size: 15px;
+  }
+  .backDesc::-webkit-scrollbar {
+    width: 10px !important;
+    cursor: pointer;
+  }
+  
+  .backDesc::-webkit-scrollbar-track {
+    background: #D9DCE6 !important;
+    border-radius: 50px !important;
+    cursor: pointer;
+  }
+  
+  .backDesc::-webkit-scrollbar-thumb {
+    background-color: #1c3247;
+    border-radius: 50px !important;
+    height: 20px !important;
+    width: 100% !important;
+    border: 1px solid #D9DCE6;
+    cursor: pointer;
+  }
+  @media (max-width: 375px) {
+    #frontCard {
+      height: auto !important;
+      margin: auto !important;
+    }
+    
+  }
+  
+  @media (max-width: 992px) {
+    #frontCard {
+      margin:20px auto !important;
+    }
+    #backCard {
+      margin:20px auto !important;
+    }
+    
+  }

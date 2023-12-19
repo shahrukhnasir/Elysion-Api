@@ -1,0 +1,248 @@
+
+.AboutDesc {
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    color: #F3F2EE;
+    margin-bottom: 0px;
+}
+#filterCollection{
+    padding: 30px 0px;
+}
+#filterCollection > div{
+    font-size: 24px;
+    color: #000000;
+    font-family: "Poppins-SemiBold";
+    cursor: pointer;
+}
+
+.Desc {
+    font-family: var(--main-font-regular);
+    font-size: 13px;
+    color: black;
+    margin-bottom: 25px;
+    text-align: justify;
+    padding: 0px 50px 0px 0px;
+}
+
+
+.subContainer{
+    max-width: 1100px;
+    flex-direction: flex;
+    justify-content: center;
+}
+
+.subHeading{
+    font-family: var(--main-font-regular);
+    font-size: 25px;
+    color: #1B3146;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.para{
+    font-family: var(--main-font-regular);
+    font-size: 13px;
+    color: black;
+}
+/*  */
+.filterHeading{
+    color: #1c3247;
+    font-size: 35px;
+    font-family: var(--main-font-regular);
+    text-align: center;
+    text-transform: capitalize;
+
+}
+
+#filterIcon {
+    position: relative;
+    top: 10px;
+}
+#filterIcon img{
+    width: 24px;
+    height: 24px;
+}
+
+
+/* Select Filtered filed */
+.Label{
+    font-size: 12px;
+    font-family: var(--main-font-regular);
+    color: #000000;
+    }
+    .selectField {
+        border-radius: 51px;
+        padding: 13px 30px;
+        border: 2px solid #1c3247;
+        font-family: var(--main-font-regular);
+        color: #9D9D9D;
+        font-size: 14px;
+        margin-bottom: 12px;
+        background-color: #F9F9F9;
+    
+    }
+    .optionField{
+        border-radius: 51px;
+        background-color: #ffffff;
+        border: 2px solid #1c3247 !important;
+        font-family: var(--main-font-regular);
+        color: #9D9D9D;  
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+/* Select Filtered filed */
+
+.setShaowRight {
+    position: relative;
+    top: 170px;
+    left: 132%;
+
+}
+/*  */
+
+@media (min-width: 200px) and (max-width:768px){
+
+
+  
+    #filterIcon {
+        position: relative;
+        top: 35px !important;
+        left: 7px !important;
+    }
+    #filterIcon img{
+        width: 16px !important;
+        height: 16px !important;
+    }
+    #filterCollection> div {
+        font-size: 12px;
+        padding: 0px;
+        color: #000000;
+        font-family: "Poppins-SemiBold";
+        cursor: pointer;
+    }
+    #filterCollection {
+        padding: 10px 2px;
+    }
+}
+@media (min-width: 768px) and (max-width:992px){
+
+
+   
+    #filterIcon {
+        position: relative;
+        top: 35px !important;
+        left: 7px !important;
+    }
+    #filterIcon img{
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+}
+
+  @media (min-width: 992px) and (max-width:1050px){
+    .BackImgSection {
+        height: 400px;
+        width: 100% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 33px !important;
+        z-index: 2;
+    
+    }
+}
+
+  @media (min-width: 1050px) and (max-width:1100px){
+    .BackImgSection {
+        height: 400px;
+        width: 113% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 1px !important;
+        z-index: 2;
+    
+    }
+}
+
+
+  @media (min-width: 1100px) and (max-width:1150px){
+    .BackImgSection {
+        height: 400px;
+        width: 118% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 10px !important;
+        z-index: 2;
+    
+    }
+}
+
+@media (min-width: 1150px) and (max-width:1200px){
+    .BackImgSection {
+        height: 400px;
+        width: 114% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 45px !important;
+        z-index: 2;
+    
+    }
+}
+
+@media (min-width: 1200px) and (max-width:1250px){
+    .BackImgSection {
+    
+        height: 400px;
+        width: 100% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 53px !important;
+        z-index: 2;
+    
+    
+    }
+}
+@media (min-width: 1250px) and (max-width:1300px){
+    .BackImgSection {
+        height: 400px;
+        width: 112% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 0px !important;
+        z-index: 2;
+    
+    }
+}
+
+@media (min-width: 1300px) and (max-width:1350px){
+    .BackImgSection {
+        height: 400px;
+        width: 110% !important;
+        background-position: top;
+        background-repeat: no-repeat;
+        position: relative;
+        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 20px;
+        left: 42px !important;
+        z-index: 2;
+    
+    }
+}

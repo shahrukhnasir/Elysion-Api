@@ -1,0 +1,172 @@
+#ContactContainer {
+  border-top-right-radius: 30px;
+  border-top-left-radius: 30px;
+  background-color: #F9F9F9;
+}
+
+.mainHeading {
+  font-size: 40px;
+  font-family: var(--main-font-regular);
+  text-transform: capitalize;
+}
+
+.subHeading {
+  font-size: 35px;
+  font-family: var(--main-font-regular);
+  color: #1C3247;
+}
+
+.warning {
+  font-family: var(--main-font-regular);
+  color: rgb(207, 34, 34);
+  font-size: 12px;
+  padding: 0px 0px 12px 16px
+}
+
+.desc {
+  font-size: 14px;
+  color: black;
+  font-family: var(--main-font-regular);
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.GeneralButton {
+  color: #F3F2EE !important;
+  background-color: #1c3247;
+  width: 150px;
+  height: 45px;
+  border-radius: 25px;
+  border: none;
+  font-family: var(--main-font-regular);
+  font-size: 13px;
+}
+
+.loc_sec {
+  display: flex;
+  max-width: 500px;
+}
+
+.icon {
+  color: #1c3247;
+  width: 18px;
+}
+
+.points {
+  font-family: var(--main-font-regular);
+  font-size: 14px;
+  color: black;
+  padding: 5px 0;
+}
+
+.inputSection {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputField {
+  border-radius: 51px;
+  padding: 13px 30px;
+  border: 2px solid #1c3247;
+  font-family: var(--main-font-regular);
+  color: #9D9D9D;
+  font-size: 14px;
+  margin-bottom: 5px;
+  background-color: #F9F9F9;
+
+}
+
+.textArea {
+  border-radius: 20px;
+  padding: 13px 30px;
+  border: 2px solid #1c3247;
+  font-family: var(--main-font-regular);
+  color: #9D9D9D;
+  font-size: 14px;
+  background-color: #F9F9F9;
+}
+
+.rightSection {
+  padding: 75px 80px 0px 0px;
+}
+
+@media (min-width: 280px) and (max-width: 390px) {
+  .mainHeading {
+    font-size: 25px;
+    text-align: start;
+  }
+
+  .rightSection {
+    padding: 0px;
+    text-align: center;
+  }
+
+  .subHeading {
+    font-size: 25px;
+    text-align: start;
+    padding: 0px;
+  }
+
+  .desc {
+    text-align: justify;
+  }
+
+  .inputField {
+    margin-bottom: 15px !important;
+  }
+
+  #secoundRow {
+    padding: 0px !important;
+  }
+
+  #form {
+    padding: 1rem !important;
+  }
+
+
+}
+
+@media (min-width: 390px) and (max-width: 540px) {
+  .mainHeading {
+    font-size: 25px;
+    text-align: start;
+  }
+
+  #form {
+    padding: 1rem !important;
+  }
+
+  .rightSection {
+    padding: 0px;
+    text-align: center;
+  }
+
+  .subHeading {
+    font-size: 25px;
+    text-align: start;
+    padding: 0px;
+  }
+
+  .desc {
+    text-align: justify;
+  }
+
+  .inputField {
+    margin-bottom: 10px !important;
+  }
+
+  #secoundRow {
+    padding: 0px !important;
+  }
+}
+
+@media (min-width: 786px)and (max-width:992px) {
+  .inputField {
+    margin-bottom: 20px !important;
+
+  }
+
+  #secoundRow {
+    padding: 0px !important;
+  }
+}

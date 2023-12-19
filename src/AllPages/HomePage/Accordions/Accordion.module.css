@@ -1,0 +1,100 @@
+.mainHeading{
+    font-family: var(--main-font-regular);
+    font-size: 40px;
+    color: #1C3247;
+    margin-top: 60px;
+    padding-bottom: 20px;
+}
+
+#minWidth{
+  width: 100%;
+}
+.topTitle{
+    font-family: var(--main-font-regular);
+    font-size: 14px;
+    color: #1C3247;
+}
+.accordionBtn{
+    font-family: var(--main-font-regular);
+    font-size: 24px;
+    color: #0A3029;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #0A3029;
+}
+.accordionBtn :focus{
+    color: #0A3029;
+    border: none;
+    background-color: white;
+}
+.innerAccodion{
+    background-color: #0A3029;
+}
+.AccBody{
+    background-color: transparent!important;
+    border-bottom: 0px;
+    padding: 20px;
+}
+.desc{
+    font-family: var(--main-font-regular);
+    font-size: 16px;
+    color: #1c3247;
+}
+/* .accordionBtn::after{
+
+    background: url('./images/arrow.png');
+    background-repeat: no-repeat;
+
+
+} */
+
+.accordionitem:focus{
+  outline: none !important;
+  color: black !important;
+  
+  box-shadow: none !important;
+  border-color: rgba(0,0,0,.125);
+}
+
+.accordionitem:active{
+        box-shadow: none !important;
+        border-color: rgba(0,0,0,.125);
+  }
+
+
+  @media (min-width: 280px) and (max-width: 390px) {
+    .mainHeading{
+        font-size: 22px;
+       }
+    #mainSection{
+        text-align: justify !important;
+    }
+       .topTitle {
+        color: #000000;
+        font-family: var(--main-font-regular);
+        font-size: 12px;
+        text-align: justify !important;
+    }
+
+    .accordionBtn{
+        font-size: 14px !important;
+    }
+   
+  }
+  @media (min-width: 390px) and (max-width: 540px) {
+   .mainHeading{
+    font-size: 25px;
+   }.accordionitem:active
+   #mainSection{
+    text-align: justify !important;
+}
+   .topTitle {
+    color: #000000;
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    text-align: justify;
+}
+
+.accordionBtn{
+    font-size: 14px !important;
+}
+  }

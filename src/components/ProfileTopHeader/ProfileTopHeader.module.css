@@ -1,0 +1,23 @@
+.ProfileTopSection {
+    background-color: #EEEEEE;
+    height: 120px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+
+
+}
+
+.Title{
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Title >h2{
+    font-family: var(--main-font-regular);
+    color: #1C3247;
+    font-size: 26px;
+}

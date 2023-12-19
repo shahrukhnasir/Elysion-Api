@@ -1,0 +1,155 @@
+
+
+.FormSectionImage {
+    width: 115%;
+}
+
+
+
+.FormHeading {
+    font-family: var(--main-font-regular);
+    font-size: 40px;
+    color: #1c3247;
+    padding-top: 100px;
+    padding-bottom: 10px;
+    text-transform: capitalize;
+}
+
+.FormDesc {
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    color: #030606;
+    margin-bottom: 20px;
+}
+
+.eyeIconContainer {
+    display: flex;
+    position: relative;
+}
+
+.eyeIcon {
+    position: absolute;
+    top: 6px;
+    right: 23px;
+    font-size: 20px;
+    color: #9D9D9D;
+}
+
+.labelCheckBox {
+    font-size: 12px;
+    font-family: var(--main-font-regular);
+    color: #000;
+}
+
+.FromBtn>button {
+    width: 100% !important;
+    height: 46px !important;
+    font-family: var(--main-font-regular);
+}
+.warning{
+    font-family: var(--main-font-regular);
+    color: rgb(207, 34, 34);  
+    font-size: 12px;
+    padding: 0px 0px 15px 16px
+}
+
+.FormLink {
+    color: #1c3247;
+    font-family: "Poppins-Medium";
+    font-size: 13px;
+    padding: 0px 5px;
+}
+
+
+
+.Desc {
+    font-family: var(--main-font-regular);
+    font-size: 13px;
+    color: black;
+    margin-bottom: 25px;
+    text-align: justify;
+    padding: 0px 50px 0px 0px;
+}
+
+
+.labelCheckBox {
+    font-size: 13px;
+    font-family: var(--main-font-regular);
+    color: #000;
+    padding: 0px 0px 10px 0px;
+}
+.forgatPawd{
+    font-size: 13px;
+    font-family: var(--main-font-regular);
+    color: #000;
+    padding: 0px 0px 10px 0px; 
+}
+
+.inputSection {
+    display: flex;
+    justify-content: space-between;
+}
+
+.inputField::placeholder{
+    color: #9D9D9D !important;
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+}
+.inputField {
+    border-radius: 51px;
+    padding: 13px 30px;
+    border: 2px solid #1c3247;
+    font-family: var(--main-font-regular);
+    color: #9D9D9D;
+    font-size: 14px;
+    margin-bottom: 12px;
+    background-color: #F9F9F9;
+
+}
+
+.textArea {
+    border-radius: 20px;
+    padding: 13px 30px;
+    border: 2px solid #1c3247;
+    font-family: var(--main-font-regular);
+    color: #9D9D9D;
+    font-size: 14px;
+    background-color: #F9F9F9;
+}
+
+/*Shadow  */
+.setShaowRight {
+    position: relative;
+    top: 600px;
+    left: 116%; 
+
+}
+@media (min-width: 200px) and (max-width:992px) {
+  
+
+    .FormSectionImage {
+        width: 100% !important;
+    }
+
+    .FormHeading {
+        font-size: 25px !important;
+        text-align: center !important;
+        padding-top: 40px !important;
+
+    }
+    .FormDesc {
+        font-size: 12px;
+        text-align: center !important;
+
+    }
+    #form_Section{
+        padding: 5px !important;
+
+    }
+
+    .py-5{
+        padding: 10px;
+    }
+}
+
+

@@ -1,0 +1,28 @@
+/* Select Flied */
+
+.Label{
+    font-size: 12px;
+    font-family: var(--main-font-regular);
+    color: #000000;
+    }
+    .selectField {
+        border-radius: 51px;
+        padding: 13px 30px;
+        border: 2px solid #1c3247;
+        font-family: var(--main-font-regular);
+        color: #9D9D9D;
+        font-size: 12px;
+        margin-bottom: 12px;
+        background-color: #F9F9F9;
+    
+    }
+    .optionField{
+        border-radius: 51px;
+        background-color: #ffffff;
+        border: 2px solid #1c3247 !important;
+        font-family: var(--main-font-regular);
+        color: #9D9D9D;  
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+    /* Select Flied */

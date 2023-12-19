@@ -1,0 +1,82 @@
+.LightButton > button{
+    background-color: #F3F2ED !important;
+    color:  #1c3247 !important;
+    width: 150px;
+    height: 42px;
+    border-radius: 25px;
+    border: none;
+    font-family: var(--main-font-regular); 
+    font-size: 13px;
+    transform: translateY(0rem);
+}
+
+
+.LightButton> button:hover{
+    background:  #ffff !important;
+    color: #1c3247 !important;
+    border: 1px solid  #1c3247 !important;
+    width: 150px;
+    height: 42px;
+    border-radius: 25px;
+    border: none;
+    font-family: var(--main-font-regular); 
+    font-size: 13px;
+    overflow: hidden;
+}
+
+/* 
+@media (min-width: 200px) and (max-width: 992px) {
+    .LightButton > button{
+        background:  #F3F2ED !important;
+        color: #1c3247 !important;
+        border: 1px solid  #1c3247 !important;
+        width: 150px;
+        height: 42px;
+        border-radius: 25px;
+        border: none;
+        font-family: var(--main-font-regular); 
+        font-size: 10px;
+        transform: translateY(0rem);
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1030px) {
+    .LightButton > button{
+        background:  #1c3247 !important;
+        color: #F3F2ED !important;
+        width: 90px;
+        height: 42px;
+        border-radius: 25px;
+        border: none;
+        font-family: var(--main-font-regular); 
+        font-size: 10px;
+        transform: translateY(0rem);
+    }
+}
+@media (min-width: 1030px) and (max-width: 1075px) {
+    .LightButton > button{
+        background:  #1c3247 !important;
+        color: #F3F2ED !important;
+        width: 120px;
+        height: 42px;
+        border-radius: 25px;
+        border: none;
+        font-family: var(--main-font-regular); 
+        font-size: 12px;
+        transform: translateY(0rem);
+    }
+}
+
+@media (min-width: 1075px) and (max-width: 1140px) {
+    .LightButton > button{
+        background:  #1c3247 !important;
+        color: #F3F2ED !important;
+        width: 120px;
+        height: 42px;
+        border-radius: 25px;
+        border: none;
+        font-family: var(--main-font-regular); 
+        font-size: 13px;
+        transform: translateY(0rem);
+    }
+} */

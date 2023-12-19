@@ -1,0 +1,303 @@
+.AboutTopSection {
+  background-color: #1c3247;
+  height: 400px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  position: relative;
+  bottom: 20px;
+}
+
+.mainHeading {
+  font-family: var(--main-font-regular);
+  font-size: 40px;
+  color: white;
+  padding-top: 120px;
+  padding-bottom: 20px;
+}
+
+.AboutDesc {
+  font-family: var(--main-font-regular);
+  font-size: 12px;
+  color: white;
+  margin-bottom: 0px;
+}
+
+.Desc {
+  font-family: var(--main-font-regular);
+  font-size: 13px;
+  color: black;
+  margin-bottom: 25px;
+  text-align: justify;
+  padding: 0px 50px 0px 0px;
+}
+
+.BackImgSection {
+  height: 400px;
+  width: 110%;
+  background: url("/images/FreeConsultation.png");
+  background-position: top;
+  background-repeat: no-repeat;
+  position: relative;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  left: 80px;
+  z-index: 2;
+}
+.labelCheckBox {
+  font-size: 13px;
+  font-family: var(--main-font-regular);
+  color: black;
+}
+
+.inputSection {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputField {
+  border-radius: 51px;
+  padding: 13px 30px;
+  border: 2px solid #1c3247;
+  font-family: var(--main-font-regular);
+  color: #9d9d9d;
+  font-size: 14px;
+  margin-bottom: 5px;
+  background-color: #f9f9f9;
+}
+.textArea {
+  border-radius: 20px;
+  padding: 13px 30px;
+  border: 2px solid #1c3247;
+  font-family: var(--main-font-regular);
+  color: #9d9d9d;
+  font-size: 14px;
+  background-color: #f9f9f9;
+}
+
+/* Select Flied */
+.Label {
+  font-size: 12px;
+  font-family: var(--main-font-regular);
+  color: black;
+}
+.selectField {
+  border-radius: 51px;
+  padding: 13px 30px;
+  border: 2px solid #1c3247;
+  font-family: var(--main-font-regular);
+  color: #9d9d9d;
+  font-size: 14px;
+  margin-bottom: 12px;
+  background-color: #f9f9f9;
+}
+.optionField {
+  border-radius: 51px;
+  background-color: #ffffff;
+  border: 2px solid #1c3247 !important;
+  font-family: var(--main-font-regular);
+  color: #9d9d9d;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+/* Select Flied */
+
+/* Card  */
+.card {
+  border: none;
+}
+.cardTitle {
+  font-family: var(--main-font-regular);
+  font-size: 25px;
+  color: black;
+}
+
+.textMuted {
+  color: #9d9d9d;
+  font-family: var(--main-font-regular);
+  font-size: 12px;
+  padding: 2px 0px;
+  margin: 0px;
+}
+.outlineButton > button {
+  background: transparent;
+  color: black;
+  width: 230px;
+  height: 42px;
+  border-radius: 25px;
+  border: 1px solid #1c3247;
+  font-family: var(--main-font-regular);
+  font-size: 13px;
+  margin: 5px 0px;
+}
+
+/* Card */
+
+@media (min-width: 280px) and (max-width: 390px) {
+  .br{
+      display: none !important;
+  }
+  .mainHeading {
+    font-family: var(--main-font-regular);
+    font-size: 25px;
+    color: white;
+    padding-top: 50px;
+    padding-bottom: 20px;
+  }
+  .inputField {
+    margin-bottom: 15px !important;
+
+}
+}
+@media (min-width: 390px) and (max-width: 540px) {
+  .br{
+    display: none !important;
+}
+.inputField {
+  margin-bottom: 15px !important;
+
+}
+.mainHeading {
+  font-family: var(--main-font-regular);
+  font-size: 25px;
+  color: white;
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+}
+
+
+
+@media (min-width: 200px) and (max-width: 992px) {
+  .BackImgSection {
+    height: 400px;
+    width: 100% !important;
+    background: url("/images/FreeConsultation.png");
+    background-position: top;
+    background-repeat: no-repeat;
+    position: relative;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    left: 0px !important;
+    z-index: 2;
+    margin: 50px 0px;
+  }
+
+  .AboutTopSection {
+    background-color: #1c3247;
+    height: 100%;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+  }
+  .inputField {
+    margin-bottom: 15px !important;
+
+}
+}
+
+@media (min-width: 992px) and (max-width: 1050px) {
+  .BackImgSection {
+    height: 400px;
+    width: 100% !important;
+    background: url("/images/FreeConsultation.png");
+    background-position: top;
+    background-repeat: no-repeat;
+    position: relative;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    left: 33px !important;
+    z-index: 2;
+  }
+}
+
+@media (min-width: 1050px) and (max-width: 1100px) {
+  .BackImgSection {
+    height: 400px;
+    width: 113% !important;
+    background: url("/images/FreeConsultation.png");
+    background-position: top;
+    background-repeat: no-repeat;
+    position: relative;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    left: 1px !important;
+    z-index: 2;
+  }
+}
+
+@media (min-width: 1100px) and (max-width: 1150px) {
+  .BackImgSection {
+    height: 400px;
+    width: 118% !important;
+    background: url("/images/FreeConsultation.png");
+    background-position: top;
+    background-repeat: no-repeat;
+    position: relative;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    left: 10px !important;
+    z-index: 2;
+  }
+}
+
+@media (min-width: 1150px) and (max-width: 1200px) {
+  .BackImgSection {
+    height: 400px;
+    width: 114% !important;
+    background: url("/images/FreeConsultation.png");
+    background-position: top;
+    background-repeat: no-repeat;
+    position: relative;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    left: 45px !important;
+    z-index: 2;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1250px) {
+  .BackImgSection {
+    height: 400px;
+    width: 100% !important;
+    background: url("/images/FreeConsultation.png");
+    background-position: top;
+    background-repeat: no-repeat;
+    position: relative;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    left: 53px !important;
+    z-index: 2;
+  }
+}
+@media (min-width: 1250px) and (max-width: 1300px) {
+  .BackImgSection {
+    height: 400px;
+    width: 112% !important;
+    background: url("/images/FreeConsultation.png");
+    background-position: top;
+    background-repeat: no-repeat;
+    position: relative;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    left: 0px !important;
+    z-index: 2;
+  }
+}
+
+@media (min-width: 1300px) and (max-width: 1350px) {
+  .BackImgSection {
+    height: 400px;
+    width: 110% !important;
+    background: url("/images/FreeConsultation.png");
+    background-position: top;
+    background-repeat: no-repeat;
+    position: relative;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    left: 42px !important;
+    z-index: 2;
+  }
+}

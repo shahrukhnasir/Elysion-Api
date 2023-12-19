@@ -1,0 +1,167 @@
+
+.cardBody {
+    background-color: #E5E5E5;
+    border-radius: 12px;
+    padding: 20px 30px;
+    text-align: center;
+    overflow: hidden; 
+
+  }
+.carTitle {
+    font-family: var(--main-font-regular);
+    font-size: 18px !important;
+    color: #1c3247;
+  }
+  .flipcardfront {
+    background-color: #E5E5E5;
+    color: #1c3247;
+    height: 100%;
+    border-radius: 20px !important;
+  }
+   
+  .pricingListOverFlow {
+    height: 210px !important;
+    /* overflow-y: scroll; */
+  }
+  .pricingListOverFlow li{
+    font-size: 14px;
+    text-align: start;
+
+  }
+  .SubTitle {
+    font-family: var(--main-font-regular);
+    font-size: 10px !important;
+    color: #1c3247;
+  }
+
+  .card3SmText {
+    font-family: var(--main-font-regular);
+    font-size: 18px !important;
+    color: #1c3247;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+  }
+
+  
+.BigText {
+  font-family: var(--main-font-semibold);
+    font-size: 60px !important;
+    color: #1c3247;
+  }
+  .pricingListOverFlow {
+    list-style-image: url('../../../../public/images/plus.png');
+    padding: 0px;
+    text-align: start;
+    padding: 20px;
+    overflow-y: scroll;
+    height: 200px;
+  
+  }
+
+  /* label */
+
+  .label {
+    z-index: 999 !important;
+    position: relative;
+    top: 18px;
+    left: -92px;
+    width: 220px;
+    background: #1c3247;
+    color: white;
+    padding: 7px;
+    transform: rotate3d(-2, 5, 13, 304deg);
+    font-family: "Poppins-Regular";
+    font-size: 16px;
+  }
+  .lightBtn >button{
+    background-color: #1c3247;
+    color: white;
+  }
+  .labelBlue {
+    z-index: 999 !important;
+    position: relative;
+    top: 18px;
+    left: -92px;
+    width: 220px;
+    background: #575755;
+    color: #1c3247;
+    padding: 7px;
+    transform: rotate3d(-2, 5, 13, 304deg);
+    font-family: "Poppins-Regular";
+    font-size: 16px;
+  }
+  
+  .pricingListOverFlow::-webkit-scrollbar {
+    width: 10px !important;
+  }
+  
+  .pricingListOverFlow::-webkit-scrollbar-track {
+    background: #d1d1d1 !important;
+    border-radius: 50px !important;
+  }
+  
+  .pricingListOverFlow::-webkit-scrollbar-thumb {
+    background-color: #1c3247;
+    border-radius: 50px !important;
+    height: 150px !important;
+    width: 100% !important;
+    border: 1px solid #d1d1d1;
+  }
+
+  @media (min-width: 200px) and (max-width: 300px) {
+    .card3SmText {
+      font-family: var(--main-font-regular);
+      font-size: 18px !important;
+      color: #1c3247;
+      position: absolute;
+      top: 24%;
+      left: 10%;
+    }
+  }
+  @media (min-width: 300px) and (max-width: 350px) {
+  
+    .card3SmText {
+      font-family: var(--main-font-regular);
+      font-size: 18px !important;
+      color: #1c3247;
+      position: absolute;
+      top: 20%;
+      left: 18%;
+    }
+  }
+  
+  @media (min-width: 350px) and (max-width: 540px) {
+  
+    .card3SmText {
+      font-family: var(--main-font-regular);
+      font-size: 18px !important;
+      color: #1c3247;
+      position: absolute;
+      top: 20%;
+      left: 24%;
+    }
+  }
+  
+  @media (min-width: 992px) and (max-width:1100px){
+  
+    .card3SmText {
+      font-family: var(--main-font-regular);
+      font-size: 18px !important;
+      color: #1c3247;
+      position: absolute;
+      top: 24%;
+      left: 18%;
+    }
+  }
+  
+  @media (min-width: 1100px) and (max-width:1600px){
+    .card3SmText {
+      font-family: var(--main-font-regular);
+      font-size: 18px !important;
+      color: #1c3247;
+      position: absolute;
+      top: 24%;
+      left: 24%;
+    }
+  }

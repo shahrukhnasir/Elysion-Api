@@ -1,0 +1,55 @@
+.card {
+    max-width: 345px;
+    height: 378px;
+    border-radius: 14px;
+    border: 1px solid #bebebe !important;
+    margin: 18px 0px;
+    overflow: hidden;
+}
+
+
+.cardBody {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    padding: 15px 25px;
+}
+
+.carTitle {
+    font-family: var(--main-font-regular);
+    font-size: 17px !important;
+    color: #1c3247;
+    width: 113px !important;
+    word-wrap: break-word; 
+
+}
+.cardPrice{
+    font-family: var(--main-font-regular);
+    font-size: 17px !important;
+    color: #1c3247;
+    text-align: end;
+}
+.cardDesc {
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    color: #000000;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.learnMore {
+    text-decoration: none !important;
+    color: #1c3247;
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    padding-top: 20px;
+
+}
+.linkBtn {
+    text-decoration: none;
+}
+
+.viewBtn {
+    display: flex;
+    margin-left: 74%;
+
+}

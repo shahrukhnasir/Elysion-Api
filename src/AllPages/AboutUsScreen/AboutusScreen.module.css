@@ -1,0 +1,179 @@
+
+
+.Desc {
+    font-family: var(--main-font-regular);
+    font-size: 15px;
+    color: white;
+    color: rgb(255, 255, 255);
+    margin-bottom: 25px;
+    text-align: justify;
+    padding: 20px 18px 0px 0px;
+}
+.learnMore button{
+margin-top: 20px;
+
+}
+.DocSection {
+    position: relative;
+    width: 740px;
+    height: 517px;
+    right: 60px;
+    top: 80px;
+}
+
+.BlueSection {
+    background-color: #575755;
+    padding: 60px 115px 60px 145px;
+    margin-bottom: 0 !important; 
+    height: 400px;
+}
+
+.BlueHeading {
+    color: white;
+    font-family: var(--main-font-regular);
+    font-size: 36px;
+}
+
+.BlueText {
+    color: white;
+     font-family: var(--main-font-regular);
+    font-size: 12px;
+}
+
+.GraySection {
+    background-color: #F6F6F6;
+    padding: 60px 245px 60px 70px;
+    margin-bottom: 0 !important;
+    height: 400px;
+}
+
+.GrayHeading {
+    color: #1c3247;
+    font-family: var(--main-font-regular);
+    font-size: 36px;
+}
+
+.GaryText {
+    color: #000000;
+     font-family: var(--main-font-regular);
+    font-size: 12px;
+}
+
+
+  .setShaowRight{
+    position: relative;
+    top: 35px;
+    left: 118%;
+  
+  }
+
+
+@media (min-width: 200px) and (max-width: 768px) {
+
+    .DocSection {
+        position: relative;
+        width: 100% !important;
+        height: 517px;
+        right: 0px;
+        top: 44px;
+    }
+
+    .TeamCard>img {
+        width: 100% !important;
+    }
+
+    .BlueSection {
+        padding:20px !important;
+    }
+
+    .GraySection {
+        padding:20px !important;
+    }
+
+   
+
+    .Desc{
+        padding: 10px !important;
+        font-size: 12px;
+        text-align: start   !important;
+    }
+    .BackImgSection{
+        display: none !important;
+
+    }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .DocSection {
+        position: relative;
+        width: 100% !important;
+        height: 517px;
+        right: 0px;
+        top: 60px;
+    }
+
+    .TeamCard>img {
+        width: 100% !important;
+    }
+
+    .BlueSection {
+        padding:20px !important;
+    }
+
+    .GraySection {
+        padding:20px !important;
+    }
+
+    
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    .DocSection {
+        position: relative;
+        width: 100% !important;
+        height: 517px;
+        right: 0px;
+        top: 80px;
+    }
+
+    .TeamCard>img {
+        width: 100% !important;
+    }
+
+    .BlueSection {
+          padding:20px !important;
+    }
+
+    .GraySection {
+          padding:20px !important;
+    }
+
+   
+    
+}
+
+
+@media (min-width: 1200px) and (max-width: 1300px) {
+    .DocSection {
+        position: relative;
+        width: 100% !important;
+        height: 517px;
+        right: 0px;
+        top: 80px;
+    }
+
+    .TeamCard>img {
+        width: 100% !important;
+    }
+
+    .BlueSection {
+          padding:20px !important;
+    }
+
+    .GraySection {
+          padding:20px !important;
+    }
+
+    
+    
+}

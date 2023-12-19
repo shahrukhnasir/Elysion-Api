@@ -1,0 +1,173 @@
+.mainSection{
+    display: flex;
+    justify-content: center;
+    max-width: 550px;
+}
+
+/* Card */
+.cardTopHeading {
+    font-size: 22px;
+    font-family: var(--main-font-regular);
+    color: #1C3247;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+.card {
+    background-color: #F9F9F9;
+    max-width: 512px;
+    height: 280px;
+    border: 2px solid #1c3247;
+    border-radius: 20px;
+    padding: 30px 40px;
+
+}
+
+.cardTitle {
+    font-size: 13px;
+    font-family: "Poppins-Regular";
+    color: #1B3146;
+    text-transform: uppercase;
+    padding-bottom: 15px;
+}
+
+.cardDetail {
+    font-size: 13px;
+    font-family: "Poppins-Regular";
+    color: #9AA3AC;
+    text-align: end;
+
+}
+
+.cardPara {
+    font-size: 15px;
+    font-family: "Poppins-Regular";
+    color: black;
+}
+
+.cardTextBlue {
+    font-size: 18px;
+    font-family: "Poppins-Medium";
+    color: #1c3247;
+    padding-top: 10px;
+}
+
+.cardLastPrice {
+    padding-top: 10px;
+    font-size: 16px;
+    font-family: var(--main-font-regular);
+    color: #1B3146;
+    text-transform: uppercase;
+    text-align: end;
+}
+
+.cardPara {
+    font-size: 13px;
+    font-family: "Poppins-Regular";
+    color: black;
+    padding-bottom: 10px;
+}
+
+/* Card */
+
+.confirmBtn >button{
+    width: 100% !important;
+
+}
+
+/* alert */
+
+.alert{
+    background-color: #F6F5F9;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 10px;
+}
+
+.alertText{
+    color: #676C97;
+    font-size: 12px;
+    font-family: "Poppins-Regular";
+    display: flex;
+    align-items: center;
+
+}
+
+.alertImage> img{
+width: 22px;
+height:22px;
+}
+
+@media (min-width: 200px) and (max-width: 540px) {
+
+
+    .card {
+        height: 360px  !important;
+        max-width: 100%  !important;
+        padding: 20px 15px !important;
+}
+.cardDetail {
+    font-size: 13px;
+    font-family: "Poppins-Regular";
+    color: #9AA3AC;
+    text-align: start;
+    padding-left: 10px;
+}
+.cardTitle{
+    padding-bottom: 3px;
+}
+.cardLastPrice{
+    padding-top: 10px;
+    font-size: 16px;
+    font-family: var(--main-font-regular);
+    color: #1B3146;
+    text-transform: uppercase;
+    text-align: start;
+}
+
+.cardTopHeading {
+ 
+    text-align: start;
+}
+}
+@media (min-width: 540px) and (max-width: 786px) {
+
+
+    .card {
+        height: 400px  !important;
+        max-width: 100%  !important;
+}
+.cardDetail {
+    font-size: 13px;
+    font-family: "Poppins-Regular";
+    color: #9AA3AC;
+    text-align: start;
+    padding-left: 10px;
+}
+.cardTitle{
+    padding-bottom: 3px;
+}
+.cardLastPrice{
+    padding-top: 10px;
+    font-size: 16px;
+    font-family: var(--main-font-regular);
+    color: #1B3146;
+    text-transform: uppercase;
+    text-align: start;
+}
+
+.cardTopHeading {
+ 
+    text-align: start;
+}
+}
+@media (min-width: 200px) and (max-width: 992px) {
+
+
+    .card {
+        height: 400px !important;
+        max-width: 100%  !important;
+}
+
+}

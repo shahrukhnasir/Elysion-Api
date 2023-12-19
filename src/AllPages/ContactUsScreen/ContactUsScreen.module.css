@@ -1,0 +1,348 @@
+.AboutTopSection {
+    background-color: #575755;
+    height: 331px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+
+
+}
+.GeneralButton {
+    color:#F3F2EE  !important;
+    background-color: #1c3247;
+    width: 150px;
+    height: 45px;
+    border-radius: 25px;
+    border: none;
+    font-family: var(--main-font-regular);
+    font-size: 13px;
+  }
+  
+.warning {
+    font-family: var(--main-font-regular);
+    color: rgb(207, 34, 34);
+    font-size: 12px;
+    padding: 0px 0px 12px 16px
+  }
+.mainHeading {
+    font-family: var(--main-font-regular);
+    font-size: 40px;
+    color: #f6f6f6;
+    padding-top: 120px;
+    padding-bottom: 20px;
+}
+
+.AboutDesc {
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    color: #f6f6f6;
+    margin-bottom: 0px;
+    max-width: 470px;
+}
+
+.Desc {
+    font-family: var(--main-font-regular);
+    font-size: 13px;
+    color: black;
+    margin-bottom: 25px;
+    text-align: justify;
+    padding: 0px 50px 0px 0px;
+}
+
+.DocSection {
+    position: relative;
+    width: 740px;
+    height: 517px;
+    right: 24px;
+    top: 128px;
+}
+
+.BlueSection {
+    background-color: #575755;
+    padding: 60px 115px 60px 145px;
+    margin-bottom: 30px;
+}
+
+.BlueHeading {
+    color: #f6f6f6;
+    font-family: var(--main-font-regular);
+    font-size: 36px;
+}
+
+.BlueText {
+    color: #f6f6f6;
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+}
+
+.GraySection {
+    background-color: #F6F6F6;
+    padding: 60px 245px 60px 70px;
+    margin-bottom: 30px;
+
+}
+
+.GrayHeading {
+    color: #1c3247;
+    font-family: var(--main-font-regular);
+    font-size: 36px;
+}
+
+.GaryText {
+    color: #000000;
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+}
+
+
+
+
+/* form card  */
+
+.form_Section{
+
+    background-color: #F3F2EE;
+    border: 1px solid #575755;
+    border-radius: 15px;
+    padding: 40px 30px;
+    max-width: 580px;
+    box-sizing: border-box;
+}
+.inputField{
+    border-radius: 51px;
+    padding: 13px 30px;
+    border: 2px solid #1c3247;
+    font-family: var(--main-font-regular);
+    color: #9D9D9D;
+    font-size: 14px;
+    margin-bottom: 5px;
+    background-color:#F9F9F9 ;
+
+  }
+  .textArea{
+    border-radius: 20px;
+    padding: 13px 30px;
+    border: 2px solid #1c3247;
+    font-family: var(--main-font-regular);
+    color: #9D9D9D;
+    font-size: 14px;
+    background-color:#F9F9F9;
+  }
+
+/* form card  */
+
+/*  */
+.textBlue{
+font-family:"Poppins-Regular";
+font-size: 14px;
+color: #1c3247;
+}
+.soclIcon{
+    width: 17px;
+    margin: 0px 7px 0px 0px;
+}
+
+.findUs{
+    color: #1c3247;
+    font-family: var(--main-font-regular);
+    font-size: 36px;
+}
+.mapContainer{
+    max-width: 1100px;
+}
+
+.google_map {
+    /* padding-bottom: 50%; */
+    position: relative;
+    max-width: 1050px;
+    height: 400px;
+    margin: 30px 0px 80px 0px;
+}
+
+.google_map iframe {
+    height: 100%;
+    width: 100%;
+    /* left: 80px;
+    top: 0;
+    position: absolute; */
+    margin: auto !important;
+    border-radius: 10px;
+}
+/* Media qury */
+@media (min-width: 200px) and (max-width: 992px) {
+    .form_Section{
+        max-width: 800px !important;
+    }
+    .google_map iframe {
+        height: 100%;
+        width: 100%;
+        left: 0px;
+        top: 0;
+        position: absolute;
+        border-radius: 10px;
+    }
+
+    .DocSection {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        right: 0px;
+        top: 30px;
+    
+}
+
+.AboutTopSection {
+    background-color: #1c3247;
+    height: 100%;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+}
+
+.mainHeading {
+    padding-top: 50px;
+    padding-bottom: 10px;
+    font-size: 25px !important;
+}
+
+
+
+.Desc {
+    padding: 0px !important;
+}
+
+.textBlue{
+    font-size: 12px !important;
+
+    }
+
+    .row .py-3{
+        padding: 0px !important;
+    }
+    .inputField{
+        margin-bottom: 20px;
+
+    }
+
+    .google_map {
+        margin: 20px 0px 20px 0px;
+    }
+}
+
+@media (min-width: 993px) and (max-width: 1100px) {
+    .form_Section{
+        max-width: 800px !important;
+    }
+
+    .google_map iframe {
+        height: 100%;
+        width: 100%;
+        left: 0px;
+        top: 0;
+        position: absolute;
+        border-radius: 10px;
+    }
+    .DocSection {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        right: 24px;
+        top: 128px;
+    
+}
+
+.AboutTopSection {
+    background-color: #1c3247;
+    height: 100%;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+}
+
+
+}
+
+
+@media (min-width: 1100px) and (max-width: 1200px) {
+    .form_Section{
+        max-width: 800px !important;
+    }
+    .google_map iframe {
+        height: 100%;
+        width: 100%;
+        left: 0px;
+        top: 0;
+        position: absolute;
+        border-radius: 10px;
+    }
+
+    .DocSection {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        right: 24px;
+        top: 128px;
+    
+}
+
+.AboutTopSection {
+    background-color: #1c3247;
+    height: 100%;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+}
+
+
+}
+
+@media (min-width: 1200px) and (max-width: 1300px) {
+    .form_Section{
+        max-width: 800px !important;
+    }
+    .google_map iframe {
+        height: 100%;
+        width: 100%;
+        left: 0px;
+        top: 0;
+        position: absolute;
+        border-radius: 10px;
+    }
+
+    .DocSection {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        right: 24px;
+        top: 128px;
+    
+}
+
+.AboutTopSection {
+    background-color: #1c3247;
+    height: 100%;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+}
+
+
+}
+
+@media (min-width: 1300px) and (max-width: 1400px) {
+    
+
+    .DocSection {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        right: 24px;
+        top: 128px;
+    
+}
+}

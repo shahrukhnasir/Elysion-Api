@@ -1,0 +1,381 @@
+/*  */
+.ProfileTopSection {
+    background-color: #EEEEEE;
+    height: 120px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    position: relative;
+    bottom: 20px;
+    
+
+
+}
+
+.Title{
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Title >h2{
+    font-family: var(--main-font-regular);
+    color: #1C3247;
+    font-size: 26px;
+    text-transform: capitalize;
+}
+
+/*  */
+.AppointmentContainer {
+    
+    max-width: 850px;
+    padding: 80px 0px;
+}
+
+.TopCatSection {
+    margin-top: 30px;
+}
+
+.cardTitle {
+    font-size: 27px;
+    color: #1c3247;
+    font-family: var(--main-font-regular);
+    margin-bottom: 0px;
+    margin-left: 10px;
+}
+
+.cardText {
+    color: #1B3146;
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+}
+
+.cardBody {
+    padding: 10px 0px;
+}
+
+#filterBox {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.filterBtn {
+    font-family: var(--main-font-regular);
+    background: transparent;
+    font-size: 13px;
+    padding: 5px 20px;
+    border: 1px solid #B5B5B5;
+    border-radius: 25px;
+    margin: 5px 5px;
+    width: 100%;
+    height: 50px;
+    color: #B5B5B5;
+
+}
+
+.filterBtnActive {
+
+    font-family: var(--main-font-regular);
+    background: #1B3146;
+    font-size: 13px;
+    color: white;
+    padding: 5px 20px;
+    border: 1px solid #707070;
+    border-radius: 25px;
+    margin: 5px 5px;
+    width: 100%;
+    height: 50px;
+
+
+}
+.clearWishList{
+    color: #1c3247;
+    text-decoration: underline;
+    font-family: "VisbySemibold";
+    font-size: 14px;
+
+}
+.bodyTable{
+    border: 1px solid #D6D6D6 !important;
+    border-radius: 10px;
+    padding: 5px 25px;
+}
+#tableOuterBody {
+    border: none;
+    border-radius: 50px !important;
+
+}
+.thead{
+    padding: 50px 0px !important;
+    border: none;
+}
+
+.tHead {
+    font-size: 12px;
+    color: #1c3247;
+    font-family: "TomatoGrotesk-Medium";
+    text-align: center;
+    text-transform: uppercase;
+    padding: 30px 30px !important;
+    border-bottom: 1px solid #D6D6D6;
+
+}
+
+.tData {
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    padding: 10px;
+    padding: 35px 0px 0px 0px !important;
+    text-align: center;
+    border-bottom: 1px solid #D6D6D6;
+
+}
+
+.tDataImage{
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    padding: 10px;
+    padding: 20px 10px !important;
+    text-align: center;
+    border-bottom: 1px solid #D6D6D6;
+}
+.dataCross{
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    padding: 10px;
+    padding: 20px 0px 0px 0px !important;
+    text-align: center;
+    border-bottom: 1px solid #D6D6D6;
+}
+.dataStatusBtn {
+    font-family: var(--main-font-regular);
+    border: none;
+    background: #E1EDFE;
+    border-radius: 39px;
+    font-size: 12px;
+    padding: 12px 24px !important;
+    margin: 5px;
+    text-align: center;
+}
+
+
+#dataActionBtn {
+    font-family: var(--main-font-regular);
+    border: 1px solid black;
+    background: transparent;
+    border-radius: 39px;
+    font-size: 12px;
+    padding: 12px 24px !important;
+    margin: 5px;
+    text-align: center;
+}
+
+.crossIcon {
+    font-size: 20px;
+    color: #EF5D61;
+    margin-top: 15px;
+    
+}
+
+
+.closeBtn {
+    position: absolute;
+    right: -2%;
+    top: -6%;
+    background-color: #575755;
+    color: wheat;
+    border-radius: 50px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.btnClose {
+    color: #fff !important;
+    opacity: 1;
+    font-size: 20px;
+    cursor: pointer;
+
+}
+
+.modalBoody {
+  padding: 5px 25px;
+}
+
+.modalTittle {
+
+    font-size: 20px;
+    font-family: var(--main-font-regular);
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.modalId {
+    font-size: 18px;
+    font-family: var(--main-font-regular);
+    color: #1c3247;
+}
+
+.modalDetail {
+    font-family: "TomatoGrotesk-Medium";
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-left: 10px;
+    padding: 10px 0px;
+}
+
+.modalText{
+    font-family: var(--main-font-regular);
+    color: #1F2C35;
+    /* text-transform: uppercase; */
+    font-size: 12px;
+    margin-left: 10px;
+    padding: 10px 0px;
+}
+.modalDesc{
+    font-family: var(--main-font-regular);
+    color: #000000;
+    font-size: 12px;
+    padding: 10px 0px;
+}
+
+.inputField {
+    border-radius: 51px;
+    padding: 13px 30px;
+    border: 1px solid #D6D6D6;
+    font-family: var(--main-font-regular);
+    color: #1c3247 !important;
+    font-size: 14px;
+    margin-bottom: 12px;
+    background-color: transparent   ;
+
+}
+
+.inputGrop{
+width: 325px  !important;
+}
+.inputField ::placeholder{
+ 
+    color: #1c3247 !important;  
+}
+
+.applyBtn{
+    border-radius: 51px;
+    
+    padding: 13px 30px;
+    height: 49px;
+    border: none;
+    font-family: var(--main-font-regular);
+    background-color: #1c3247 !important;
+    font-size: 14px;
+    color: white;
+    position: relative;
+    right: 20px;
+    z-index: 999;
+}
+
+
+.p_payment > button{
+    width:200px !important;
+}
+.inputGrop>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    margin-left: -1px;
+    border-top-left-radius: 51px;
+    border-bottom-left-radius: 51px;
+    
+}
+.rightText{
+display: flex;
+justify-content: flex-end;
+}
+.subTotal{
+    font-size: 23px;
+    font-family: var(--main-font-regular);
+    color: #1C3247;
+    display: flex;
+    justify-content: flex-end;
+
+}
+#payment{
+    float: end !important;
+  }
+.subPrice{
+    font-size: 23px;
+    font-family: var(--main-font-regular);
+    color: #1C3247;
+    display: flex;
+    justify-content: flex-end;  
+}
+@media (min-width: 200px) and (max-width: 992px) {
+    .AppointmentContainer {
+        width: 100% !important;
+        overflow-x: auto !important;
+    }
+
+    .paginationSec {
+        display: flex;
+        justify-content: center !important;
+    }
+
+    .bodyTable{
+        border:none !important;
+        border-radius: 0px;
+        padding: 5px 25px;
+    }
+    .subTotal{
+        font-size: 18px;
+        font-family: var(--main-font-regular);
+        color: #1C3247;
+        display: flex;
+        justify-content: flex-start;
+        padding-left: 20px;
+    }
+    .subPrice {
+        font-size: 18px;
+        font-family: var(--main-font-regular);
+        color: #1C3247;
+        display: flex;
+        justify-content: flex-start;
+        padding-left: 20px;
+    }
+    #payment{
+      float: left !important;
+      padding-left: 20px;
+    }
+    .tHead {
+        font-size: 12px;
+        color: #1c3247;
+        font-family: "TomatoGrotesk-Medium";
+        text-align: center;
+        text-transform: uppercase;
+        padding: 0px 5px !important;
+        border-bottom: 1px solid #D6D6D6;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1100px) {
+    .AppointmentContainer {
+        width: 700px !important;
+        overflow-x: auto;
+    }
+
+    .paginationSec {
+        display: flex;
+        justify-content: center !important;
+    }
+}
+
+@media (min-width: 1100px) and (max-width: 1200px) {
+    .AppointmentContainer {
+        width: 800px !important;
+        overflow-x: auto;
+    }
+
+
+    .paginationSec {
+        display: flex;
+        justify-content: center !important;
+    }
+}
