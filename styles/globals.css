@@ -1,3 +1,8 @@
+.theme-button-bg {
+    background-color: #1c3247 !important;
+    border: none !important;
+    outline: none !important;
+}
 .PatientcardBodyEven,
 .PatientcardBodyOdd,
 .cardBodyEven,

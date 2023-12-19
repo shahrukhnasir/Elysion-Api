@@ -6,7 +6,7 @@ import { BsEye, BsEyeSlash } from "react-icons/bs";
 import TopLayout from "../../components/TopLayout/TopLayout";
 import { useRouter } from "next/router";
 import Shadow from "../../components/Shadow/Shadow";
-import { LoginHandler } from "../../Service/LoginService";
+import { LoginHandler } from "../../Service/AuthService";
 import { useDispatch } from "react-redux";
 const SigninScreen = () => {
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const SigninScreen = () => {
       chatFields.password.length === 0
     ) {
       setError(true);
+      setLoading(false);
       return;
     }
     setError(false);
@@ -164,7 +165,7 @@ const SigninScreen = () => {
                   <CommanButton
                     onClick={HandleSubmit}
                     className={styles.FromBtn}
-                    label="Signining..."
+                    label="Signing..."
                   />
                 )}
             </div>
