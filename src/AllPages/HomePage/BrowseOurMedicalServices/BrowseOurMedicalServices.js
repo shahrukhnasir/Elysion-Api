@@ -9,6 +9,7 @@ import {
   MedicalServiceSections,
 } from "../../../Service/HomePageService";
 import { Skeleton } from "antd";
+
 import { useRouter } from "next/router";
 const BrowseOurMedicalServices = () => {
   const service = [
