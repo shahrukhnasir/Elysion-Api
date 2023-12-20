@@ -5,4 +5,9 @@ export const SIGN_UP = "auth/signup"
 export const LOGIN = "auth/login"
 export const FORGOT_PASSWORD = "auth/forgot"
 export const OTP_NEW_PASSWORD = "auth/reset-password"
-
+export const HERO_SECTION = "content-pages/view/hero-section"
+export const MEET_DOCTOR = "content-pages/view/meet-doctor"
+export const MEDICAL_SERVICES = "content-pages/view/medical-services"
+export const SERVICES = "services"
+export const SERVICES_ID = `services/view`
+export const FIND_LOCATION = `content-pages/view/find-our-Location`

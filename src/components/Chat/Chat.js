@@ -211,9 +211,9 @@ const Chat = () => {
 
 					<button className={styles.popup__btn} onClick={handletoggle}>
 						{toggle == true ? (
-							<img src="../images/cross.svg" className={styles.pop_Icon} alt="cross-icon" />
+							<img src="/images/cross.svg" className={styles.pop_Icon} alt="cross-icon" />
 						) : (
-							<img src="../images/chat.svg" className={styles.pop_Icon} alt="chat-icon" />
+							<img src="/images/chat.svg" className={styles.pop_Icon} alt="chat-icon" />
 						)}
 
 

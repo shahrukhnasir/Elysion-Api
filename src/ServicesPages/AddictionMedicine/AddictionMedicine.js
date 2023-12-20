@@ -4,8 +4,11 @@ import Link from "next/link";
 import ServiceCardComman from "../../components/ServiceCardComman/ServiceCardComman";
 import TopLayout from "../../components/TopLayout/TopLayout";
 import service from "../constant/serviceData";
+import { useRouter } from "next/router";
 
 const AddictionMedicine = () => {
+  const { query } = useRouter();
+  console.log(query);
   return (
     <>
       <div className="container-fluid p-0">

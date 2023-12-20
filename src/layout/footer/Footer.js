@@ -49,7 +49,7 @@ const Footer = () => {
 							<div className={styles.firstSection}>
 								<Link href="/">
 									<img
-										src="../images/elysion-white-logo.png"
+										src="/images/elysion-white-logo.png"
 										className="img-fluid"
 										alt="logo"
 									/>
