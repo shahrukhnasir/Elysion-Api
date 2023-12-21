@@ -1,5 +1,8 @@
 import {
+  CATEGORIES,
+  CAT_BY_PRODUCT,
   CONTACT_US,
+  FAQ,
   FIND_LOCATION,
   FORGOT_PASSWORD,
   HERO_SECTION,
@@ -7,6 +10,7 @@ import {
   MEDICAL_SERVICES,
   MEET_DOCTOR,
   OTP_NEW_PASSWORD,
+  PRODUCT,
   SERVICES,
   SERVICES_ID,
   SIGN_UP,
@@ -43,9 +47,26 @@ export const AllServiceContent = (data) => {
   return getMethod(`${SERVICES}`, data);
 };
 
-export const ServiceContentById = (slug,data) => {
+export const ServiceContentById = (slug, data) => {
   return getMethod(`${SERVICES_ID}/${slug}`, data);
 };
 export const FindLocation = (data) => {
   return getMethod(`${FIND_LOCATION}`, data);
 };
+export const Faqs = (data) => {
+  return getMethod(`${FAQ}`, data);
+};
+export const Categories = (data) => {
+  return getMethod(`${CATEGORIES}`, data);
+};
+
+export const Products = (data) => {
+  return getMethod(`${PRODUCT}`, data);
+};
+
+export const CatByProducts = (slug,data ) => {
+  return getMethod(`${CAT_BY_PRODUCT}?filter_by=category&value=${slug}`, data);
+};
+// export const CatByProducts = (slug,data) => {
+//   return getMethod(`${CAT_BY_PRODUCT}${slug}`, data);
+// };
