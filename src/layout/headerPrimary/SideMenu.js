@@ -377,9 +377,9 @@ const SideMenu = () => {
                 </li>
                 <li className="menu-items">
                   <Link
-                    href="https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons"
+                    href="/shop"
                     className="menu-link"
-                    onClick={(e) => navigateHandler(e, "https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons")}
+                    onClick={(e) => navigateHandler(e, "/shop")}
                   >
                     Shop
                   </Link>

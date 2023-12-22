@@ -67,6 +67,10 @@ export const Products = (data) => {
 export const CatByProducts = (slug,data ) => {
   return getMethod(`${CAT_BY_PRODUCT}?filter_by=category&value=${slug}`, data);
 };
-// export const CatByProducts = (slug,data) => {
-//   return getMethod(`${CAT_BY_PRODUCT}${slug}`, data);
-// };
+export const ProductDetails = (slug,data) => {
+  return getMethod(`${PRODUCT}/${slug}`, data);
+};
+
+export const SearchProduct = (search,data ) => {
+  return getMethod(`${CAT_BY_PRODUCT}?filter_by=search&value=${search}`, data);
+};

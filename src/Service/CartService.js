@@ -1,5 +1,10 @@
-
-import { CatByProducts, Categories, Products } from "../network/Network";
+import {
+  CatByProducts,
+  Categories,
+  ProductDetails,
+  Products,
+  SearchProduct,
+} from "../network/Network";
 import "sweetalert2/dist/sweetalert2.min.css";
 
 // 👇Categories Service//
@@ -22,7 +27,7 @@ export const ProductList = (setLoading, setProducts) => (dispatch) => {
   Products()
     .then((res) => {
       setProducts(res?.data?.response?.data);
-      console.log(res?.data?.response?.data), "product";
+      // console.log(res?.data?.response?.data), "product";
       setLoading(false);
     })
     .catch((err) => {
@@ -40,17 +45,51 @@ export const CatProductById =
     if (slug !== undefined) {
       try {
         const response = await CatByProducts(slug);
-        console.log(response?.data,'dsjisd')
+        // console.log(response?.data, "dsjisd");
         const responseData = response?.data?.response?.data?.data;
 
         setCatByProdutId(slug);
         setCatByProductList(responseData);
         setLoading(false);
       } catch (err) {
-        console.error(err,"dsdmsd");
+        console.error(err, "dsdmsd");
         setCatByProductList([]);
         setLoading(false);
         // alert('Error: ' + err.message);
       }
     }
   };
+
+////👇Product Details By id
+export const getProductDetailById = (slug, setProductDetails, setProductDetailById) => async (dispatch) => {
+  try {
+    // setLoading(true);
+
+    if (slug !== undefined) {
+      const res = await ProductDetails(slug);
+      const productData = res?.data?.response?.data;
+
+      setProductDetails(productData);
+      dispatch(setProductDetailById(slug));
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+
+////👇Search Products
+export const SearchProducts = (search, setSearchProduct, setSearch) => async (dispatch) => {
+  try {
+    if (search !== undefined) {
+      const res = await SearchProduct(search);
+      const productData = res?.data?.response?.data?.data;
+
+      console.log(productData,"resBySearchProduct");
+      setSearchProduct(productData);
+      dispatch(setSearch(search));
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};

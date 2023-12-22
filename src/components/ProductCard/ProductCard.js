@@ -3,10 +3,10 @@ import styles from "../ProductCard/ProductCard.module.css";
 import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
 
-const ProductCard = ({ Title, Descriptions, Price, image, id }) => {
+const ProductCard = ({ Title, Descriptions, Price, image, id ,onClick}) => {
   return (
     <>
-      <div className={`${styles.card}  card`}>
+      <div className={`${styles.card}  card`} onClick={onClick}>
         <img src={image} class="card-img-top" alt="image" />
         <div className={`${styles.cardBody}  card-body`}>
           <div className="row">
@@ -21,7 +21,7 @@ const ProductCard = ({ Title, Descriptions, Price, image, id }) => {
             </div>
           </div>
           <p className={`${styles.cardDesc}`}>{Descriptions}</p>
-          <Link href={`/ProductDetails/${id && id}`} className={`${styles.linkBtn}`}>
+          <Link href={""} className={`${styles.linkBtn}`}>
             <span className={styles.learnMore}>View Details</span>{" "}
             <span>
               <BsArrowRight className={styles.arrowIcon} />

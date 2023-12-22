@@ -251,7 +251,8 @@ const HorizontalMenu = () => {
                 >
                   <Link
                     className={`${styles?.dropbtn} nav-link`}
-                    href="https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons"
+                    href={'/shop'}
+                    // href="https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons"
                   >
                     Shop
                     {/* Commit as per Client Requirement */}

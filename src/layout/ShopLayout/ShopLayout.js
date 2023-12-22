@@ -6,11 +6,15 @@ import {
   CatProductById,
   CategoryList,
   ProductList,
+  SearchProducts,
 } from "../../Service/CartService";
 import { Skeleton } from "antd";
+import { useRouter } from "next/router";
+import { baseUrl } from "../../network/baseUrl";
+import axios from "axios";
 const ShopLayout = () => {
   // const [getCat, setCat] = useState("");
-  const [getActiveCat, setActiveCat] = useState();
+  // const [getActiveCat, setActiveCat] = useState();
 
   const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -20,7 +24,9 @@ const ShopLayout = () => {
   const [slug, setSlug] = useState([]);
   const [allProducts, setAllProducts] = useState(false);
   const dispatch = useDispatch();
-
+  const route = useRouter();
+  const { query } = useRouter();
+  const slugs = query?.pid;
   useEffect(() => {
     dispatch(CategoryList(setLoading, setCategory, dispatch));
     dispatch(ProductList(setLoading, setProducts, dispatch));
@@ -31,15 +37,36 @@ const ShopLayout = () => {
       CatProductById(setCatByProdutId, slug, setCatByProductList, setLoading)
     );
   }, [slug]);
-console.log(catByProductList,"catByProductList");
+
   const filterCatHandler = (e, id) => {
     e.preventDefault();
     setSlug(id);
   };
   const AllCatHandler = (e) => {
     e.preventDefault();
-    setAllProducts(true)
+    setAllProducts(true);
   };
+  const handleProductDetail = (productId) => {
+    route.push(`/shop/product/${productId}`);
+  };
+
+  // Search Api intrgrated
+  const [search, setSearchQuery] = useState("");
+  const [searchResults, setSearch] = useState([]);
+  const [searchProduct, setSearchProduct] = useState([]);
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+  };
+
+  useEffect(() => {
+    if (search.trim() !== "") {
+      dispatch(SearchProducts(search, setSearchProduct, setSearch));
+    } else {
+      SearchProducts([]);
+    }
+  }, [search]);
+  console.log(searchProduct, "searchProduct");
 
   return (
     <>
@@ -66,10 +93,10 @@ console.log(catByProductList,"catByProductList");
                   <li className={`${styles.search_sec} list-group-item`}>
                     <input
                       type="text"
-                      placeholder="Search"
                       className={styles.filterField}
-                      name=""
-                      id=""
+                      placeholder="Search Product"
+                      value={search}
+                      onChange={handleSearchChange}
                     />
                     <img
                       src="./images/filterIcon.png"
@@ -77,37 +104,32 @@ console.log(catByProductList,"catByProductList");
                       alt=""
                     />
                   </li>
+                  <div id={styles.filterMenu}>
+                    <li
+                      className={styles.filterBtn}
+                      onClick={(e) => AllCatHandler(e)}
+                    >
+                      All
+                    </li>
+                  </div>
 
-                  <li
-                    id={styles.filterMenu}
-                    className={
-                      allProducts ? styles.filterBtnActive : styles.filterBtn
-                    }
-                    onClick={(e) => AllCatHandler(e)}
-                  >
-                    All
-                  </li>
-
-                 
-                    <>
-                      {category?.map((item, i) => (
-                        <div id={styles.filterMenu} key={i}>
-                          <li
-                            id={item?.id}
-                            className={
-                              category === i
-                                ? styles.filterBtnActive
-                                : styles.filterBtn
-                            }
-                            onClick={(e) => filterCatHandler(e, item?.id, i)}
-                          >
-                            {item?.name}
-                          </li>
-                        </div>
-                      ))}
-                    </>
-                  
-                
+                  <>
+                    {category?.map((item, i) => (
+                      <div id={styles.filterMenu} key={i}>
+                        <li
+                          id={item?.id}
+                          className={
+                            category === i
+                              ? styles.filterBtnActive
+                              : styles.filterBtn
+                          }
+                          onClick={(e) => filterCatHandler(e, item?.id, i)}
+                        >
+                          {item?.name}
+                        </li>
+                      </div>
+                    ))}
+                  </>
                 </ul>
               </div>
             </div>
@@ -117,21 +139,20 @@ console.log(catByProductList,"catByProductList");
                 <div className="row">
                   {!loading ? (
                     <>
-                      {catByProductList && catByProductList.length > 0 ? (
-                        catByProductList.map((item, i) => (
-                          <div className="col-lg-4" key={i}>
-                            <ProductCard
-                              image={item?.thumbnail_url}
-                              Title={item?.title}
-                              Descriptions={item?.description}
-                              Price={item?.price}
-                              id={item?.id}
-                            />
-                          </div>
-                        ))
-                      ) : (
-                        "Data Not Available"
-                      )}
+                      {catByProductList && catByProductList.length > 0
+                        ? catByProductList.map((item, i) => (
+                            <div className="col-lg-4" key={i}>
+                              <ProductCard
+                                image={item?.thumbnail_url}
+                                Title={item?.title}
+                                Descriptions={item?.description}
+                                Price={item?.price}
+                                id={item?.id}
+                                onClick={() => handleProductDetail(item?.id)}
+                              />
+                            </div>
+                          ))
+                        : "Data Not Available"}
                     </>
                   ) : (
                     <>
@@ -190,6 +211,14 @@ console.log(catByProductList,"catByProductList");
                     </nav>
                   </div>
                 </div>
+
+                {/* search */}
+
+                {/* <ul>
+                  {searchResults.map((item) => (
+                    <li key={item.id}>{item.name}</li>
+                  ))}
+                </ul> */}
               </div>
             </div>
           </div>
