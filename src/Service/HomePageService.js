@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import {
   AllServiceContent,
   Faqs,
@@ -5,6 +6,7 @@ import {
   HeroSectionContent,
   MedicalServiceContent,
   MeetDoctorContent,
+  NewsLatter,
   ServiceContentById,
 } from "../network/Network";
 
@@ -136,4 +138,59 @@ export const FaqContent = (setLoading, setFaq) => (dispatch) => {
       console.log(err);
       setLoading(false);
     });
+};
+
+// 👇Footer NewsLatter//////////
+export const FooterNewsLatterEmail = (data, setLoading, setChatFields,router) => () => {
+  
+  try {
+    NewsLatter(data)
+    .then((res) => {
+        console.log(res,"Success");
+        setLoading(false);
+        setChatFields({
+          email: "",
+
+        });
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Email Send Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: {
+            confirmButton: "theme-button-bg",
+          },
+          
+        });
+        router.push("/thank-you");
+      })
+      .catch((error) => {
+        console.error("Error in SignUp:", error);
+        setLoading(false);
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Email  Failed",
+          text: "Please check your fields",
+          showConfirmButton: true,
+          customClass: {
+            confirmButton: "theme-button-bg",
+          },
+        
+        });
+      });
+  } catch (error) {
+    console.error("Unexpected error in Email send:", error);
+    Swal.fire({
+      position: "center",
+      icon: "error",
+      title: "Unexpected Error",
+      text: "An unexpected error occurred. Please try again later.",
+      showConfirmButton: true,
+      customClass: {
+        confirmButton: "theme-button-bg",
+      },
+    });
+  }
 };

@@ -5,10 +5,13 @@ import {
   FAQ,
   FIND_LOCATION,
   FORGOT_PASSWORD,
+  FREE_CONSULTATION,
   HERO_SECTION,
   LOGIN,
   MEDICAL_SERVICES,
   MEET_DOCTOR,
+  MEMBER_SHIP,
+  NEWS__LATTER,
   OTP_NEW_PASSWORD,
   PRODUCT,
   SERVICES,
@@ -65,12 +68,23 @@ export const Products = (data) => {
 };
 
 export const CatByProducts = (slug,data ) => {
-  return getMethod(`${CAT_BY_PRODUCT}?filter_by=category&value=${slug}`, data);
+  return getMethod(`${PRODUCT}?filter_by=category&value=${slug}`, data);
 };
 export const ProductDetails = (slug,data) => {
   return getMethod(`${PRODUCT}/${slug}`, data);
 };
 
-export const SearchProduct = (search,data ) => {
-  return getMethod(`${CAT_BY_PRODUCT}?filter_by=search&value=${search}`, data);
+export const SearchProduct = (slug,search,data ) => {
+  return getMethod(`${PRODUCT}?filter_by=categorysearch&category=${slug}&value=${search}`, data);
+};
+
+export const NewsLatter = (data) => {
+  return postMethod(`${NEWS__LATTER}`, data);
+};
+export const FreeConsult = (data) => {
+  return postMethod(`${FREE_CONSULTATION}`, data);
+};
+export const Membership = (data) => {
+  return getMethod(`${MEMBER_SHIP}`, data);
+  
 };

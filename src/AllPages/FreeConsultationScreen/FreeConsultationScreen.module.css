@@ -6,6 +6,12 @@
   position: relative;
   bottom: 20px;
 }
+.warning {
+  font-family: var(--main-font-regular);
+  color: rgb(207, 34, 34);
+  font-size: 12px;
+  padding: 0px 0px 12px 16px
+}
 
 .mainHeading {
   font-family: var(--main-font-regular);

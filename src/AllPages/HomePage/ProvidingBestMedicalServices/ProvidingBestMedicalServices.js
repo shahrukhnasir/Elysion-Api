@@ -17,7 +17,18 @@ const ProvidingBestMedicalServices = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(MeetDoctorSections(setLoading, setMainHeading,setParaOne,setParaTwo,setDocImage,setSubHeading,setPoints,dispatch));
+    dispatch(
+      MeetDoctorSections(
+        setLoading,
+        setMainHeading,
+        setParaOne,
+        setParaTwo,
+        setDocImage,
+        setSubHeading,
+        setPoints,
+        dispatch
+      )
+    );
   }, []);
 
   return (
@@ -81,7 +92,7 @@ const ProvidingBestMedicalServices = () => {
                 </h1>
 
                 <p className={styles.mainDescription}>
-                {!loading ? (
+                  {!loading ? (
                     paraOne
                   ) : (
                     <>
@@ -90,7 +101,7 @@ const ProvidingBestMedicalServices = () => {
                   )}
                 </p>
                 <p className={styles.mainDescription}>
-                {!loading ? (
+                  {!loading ? (
                     paraTwo
                   ) : (
                     <>
@@ -150,28 +161,39 @@ const ProvidingBestMedicalServices = () => {
                 </div> */}
                 <div className={styles.affiliations}>
                   <h6>
-                  {!loading ? (
-                    subHeading
-                  ) : (
-                    <>
-                      <Skeleton />
-                    </>
-                  )}
+                    {!loading ? (
+                      subHeading
+                    ) : (
+                      <>
+                        <Skeleton />
+                      </>
+                    )}
                   </h6>
 
                   <ul>
-                  {!loading ? (
-                    <>
-                   <li>{points && points.length >= 0 ? points.substring(0, 37) : null}</li>
-                   <li>{points && points.length >= 0 ? points.substring(37,69 ) : null}</li>
-                   <li>{points && points.length >= 0 ? points.substring(69,100 ) : null}</li>
-                    </>
-                  ) : (
-                    <>
-                      <Skeleton />
-                    </>
-                  )}
-                  
+                    {!loading ? (
+                      <>
+                        <li>
+                          {points && points.length >= 0
+                            ? points.substring(0, 37)
+                            : null}
+                        </li>
+                        <li>
+                          {points && points.length >= 0
+                            ? points.substring(37, 69)
+                            : null}
+                        </li>
+                        <li>
+                          {points && points.length >= 0
+                            ? points.substring(69, 100)
+                            : null}
+                        </li>
+                      </>
+                    ) : (
+                      <>
+                        <Skeleton />
+                      </>
+                    )}
                   </ul>
                 </div>
 
@@ -188,22 +210,19 @@ const ProvidingBestMedicalServices = () => {
               data-aos="fade-right"
               data-aos-duration="2000"
             >
-              {/* className={styles.docSectionImage} */}
               <div className={styles.DocSection}>
-                {/* {!loading ? (
-                  
-                <div className={styles.meetDocImage}>
-                   <Image src={docImage} width={100} height={50} alt="Picture of the Doctor" />
-                </div>
-                  ) : ( */}
-                    <>
-                     <div className={styles.meetDocImage}>
-                     <Image src={meetDoc} alt="Picture of the Doctor" />
-                     </div>
-                      
-                    </>
-                  {/* )} */}
-                  {/* <Image src={meetDoc} alt="Picture of the Doctor" /> */}
+                {!loading ? (
+                  <div className={styles.meetDocImage}>
+                    <Image
+                      src={docImage}
+                      width={100}
+                      height={50}
+                      alt="Picture of the Doctor"
+                    />
+                  </div>
+                ) : (
+                  <Skeleton active avatar row={12}/>
+                )}
               </div>
             </div>
           </div>

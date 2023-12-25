@@ -7,20 +7,33 @@ import { FaFacebookF } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { PostContactHandler } from "../../Service/contactService";
 import { useDispatch } from "react-redux";
+import { FooterNewsLatterEmail } from "../../Service/HomePageService";
 const Footer = () => {
 
 	const dispatch = useDispatch()
 	const router = useRouter();
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const [chatFields, setChatFields] = useState({
-		name: "elysion",
-		lName: "health",
-		number: "470-300-2259",
-		message: "eh",
 		email: ""
 	});
-
-	const [loading, setLoading] = useState(false);
+	const handleEmailSend = async (e) => {
+		e.preventDefault();
+		setLoading(true);
+		if (
+		  chatFields.email.length === 0 
+		) {
+		  setError(true);
+		  setLoading(false);
+		  return;
+		}
+		setError(false);
+		setLoading(true );
+		let data = new FormData();
+		data.append("email", chatFields?.email);
+		dispatch(FooterNewsLatterEmail(data, setLoading, setChatFields,router));
+		// router.push('/thank-you');
+	};
 	const handleChange = (e) => {
 		e.preventDefault();
 		setChatFields((prev) => ({
@@ -28,18 +41,6 @@ const Footer = () => {
 			[e.target.name]: e.target.value,
 		}));
 	};
-	const handleEmailSend = async (e) => {
-		e.preventDefault();
-		let data = new FormData();
-		data.append("first_name", chatFields?.name);
-		data.append("last_name", chatFields?.lName);
-		data.append("phone", chatFields?.number);
-		data.append("message", chatFields?.message);
-		data.append("email", chatFields?.email);
-		dispatch(PostContactHandler(data, setLoading, setChatFields));
-		router.push('/thank-you');
-	};
-
 	return (
 		<>
 			<div className={`${styles.footerContainer} container-fluid py-2`}>

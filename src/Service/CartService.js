@@ -45,7 +45,6 @@ export const CatProductById =
     if (slug !== undefined) {
       try {
         const response = await CatByProducts(slug);
-        // console.log(response?.data, "dsjisd");
         const responseData = response?.data?.response?.data?.data;
 
         setCatByProdutId(slug);
@@ -55,7 +54,6 @@ export const CatProductById =
         console.error(err, "dsdmsd");
         setCatByProductList([]);
         setLoading(false);
-        // alert('Error: ' + err.message);
       }
     }
   };
@@ -79,13 +77,11 @@ export const getProductDetailById = (slug, setProductDetails, setProductDetailBy
 
 
 ////👇Search Products
-export const SearchProducts = (search, setSearchProduct, setSearch) => async (dispatch) => {
+export const SearchProducts = (slug,search, setSearchProduct, setSearch) => async (dispatch) => {
   try {
     if (search !== undefined) {
-      const res = await SearchProduct(search);
+      const res = await SearchProduct(slug,search);
       const productData = res?.data?.response?.data?.data;
-
-      console.log(productData,"resBySearchProduct");
       setSearchProduct(productData);
       dispatch(setSearch(search));
     }

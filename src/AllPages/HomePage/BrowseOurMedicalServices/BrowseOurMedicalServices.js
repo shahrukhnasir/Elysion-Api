@@ -99,7 +99,7 @@ const BrowseOurMedicalServices = () => {
     dispatch(AllServices(setLoading, setServicesData, dispatch));
   }, []);
 
-  console.log(servicesData, "servicesDataservicesData");
+  // console.log(servicesData, "servicesDataservicesData");
   return (
     <>
       <div className="container-fluid py-lg-5" id="service">

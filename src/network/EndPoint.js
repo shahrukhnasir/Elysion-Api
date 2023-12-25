@@ -14,5 +14,5 @@ export const FIND_LOCATION = `content-pages/view/find-our-Location`
 export const FAQ = `faqs`
 export const CATEGORIES = `shop/category`
 export const PRODUCT = `shop/product`
-export const CAT_BY_PRODUCT = `shop/product`
-// export const CAT_BY_PRODUCT = `shop/product?filter_by=category&value=`
+export const FREE_CONSULTATION= `free-consult`
+export const MEMBER_SHIP =`memberships`

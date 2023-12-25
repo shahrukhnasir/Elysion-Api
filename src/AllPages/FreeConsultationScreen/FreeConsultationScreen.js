@@ -3,16 +3,52 @@ import styles from "../FreeConsultationScreen/FreeConsultationScreen.module.css"
 import CommanButton from "../../components/CommanButton/CommanButton";
 import TopLayout from "../../components/TopLayout/TopLayout";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { FreeConsultation } from "../../Service/FreeConsultService";
 const AboutusScreen = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [chatFields, setChatFields] = useState({
+    fname: "",
+    lname: "",
+    phone: "",
+    email: "",
+    dob: "",
+  });
+  const dispatch = useDispatch();
 
-  const router = useRouter()
-  const navigateHandler = (e, id, urlPath) => {
+  const HandleSubmit = (e) => {
     e.preventDefault();
-    router.push({
-      pathname: urlPath,
-      query: { id: id },
-    })
-  }
+    setLoading(true);
+    if (
+      chatFields.fname.length === 0 ||
+      chatFields.lname.length === 0 ||
+      chatFields.email.length === 0 ||
+      chatFields.phone.length === 0 ||
+      chatFields.dob.length === 0
+    ) {
+      setError(true);
+      setLoading(false);
+      return;
+    }
+    setError(false);
+    setLoading(true);
+    let data = new FormData();
+    data.append("first_name", chatFields?.fname);
+    data.append("last_name", chatFields?.lname);
+    data.append("email", chatFields?.email);
+    data.append("phone", chatFields?.phone);
+    data.append("dob", chatFields?.dob);
+    dispatch(FreeConsultation(data, setLoading, setChatFields, router));
+  };
+  const handleChange = (e) => {
+    e.preventDefault();
+    setChatFields((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
   return (
     <>
       <div className="container-fluid p-0">
@@ -34,43 +70,87 @@ quasi"
                 <div className="col-lg-6">
                   <input
                     type="text"
-                    class={`${styles.inputField} form-control`}
+                    value={chatFields.fname}
+                    name="fname"
+                    onChange={handleChange}
+                    className={`${styles.inputField} form-control`}
                     placeholder="First Name"
                   />
+                  {error && chatFields.fname.length <= 0 ? (
+                    <span className={styles.warning}>
+                      First Name can't be Empty!
+                    </span>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <div className="col-lg-6">
                   <input
                     type="text"
-                    class={`${styles.inputField} form-control`}
+                    value={chatFields.lname}
+                    onChange={handleChange}
+                    name="lname"
+                    className={`${styles.inputField} form-control`}
                     placeholder="Last Name"
                   />
+                  {error && chatFields.lname.length <= 0 ? (
+                    <div className={styles.warning}>
+                      Last Name can't be Empty!
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
 
               <div className="row py-lg-3">
                 <div className="col-lg-6">
-                  <input
+                <input
                     type="email"
+                    name="email"
+                    value={chatFields.email}
+                    onChange={handleChange}
                     className={`${styles.inputField} form-control`}
                     placeholder="Email"
                   />
+                  {error && chatFields.email.length <= 0 ? (
+                    <div className={styles.warning}>Email can't be Empty!</div>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <div className="col-lg-6">
-                  <input
+                <input
                     type="number"
+                    name="phone"
+                    value={chatFields.phone}
+                    onChange={handleChange}
                     className={`${styles.inputField} form-control`}
                     placeholder="Phone"
                   />
+                  {error && chatFields.phone.length <= 0 ? (
+                    <div className={styles.warning}>Phone can't be Empty!</div>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <div className="col-lg-12 pt-lg-3">
-                  <input
+                <input
                     type="date"
+                    name="dob"
+                    value={chatFields.dob}
+                    onChange={handleChange}
                     className={`${styles.inputField} form-control`}
-                    placeholder="Date of Birth"
+                    placeholder="Date Of Birth"
                   />
+                  {error && chatFields.phone.length <= 0 ? (
+                    <div className={styles.warning}>DOB can't be Empty!</div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
 
@@ -109,14 +189,23 @@ quasi"
               </div>
               <div className="py-3">
                 {/* <Link href="/thank-you"  > */}
-                <CommanButton label={"Submit"}
-                  onClick={(e) => navigateHandler(e, 1, "/thank-you")}
-                />
+                {!loading ? (
+                  <CommanButton
+                    onClick={HandleSubmit}
+                    className={styles.FromBtn}
+                    label="Submit"
+                  />
+                ) : (
+                  <CommanButton
+                    onClick={HandleSubmit}
+                    className={styles.FromBtn}
+                    label="Submiting..."
+                  />
+                )}
                 {/* </Link> */}
               </div>
             </div>
-            <div className="col-lg-5 offset-lg-1">
-            </div>
+            <div className="col-lg-5 offset-lg-1"></div>
           </div>
         </div>
       </div>

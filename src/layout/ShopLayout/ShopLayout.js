@@ -22,7 +22,7 @@ const ShopLayout = () => {
   const [catByProductId, setCatByProdutId] = useState([]);
   const [catByProductList, setCatByProductList] = useState([]);
   const [slug, setSlug] = useState([]);
-  const [allProducts, setAllProducts] = useState(false);
+  const [showAllProduct, setAllProducts] = useState(false);
   const dispatch = useDispatch();
   const route = useRouter();
   const { query } = useRouter();
@@ -40,12 +40,16 @@ const ShopLayout = () => {
 
   const filterCatHandler = (e, id) => {
     e.preventDefault();
+    setSearchQuery("")
     setSlug(id);
   };
   const AllCatHandler = (e) => {
     e.preventDefault();
     setAllProducts(true);
+    setCatByProductList(products);
+    setSearchQuery("")
   };
+
   const handleProductDetail = (productId) => {
     route.push(`/shop/product/${productId}`);
   };
@@ -57,16 +61,20 @@ const ShopLayout = () => {
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
+
+    if (search === "") {
+      setSearchProduct(catByProductList);
+    }
   };
 
   useEffect(() => {
     if (search.trim() !== "") {
-      dispatch(SearchProducts(search, setSearchProduct, setSearch));
+      dispatch(SearchProducts(slug, search, setSearchProduct, setSearch));
     } else {
-      SearchProducts([]);
+      setSearchProduct([]);
     }
   }, [search]);
-  console.log(searchProduct, "searchProduct");
+  console.log(products, "products");
 
   return (
     <>
@@ -91,18 +99,22 @@ const ShopLayout = () => {
                   </li>
 
                   <li className={`${styles.search_sec} list-group-item`}>
-                    <input
-                      type="text"
-                      className={styles.filterField}
-                      placeholder="Search Product"
-                      value={search}
-                      onChange={handleSearchChange}
-                    />
-                    <img
-                      src="./images/filterIcon.png"
-                      className={styles.filterIcon}
-                      alt=""
-                    />
+           
+
+                        <input
+                          type="text"
+                          className={styles.filterField}
+                          placeholder="Search Product"
+                          value={search}
+                          onChange={(e) => handleSearchChange(e)}
+                        />
+                        <img
+                          src="./images/filterIcon.png"
+                          className={styles.filterIcon}
+                          alt=""
+                        />
+          
+           
                   </li>
                   <div id={styles.filterMenu}>
                     <li
@@ -139,20 +151,57 @@ const ShopLayout = () => {
                 <div className="row">
                   {!loading ? (
                     <>
-                      {catByProductList && catByProductList.length > 0
-                        ? catByProductList.map((item, i) => (
-                            <div className="col-lg-4" key={i}>
-                              <ProductCard
-                                image={item?.thumbnail_url}
-                                Title={item?.title}
-                                Descriptions={item?.description}
-                                Price={item?.price}
-                                id={item?.id}
-                                onClick={() => handleProductDetail(item?.id)}
-                              />
-                            </div>
-                          ))
-                        : "Data Not Available"}
+                      {searchProduct && searchProduct.length > 0 ? (
+                        searchProduct.map((item, i) => (
+                          <div className="col-lg-4" key={i}>
+                            <ProductCard
+                              image={item?.thumbnail_url}
+                              Title={item?.title}
+                              Descriptions={item?.description}
+                              Price={item?.price}
+                              id={item?.id}
+                              onClick={() => handleProductDetail(item?.id)}
+                            />
+                          </div>
+                        ))
+                      ) : (
+                        <>
+                          {!loading ? (
+                            catByProductList &&
+                            catByProductList.map((item, i) => (
+                              <div className="col-lg-4" key={i}>
+                                <ProductCard
+                                  image={item?.thumbnail_url}
+                                  Title={item?.title}
+                                  Descriptions={item?.description}
+                                  Price={item?.price}
+                                  id={item?.id}
+                                  onClick={() => handleProductDetail(item?.id)}
+                                />
+                              </div>
+                            ))
+                          ) : showAllProduct ? (
+                            <>
+                              {products?.map((item, i) => (
+                                <div className="col-lg-4" key={i}>
+                                  <ProductCard
+                                    image={item?.thumbnail_url}
+                                    Title={item?.title}
+                                    Descriptions={item?.description}
+                                    Price={item?.price}
+                                    id={item?.id}
+                                    onClick={() =>
+                                      handleProductDetail(item?.id)
+                                    }
+                                  />
+                                </div>
+                              ))}
+                            </>
+                          ) : (
+                            "No products"
+                          )}
+                        </>
+                      )}
                     </>
                   ) : (
                     <>
