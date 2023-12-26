@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "../ProductDetail/ProductDetails.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
@@ -18,7 +18,7 @@ import {
 } from "../../components/CustomSlider/SliderArrow";
 import SliderProductCard from "../../components/SliderProductCard/SliderProductCard";
 import {
-  ProductDetailById,
+  AddToCartHandler,
   getProductDetailById,
 } from "../../Service/CartService";
 import { Skeleton } from "antd";
@@ -114,7 +114,26 @@ const ProductDetail = () => {
   const [productDetail, setProductDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [steps, setSteps] = useState(0);
+  const [variant, setProductVariants] = useState();
+  const [milliGram, setMiliId] = useState([]);
+  const [variantId, setVariantId] = useState();
   const [tab, setTab] = useState(0);
+  const token = useSelector((state) => state?.authSlice?.authToken);
+  const AddToCartHandle = async (e) => {
+    if (token) {
+      e.preventDefault();
+      setLoading(true);
+      let data = new FormData();
+      data.append("product_id", slug);
+      data.append("product_variant_id", variantId);
+      data.append("product_miligram_id", milliGram);
+      data.append("qty", variant?.[0]?.qty);
+      dispatch(AddToCartHandler(token, data, setLoading,router));
+      console.log(loading, "loadingloadingloadingloading");
+    } else {
+      alert("first signin");
+    }
+  };
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -168,11 +187,45 @@ const ProductDetail = () => {
   };
   const { query } = useRouter();
   const slug = query?.pid;
-  // console.log(query?.pid);
 
   useEffect(() => {
-    dispatch(getProductDetailById(slug, setProductDetails, setLoading));
+    dispatch(
+      getProductDetailById(
+        slug,
+        setProductDetails,
+        setLoading,
+        setProductVariants
+      )
+    );
   }, [slug]);
+
+  // setVarriant(productDetail?.variants);
+  // console.log(milliGram?.map((mili,i)=> mili?.miligram_id), "milliGram");
+  // console.log(milliGram, "milliGram");
+  // console.log(variant, "variant");
+  // console.log(productDetail,"productDetail");
+  // console.log(
+  //   variant?.map((vari, i) => vari?.variant),
+  //   "variant"
+  // );
+  const variantChangeHandler = (selectedVariant) => {
+    let filteredMili = productDetail?.mg?.filter(
+      (variant) => variant?.miligram === selectedVariant
+    );
+    setMiliId(filteredMili?.[0]?.id);
+  };
+  console.log(milliGram, "MiliGram");
+  console.log(variantId, "variantId");
+  console.log(slug, "ProductId");
+  console.log(productDetail?.user_id, "user_id");
+  // const [cartFields, setCartFields] = useState({
+  //   product_id: slug,
+  //   product_variant_id: variantId,
+  //   product_miligram_id: milliGram,
+  //   qty: productDetail?.unit_price,
+  // });
+
+  // console.log(productDetail,"milliGram");
   return (
     <>
       <div className="container-fluid p-0">
@@ -221,17 +274,13 @@ const ProductDetail = () => {
                   </div>
                 </div>
                 <p className={styles.desc}>
-
-                {loading ? (
-                <>
-                 {productDetail && productDetail?.description}
-                </>
-              ) : (
-                <>
-                  <Skeleton />
-                </>
-              )}
-                  
+                  {loading ? (
+                    <>{productDetail && productDetail?.description}</>
+                  ) : (
+                    <>
+                      <Skeleton />
+                    </>
+                  )}
                 </p>
 
                 <hr />
@@ -261,16 +310,81 @@ const ProductDetail = () => {
                 <p>
                   <span className={styles.cardText}>Stock Status</span>
                   <span className={styles.cardBlueText}>
-                    
                     {productDetail?.qty}
                   </span>
+                </p>
+
+                <p>
+                  <span className={styles.cardText}>Variants</span>
+                  {Array.isArray(variant) && (
+                    <select
+                      id="variant_select"
+                      className={styles.selectField}
+                      name="variant"
+                      onChange={(e) => {
+                        const selectedVariant = e.target.value;
+                        setVariantId(
+                          variant.find(
+                            (vari) => vari.variant === selectedVariant
+                          )?.id
+                        );
+                        variantChangeHandler(selectedVariant);
+                      }}
+                    >
+                      <option value="">Select</option>
+                      {variant.map((vari, i) => (
+                        <option
+                          key={i}
+                          value={vari.variant}
+                          className={styles.optionField}
+                        >
+                          {vari.variant}
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                  {/* {Array.isArray(variant) &&
+                    variant.map((vari, i) => (
+                      <span key={i} className="mx-2">
+                        <input
+                          type="checkbox"
+                          id={`variant_${i}`}
+                          name="variant" 
+                          onClick={() => setVariantId(vari?.id)}
+                          value={vari?.variant}
+                          onChange={() => variantChangeHandler(vari?.variant)}
+                        />
+                        <label htmlFor={`variant_${i}`}>{vari?.variant}</label>
+                      </span>
+                    ))} */}
+
+                  {/* {Array.isArray(milliGram) &&
+                    milliGram.map((mili, i) => (
+                      <span key={i} className="mx-2">
+                        <input
+                          type="checkbox"
+                          id={`miligram_${i}`}
+                          name="miligram"
+                          value={mili?.variant}
+                          onClick={()=> setMili(mili?.miligram_id)}
+                          onChange={() => miliGramHandler(mili?.miligram)}
+                        />
+                        <label htmlFor={`miligram_${i}`}>{mili?.miligram}</label>
+                      </span>
+                    ))} */}
                 </p>
               </div>
 
               <div className="">
-                <Link href="/my-cart">
-                  <CommanButton label="Add to Cart" />
-                </Link>
+                {loading ? (
+                  <Link href="" onClick={AddToCartHandle}>
+                    <CommanButton label="Add to Cart" />
+                  </Link>
+                ) : (
+                  <Link href="" onClick={AddToCartHandle}>
+                    <CommanButton label="Add..." />
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -296,15 +410,13 @@ const ProductDetail = () => {
           {tab === 0 && (
             <div>
               <p className={styles.detailsReview}>
-              {loading ? (
-                <>
-                 {productDetail && productDetail?.description}
-                </>
-              ) : (
-                <>
-                  <Skeleton />
-                </>
-              )}
+                {loading ? (
+                  <>{productDetail && productDetail?.description}</>
+                ) : (
+                  <>
+                    <Skeleton />
+                  </>
+                )}
               </p>
             </div>
           )}

@@ -186,3 +186,33 @@ font-size: 12px;
     padding-bottom: 20px;
   }
   }
+  /* Select Flied */
+
+.Label {
+    font-size: 12px;
+    font-family: var(--main-font-regular);
+    color: black;
+  }
+  
+  .selectField {
+    border-radius: 51px;
+    padding: 9px 20px;
+    border: 2px solid #1c3247;
+    font-family: var(--main-font-regular);
+    color: #9d9d9d;
+    font-size: 12px;
+    margin: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .optionField {
+    border-radius: 51px;
+    background-color: #ffffff;
+    border: 2px solid #1c3247 !important;
+    font-family: var(--main-font-regular);
+    color: #9d9d9d;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  
+  /* Select Flied */

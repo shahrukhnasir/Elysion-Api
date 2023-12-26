@@ -1,4 +1,6 @@
 import {
+  ADD_TO_CART,
+  ADD_TO_CART_LIST,
   CATEGORIES,
   CAT_BY_PRODUCT,
   CONTACT_US,
@@ -67,15 +69,18 @@ export const Products = (data) => {
   return getMethod(`${PRODUCT}`, data);
 };
 
-export const CatByProducts = (slug,data ) => {
+export const CatByProducts = (slug, data) => {
   return getMethod(`${PRODUCT}?filter_by=category&value=${slug}`, data);
 };
-export const ProductDetails = (slug,data) => {
+export const ProductDetails = (slug, data) => {
   return getMethod(`${PRODUCT}/${slug}`, data);
 };
 
-export const SearchProduct = (slug,search,data ) => {
-  return getMethod(`${PRODUCT}?filter_by=categorysearch&category=${slug}&value=${search}`, data);
+export const SearchProduct = (slug, search, data) => {
+  return getMethod(
+    `${PRODUCT}?filter_by=categorysearch&category=${slug}&value=${search}`,
+    data
+  );
 };
 
 export const NewsLatter = (data) => {
@@ -86,5 +91,11 @@ export const FreeConsult = (data) => {
 };
 export const Membership = (data) => {
   return getMethod(`${MEMBER_SHIP}`, data);
-  
+};
+export const AddToCart = (token, data) => {
+  return postMethod(`${ADD_TO_CART}`, data, token);
+};
+
+export const AddToCartList = (data,token) => {
+  return getMethod(`${ADD_TO_CART_LIST}`, data, token);
 };

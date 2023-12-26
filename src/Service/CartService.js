@@ -1,4 +1,7 @@
+import Swal from "sweetalert2";
 import {
+  AddToCart,
+  AddToCartList,
   CatByProducts,
   Categories,
   ProductDetails,
@@ -59,33 +62,107 @@ export const CatProductById =
   };
 
 ////👇Product Details By id
-export const getProductDetailById = (slug, setProductDetails, setProductDetailById) => async (dispatch) => {
-  try {
-    // setLoading(true);
+export const getProductDetailById =
+  (slug, setProductDetails, setProductDetailById, setProductVariants) =>
+  async (dispatch) => {
+    try {
+      // setLoading(true);
 
-    if (slug !== undefined) {
-      const res = await ProductDetails(slug);
-      const productData = res?.data?.response?.data;
-
-      setProductDetails(productData);
-      dispatch(setProductDetailById(slug));
+      if (slug !== undefined) {
+        const res = await ProductDetails(slug);
+        const productData = res?.data?.response?.data;
+        const productVarriant = res?.data?.response?.data?.variants;
+        // const productMilliGram = res?.data?.response?.data?.mg;
+        // console.log(res?.data?.response?.data?.mg, "M_G");
+        setProductDetails(productData);
+        setProductVariants(productVarriant);
+        // setProductMilliGram(productMilliGram);
+        dispatch(setProductDetailById(slug));
+      }
+    } catch (err) {
+      console.error(err);
     }
-  } catch (err) {
-    console.error(err);
-  }
-};
-
+  };
 
 ////👇Search Products
-export const SearchProducts = (slug,search, setSearchProduct, setSearch) => async (dispatch) => {
-  try {
-    if (search !== undefined) {
-      const res = await SearchProduct(slug,search);
-      const productData = res?.data?.response?.data?.data;
-      setSearchProduct(productData);
-      dispatch(setSearch(search));
+export const SearchProducts =
+  (slug, search, setSearchProduct, setSearch) => async (dispatch) => {
+    try {
+      if (search !== undefined) {
+        const res = await SearchProduct(slug, search);
+        const productData = res?.data?.response?.data?.data;
+        setSearchProduct(productData);
+        dispatch(setSearch(search));
+      }
+    } catch (err) {
+      console.error(err);
     }
-  } catch (err) {
-    console.error(err);
-  }
+  };
+
+////👇// Add TO Cart
+export const AddToCartHandler = (token, data, setLoading, router) => () => {
+  AddToCart(token, data)
+    .then((res) => {
+      if (res) {
+        setLoading(false);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Add to Cart successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        router.push("/my-cart");
+      } else {
+        console.log("Something");
+      }
+    })
+    .catch((res) => {
+      console.log(res);
+      // console.log("data", res?.response?.data?.message);
+      setLoading(true);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: res?.response?.data?.message || res?.response?.data?.errors,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    });
 };
+
+//
+////👇Add TO Cart List
+// export const AddToCartListHandler = (token, setAddCartList, setLoading) => async (dispatch) => {
+//   try {
+//     setLoading(true);
+
+//     if (token !== undefined) {
+//       const res = await AddToCartList(token);
+//       const cartList = res?.data?.response?.data;
+
+//       console.log(res, cartList, "resresresres");
+
+//       setAddCartList(cartList);
+//     }
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
+
+////👇Add TO Cart List
+export const AddToCartListHandler =
+  (token, setAddCartList, setLoading) => (dispatch) => {
+    setLoading(true);
+    AddToCartList(token)
+      .then((res) => {
+        setAddCartList(res?.data?.response?.data);
+        console.log(res?.data?.response?.data,"res");
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
