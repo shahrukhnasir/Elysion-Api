@@ -18,4 +18,5 @@ export const FREE_CONSULTATION= `free-consult`
 export const MEMBER_SHIP =`memberships`
 export const ADD_TO_CART =`cart/create`
 export const ADD_TO_CART_LIST =`cart`
-// export const ADD_TO_CART =`cart/create`
+export const REMOVED_TO_CART =`cart/delete/`
+export const REMOVED_TO_ALL =`cart/delete-all`

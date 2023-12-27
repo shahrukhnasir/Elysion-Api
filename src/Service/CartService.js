@@ -6,6 +6,8 @@ import {
   Categories,
   ProductDetails,
   Products,
+  RemovedToAll,
+  RemovedToCart,
   SearchProduct,
 } from "../network/Network";
 import "sweetalert2/dist/sweetalert2.min.css";
@@ -132,25 +134,6 @@ export const AddToCartHandler = (token, data, setLoading, router) => () => {
     });
 };
 
-//
-////👇Add TO Cart List
-// export const AddToCartListHandler = (token, setAddCartList, setLoading) => async (dispatch) => {
-//   try {
-//     setLoading(true);
-
-//     if (token !== undefined) {
-//       const res = await AddToCartList(token);
-//       const cartList = res?.data?.response?.data;
-
-//       console.log(res, cartList, "resresresres");
-
-//       setAddCartList(cartList);
-//     }
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
 ////👇Add TO Cart List
 export const AddToCartListHandler =
   (token, setAddCartList, setLoading) => (dispatch) => {
@@ -158,11 +141,78 @@ export const AddToCartListHandler =
     AddToCartList(token)
       .then((res) => {
         setAddCartList(res?.data?.response?.data);
-        console.log(res?.data?.response?.data,"res");
         setLoading(false);
+        // console.log(res?.data?.response?.data, "res");
       })
       .catch((err) => {
         console.log(err);
         setLoading(false);
       });
+  };
+  
+  ////👇Removed To Cart  item
+export const RemovedToCartHandler = (slug, token, setLoading,dispatch) => async () => {
+  setLoading(true);
+  try {
+    const res = await RemovedToCart(slug, token);
+    console.log(res?.data?.message === "success");
+    if (res?.data?.message === "success") {
+      setLoading(false);
+      await Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Removed to Cart successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+     
+      dispatch(AddToCartHandler(token))
+    }
+  } catch (error) {
+    // setLoading(false);
+    console.error("Error in Password Update:", error);
+ 
+    await Swal.fire({
+      position: "center",
+      icon: "error",
+      title: "Cart Not Removed ",
+      text: "Cart Not Removed ",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    setLoading(false);
+  }
+};
+
+
+  ////👇Removed To All 
+  export const RemovedAllHandler = ( token,data, setLoading) => async (dispatch) => {
+    // setLoading(true);
+    try {
+      const res = await RemovedToAll( token,data);
+      console.log(res?.data?.message === "success");
+      if (res?.data?.message === "success") {
+        // setLoading(false);
+        await Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Clear All Cart List successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      // setLoading(false);
+      console.error("Error in Password Update:", error?.message);
+   
+      await Swal.fire({
+        position: "center",
+        icon: "error",
+        title: error?.message,
+        text: "please login",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      // setLoading(false);
+    }
   };

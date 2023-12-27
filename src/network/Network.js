@@ -16,11 +16,13 @@ import {
   NEWS__LATTER,
   OTP_NEW_PASSWORD,
   PRODUCT,
+  REMOVED_TO_ALL,
+  REMOVED_TO_CART,
   SERVICES,
   SERVICES_ID,
   SIGN_UP,
 } from "./EndPoint";
-import { getMethod, postMethod } from "./Config";
+import { deleteMethod, getMethod, postMethod } from "./Config";
 
 export const ContactApi = (data) => {
   return postMethod(`${CONTACT_US}`, data);
@@ -96,6 +98,12 @@ export const AddToCart = (token, data) => {
   return postMethod(`${ADD_TO_CART}`, data, token);
 };
 
-export const AddToCartList = (data,token) => {
+export const AddToCartList = (data, token) => {
   return getMethod(`${ADD_TO_CART_LIST}`, data, token);
+};
+export const RemovedToCart = (slug, token, data) => {
+  return deleteMethod(`${REMOVED_TO_CART}${slug}`, token, data);
+};
+export const RemovedToAll = (data, token) => {
+  return deleteMethod(`${REMOVED_TO_ALL}`, data, token);
 };

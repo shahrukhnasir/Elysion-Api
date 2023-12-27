@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styles from "../MyCart/MyCart.module.css";
 import { MdOutlineClose } from "react-icons/md";
 import Link from "next/link";
 import CommanButton from "../../components/CommanButton/CommanButton";
 import { useDispatch, useSelector } from "react-redux";
-import { AddToCartListHandler } from "../../Service/CartService";
+import {
+  AddToCartListHandler,
+  RemovedAllHandler,
+  RemovedToCartHandler,
+} from "../../Service/CartService";
+import { Skeleton } from "antd";
 const MyCart = () => {
   // const Data = [
   //   {
@@ -48,14 +53,31 @@ const MyCart = () => {
   // ];
   const token = useSelector((state) => state?.authSlice?.authToken);
   const dispatch = useDispatch();
-  const [cartList, setCartList] = useState([]);
+  const [cartList, setAddCartList] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(AddToCartListHandler(token, setCartList, setLoading, dispatch));
-  }, []);
+    dispatch(AddToCartListHandler(token, setAddCartList, setLoading, dispatch));
+  }, [setAddCartList, AddToCartListHandler]);
+
+  const handleRemovedById = (slug) => {
+    // e.preventDefault()
+
+    if (slug) {
+      dispatch(RemovedToCartHandler(slug, token, setLoading, setAddCartList));
+      dispatch(
+        AddToCartListHandler(token, setAddCartList, setLoading, dispatch)
+      );
+    }
+  };
+
+  const handleClearAll = () => {
+    dispatch(RemovedAllHandler(token, setLoading));
+    setAddCartList([]);
+  };
 
   console.log(cartList, "cartList");
+
   return (
     <>
       <div className="container-fluid p-0">
@@ -71,7 +93,7 @@ const MyCart = () => {
               <thead>
                 <tr className={`${styles.thead}`}>
                   <th scope="col" className={styles.tHead}>
-                    S.No
+                    P.Name
                   </th>
                   <th scope="col" className={styles.tHead}>
                     Product Name
@@ -89,32 +111,66 @@ const MyCart = () => {
                   <th scope="col" className={styles.tHead}></th>
                 </tr>
               </thead>
-              {cartList?.map((item, i) => {
-                return (
-                  <tbody>
-                    <tr key={i}>
-                      <td className={styles.tData}>{item.sNo}</td>
-                      <td className={styles.tDataImage}>
-                        <img
-                          className="w-25"
-                          src={item?.productImage}
-                          alt="image"
-                        />{" "}
-                        {item?.title}
-                      </td>
-                      <td className={styles.tData}>{item?.price}</td>
-                      <td className={styles.tData}>{item?.qty}</td>
-                      <td className={styles.tData}>{item?.sub_total}</td>
-
-                      <td className={styles.dataCross}>
-                        <Link href="">
-                          <MdOutlineClose className={styles.crossIcon} />
-                        </Link>{" "}
-                      </td>
-                    </tr>
-                  </tbody>
-                );
-              })}
+              {!loading ? (
+                <>
+                  {cartList && cartList.length > 0 ? (
+                    cartList.map((item, i) => (
+                      <tbody key={i}>
+                        <tr>
+                          <td className={styles.tData}>
+                            {item?.product?.title}
+                          </td>
+                          <td className={styles.tDataImage}>
+                            <img
+                              className="w-25"
+                              src={item?.product?.thumbnail_url}
+                              alt="image"
+                            />
+                            {item?.title}
+                          </td>
+                          <td className={styles.tData}>{item?.price}</td>
+                          <td className={styles.tData}>{item?.qty}</td>
+                          <td className={styles.tData}>{item?.sub_total}</td>
+                          <td
+                            className={styles.dataCross}
+                            onClick={() => handleRemovedById(item?.id)}
+                          >
+                            <Link href="">
+                              <MdOutlineClose className={styles.crossIcon} />
+                            </Link>
+                          </td>
+                        </tr>
+                      </tbody>
+                    ))
+                  ) : (
+                    <>
+                      {cartList && cartList.length < 0 ? (
+                        <>
+                          <tbody>
+                            <tr className="text-center">
+                              <td colSpan="6 ">Product not added</td>
+                            </tr>
+                          </tbody>
+                        </>
+                      ) : (
+                        <tbody>
+                          <tr className="text-center">
+                            <td colSpan="6 ">Product not added</td>
+                          </tr>
+                        </tbody>
+                      )}
+                    </>
+                  )}
+                </>
+              ) : (
+                <tbody>
+                  <tr>
+                    <td colSpan="6">
+                      <Skeleton active loading={cartList} />
+                    </td>
+                  </tr>
+                </tbody>
+              )}
             </table>
 
             <div>
@@ -137,7 +193,7 @@ const MyCart = () => {
                   <div className="row">
                     <div className="col-lg-8">
                       {" "}
-                      <span className={styles.subTotal}>Sub Total</span>
+                      <span className={styles.subTotal}>Total</span>
                     </div>
                     <div className="col-lg-4">
                       {" "}
@@ -148,7 +204,9 @@ const MyCart = () => {
               </div>
             </div>
           </div>
-
+          <div className="float-start py-3" id={styles.payment}>
+            <CommanButton label="ClearList" onClick={handleClearAll} />
+          </div>
           <div className="float-end py-3" id={styles.payment}>
             <Link href="/checkout-details">
               <CommanButton
