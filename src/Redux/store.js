@@ -11,6 +11,7 @@ import {
   REGISTER,
 } from 'redux-persist'
 import authSlice from "./Auth/authSlice";
+import cartVariantSlice from "../Redux/CartCreate/CartCreate";
 
 
 const persistConfig = {
@@ -19,7 +20,8 @@ const persistConfig = {
 }
 
 const persistedReducer = persistReducer(persistConfig, combineReducers({
-  authSlice:authSlice
+  authSlice:authSlice,
+  cartVariantSlice:cartVariantSlice,
 }));
 
 export const store = configureStore({

@@ -58,16 +58,16 @@ const MyCart = () => {
 
   useEffect(() => {
     dispatch(AddToCartListHandler(token, setAddCartList, setLoading, dispatch));
-  }, [setAddCartList, AddToCartListHandler]);
+  }, [ AddToCartListHandler]);
 
   const handleRemovedById = (slug) => {
     // e.preventDefault()
 
     if (slug) {
       dispatch(RemovedToCartHandler(slug, token, setLoading, setAddCartList));
-      dispatch(
-        AddToCartListHandler(token, setAddCartList, setLoading, dispatch)
-      );
+      // dispatch(
+      //   AddToCartListHandler(token, setAddCartList, setLoading, dispatch)
+      // );
     }
   };
 
@@ -113,7 +113,7 @@ const MyCart = () => {
               </thead>
               {!loading ? (
                 <>
-                  {cartList && cartList.length > 0 ? (
+                  {cartList  ? (
                     cartList.map((item, i) => (
                       <tbody key={i}>
                         <tr>
@@ -143,23 +143,11 @@ const MyCart = () => {
                       </tbody>
                     ))
                   ) : (
-                    <>
-                      {cartList && cartList.length < 0 ? (
-                        <>
-                          <tbody>
-                            <tr className="text-center">
-                              <td colSpan="6 ">Product not added</td>
-                            </tr>
-                          </tbody>
-                        </>
-                      ) : (
-                        <tbody>
-                          <tr className="text-center">
-                            <td colSpan="6 ">Product not added</td>
-                          </tr>
-                        </tbody>
-                      )}
-                    </>
+                    <tbody>
+                      <tr className="text-center">
+                        <td colSpan="6 ">Product not added</td>
+                      </tr>
+                    </tbody>
                   )}
                 </>
               ) : (

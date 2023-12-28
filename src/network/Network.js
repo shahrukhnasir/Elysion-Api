@@ -3,6 +3,7 @@ import {
   ADD_TO_CART_LIST,
   CATEGORIES,
   CAT_BY_PRODUCT,
+  CHECK_OUT,
   CONTACT_US,
   FAQ,
   FIND_LOCATION,
@@ -106,4 +107,8 @@ export const RemovedToCart = (slug, token, data) => {
 };
 export const RemovedToAll = (data, token) => {
   return deleteMethod(`${REMOVED_TO_ALL}`, data, token);
+};
+
+export const CheckOut = (token, data) => {
+  return postMethod(`${CHECK_OUT}`, data, token);
 };

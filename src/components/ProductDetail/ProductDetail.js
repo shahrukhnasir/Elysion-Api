@@ -197,7 +197,7 @@ const ProductDetail = () => {
         setProductVariants
       )
     );
-  }, [slug]);
+  }, [slug,setProductVariants]);
 
   // setVarriant(productDetail?.variants);
   // console.log(milliGram?.map((mili,i)=> mili?.miligram_id), "milliGram");

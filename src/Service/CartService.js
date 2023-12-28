@@ -4,6 +4,7 @@ import {
   AddToCartList,
   CatByProducts,
   Categories,
+  CheckOut,
   ProductDetails,
   Products,
   RemovedToAll,
@@ -123,7 +124,7 @@ export const AddToCartHandler = (token, data, setLoading, router) => () => {
     .catch((res) => {
       console.log(res);
       // console.log("data", res?.response?.data?.message);
-      setLoading(true);
+      // setLoading(true);
       Swal.fire({
         position: "center",
         icon: "error",
@@ -149,47 +150,48 @@ export const AddToCartListHandler =
         setLoading(false);
       });
   };
-  
-  ////👇Removed To Cart  item
-export const RemovedToCartHandler = (slug, token, setLoading,dispatch) => async () => {
-  setLoading(true);
-  try {
-    const res = await RemovedToCart(slug, token);
-    console.log(res?.data?.message === "success");
-    if (res?.data?.message === "success") {
-      setLoading(false);
+
+////👇Removed To Cart  item
+export const RemovedToCartHandler =
+  (slug, token, setLoading, dispatch) => async () => {
+    setLoading(true);
+    try {
+      const res = await RemovedToCart(slug, token);
+      console.log(res?.data?.message === "success");
+      if (res?.data?.message === "success") {
+        setLoading(false);
+        await Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Removed to Cart successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+
+        // dispatch(AddToCartHandler(token))
+      }
+    } catch (error) {
+      // setLoading(false);
+      console.error("Error in Password Update:", error);
+
       await Swal.fire({
         position: "center",
-        icon: "success",
-        title: "Removed to Cart successfully",
+        icon: "error",
+        title: "Cart Not Removed ",
+        text: "Cart Not Removed ",
         showConfirmButton: false,
         timer: 1500,
       });
-     
-      dispatch(AddToCartHandler(token))
+      setLoading(false);
     }
-  } catch (error) {
-    // setLoading(false);
-    console.error("Error in Password Update:", error);
- 
-    await Swal.fire({
-      position: "center",
-      icon: "error",
-      title: "Cart Not Removed ",
-      text: "Cart Not Removed ",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-    setLoading(false);
-  }
-};
+  };
 
-
-  ////👇Removed To All 
-  export const RemovedAllHandler = ( token,data, setLoading) => async (dispatch) => {
+////👇Removed To All
+export const RemovedAllHandler =
+  (token, data, setLoading) => async (dispatch) => {
     // setLoading(true);
     try {
-      const res = await RemovedToAll( token,data);
+      const res = await RemovedToAll(token, data);
       console.log(res?.data?.message === "success");
       if (res?.data?.message === "success") {
         // setLoading(false);
@@ -204,7 +206,40 @@ export const RemovedToCartHandler = (slug, token, setLoading,dispatch) => async 
     } catch (error) {
       // setLoading(false);
       console.error("Error in Password Update:", error?.message);
-   
+
+      await Swal.fire({
+        position: "center",
+        icon: "error",
+        title: error?.message,
+        text: "please login",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      // setLoading(false);
+    }
+  };
+
+////👇Check Out
+export const CheckOutHandler =
+  (token, data, setLoading) => async (dispatch) => {
+    setLoading(true);
+    try {
+      const res = await CheckOut(token, data);
+      console.log(res);
+      if (res?.data?.message === "success") {
+      setLoading(false);
+      await Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Clear All Cart List successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      }
+    } catch (error) {
+      // setLoading(false);
+      console.error("Error in Password Update:", error?.message);
+
       await Swal.fire({
         position: "center",
         icon: "error",

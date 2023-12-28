@@ -40,14 +40,14 @@ const ShopLayout = () => {
 
   const filterCatHandler = (e, id) => {
     e.preventDefault();
-    setSearchQuery("")
+    // setSearchQuery("")
     setSlug(id);
   };
   const AllCatHandler = (e) => {
     e.preventDefault();
     setAllProducts(true);
     setCatByProductList(products);
-    setSearchQuery("")
+    // setSearchQuery("")
   };
 
   const handleProductDetail = (productId) => {
