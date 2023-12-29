@@ -21,3 +21,5 @@ export const ADD_TO_CART_LIST =`cart`
 export const REMOVED_TO_CART =`cart/delete/`
 export const REMOVED_TO_ALL =`cart/delete-all`
 export const CHECK_OUT =`orders/checkout`
+export const BLOGS =`blogs`
+export const BLOG_CONTENT = `content-pages/view/blog`

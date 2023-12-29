@@ -10,7 +10,9 @@ import {
   RemovedToCartHandler,
 } from "../../Service/CartService";
 import { Skeleton } from "antd";
+import { useRouter } from "next/router";
 const MyCart = () => {
+  const     router = useRouter()
   // const Data = [
   //   {
   //     id: 1,
@@ -64,15 +66,18 @@ const MyCart = () => {
     // e.preventDefault()
 
     if (slug) {
-      dispatch(RemovedToCartHandler(slug, token, setLoading, setAddCartList));
+      dispatch(RemovedToCartHandler(slug, token, setLoading, setAddCartList,router));
       // dispatch(
       //   AddToCartListHandler(token, setAddCartList, setLoading, dispatch)
       // );
+      console.log(slug,'useRouter');
+      // router.reload();
     }
   };
 
   const handleClearAll = () => {
     dispatch(RemovedAllHandler(token, setLoading));
+    router.reload();
     setAddCartList([]);
   };
 

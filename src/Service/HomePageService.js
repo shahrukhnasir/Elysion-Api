@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import {
   AllServiceContent,
+  BlogContent,
   Faqs,
   FindLocation,
   HeroSectionContent,
@@ -193,4 +194,21 @@ export const FooterNewsLatterEmail = (data, setLoading, setChatFields,router) =>
       },
     });
   }
+};
+
+// 👇Blog Content//
+export const BlogsContent = (setLoading, setBlogHeading,setBlogDes,setBlogImage) => (dispatch) => {
+  setLoading(true);
+  BlogContent()
+    .then((res) => {
+
+      setBlogHeading(res?.data?.response?.data?.[0]?.type);
+      setBlogDes(res?.data?.response?.data?.[0]?.value);
+      setBlogImage(res?.data?.response?.data?.[1]?.image_url);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
 };

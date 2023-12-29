@@ -113,12 +113,21 @@ const Products = [
 const ProductDetail = () => {
   const [productDetail, setProductDetails] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [steps, setSteps] = useState(0);
+  const [steps, setSteps] = useState(1);
   const [variant, setProductVariants] = useState();
   const [milliGram, setMiliId] = useState([]);
   const [variantId, setVariantId] = useState();
   const [tab, setTab] = useState(0);
   const token = useSelector((state) => state?.authSlice?.authToken);
+
+  const updateSteps = (amount) => {
+    setSteps((prevState) => {
+      const updatedSteps = prevState + amount;
+      console.log(updatedSteps, "//////////////////////////");
+      return updatedSteps;
+    });
+  };
+  console.log(productDetail,"productDetail");
   const AddToCartHandle = async (e) => {
     if (token) {
       e.preventDefault();
@@ -127,8 +136,8 @@ const ProductDetail = () => {
       data.append("product_id", slug);
       data.append("product_variant_id", variantId);
       data.append("product_miligram_id", milliGram);
-      data.append("qty", variant?.[0]?.qty);
-      dispatch(AddToCartHandler(token, data, setLoading,router));
+      data.append("qty", steps);
+      dispatch(AddToCartHandler(token, data, setLoading, router));
       console.log(loading, "loadingloadingloadingloading");
     } else {
       alert("first signin");
@@ -137,16 +146,8 @@ const ProductDetail = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const increment = () => {
-    setSteps((prevState) => prevState + 1);
-  };
-
-  const decrement = () => {
-    setSteps((prevState) => prevState - 1);
-  };
   // tabs
   const handleTab = (tab) => {
-    console.log(tab);
     setTab(tab);
   };
   // slider
@@ -197,7 +198,7 @@ const ProductDetail = () => {
         setProductVariants
       )
     );
-  }, [slug,setProductVariants]);
+  }, [slug, setProductVariants]);
 
   // setVarriant(productDetail?.variants);
   // console.log(milliGram?.map((mili,i)=> mili?.miligram_id), "milliGram");
@@ -295,13 +296,19 @@ const ProductDetail = () => {
                 <p>
                   <span className={styles.cardText}>Quantity</span>
                   <span className={styles.priceText}>
-                    <button className={styles.qtyBtn} onClick={decrement}>
+                    <button
+                      className={styles.qtyBtn}
+                      onClick={() => updateSteps(-1)}
+                    >
                       <AiOutlineMinus />
                     </button>{" "}
                     <span>
                       <button className={styles.qtyResult}> {steps}</button>
                     </span>{" "}
-                    <button className={styles.qtyBtn} onClick={increment}>
+                    <button
+                      className={styles.qtyBtn}
+                      onClick={() => updateSteps(1)}
+                    >
                       <AiOutlinePlus />
                     </button>
                   </span>

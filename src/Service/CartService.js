@@ -153,7 +153,7 @@ export const AddToCartListHandler =
 
 ////👇Removed To Cart  item
 export const RemovedToCartHandler =
-  (slug, token, setLoading, dispatch) => async () => {
+  (slug, token, setLoading, router) => async () => {
     setLoading(true);
     try {
       const res = await RemovedToCart(slug, token);
@@ -167,6 +167,7 @@ export const RemovedToCartHandler =
           showConfirmButton: false,
           timer: 1500,
         });
+        // router.reload();
 
         // dispatch(AddToCartHandler(token))
       }
@@ -221,7 +222,7 @@ export const RemovedAllHandler =
 
 ////👇Check Out
 export const CheckOutHandler =
-  (token, data, setLoading) => async (dispatch) => {
+  (token, data, setLoading,route) => async (dispatch) => {
     setLoading(true);
     try {
       const res = await CheckOut(token, data);
@@ -231,22 +232,24 @@ export const CheckOutHandler =
       await Swal.fire({
         position: "center",
         icon: "success",
-        title: "Clear All Cart List successfully",
+        title: "Order successfully completed",
         showConfirmButton: false,
         timer: 1500,
       });
+      route.push('thankyou')
       }
+      
     } catch (error) {
       // setLoading(false);
-      console.error("Error in Password Update:", error?.message);
+      // console.error(error?.response?.data?.message,"///////", );
 
       await Swal.fire({
         position: "center",
         icon: "error",
-        title: error?.message,
-        text: "please login",
+        title: error?.response?.data?.message,
+        text: error?.response?.data?.message,
         showConfirmButton: false,
-        timer: 1000,
+        timer: 1500,
       });
       // setLoading(false);
     }

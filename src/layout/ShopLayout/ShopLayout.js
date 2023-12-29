@@ -13,8 +13,6 @@ import { useRouter } from "next/router";
 import { baseUrl } from "../../network/baseUrl";
 import axios from "axios";
 const ShopLayout = () => {
-  // const [getCat, setCat] = useState("");
-  // const [getActiveCat, setActiveCat] = useState();
 
   const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -99,22 +97,18 @@ const ShopLayout = () => {
                   </li>
 
                   <li className={`${styles.search_sec} list-group-item`}>
-           
-
-                        <input
-                          type="text"
-                          className={styles.filterField}
-                          placeholder="Search Product"
-                          value={search}
-                          onChange={(e) => handleSearchChange(e)}
-                        />
-                        <img
-                          src="./images/filterIcon.png"
-                          className={styles.filterIcon}
-                          alt=""
-                        />
-          
-           
+                    <input
+                      type="text"
+                      className={styles.filterField}
+                      placeholder="Search Product"
+                      value={search}
+                      onChange={(e) => handleSearchChange(e)}
+                    />
+                    <img
+                      src="./images/filterIcon.png"
+                      className={styles.filterIcon}
+                      alt=""
+                    />
                   </li>
                   <div id={styles.filterMenu}>
                     <li

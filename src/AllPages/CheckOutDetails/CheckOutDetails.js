@@ -9,6 +9,7 @@ import {
   AddToCartListHandler,
   CheckOutHandler,
 } from "../../Service/CartService";
+import StripeCheckout from "react-stripe-checkout";
 const CheckOutDetails = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -16,6 +17,14 @@ const CheckOutDetails = () => {
   const [loading, setLoading] = useState(false);
   const [cartList, setAddCartList] = useState([]);
   const token = useSelector((state) => state?.authSlice?.authToken);
+
+  const [striptoken, setStriptoken] = useState();
+
+  const onToken = (token) => {
+    setStriptoken(token?.id);
+    console.log(token, striptoken, "stripetoken");
+  };
+
   const [checkOutField, setCheckOutFields] = useState({
     fName: "",
     lName: "",
@@ -40,63 +49,70 @@ const CheckOutDetails = () => {
     e.preventDefault();
     setCheckOutFields((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const HandleSubmit = (e) => {
-    const stripe_Token = [
-      "pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3",
-    ];
-    e.preventDefault();
 
+  const HandleSubmit = async (e) => {
+    e.preventDefault();
     setError(false);
     setLoading(true);
-    let data = new FormData();
-    data.append("shipper_first_name", checkOutField?.fName);
-    data.append("shipper_last_name", checkOutField?.lName);
-    data.append("shipper_email", checkOutField?.email);
-    data.append("shipper_phone", checkOutField?.phone);
-    data.append("shipper_address", checkOutField?.address);
-    data.append("shipper_country", checkOutField?.country);
-    data.append("shipper_city", checkOutField?.address);
-    data.append("shipper_state", checkOutField?.address);
-    data.append("shipper_zip", checkOutField?.zip);
-    data.append("billing_first_name", checkOutField?.bName);
-    data.append("billing_last_name", checkOutField?.bLName);
-    data.append("billing_email", checkOutField?.bEmail);
-    data.append("billing_phone", checkOutField?.bPhone);
-    data.append("billing_address", checkOutField?.bAddress);
-    data.append("billing_country", checkOutField?.country);
-    data.append("billing_city", checkOutField?.city);
-    data.append("billing_state", checkOutField?.state);
-    data.append("billing_zip", checkOutField?.zip);
-    data.append("total_discount", "10%");
-    data.append("total_amount", finalTotal);
-    cartList?.map((i, cart) => {
-      data.append(`cart[${cart?.id}]`, i.id);
-    });
-    stripe_Token.map((i, t) => {
-      data.append(`stripe_Token[${t}]`, i.id);
-    });
-    dispatch(CheckOutHandler(token, data, setLoading));
-    if (
-      checkOutField.fName.length === 0 ||
-      checkOutField.lName.length === 0 ||
-      checkOutField.email.length === 0 ||
-      checkOutField.phone.length === 0 ||
-      checkOutField.bName.length === 0 ||
-      checkOutField.bLName.length === 0 ||
-      checkOutField.bEmail.length === 0 ||
-      checkOutField.bPhone.length === 0 ||
-      checkOutField.bAddress.length === 0 ||
-      checkOutField.bOaddress.length === 0 ||
-      checkOutField.cartNumber.length === 0 ||
-      checkOutField.expirDate.length === 0 ||
-      checkOutField.cvv.length === 0 ||
-      checkOutField.country.length === 0 ||
-      checkOutField.city.length === 0 ||
-      checkOutField.state.length === 0 ||
-      checkOutField.zip.length === 0
-    ) {
+    try {
+      if (striptoken) {
+        let data = new FormData();
+        data.append("shipper_first_name", checkOutField?.fName);
+        data.append("shipper_last_name", checkOutField?.lName);
+        data.append("shipper_email", checkOutField?.email);
+        data.append("shipper_phone", checkOutField?.phone);
+        data.append("shipper_address", checkOutField?.address);
+        data.append("shipper_country", checkOutField?.country);
+        data.append("shipper_city", checkOutField?.address);
+        data.append("shipper_state", checkOutField?.address);
+        data.append("shipper_zip", checkOutField?.zip);
+        data.append("billing_first_name", checkOutField?.bName);
+        data.append("billing_last_name", checkOutField?.bLName);
+        data.append("billing_email", checkOutField?.bEmail);
+        data.append("billing_phone", checkOutField?.bPhone);
+        data.append("billing_address", checkOutField?.bAddress);
+        data.append("billing_country", checkOutField?.country);
+        data.append("billing_city", checkOutField?.city);
+        data.append("billing_state", checkOutField?.state);
+        data.append("billing_zip", checkOutField?.zip);
+        data.append("total_discount", "10%");
+        data.append("total_amount", finalTotal);
+        data.append("stripe_Token", striptoken);
+        cartList?.map((i, cart) => {
+          data.append(`cart[${cart?.id}]`, i.id);
+        });
+
+        dispatch(CheckOutHandler(token, data, setLoading,router));
+      }
+
+      // Validate form fields
+      if (
+        checkOutField.fName.length === 0 ||
+        checkOutField.lName.length === 0 ||
+        checkOutField.email.length === 0 ||
+        checkOutField.phone.length === 0 ||
+        checkOutField.bName.length === 0 ||
+        checkOutField.bLName.length === 0 ||
+        checkOutField.bEmail.length === 0 ||
+        checkOutField.bPhone.length === 0 ||
+        checkOutField.bAddress.length === 0 ||
+        checkOutField.bOaddress.length === 0 ||
+        checkOutField.cartNumber.length === 0 ||
+        checkOutField.expirDate.length === 0 ||
+        checkOutField.cvv.length === 0 ||
+        checkOutField.country.length === 0 ||
+        checkOutField.city.length === 0 ||
+        checkOutField.state.length === 0 ||
+        checkOutField.zip.length === 0
+      ) {
+        setError(true);
+        return;
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
       setError(true);
-      return;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -191,7 +207,6 @@ const CheckOutDetails = () => {
                   </div>
                 </div>
               </div>
-
               <div className="row">
                 <div className="col-lg-6">
                   <input
@@ -318,7 +333,6 @@ const CheckOutDetails = () => {
                   </div>
                 </div>
               </div>
-
               <div className="col-lg-12">
                 <input
                   type="text"
@@ -339,7 +353,6 @@ const CheckOutDetails = () => {
                   )}
                 </div>
               </div>
-
               {/* Heading */}
               <div className="row py-3">
                 <div className="col-lg-6">
@@ -360,7 +373,6 @@ const CheckOutDetails = () => {
                   </div>
                 </div>
               </div>
-
               {/* Add Shipping Details */}
               <div className="row">
                 <div className="col-lg-6">
@@ -405,7 +417,6 @@ const CheckOutDetails = () => {
                   </div>
                 </div>
               </div>
-
               <div className="row">
                 <div className="col-lg-6">
                   <input
@@ -449,7 +460,6 @@ const CheckOutDetails = () => {
                   </div>
                 </div>
               </div>
-
               <div className="col-lg-12">
                 <input
                   type="text"
@@ -470,7 +480,6 @@ const CheckOutDetails = () => {
                   )}
                 </div>
               </div>
-
               {/* <div className="col-lg-12">
                 <input
                   type="text"
@@ -494,7 +503,6 @@ const CheckOutDetails = () => {
                 </div>
               </div> */}
               {/* Add Shipping Details End */}
-
               {/* Heading */}
               {/* <div className="row py-3">
                 <div className="col-lg-6">
@@ -511,9 +519,7 @@ const CheckOutDetails = () => {
                   </span>
                 </div>
               </div> */}
-
               {/* Enter Card Details */}
-
               {/* <div className="row">
                 <div className="col-lg-12">
                   <label htmlFor="" className={styles.labelInput}>
@@ -539,7 +545,6 @@ const CheckOutDetails = () => {
                   </div>
                 </div>
               </div> */}
-
               {/* <div className="row">
                 <div className="col-lg-6">
                   <label htmlFor="" className={styles.labelInput}>
@@ -592,11 +597,22 @@ const CheckOutDetails = () => {
               {/* Enter Card Details */}
 
               <div className="py-3">
-                <CommanButton
-                  onClick={HandleSubmit}
-                  label="Add Card"
-                  className={styles.cartButton}
-                />
+                {striptoken ? (
+                  ""
+                ) : (
+                  <StripeCheckout
+                    token={onToken}
+                    stripeKey="pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3"
+                    amount={finalTotal}
+                    currency="USD"
+                  >
+                    <CommanButton
+                      label="add to card"
+                      onClick={HandleSubmit}
+                      className={styles.cartButton}
+                    />
+                  </StripeCheckout>
+                )}
               </div>
             </div>
 
@@ -675,7 +691,14 @@ const CheckOutDetails = () => {
             </div>
             <div className="col-lg-6">
               <div className={styles.checkOutLast}>
-                <CommanButton onSubmit={HandleSubmit} label="Checkout" />
+                {striptoken ? (
+                  <>
+                    <CommanButton onClick={HandleSubmit} label="Checkout" />
+                  </>
+                ):
+                
+                ""}
+
               </div>
             </div>
           </div>

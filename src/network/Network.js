@@ -1,6 +1,8 @@
 import {
   ADD_TO_CART,
   ADD_TO_CART_LIST,
+  BLOGS,
+  BLOG_CONTENT,
   CATEGORIES,
   CAT_BY_PRODUCT,
   CHECK_OUT,
@@ -111,4 +113,11 @@ export const RemovedToAll = (data, token) => {
 
 export const CheckOut = (token, data) => {
   return postMethod(`${CHECK_OUT}`, data, token);
+};
+export const Blogs = (data) => {
+  return getMethod(`${BLOGS}`, data);
+};
+
+export const BlogContent = (data) => {
+  return getMethod(`${BLOG_CONTENT}`, data);
 };
