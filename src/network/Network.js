@@ -23,7 +23,10 @@ import {
   REMOVED_TO_CART,
   SERVICES,
   SERVICES_ID,
+  SERVICE_PROVIDER,
+  SERVICE_PROVIDER_ID,
   SIGN_UP,
+  SLOTS,
 } from "./EndPoint";
 import { deleteMethod, getMethod, postMethod } from "./Config";
 
@@ -120,4 +123,15 @@ export const Blogs = (data) => {
 
 export const BlogContent = (data) => {
   return getMethod(`${BLOG_CONTENT}`, data);
+};
+export const ServiceProvider = (token, data) => {
+  return getMethod(`${SERVICE_PROVIDER}`, token, data);
+};
+
+export const ServiceProviderById = (slug, token, data) => {
+  return getMethod(`${SERVICE_PROVIDER_ID}${slug}`, token, data);
+};
+
+export const SlotById = (slug, token, data) => {
+  return getMethod(`${SLOTS}${slug}`, token, data);
 };
