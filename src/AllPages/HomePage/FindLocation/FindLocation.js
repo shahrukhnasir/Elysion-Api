@@ -1,6 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../FindLocation/FIndLocation.module.css";
+import { FindLocationContent } from "../../../Service/HomePageService";
+import { useDispatch } from "react-redux";
+import { Skeleton } from "antd";
 const FindLocation = () => {
+  const [findLocation, setFindLocation] = useState([]);
+  const [locationDetails, setLocationDetails] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      FindLocationContent(
+        setLoading,
+        setFindLocation,
+        setLocationDetails,
+        dispatch
+      )
+    );
+  }, []);
+
   return (
     <>
       <div
@@ -24,21 +43,33 @@ const FindLocation = () => {
             data-aos="fade-right"
             data-aos-duration="2000"
           >
-            <h1 className={styles.heading}>Find Our Location</h1>
+            {!loading ? (
+              <h1 className={styles.heading}>{findLocation}</h1>
+            ) : (
+              <>
+                <Skeleton />
+              </>
+            )}
 
-            <p className={styles.desc}>
-              Kindly utilize the provided address <br className={styles.br} />to send correspondence to the provider   <br className={styles.br} />Apractice of Elysion Health & Wellness:  <br className={styles.br} />  Location 3698 Largent Way, Suite 102, Marietta GA 30064. <br className={styles.br} />
-            </p>
-
-              <a target="_blank" href="https://maps.app.goo.gl/RT2qm8XN9HEcUigu7">
-            <button  className={styles.btn}>
-
-              <span>
-                <img src="./images/loc.png" className={styles.locImg} alt="location" />
-              </span>
-              Find us on Google Maps
-            </button>
-              </a>
+            {!loading ? (
+              <p className={styles.desc}>{locationDetails}</p>
+            ) : (
+              <>
+                <Skeleton />
+              </>
+            )}
+            <a target="_blank" href="https://maps.app.goo.gl/RT2qm8XN9HEcUigu7">
+              <button className={styles.btn}>
+                <span>
+                  <img
+                    src="./images/loc.png"
+                    className={styles.locImg}
+                    alt="location"
+                  />
+                </span>
+                Find us on Google Maps
+              </button>
+            </a>
           </div>
         </div>
       </div>
@@ -47,4 +78,3 @@ const FindLocation = () => {
 };
 
 export default FindLocation;
-

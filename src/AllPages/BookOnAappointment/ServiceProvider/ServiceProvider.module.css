@@ -1,70 +1,102 @@
 /* Select Flied */
 
-.Label{
+.Label {
     font-size: 12px;
     font-family: var(--main-font-regular);
     color: black;
-    }
-    .selectField {
-        border-radius: 51px;
-        padding: 13px 30px;
-        border: 2px solid #1c3247;
-        font-family: var(--main-font-regular);
-        color: #9D9D9D;
-        font-size: 12px;
-        margin-bottom: 12px;
-        background-color: #F9F9F9;
-    
-    }
-    .optionField{
-        border-radius: 51px;
-        background-color: #ffffff;
-        border: 2px solid #1c3247 !important;
-        font-family: var(--main-font-regular);
-        color: #9D9D9D;  
-        font-size: 12px;
-        margin-bottom: 12px;
-    }
-    /* Select Flied */
+}
 
-    .cardTopHeading{
-        font-size: 18px;
-        font-family: var(--main-font-regular);
-        color: black;
-        margin: 20px 0px;
-    }
-    /* Card  */
-    .card{
+.card_img {
+    max-width: 250px;
+    min-width: 100px;
+}
+
+#miniCard {
+
+        background: #1c3247;
+        color: white;
+        width: 150px;
+        height: 42px;
+        border-radius: 25px;
         border: none;
-    }
-.cardTitle{
+        font-family: var(--main-font-regular);
+        font-size: 13px;
+        transform: translateY(0rem);
+        transition: all 0.3s ease-in-out;
+    
+}
+.time{
+    text-align: center;
+    font-family: var(--main-font-regular);
+    font-size: 20px;
+    align-items: center;
+
+}
+.selectField {
+    border-radius: 51px;
+    padding: 13px 30px;
+    border: 2px solid #1c3247;
+    font-family: var(--main-font-regular);
+    color: #9D9D9D;
+    font-size: 12px;
+    margin-bottom: 12px;
+    background-color: #F9F9F9;
+
+}
+
+.optionField {
+    border-radius: 51px;
+    background-color: #ffffff;
+    border: 2px solid #1c3247 !important;
+    font-family: var(--main-font-regular);
+    color: #9D9D9D;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+
+/* Select Flied */
+
+.cardTopHeading {
+    font-size: 18px;
+    font-family: var(--main-font-regular);
+    color: black;
+    margin: 20px 0px;
+}
+
+/* Card  */
+.card {
+    border: none;
+}
+
+.cardTitle {
     font-family: var(--main-font-regular);
     font-size: 25px;
     color: black;
 }
 
-.textMuted{
-color: #9D9D9D;
-font-family: var(--main-font-regular);
-font-size: 12px;
-padding: 2px 0px;
-margin: 0px;
+.textMuted {
+    color: #9D9D9D;
+    font-family: var(--main-font-regular);
+    font-size: 12px;
+    padding: 2px 0px;
+    margin: 0px;
 }
-    .outlineButton> button{
-        background: transparent;
-        color: black;
-        width: 230px;
-        height: 42px;
-        border-radius: 25px;
-        border: 1px solid #1c3247;
-        font-family: var(--main-font-regular);
-        font-size: 13px;
-        margin: 5px 0px;
-    }
 
-    /* Card */
+.outlineButton>button {
+    background: transparent;
+    color: black;
+    width: 230px;
+    height: 42px;
+    border-radius: 25px;
+    border: 1px solid #1c3247;
+    font-family: var(--main-font-regular);
+    font-size: 13px;
+    margin: 5px 0px;
+}
 
-.discount{
+/* Card */
+
+.discount {
     font-family: var(--main-font-regular);
     font-size: 13px;
     color: #1c3247;
@@ -74,11 +106,12 @@ margin: 0px;
 
 }
 
-@media (min-width: 200px) and (max-width:600px){
-    .card :first-child{
+@media (min-width: 200px) and (max-width:600px) {
+    .card :first-child {
         text-align: center;
     }
-    .nextBtn{
+
+    .nextBtn {
         display: flex;
         justify-content: end !important;
     }

@@ -1,6 +1,27 @@
-
 export const CONTACT_US = "contact-us";
-export const NEWS__LATTER = "news-letter"
-export const SIGN_UP = "auth/signup"
-export const LOGIN = "auth/login"
-
+export const NEWS__LATTER = "news-letter";
+export const SIGN_UP = "auth/signup";
+export const LOGIN = "auth/login";
+export const FORGOT_PASSWORD = "auth/forgot";
+export const OTP_NEW_PASSWORD = "auth/reset-password";
+export const HERO_SECTION = "content-pages/view/hero-section";
+export const MEET_DOCTOR = "content-pages/view/meet-doctor";
+export const MEDICAL_SERVICES = "content-pages/view/medical-services";
+export const SERVICES = "services";
+export const SERVICES_ID = `services/view`;
+export const FIND_LOCATION = `content-pages/view/find-our-Location`;
+export const FAQ = `faqs`;
+export const CATEGORIES = `shop/category`;
+export const PRODUCT = `shop/product`;
+export const FREE_CONSULTATION = `free-consult`;
+export const MEMBER_SHIP = `memberships`;
+export const ADD_TO_CART = `cart/create`;
+export const ADD_TO_CART_LIST = `cart`;
+export const REMOVED_TO_CART = `cart/delete/`;
+export const REMOVED_TO_ALL = `cart/delete-all`;
+export const CHECK_OUT = `orders/checkout`;
+export const BLOGS = `blogs`;
+export const BLOG_CONTENT = `content-pages/view/blog`;
+export const SERVICE_PROVIDER = `service-provider`;
+export const SERVICE_PROVIDER_ID = `service-provider/view/`;
+export const SLOTS = `slots/get-slots/`

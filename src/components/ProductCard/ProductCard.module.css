@@ -7,6 +7,9 @@
     overflow: hidden;
 }
 
+.card img {
+    height: 205px !important;
+}
 
 .cardBody {
     background-color: #FFFFFF;
@@ -19,15 +22,17 @@
     font-size: 17px !important;
     color: #123B51;
     width: 113px !important;
-    word-wrap: break-word; 
+    word-wrap: break-word;
 
 }
-.cardPrice{
+
+.cardPrice {
     font-family: var(--main-font-regular);
     font-size: 17px !important;
     color: #123B51;
     text-align: end;
 }
+
 .cardDesc {
     font-family: var(--main-font-regular);
     font-size: 12px;
@@ -44,6 +49,7 @@
     padding-top: 20px;
 
 }
+
 .linkBtn {
     text-decoration: none;
 }
@@ -56,10 +62,11 @@
 
 @media (min-width: 200px) and (max-width: 991px) {
 
-    .card{
-        width: 100%!important;
+    .card {
+        width: 100% !important;
         margin: 25px auto !important;
     }
+
     .cardBody {
         background-color: #FFFFFF;
         border-radius: 12px;
@@ -68,12 +75,10 @@
 
 }
 
-@media (min-width: 280px) and (max-width: 390px) {
+@media (min-width: 280px) and (max-width: 390px) {}
 
-  }
-  @media (min-width: 390px) and (max-width: 540px) {
+@media (min-width: 390px) and (max-width: 540px) {}
 
-  }
 /* .card:hover {
     box-shadow: #e60606 0px 0px, #e60606 0px 10px;
     transition: all 1s;

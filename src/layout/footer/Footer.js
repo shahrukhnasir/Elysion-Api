@@ -2,25 +2,38 @@ import { useState } from "react";
 import styles from "../footer/footer.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import { FaYoutube } from "react-icons/fa";
+import { FaInstagram, FaTiktok } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { PostContactHandler } from "../../Service/contactService";
 import { useDispatch } from "react-redux";
+import { FooterNewsLatterEmail } from "../../Service/HomePageService";
 const Footer = () => {
 
 	const dispatch = useDispatch()
 	const router = useRouter();
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const [chatFields, setChatFields] = useState({
-		name: "elysion",
-		lName: "health",
-		number: "470-300-2259",
-		message: "eh",
 		email: ""
 	});
-
-	const [loading, setLoading] = useState(false);
+	const handleEmailSend = async (e) => {
+		e.preventDefault();
+		setLoading(true);
+		if (
+		  chatFields.email.length === 0 
+		) {
+		  setError(true);
+		  setLoading(false);
+		  return;
+		}
+		setError(false);
+		setLoading(true );
+		let data = new FormData();
+		data.append("email", chatFields?.email);
+		dispatch(FooterNewsLatterEmail(data, setLoading, setChatFields,router));
+		// router.push('/thank-you');
+	};
 	const handleChange = (e) => {
 		e.preventDefault();
 		setChatFields((prev) => ({
@@ -28,18 +41,6 @@ const Footer = () => {
 			[e.target.name]: e.target.value,
 		}));
 	};
-	const handleEmailSend = async (e) => {
-		e.preventDefault();
-		let data = new FormData();
-		data.append("first_name", chatFields?.name);
-		data.append("last_name", chatFields?.lName);
-		data.append("phone", chatFields?.number);
-		data.append("message", chatFields?.message);
-		data.append("email", chatFields?.email);
-		dispatch(PostContactHandler(data, setLoading, setChatFields));
-		router.push('/thank-you');
-	};
-
 	return (
 		<>
 			<div className={`${styles.footerContainer} container-fluid py-2`}>
@@ -49,7 +50,7 @@ const Footer = () => {
 							<div className={styles.firstSection}>
 								<Link href="/">
 									<img
-										src="../images/elysion-white-logo.png"
+										src="/images/elysion-white-logo.png"
 										className="img-fluid"
 										alt="logo"
 									/>
@@ -206,20 +207,27 @@ const Footer = () => {
 								<ul className={styles.iconsSection}>
 									<li className="text-white">
 										<div className={styles.rouded}>
-											<Link href="https://www.instagram.com/accounts/login/">
-												<FaYoutube className={styles.icon} />
+											<Link href="https://www.instagram.com/elysionhealth/?igshid=NGVhN2U2NjQ0Yg%3D%3D&utm_source=qr%C2%A0%C2%A0%C2%A0And">
+												<FaInstagram  className={styles.icon} />
 											</Link>
 										</div>
 									</li>
 
 									<li className="text-white">
 										<div className={styles.rouded}>
-											<Link href="https://www.facebook.com/">
+											<Link href="https://www.facebook.com/elysionhealth?mibextid=LQQJ4d%20Can">
 												<FaFacebookF className={styles.icon} />
+											</Link>
+											
+										</div>
+									</li>
+									<li className="text-white">
+										<div className={styles.rouded}>
+											<Link href="https://www.tiktok.com/@tlgibsonmatrix?_t=8iIqXf7JMvC&_r=1%C2%A0">
+												<FaTiktok  className={styles.icon} />
 											</Link>
 										</div>
 									</li>
-
 									{/* <li className="text-white">
 										<div className={styles.rouded}>
 											<Link href="https://twitter.com/?lang=en">

@@ -1,17 +1,55 @@
 import React, { useState } from "react";
 import styles from "../CreatNewPasswordScreen/CreateNewPasswordScreen.module.css";
 import CommanButton from "../../components/CommanButton/CommanButton";
-import Link from "next/link";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import Shadow from "../../components/Shadow/Shadow";
 import TopLayout from "../../components/TopLayout/TopLayout";
+import { useDispatch } from "react-redux";
+import { OtpNewPasswordHandler } from "../../Service/AuthService";
+import { useRouter } from "next/router";
 const CreateNewPasswordScreen = () => {
+  const dispatch = useDispatch();
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
-  const [passwordInput, setPasswordInput] = useState("");
-  const [confirmPasswordInput, setCofirmPasswordInput] = useState("");
-  const handlePasswordChange = (evnt) => {
-    setPasswordInput(evnt.target.value);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const [chatFields, setChatFields] = useState({
+    otp: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const HandleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    if (
+      chatFields.otp.length === 0 ||
+      chatFields.password.length === 0 ||
+      chatFields.confirmPassword.length === 0 ||
+      chatFields.email.length === 0
+    ) {
+      setError(true);
+      setLoading(false);
+      return;
+    }
+    setError(false);
+    setLoading(true);
+    let data = new FormData();
+    data.append("otp", chatFields?.otp);
+    data.append("password", chatFields?.password);
+    data.append("confirm_password", chatFields?.confirmPassword);
+    data.append("email", chatFields?.email);
+    dispatch(OtpNewPasswordHandler(data, setLoading, setChatFields, router));
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setChatFields((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const togglePassword = () => {
@@ -21,10 +59,6 @@ const CreateNewPasswordScreen = () => {
       return;
     }
     setPasswordType("password");
-  };
-
-  const handleConfirmPasswordChange = (evnt) => {
-    setCofirmPasswordInput(evnt.target.value);
   };
 
   const toggleConfirmPassword = () => {
@@ -66,17 +100,70 @@ const CreateNewPasswordScreen = () => {
                 <div className="col-lg-12">
                   <div className={styles.eyeIconContainer}>
                     <input
+                      placeholder="O-T-P"
+                      type="number"
+                      onChange={handleChange}
+                      value={chatFields.otp}
+                      name="otp"
+                      className={`${styles.inputField} form-control`}
+                    />
+                  </div>
+                  <div className="pb-2">
+                    {error && chatFields.otp.length <= 0 ? (
+                      <span className={styles.warning}>
+                        OTP can't be Empty!
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+
+                <div className="col-lg-12">
+                  <div className={styles.eyeIconContainer}>
+                    <input
+                      placeholder="Type Email"
+                      type="email"
+                      onChange={handleChange}
+                      value={chatFields.email}
+                      name="email"
+                      className={`${styles.inputField} form-control`}
+                    />
+                  </div>
+                  <div className="pb-2">
+                    {error && chatFields.email.length <= 0 ? (
+                      <span className={styles.warning}>
+                        Email can't be Empty!
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className={styles.eyeIconContainer}>
+                    <input
                       placeholder="Create New Password"
                       type={passwordType}
-                      onChange={handlePasswordChange}
-                      value={passwordInput}
+                      onChange={handleChange}
+                      value={chatFields.password}
                       name="password"
                       className={`${styles.inputField} form-control`}
                     />
+
                     <span className={styles.eyeIcon} onClick={togglePassword}>
                       {passwordType === "password" ? <BsEyeSlash /> : <BsEye />}
                     </span>
                   </div>
+                </div>
+                <div className="pb-2">
+                  {error && chatFields.password.length <= 0 ? (
+                    <span className={styles.warning}>
+                      Password can't be Empty!
+                    </span>
+                  ) : (
+                    ""
+                  )}
                 </div>
 
                 <div className="col-lg-12">
@@ -84,11 +171,12 @@ const CreateNewPasswordScreen = () => {
                     <input
                       placeholder="Confirm Password"
                       type={confirmPasswordType}
-                      onChange={handleConfirmPasswordChange}
-                      value={confirmPasswordInput}
-                      name="password"
+                      onChange={handleChange}
+                      value={chatFields.confirmPassword}
+                      name="confirmPassword"
                       className={`${styles.inputField} form-control`}
                     />
+
                     <span
                       className={styles.eyeIcon}
                       onClick={toggleConfirmPassword}
@@ -100,12 +188,30 @@ const CreateNewPasswordScreen = () => {
                       )}
                     </span>
                   </div>
+                  <div className="pb-2">
+                    {error && chatFields.confirmPassword.length <= 0 ? (
+                      <span className={styles.warning}>
+                        Confirm Password can't be Empty!
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
               </div>
-
-              <Link href="/signin">
-                <CommanButton className={styles.FromBtn} label="Sign In" />
-              </Link>
+              {!loading ? (
+                <CommanButton
+                  onClick={HandleSubmit}
+                  className={styles.FromBtn}
+                  label="Submit"
+                />
+              ) : (
+                <CommanButton
+                  onClick={HandleSubmit}
+                  className={styles.FromBtn}
+                  label="Submiting..."
+                />
+              )}
             </div>
           </div>
         </div>

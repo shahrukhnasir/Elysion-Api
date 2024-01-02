@@ -6,7 +6,7 @@ const Custom404 = () => {
     <div className="row text-center">
 
     <div className="py-auto">
-        <img src="./images/404.jpg"  className="img-fluid" alt="" />
+        <img src="/images/404.jpg"  className="img-fluid" alt="" />
     </div>
     </div>
    </div>

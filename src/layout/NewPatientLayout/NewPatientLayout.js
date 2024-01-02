@@ -1,19 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // React Calender
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 //css
 import styles from "../NewPatientLayout/NewPatientLayout.module.css";
-import CommanButton from "../../components/CommanButton/CommanButton";
 import TopLayout from "../../components/TopLayout/TopLayout";
-const NewPatientLayout = ({ children, heading }) => {
-  const [value, onChange] = useState(new Date());
-  const [date, setDate] = useState(new Date());
+import { useDispatch, useSelector } from "react-redux";
+import { Slots } from "../../Service/ServiceProviders";
+import { useRouter } from "next/router";
+import TimeButton from "../../components/TimeButton/TimeButton";
+import { setAppointmentDetails } from "../../Redux/Appoinment/appointmentDetails";
+import { setAppointmentDate } from "../../Redux/Appoinment/appointDate";
 
+const NewPatientLayout = ({ children, heading }) => {
+  // const [value, onChange] = useState(new Date());
+  const [date, setDate] = useState(new Date());
+  const [getVariations, setVariations] = useState([]);
+  const [slots, setSlots] = useState([]);
+  const [loading, setLoading] = useState([]);
+  const token = useSelector((state) => state?.authSlice?.authToken);
+  const router = useRouter();
+  const slug = router.query.docId;
+
+  const TimeSelect = (value) => {
+    console.log(value, "value");
+    dispacth(setAppointmentDetails(value));
+    if (getVariations.includes(value)) {
+      const removal = getVariations.filter((varr) => varr !== value);
+      console.log(removal);
+      setVariations(removal);
+      // dispacth(setAppointmentDetails(value));
+    } else {
+      setVariations([...getVariations, value]);
+    }
+  };
+
+
+  const dispacth = useDispatch();
+  useEffect(() => {
+    if (slug) {
+      dispacth(Slots(slug, token, setLoading, setSlots));
+    }
+  }, [slug, token]);
+  dispacth(setAppointmentDate(date?.getDate()));
+
+  console.log(date?.getDate(), "datedatedate");
   return (
     <>
       <section>
-
         <TopLayout
           Heading={heading}
           descriptions=" Sed ut perspiciatis unde omnis iste natus error sit
@@ -28,33 +62,57 @@ const NewPatientLayout = ({ children, heading }) => {
           <div className="row">
             <div className="col-lg-8">{children}</div>
             <div className="col-lg-4">
-              <span className={styles.selectDate}>Select Date</span>
+              <span className={styles.selectDate}>
+                Select Date As per Available Time
+              </span>
 
               <div className="calendar-container">
                 <Calendar onChange={setDate} value={date} selectRange={false} />
               </div>
               <div className="row" id={styles.availableTime}>
-                <span className={styles.aTime}>Available Time</span>
-                <div className="col p-0 my-1 mx-1">
-                  <CommanButton label="9:30 AM" className={styles.btn} />
-                </div>
-                <div className="col p-0 my-1 mx-1">
-                  <CommanButton label="10:30 AM" className={styles.btn} />
-                </div>
-                <div className="col p-0 my-1 mx-1">
-                  <CommanButton label="1:30 AM" className={styles.btn} />
-                </div>
-              </div>
-              <div className="row" id={styles.availableTime}>
-                <div className="col p-0 my-1 mx-1">
-                  <CommanButton label="2:30 AM" className={styles.btn} />
-                </div>
-                <div className="col p-0 my-1 mx-1">
-                  <CommanButton label="6:30 AM" className={styles.btn} />
-                </div>
-                <div className="col p-0 my-1 mx-1">
-                  <CommanButton label="8:30 AM" className={styles.btn} />
-                </div>
+                {slots.length > 0 ? (
+                  <>
+                    <span className={styles.aTime}>Available Time</span>
+
+                    {slots?.map((item) => {
+                      const selected = getVariations?.includes(item);
+                      return (
+                        <div className="col-lg-6" key={item?.id}>
+                          <div id={styles.miniCard}>
+                            <TimeButton
+                              style={{
+                                backgroundColor: `${
+                                  selected ? "#1c3247" : "#ffffff"
+                                }`,
+                                color: `${selected ? "#fff" : "#000"}`,
+                                border: `${
+                                  selected
+                                    ? "1px solid #1c3247"
+                                    : "1px solid #1c3247"
+                                }`,
+                              }}
+                              onClick={() => TimeSelect(item)}
+                              from={item.from}
+                              to={item.from}
+                              day={item.day}
+                              className={styles.btn}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <TimeButton
+                    from="No Slots"
+                    to="Available"
+                    style={{
+                      backgroundColor: `${"#1c3247"}`,
+                      color: `${"#ffff"}`,
+                    }}
+                    className={styles.btn}
+                  />
+                )}
               </div>
             </div>
           </div>

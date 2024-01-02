@@ -1,14 +1,23 @@
-import React, { Component, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./navbar.module.css";
-import { CaretRightOutlined } from "@ant-design/icons";
 import { RxCross1 } from "react-icons/rx";
 import { CiMenuFries } from "react-icons/ci";
 import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import CommanButton from "../../components/CommanButton/CommanButton";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { AllServices } from "../../Service/HomePageService";
+import { Skeleton } from "antd";
 
 const HorizontalMenu = () => {
+  const [servicesData, setServicesData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(AllServices(setLoading, setServicesData, dispatch));
+  }, []);
+
   const router = useRouter();
   const [search, setsearch] = useState(false);
   const [menu, setMenu] = useState(false);
@@ -30,54 +39,51 @@ const HorizontalMenu = () => {
     setDropDown(!dropDown);
   };
 
-
-  const dropServiceHandler = () => {
-    setDropDown(!dropDown);
-    router.push({
-      pathname: "/service",
-    });
-  };
-  const dropShopHandler = () => {
-    setDropDown(!dropDown);
-    router.push({
-      // pathname: "/shop",
-      pathname: "https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons",
-    });
-  };
-
-
-  const btn2 = (
-    <>
-      <div className={styles?.btnText}>Free </div>
-      <div className={styles?.extraText}>Consultation</div>
-    </>
-  );
-  const serviceMenu = [
-    {
-      id: 1,
-      route: "/services",
-      label: "Patient Portal",
-    },
-    {
-      id: 1,
-      route: "/services",
-      label: "Patient Portal",
-    },
-  ];
-
-
+  // const dropServiceHandler = () => {
+  //   setDropDown(!dropDown);
+  //   router.push({
+  //     pathname: "/service",
+  //   });
+  // };
+  // const dropShopHandler = () => {
+  //   setDropDown(!dropDown);
+  //   router.push({
+  //     // pathname: "/shop",
+  //     pathname:
+  //       "https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons",
+  //   });
+  // };
+  const Istoken = useSelector((state) => state?.authSlice?.authToken);
+  // const btn2 = (
+  //   <>
+  //     <div className={styles?.btnText}>Free </div>
+  //     <div className={styles?.extraText}>Consultation</div>
+  //   </>
+  // );
+  // const serviceMenu = [
+  //   {
+  //     id: 1,
+  //     route: "/services",
+  //     label: "Patient Portal",
+  //   },
+  //   {
+  //     id: 1,
+  //     route: "/services",
+  //     label: "Patient Portal",
+  //   },
+  // ];
 
   // const router = useRouter()
-  const navigateTo = (routeId) => {
-    // router.push(`/services/${routeId}`)
-    router.push(
-      {
-        pathname: `/services/${routeId}`,
-        query: routeId,
-      },
-      `/services/${routeId}`
-    );
-  }
+  // const navigateTo = (routeId) => {
+  //   // router.push(`/services/${routeId}`)
+  //   router.push(
+  //     {
+  //       pathname: `/services/${routeId}`,
+  //       query: routeId,
+  //     },
+  //     `/services/${routeId}`
+  //   );
+  // };
 
   return (
     <>
@@ -124,72 +130,51 @@ const HorizontalMenu = () => {
                       <div className="row">
                         <div className="col-lg-6">
                           <ul className={styles.dropLinkContainer}>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/Internal-Integrative-medicine" >Internal and Integrative Medicine</Link>
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              {/* <Link href={`/services/2`}>
-                                Functional Medicine
-                              </Link> */}
-                              <Link href="/functional-medicine"  > Functional Medicine</Link>
-
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/women-wellness"  >
-                                Women’s Wellness
-                              </Link>
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/hormone-bioidentical-treatment"  >
-                                Hormone balance and Bioidentical Treatment
-                              </Link>
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/menopause-treatment" >
-                                Menopause and Perimenopausal Treatment
-                              </Link>
-                            </li>
-                            
+                            {!loading ? (
+                              <>
+                                {servicesData?.slice(0, 5)?.map((list, i) => {
+                                  return (
+                                    <>
+                                      <li className={styles?.dropLink} key={i}>
+                                        {" "}
+                                        <a href={`/services/view/${list.id}`}>
+                                          {list?.name}
+                                        </a>
+                                      </li>
+                                    </>
+                                  );
+                                })}
+                              </>
+                            ) : (
+                              <>
+                                <Skeleton loading={servicesData} row={6} />
+                              </>
+                            )}
                           </ul>
                         </div>
                         <div className="col-lg-6">
                           <ul className={styles.dropLinkContainer}>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/addiction-medicine" >
-                                Addiction Medicine
-                              </Link>
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/weight-loss-management"  >
-                                Weight Loss Management
-                              </Link>
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/weight-management"  >
-                                GLP-1 Weight Management
-                              </Link>
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/iv-hydration-therapy" >
-                                IV Hydration & Vitamin Therapy
-                              </Link>
-                            </li>
+                            {!loading ? (
+                              <>
+                                {servicesData?.slice(5, 12)?.map((list, i) => {
+                                  return (
+                                    <>
+                                      <li className={styles?.dropLink} key={i}>
+                                        {" "}
+                                        <a href={`/services/view/${list.id}`}>
+                                          {list?.name}
+                                        </a>
+                                      </li>
+                                    </>
+                                  );
+                                })}
+                              </>
+                            ) : (
+                              <>
+                                <Skeleton loading={servicesData} row={6} />
+                              </>
+                            )}
 
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/botox-filler">
-                                Botox, Dysport, Jeuveau & Fillers
-                              </Link>
-                            </li>
                             <u>
                               <li className={styles?.dropLink}>
                                 {" "}
@@ -221,7 +206,9 @@ const HorizontalMenu = () => {
                             </li>
                             <li className={styles?.dropLink}>
                               {" "}
-                              <Link href="/patient-education">Patient Education </Link>
+                              <Link href="/patient-education">
+                                Patient Education{" "}
+                              </Link>
                             </li>
 
                             <li className={styles?.dropLink}>
@@ -238,7 +225,9 @@ const HorizontalMenu = () => {
                             </li>
                             <li className={styles?.dropLink}>
                               {" "}
-                              <Link href="https://elysionhealth.md-hq.com/">Patient Portal</Link>
+                              <Link href="https://elysionhealth.md-hq.com/">
+                                Patient Portal
+                              </Link>
                             </li>
                             <li className={styles?.dropLink}>
                               {" "}
@@ -262,7 +251,8 @@ const HorizontalMenu = () => {
                 >
                   <Link
                     className={`${styles?.dropbtn} nav-link`}
-                    href="https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons"
+                    href={'/shop'}
+                    // href="https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons"
                   >
                     Shop
                     {/* Commit as per Client Requirement */}
@@ -356,7 +346,7 @@ const HorizontalMenu = () => {
 
                   <li className="mx-3">
                     {/* <Link href="https://elysionhealth.md-hq.com/schedule_visit" target="_blank"> */}
-                    <Link href="https://elysionhealth.md-hq.com/embedded/schedule.php" target="_blank">
+                    <Link href="/free-consultation">
                       {" "}
                       <CommanButton
                         className={styles?.freeCons}
@@ -366,16 +356,23 @@ const HorizontalMenu = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link href="https://elysionhealth.md-hq.com/" target="_blank">
-                      <CommanButton
-                        label="Patient Portal"
-
-                        className={styles.portalBtn}
-                      />
-                    </Link>
+                    {/* <Link href="https://elysionhealth.md-hq.com/" target="_blank"> */}
+                    {Istoken ? (
+                      <Link href="/profile">
+                        <CommanButton
+                          label="Patient Portal"
+                          className={styles.portalBtn}
+                        />
+                      </Link>
+                    ) : (
+                      <Link href="/signin">
+                        <CommanButton
+                          label="Login"
+                          className={styles.portalBtn}
+                        />
+                      </Link>
+                    )}
                   </li>
-
-
                 </ul>
               </ul>
             </div>

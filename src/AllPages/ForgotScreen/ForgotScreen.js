@@ -1,12 +1,43 @@
 import React, { useState } from "react";
 import styles from "../SigninScreen/SigninScreen.module.css";
 import CommanButton from "../../components/CommanButton/CommanButton";
-import Link from "next/link";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
 import TopLayout from "../../components/TopLayout/TopLayout";
 import Shadow from "../../components/Shadow/Shadow";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import { ForgotPasswordHandler } from "../../Service/AuthService";
 const ForgotScreen = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [chatFields, setChatFields] = useState({ email: ""});
+  const HandleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    if (
+      chatFields.email.length === 0
+    ) {
+      setError(true);
+      setLoading(false);
+      return;
+    }
+    setError(false);
+    setLoading(true);
+    let data = new FormData();
+    data.append("email", chatFields?.email);
+    dispatch(ForgotPasswordHandler(data, setLoading, setChatFields,router));
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setChatFields((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
   return (
+
     <>
       <div className="container-fluid p-0">
         <TopLayout
@@ -39,17 +70,30 @@ const ForgotScreen = () => {
                 </p>
 
                 <div className="col-lg-12">
-                  <input
+                  
+                   <input
                     type="email"
                     className={`${styles.inputField} form-control`}
                     placeholder="Email"
+                    value={chatFields.email}
+                    name="email"
+                    onChange={handleChange}
                   />
+                  <div className="pb-2">
+                    {error && chatFields.email.length <= 0 ? (
+                      <span className={styles.warning}>
+                        Email can't be Empty!
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
               </div>
 
-              <Link href="/createnewpassword">
-                <CommanButton className={styles.FromBtn} label="Submit" />
-              </Link>
+              {/* <Link href="/createnewpassword"> */}
+                <CommanButton className={styles.FromBtn} onClick={HandleSubmit} label="Submit" />
+              {/* </Link> */}
             </div>
           </div>
         </div>

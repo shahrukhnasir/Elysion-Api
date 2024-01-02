@@ -1,41 +1,134 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../CheckOutDetails/CheckOutDetails.module.css";
 
 import CommanButton from "../../components/CommanButton/CommanButton";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  AddToCartListHandler,
+  CheckOutHandler,
+} from "../../Service/CartService";
+import StripeCheckout from "react-stripe-checkout";
 const CheckOutDetails = () => {
-  const [error, setError] = useState(false);
-  const [fName, setfName] = useState("");
-  const [lName, setLname] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-
-  const [bName, setBName] = useState("");
-  const [bLName, setBlname] = useState("");
-  const [bEmail, setBemail] = useState("");
-  const [bPhone, setBphone] = useState("");
-  const [bAddress, setBaddress] = useState("");
-  const [bOaddress, setBoAddress] = useState("");
-
-  const [cartNumber, setcartNumber] = useState("");
-  const [expirDate, setExpirDate] = useState("");
-  const [cvv, setCvv] = useState("");
-
+  const dispatch = useDispatch();
   const router = useRouter();
-  const HandleSubmit = (e, id, urlPath) => {
-    e.preventDefault();
-    if (email.length === 0) {
-      setError(true);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [cartList, setAddCartList] = useState([]);
+  const token = useSelector((state) => state?.authSlice?.authToken);
 
-      return;
-    }
-    router.push({
-      pathname: urlPath,
-      query: { id: id },
-    });
+  const [striptoken, setStriptoken] = useState();
+
+  const onToken = (token) => {
+    setStriptoken(token?.id);
+    console.log(token, striptoken, "stripetoken");
   };
+
+  const [checkOutField, setCheckOutFields] = useState({
+    fName: "",
+    lName: "",
+    email: "",
+    phone: "",
+    address: "",
+    bName: "",
+    bLName: "",
+    bEmail: "",
+    bPhone: "",
+    bAddress: "",
+    bOaddress: "",
+    cartNumber: "",
+    expirDate: "",
+    cvv: "",
+    country: "",
+    zip: "",
+    city: "",
+    state: "",
+  });
+  const handleChange = (e) => {
+    e.preventDefault();
+    setCheckOutFields((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const HandleSubmit = async (e) => {
+    e.preventDefault();
+    setError(false);
+    setLoading(true);
+    try {
+      if (striptoken) {
+        let data = new FormData();
+        data.append("shipper_first_name", checkOutField?.fName);
+        data.append("shipper_last_name", checkOutField?.lName);
+        data.append("shipper_email", checkOutField?.email);
+        data.append("shipper_phone", checkOutField?.phone);
+        data.append("shipper_address", checkOutField?.address);
+        data.append("shipper_country", checkOutField?.country);
+        data.append("shipper_city", checkOutField?.address);
+        data.append("shipper_state", checkOutField?.address);
+        data.append("shipper_zip", checkOutField?.zip);
+        data.append("billing_first_name", checkOutField?.bName);
+        data.append("billing_last_name", checkOutField?.bLName);
+        data.append("billing_email", checkOutField?.bEmail);
+        data.append("billing_phone", checkOutField?.bPhone);
+        data.append("billing_address", checkOutField?.bAddress);
+        data.append("billing_country", checkOutField?.country);
+        data.append("billing_city", checkOutField?.city);
+        data.append("billing_state", checkOutField?.state);
+        data.append("billing_zip", checkOutField?.zip);
+        data.append("total_discount", "10%");
+        data.append("total_amount", finalTotal);
+        data.append("stripe_Token", striptoken);
+        cartList?.map((i, cart) => {
+          data.append(`cart[${cart?.id}]`, i.id);
+        });
+
+        dispatch(CheckOutHandler(token, data, setLoading,router));
+      }
+
+      // Validate form fields
+      if (
+        checkOutField.fName.length === 0 ||
+        checkOutField.lName.length === 0 ||
+        checkOutField.email.length === 0 ||
+        checkOutField.phone.length === 0 ||
+        checkOutField.bName.length === 0 ||
+        checkOutField.bLName.length === 0 ||
+        checkOutField.bEmail.length === 0 ||
+        checkOutField.bPhone.length === 0 ||
+        checkOutField.bAddress.length === 0 ||
+        checkOutField.bOaddress.length === 0 ||
+        checkOutField.cartNumber.length === 0 ||
+        checkOutField.expirDate.length === 0 ||
+        checkOutField.cvv.length === 0 ||
+        checkOutField.country.length === 0 ||
+        checkOutField.city.length === 0 ||
+        checkOutField.state.length === 0 ||
+        checkOutField.zip.length === 0
+      ) {
+        setError(true);
+        return;
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(AddToCartListHandler(token, setAddCartList, setLoading));
+  }, []);
+  const totalQty = cartList.reduce((total, cart) => {
+    const qtyTotal = cart?.qty?.length || 0;
+    return total + qtyTotal;
+  }, 0);
+
+  const finalTotal = cartList.reduce((total, cart) => {
+    const subTotal = cart?.sub_total || 0;
+    return total + subTotal;
+  }, 0);
+
   return (
     <>
       <div className="container-fluid p-0">
@@ -78,14 +171,12 @@ const CheckOutDetails = () => {
                     type="text"
                     className={`${styles.inputField} form-control`}
                     placeholder="First Name"
-                    value={fName}
-                    onChange={(e) => {
-                      setfName(e.target.value);
-                    }}
+                    value={checkOutField?.fName}
+                    onChange={handleChange}
+                    name="fName"
                   />
-
                   <div className="pb-2">
-                    {error && fName.length <= 0 ? (
+                    {error && checkOutField?.fName.length <= 0 ? (
                       <span className={styles.warning}>
                         First Name can't be Empty!
                       </span>
@@ -100,14 +191,13 @@ const CheckOutDetails = () => {
                     type="text"
                     className={`${styles.inputField} form-control`}
                     placeholder="Last Name"
-                    value={lName}
-                    onChange={(e) => {
-                      setLname(e.target.value);
-                    }}
+                    value={checkOutField?.lName}
+                    name="lName"
+                    onChange={handleChange}
                   />
 
                   <div className="pb-2">
-                    {error && lName.length <= 0 ? (
+                    {error && checkOutField?.lName.length <= 0 ? (
                       <span className={styles.warning}>
                         Last Name can't be Empty!
                       </span>
@@ -117,21 +207,19 @@ const CheckOutDetails = () => {
                   </div>
                 </div>
               </div>
-
               <div className="row">
                 <div className="col-lg-6">
                   <input
                     type="email"
                     className={`${styles.inputField} form-control`}
                     placeholder="Email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
+                    value={checkOutField?.email}
+                    name="email"
+                    onChange={handleChange}
                   />
 
                   <div className="pb-2">
-                    {error && email.length <= 0 ? (
+                    {error && checkOutField?.email.length <= 0 ? (
                       <span className={styles.warning}>
                         Email can't be Empty!
                       </span>
@@ -146,14 +234,13 @@ const CheckOutDetails = () => {
                     type="number"
                     className={`${styles.inputField} form-control`}
                     placeholder="Phone"
-                    value={phone}
-                    onChange={(e) => {
-                      setPhone(e.target.value);
-                    }}
+                    name="phone"
+                    value={checkOutField?.phone}
+                    onChange={handleChange}
                   />
 
                   <div className="pb-2">
-                    {error && phone.length <= 0 ? (
+                    {error && checkOutField?.phone.length <= 0 ? (
                       <span className={styles.warning}>
                         Phone can't be Empty!
                       </span>
@@ -162,21 +249,102 @@ const CheckOutDetails = () => {
                     )}
                   </div>
                 </div>
-              </div>
 
+                <div className="col-lg-6">
+                  <input
+                    type="text"
+                    className={`${styles.inputField} form-control`}
+                    placeholder="Country"
+                    value={checkOutField?.country}
+                    onChange={handleChange}
+                    name="country"
+                  />
+
+                  <div className="pb-2">
+                    {error && checkOutField?.country.length <= 0 ? (
+                      <span className={styles.warning}>
+                        Address can't be Empty!
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+
+                <div className="col-lg-6">
+                  <input
+                    type="text"
+                    className={`${styles.inputField} form-control`}
+                    placeholder="City"
+                    value={checkOutField?.city}
+                    onChange={handleChange}
+                    name="city"
+                  />
+
+                  <div className="pb-2">
+                    {error && checkOutField?.city.length <= 0 ? (
+                      <span className={styles.warning}>
+                        City can't be Empty!
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+                <div className="col-lg-6">
+                  <input
+                    type="text"
+                    className={`${styles.inputField} form-control`}
+                    placeholder="State"
+                    value={checkOutField?.state}
+                    onChange={handleChange}
+                    name="state"
+                  />
+
+                  <div className="pb-2">
+                    {error && checkOutField?.state.length <= 0 ? (
+                      <span className={styles.warning}>
+                        State can't be Empty!
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+
+                <div className="col-lg-6">
+                  <input
+                    type="text"
+                    className={`${styles.inputField} form-control`}
+                    placeholder="Zip Code"
+                    value={checkOutField?.zip}
+                    onChange={handleChange}
+                    name="zip"
+                  />
+
+                  <div className="pb-2">
+                    {error && checkOutField?.zip <= 0 ? (
+                      <span className={styles.warning}>
+                        Zip can't be Empty!
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              </div>
               <div className="col-lg-12">
                 <input
                   type="text"
                   className={`${styles.inputField} form-control`}
                   placeholder="Address"
-                  value={address}
-                  onChange={(e) => {
-                    setAddress(e.target.value);
-                  }}
+                  value={checkOutField?.address}
+                  onChange={handleChange}
+                  name="address"
                 />
 
                 <div className="pb-2">
-                  {error && address.length <= 0 ? (
+                  {error && checkOutField?.address.length <= 0 ? (
                     <span className={styles.warning}>
                       Address can't be Empty!
                     </span>
@@ -205,7 +373,6 @@ const CheckOutDetails = () => {
                   </div>
                 </div>
               </div>
-
               {/* Add Shipping Details */}
               <div className="row">
                 <div className="col-lg-6">
@@ -213,14 +380,13 @@ const CheckOutDetails = () => {
                     type="text"
                     className={`${styles.inputField} form-control`}
                     placeholder="First Name"
-                    value={bName}
-                    onChange={(e) => {
-                      setBName(e.target.value);
-                    }}
+                    value={checkOutField?.bName}
+                    onChange={handleChange}
+                    name="bName"
                   />
 
                   <div className="pb-2">
-                    {error && bName.length <= 0 ? (
+                    {error && checkOutField?.bName.length <= 0 ? (
                       <span className={styles.warning}>
                         First Name can't be Empty!
                       </span>
@@ -235,14 +401,13 @@ const CheckOutDetails = () => {
                     type="text"
                     className={`${styles.inputField} form-control`}
                     placeholder="Last Name"
-                    value={bLName}
-                    onChange={(e) => {
-                      setBlname(e.target.value);
-                    }}
+                    value={checkOutField?.bLName}
+                    onChange={handleChange}
+                    name="bLName"
                   />
 
                   <div className="pb-2">
-                    {error && bLName.length <= 0 ? (
+                    {error && checkOutField?.bLName.length <= 0 ? (
                       <span className={styles.warning}>
                         Last Name can't be Empty!
                       </span>
@@ -252,21 +417,19 @@ const CheckOutDetails = () => {
                   </div>
                 </div>
               </div>
-
               <div className="row">
                 <div className="col-lg-6">
                   <input
                     type="email"
                     className={`${styles.inputField} form-control`}
                     placeholder="Email"
-                    value={bEmail}
-                    onChange={(e) => {
-                      setBemail(e.target.value);
-                    }}
+                    value={checkOutField?.bEmail}
+                    onChange={handleChange}
+                    name="bEmail"
                   />
 
                   <div className="pb-2">
-                    {error && bEmail.length <= 0 ? (
+                    {error && checkOutField?.bEmail.length <= 0 ? (
                       <span className={styles.warning}>
                         Email can't be Empty!
                       </span>
@@ -281,14 +444,13 @@ const CheckOutDetails = () => {
                     type="number"
                     className={`${styles.inputField} form-control`}
                     placeholder="Phone"
-                    value={bPhone}
-                    onChange={(e) => {
-                      setBphone(e.target.value);
-                    }}
+                    value={checkOutField?.bPhone}
+                    onChange={handleChange}
+                    name="bPhone"
                   />
 
                   <div className="pb-2">
-                    {error && bPhone.length <= 0 ? (
+                    {error && checkOutField?.bPhone.length <= 0 ? (
                       <span className={styles.warning}>
                         Phone can't be Empty!
                       </span>
@@ -298,20 +460,18 @@ const CheckOutDetails = () => {
                   </div>
                 </div>
               </div>
-
               <div className="col-lg-12">
                 <input
                   type="text"
                   className={`${styles.inputField} form-control`}
                   placeholder="Address"
-                  value={bAddress}
-                  onChange={(e) => {
-                    setBaddress(e.target.value);
-                  }}
+                  value={checkOutField?.bAddress}
+                  onChange={handleChange}
+                  name="bAddress"
                 />
 
                 <div className="pb-2">
-                  {error && bAddress.length <= 0 ? (
+                  {error && checkOutField?.bAddress.length <= 0 ? (
                     <span className={styles.warning}>
                       Address can't be Empty!
                     </span>
@@ -320,22 +480,20 @@ const CheckOutDetails = () => {
                   )}
                 </div>
               </div>
-
-              <div className="col-lg-12">
+              {/* <div className="col-lg-12">
                 <input
                   type="text"
                   className={`${styles.inputFieldAdres} form-control`}
                   placeholder="Address2"
-                  value={bOaddress}
-                  onChange={(e) => {
-                    setBoAddress(e.target.value);
-                  }}
+                  name="bOaddress"
+                  value={checkOutField?.bOaddress}
+                  onChange={handleChange}
                 />
 
                 <span className={styles.optional}> (optional)</span>
 
                 <div className="pb-2">
-                  {error && bOaddress.length <= 0 ? (
+                  {error && checkOutField?.bOaddress.length <= 0 ? (
                     <span className={styles.warning}>
                       Address can't be Empty!
                     </span>
@@ -343,25 +501,26 @@ const CheckOutDetails = () => {
                     ""
                   )}
                 </div>
-              </div>
+              </div> */}
               {/* Add Shipping Details End */}
-
               {/* Heading */}
-              <div className="row py-3">
+              {/* <div className="row py-3">
                 <div className="col-lg-6">
                   <h1 className={styles.cartDetails}> Enter Card Details</h1>
                 </div>
 
                 <div className="col-lg-6">
                   <span className={styles.cartImage}>
-                    <img src="./images/visa.png" className="img-fluid" alt="img" />
+                    <img
+                      src="./images/visa.png"
+                      className="img-fluid"
+                      alt="img"
+                    />
                   </span>
                 </div>
-              </div>
-
+              </div> */}
               {/* Enter Card Details */}
-
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-lg-12">
                   <label htmlFor="" className={styles.labelInput}>
                     Card Number
@@ -370,14 +529,13 @@ const CheckOutDetails = () => {
                     type="number"
                     className={`${styles.inputField} form-control`}
                     placeholder="Enter Card Number"
-                    value={cartNumber}
-                    onChange={(e) => {
-                      setcartNumber(e.target.value);
-                    }}
+                    value={checkOutField?.cartNumber}
+                    onChange={handleChange}
+                    name="cartNumber"
                   />
 
                   <div className="pb-2">
-                    {error && cartNumber.length <= 0 ? (
+                    {error && checkOutField?.cartNumber.length <= 0 ? (
                       <span className={styles.warning}>
                         Cart Number can't be Empty!
                       </span>
@@ -386,9 +544,8 @@ const CheckOutDetails = () => {
                     )}
                   </div>
                 </div>
-              </div>
-
-              <div className="row">
+              </div> */}
+              {/* <div className="row">
                 <div className="col-lg-6">
                   <label htmlFor="" className={styles.labelInput}>
                     Expiry date
@@ -397,14 +554,13 @@ const CheckOutDetails = () => {
                     type="text"
                     className={`${styles.inputField} form-control`}
                     placeholder="MM/YY"
-                    value={expirDate}
-                    onChange={(e) => {
-                      setExpirDate(e.target.value);
-                    }}
+                    value={checkOutField?.expirDate}
+                    onChange={handleChange}
+                    name="expirDate"
                   />
 
                   <div className="pb-2">
-                    {error && expirDate.length <= 0 ? (
+                    {error && checkOutField?.expirDate.length <= 0 ? (
                       <span className={styles.warning}>
                         Expiry Date can't be Empty!
                       </span>
@@ -422,14 +578,13 @@ const CheckOutDetails = () => {
                     type="number"
                     className={`${styles.inputField} form-control`}
                     placeholder="CVV"
-                    value={cvv}
-                    onChange={(e) => {
-                      setCvv(e.target.value);
-                    }}
+                    value={checkOutField?.cvv}
+                    onChange={handleChange}
+                    name="cvv"
                   />
 
                   <div className="pb-2">
-                    {error && cvv.length <= 0 ? (
+                    {error && checkOutField?.cvv.length <= 0 ? (
                       <span className={styles.warning}>
                         CVV can't be Empty!
                       </span>
@@ -438,15 +593,26 @@ const CheckOutDetails = () => {
                     )}
                   </div>
                 </div>
-              </div>
+              </div> */}
               {/* Enter Card Details */}
 
               <div className="py-3">
-                <CommanButton
-                  onClick={(e) => HandleSubmit(e, 3, "/thank-you")}
-                  label="Add Card"
-                  className={styles.cartButton}
-                />
+                {striptoken ? (
+                  ""
+                ) : (
+                  <StripeCheckout
+                    token={onToken}
+                    stripeKey="pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3"
+                    amount={finalTotal}
+                    currency="USD"
+                  >
+                    <CommanButton
+                      label="add to card"
+                      onClick={HandleSubmit}
+                      className={styles.cartButton}
+                    />
+                  </StripeCheckout>
+                )}
               </div>
             </div>
 
@@ -467,11 +633,11 @@ const CheckOutDetails = () => {
                 </div>
                 <div className="row">
                   <div className="col-lg-6">
-                    <article className={styles.cardTitle}>Item Total</article>
+                    <article className={styles.cardTitle}>Item Qty</article>
                   </div>
 
                   <div className="col-lg-6 p-0">
-                    <article className={styles.cardDetail}>$158.07 </article>
+                    <article className={styles.cardDetail}>{totalQty} </article>
                   </div>
                 </div>
 
@@ -494,7 +660,7 @@ const CheckOutDetails = () => {
                   </div>
 
                   <div className="col-lg-6">
-                    <h1 className={styles.cardLastPrice}>$170.0</h1>
+                    <h1 className={styles.cardLastPrice}>{finalTotal}</h1>
                   </div>
                 </div>
               </div>
@@ -525,10 +691,14 @@ const CheckOutDetails = () => {
             </div>
             <div className="col-lg-6">
               <div className={styles.checkOutLast}>
-                <CommanButton
-                  onClick={(e) => HandleSubmit(e, 3, "/thank-you")}
-                  label="Checkout"
-                />
+                {striptoken ? (
+                  <>
+                    <CommanButton onClick={HandleSubmit} label="Checkout" />
+                  </>
+                ):
+                
+                ""}
+
               </div>
             </div>
           </div>
@@ -539,3 +709,25 @@ const CheckOutDetails = () => {
 };
 
 export default CheckOutDetails;
+// if (
+//   checkOutField.fName.length === 0 ||
+//   checkOutField.lName.length === 0 ||
+//   checkOutField.email.length === 0 ||
+//   checkOutField.phone.length === 0 ||
+//   checkOutField.bName.length === 0 ||
+//   checkOutField.bLName.length === 0 ||
+//   checkOutField.bEmail.length === 0 ||
+//   checkOutField.bPhone.length === 0 ||
+//   checkOutField.bAddress.length === 0 ||
+//   checkOutField.bOaddress.length === 0 ||
+//   checkOutField.cartNumber.length === 0 ||
+//   checkOutField.expirDate.length === 0 ||
+//   checkOutField.cvv.length === 0 ||
+//   checkOutField.country.length === 0 ||
+//   checkOutField.city.length === 0 ||
+//   checkOutField.state.length === 0 ||
+//   checkOutField.zip.length === 0
+// ) {
+//   setError(true);
+//   return;
+// }

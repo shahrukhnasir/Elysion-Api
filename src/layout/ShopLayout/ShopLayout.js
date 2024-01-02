@@ -1,113 +1,78 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../ShopLayout/ShopLayout.module.css";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import { useDispatch } from "react-redux";
+import {
+  CatProductById,
+  CategoryList,
+  ProductList,
+  SearchProducts,
+} from "../../Service/CartService";
+import { Skeleton } from "antd";
+import { useRouter } from "next/router";
+import { baseUrl } from "../../network/baseUrl";
+import axios from "axios";
 const ShopLayout = () => {
-  const [getCat, setCat] = useState("");
-  const [getActiveCat, setActiveCat] = useState();
-  const Products = [
-    {
-      id: 1,
-      title: "Consectetue adlist",
-      img: "./images/product/product2.png",
-      desc: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan",
-      price: "$20.0",
-      status: "All",
-    },
-    {
-      id: 2,
-      title: "Dolor Sit Amet",
-      img: "./images/product/product1.png",
-      desc: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan",
-      price: "$20.0",
-      status: "All",
-    },
 
-  
-    {
-      id: 3,
-      title: "Sed ut perspiciatis",
-      img: "./images/product/product3.png",
-      desc: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan",
-      price: "$20.0",
-      status: "All",
-    },
-    {
-      id: 4,
-      title: "Sed ut perspiciatis",
-      img: "./images/product/product4.png",
-      desc: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan",
-      price: "$20.0",
-      status: "All",
-    },
+  const [category, setCategory] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [catByProductId, setCatByProdutId] = useState([]);
+  const [catByProductList, setCatByProductList] = useState([]);
+  const [slug, setSlug] = useState([]);
+  const [showAllProduct, setAllProducts] = useState(false);
+  const dispatch = useDispatch();
+  const route = useRouter();
+  const { query } = useRouter();
+  const slugs = query?.pid;
+  useEffect(() => {
+    dispatch(CategoryList(setLoading, setCategory, dispatch));
+    dispatch(ProductList(setLoading, setProducts, dispatch));
+  }, []);
 
-    {
-      id: 5,
-      title: "Dolor Sit Amet",
-      img: "./images/product/product5.png",
-      desc: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan",
-      price: "$20.0",
-      status: "All",
-    },
-    {
-      id: 6,
-      title: "Consectetue adlist",
-      img: "./images/product/product6.png",
-      desc: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan",
-      price: "$20.0",
-      status: "All",
-    },
+  useEffect(() => {
+    dispatch(
+      CatProductById(setCatByProdutId, slug, setCatByProductList, setLoading)
+    );
+  }, [slug]);
 
-    {
-      id: 7,
-      title: "Consectetue adlist",
-      img: "./images/product/product1.png",
-      desc: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan",
-      price: "$20.0",
-      status: "Lorem Ipsum",
-    },
-
-    {
-      id: 8,
-      title: "Consectetue adlist",
-      img: "./images/product/product5.png",
-      desc: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan",
-      price: "$20.0",
-      status: "Lorem Ipsum",
-    },
-    {
-      id: 9,
-      title: "Consectetue adlist",
-      img: "./images/product/product6.png",
-      desc: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan",
-      price: "$20.0",
-      status: "Sed ut perspiciatis",
-    }
-  ];
-
-  const filterCats = [
-    {
-      id: 1,
-      name: "All",
-    },
-    {
-      id: 2,
-      name: "Lorem Ipsum",
-    },
-    {
-      id: 3,
-      name: "Sed ut perspiciatis",
-    },
-    {
-      id: 4,
-      name: "Voluptatem accusan",
-    },
-  ];
-
-  const filterCatHandler = (e, item, id) => {
+  const filterCatHandler = (e, id) => {
     e.preventDefault();
-    setCat(item?.name);
-    setActiveCat(id);
+    // setSearchQuery("")
+    setSlug(id);
   };
+  const AllCatHandler = (e) => {
+    e.preventDefault();
+    setAllProducts(true);
+    setCatByProductList(products);
+    // setSearchQuery("")
+  };
+
+  const handleProductDetail = (productId) => {
+    route.push(`/shop/product/${productId}`);
+  };
+
+  // Search Api intrgrated
+  const [search, setSearchQuery] = useState("");
+  const [searchResults, setSearch] = useState([]);
+  const [searchProduct, setSearchProduct] = useState([]);
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+
+    if (search === "") {
+      setSearchProduct(catByProductList);
+    }
+  };
+
+  useEffect(() => {
+    if (search.trim() !== "") {
+      dispatch(SearchProducts(slug, search, setSearchProduct, setSearch));
+    } else {
+      setSearchProduct([]);
+    }
+  }, [search]);
+  console.log(products, "products");
 
   return (
     <>
@@ -121,7 +86,9 @@ const ShopLayout = () => {
           <div className="row">
             <div className="col-lg-3">
               <div>
-                <ul className={`${styles.SideBarMenu} list-group list-group-flush`}>
+                <ul
+                  className={`${styles.SideBarMenu} list-group list-group-flush`}
+                >
                   <li
                     className={`${styles.activeBar} list-group-item active`}
                     aria-current="true"
@@ -132,10 +99,10 @@ const ShopLayout = () => {
                   <li className={`${styles.search_sec} list-group-item`}>
                     <input
                       type="text"
-                      placeholder="Search"
                       className={styles.filterField}
-                      name=""
-                      id=""
+                      placeholder="Search Product"
+                      value={search}
+                      onChange={(e) => handleSearchChange(e)}
                     />
                     <img
                       src="./images/filterIcon.png"
@@ -143,24 +110,32 @@ const ShopLayout = () => {
                       alt=""
                     />
                   </li>
-
-                  {filterCats?.map((item, i) => (
-        <div id={styles.filterMenu}>
-                      <li
-                      // class="list-group-item"
-              
-                      className={
-                        getActiveCat === i
-                          ? styles.filterBtnActive
-                          : styles.filterBtn
-                      }
-                      onClick={(e) => filterCatHandler(e, item, i)}
+                  <div id={styles.filterMenu}>
+                    <li
+                      className={styles.filterBtn}
+                      onClick={(e) => AllCatHandler(e)}
                     >
-                      {item?.name}
+                      All
                     </li>
-                    </div>
-           
-                  ))}
+                  </div>
+
+                  <>
+                    {category?.map((item, i) => (
+                      <div id={styles.filterMenu} key={i}>
+                        <li
+                          id={item?.id}
+                          className={
+                            category === i
+                              ? styles.filterBtnActive
+                              : styles.filterBtn
+                          }
+                          onClick={(e) => filterCatHandler(e, item?.id, i)}
+                        >
+                          {item?.name}
+                        </li>
+                      </div>
+                    ))}
+                  </>
                 </ul>
               </div>
             </div>
@@ -168,57 +143,125 @@ const ShopLayout = () => {
             <div className="col-lg-9">
               <div className="container">
                 <div className="row">
-                  {Products.map((item, i) => {
-                    if (getCat == "" || getCat == "All") {
-                      return (
-                        <div className="col-lg-4">
-                          <ProductCard
-                            image={item?.img}
-                            Title={item?.title}
-                            Descriptions={item?.desc}
-                            Price={item?.price}
-                            id={item?.id}
-                          />
-                        </div>
-                      );
-                    } else {
-                      if (item?.status == getCat) {
-                        return (
-                          <ProductCard
-                            image={item?.img}
-                            Title={item?.title}
-                            Descriptions={item?.desc}
-                            Price={item?.price}
-                            id={item?.id}
-
-                          />
-                        );
-                      }
-                    }
-                  })}
+                  {!loading ? (
+                    <>
+                      {searchProduct && searchProduct.length > 0 ? (
+                        searchProduct.map((item, i) => (
+                          <div className="col-lg-4" key={i}>
+                            <ProductCard
+                              image={item?.thumbnail_url}
+                              Title={item?.title}
+                              Descriptions={item?.description}
+                              Price={item?.price}
+                              id={item?.id}
+                              onClick={() => handleProductDetail(item?.id)}
+                            />
+                          </div>
+                        ))
+                      ) : (
+                        <>
+                          {!loading ? (
+                            catByProductList &&
+                            catByProductList.map((item, i) => (
+                              <div className="col-lg-4" key={i}>
+                                <ProductCard
+                                  image={item?.thumbnail_url}
+                                  Title={item?.title}
+                                  Descriptions={item?.description}
+                                  Price={item?.price}
+                                  id={item?.id}
+                                  onClick={() => handleProductDetail(item?.id)}
+                                />
+                              </div>
+                            ))
+                          ) : showAllProduct ? (
+                            <>
+                              {products?.map((item, i) => (
+                                <div className="col-lg-4" key={i}>
+                                  <ProductCard
+                                    image={item?.thumbnail_url}
+                                    Title={item?.title}
+                                    Descriptions={item?.description}
+                                    Price={item?.price}
+                                    id={item?.id}
+                                    onClick={() =>
+                                      handleProductDetail(item?.id)
+                                    }
+                                  />
+                                </div>
+                              ))}
+                            </>
+                          ) : (
+                            "No products"
+                          )}
+                        </>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <Skeleton />
+                    </>
+                  )}
                 </div>
 
                 <div className="">
-                <div className={styles.paginationSec}>
+                  <div className={styles.paginationSec}>
                     <nav aria-label="Page navigation example ">
-                        <ul className={`pagination`}>
-                            <li className="page-item">
-                                <a className={`${styles.pageLink} page-link`} href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li className="page-item"><a className={`${styles.pageLink} page-link`} href="#">1</a></li>
-                            <li className="page-item"><a className={`${styles.pageLink} page-link`} href="#">2</a></li>
-                            <li className="page-item"><a className={`${styles.pageLink} page-link`} href="#">3</a></li>
-                            <li className="page-item">
-                                <a className={`${styles.pageLink} page-link`} href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
+                      <ul className={`pagination`}>
+                        <li className="page-item">
+                          <a
+                            className={`${styles.pageLink} page-link`}
+                            href="#"
+                            aria-label="Previous"
+                          >
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                        <li className="page-item">
+                          <a
+                            className={`${styles.pageLink} page-link`}
+                            href="#"
+                          >
+                            1
+                          </a>
+                        </li>
+                        <li className="page-item">
+                          <a
+                            className={`${styles.pageLink} page-link`}
+                            href="#"
+                          >
+                            2
+                          </a>
+                        </li>
+                        <li className="page-item">
+                          <a
+                            className={`${styles.pageLink} page-link`}
+                            href="#"
+                          >
+                            3
+                          </a>
+                        </li>
+                        <li className="page-item">
+                          <a
+                            className={`${styles.pageLink} page-link`}
+                            href="#"
+                            aria-label="Next"
+                          >
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </ul>
                     </nav>
+                  </div>
                 </div>
-                </div>
+
+                {/* search */}
+
+                {/* <ul>
+                  {searchResults.map((item) => (
+                    <li key={item.id}>{item.name}</li>
+                  ))}
+                </ul> */}
               </div>
             </div>
           </div>

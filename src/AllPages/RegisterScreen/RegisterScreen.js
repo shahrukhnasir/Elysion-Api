@@ -6,8 +6,8 @@ import Shadow from "../../components/Shadow/Shadow";
 import { useRouter } from 'next/router'
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import TopLayout from "../../components/TopLayout/TopLayout";
-import { SignUpHandler } from "../../Service/SignUpService";
-import { useDispatch, useSelector } from "react-redux";
+import { SignUpHandler } from "../../Service/AuthService";
+import { useDispatch } from "react-redux";
 const RegisterScreen = () => {
   const router = useRouter();
   const [passwordType, setPasswordType] = useState("password");
@@ -36,10 +36,11 @@ const RegisterScreen = () => {
       chatFields.confirmPassword === 0
     ) {
       setError(true);
+      setLoading(false);
       return;
     }
     setError(false);
-    setLoading(true);
+    setLoading(true );
     let data = new FormData();
     data.append("first_name", chatFields?.fname);
     data.append("last_name", chatFields?.lname);

@@ -7,6 +7,7 @@ import CommanButton from "../../components/CommanButton/CommanButton";
 import { useRouter } from "next/router";
 import { FaSearch } from "react-icons/fa";
 import CommanButtonLight from "../../components/CommanButtonLight/CommanButtonLight";
+import { useSelector } from "react-redux";
 
 const SideMenu = () => {
   const router = useRouter();
@@ -22,6 +23,7 @@ const SideMenu = () => {
   const dropDownHandler = () => {
     setDropDown(!dropDown);
   };
+  const Istoken = useSelector((state) => state?.authSlice?.authToken);
   const btn = (
     <>
       <div className={styles?.btnText}>Patient Portal </div>
@@ -375,9 +377,9 @@ const SideMenu = () => {
                 </li>
                 <li className="menu-items">
                   <Link
-                    href="https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons"
+                    href="/shop"
                     className="menu-link"
-                    onClick={(e) => navigateHandler(e, "https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons")}
+                    onClick={(e) => navigateHandler(e, "/shop")}
                   >
                     Shop
                   </Link>
@@ -459,17 +461,29 @@ const SideMenu = () => {
                     Contact Us
                   </Link>
                 </li>
-
+                {Istoken ? (
+                       <li className="menu-items">
+                       <Link
+                         href="/register"
+                         onClick={(e) => navigateHandler(e, "/profile")}
+                       >
+                         <CommanButtonLight label="Patient Portal" />
+                       </Link>
+                     </li>
+                     
+                    ) : (
+                      <li className="menu-items">
+                      <Link
+                        href="/signin"
+                        onClick={(e) => navigateHandler(e, "/signin")}
+                      >
+                        <CommanButtonLight label="Login" />
+                      </Link>
+                    </li>
+                    )}
+                
                 <li className="menu-items">
-                  <Link
-                    href="/register"
-                    onClick={(e) => navigateHandler(e, "/register")}
-                  >
-                    <CommanButtonLight label="Patient Portal" />
-                  </Link>
-                </li>
-                <li className="menu-items">
-                  <Link href="/book-on-appointment">
+                  <Link href="/free-consultation">
                     <CommanButtonLight
                       className={styles?.bookNow}
                       // className={styles.portalBtn}

@@ -1,9 +1,30 @@
-import React, { useState } from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
 import styles from "../HeroSection/HeroSection.module.css";
 import Link from "next/link";
 import CommanButton from "../../../components/CommanButton/CommanButton";
-function HeroSection() {
+import { HeroSections } from "../../../Service/HomePageService";
+import { useDispatch } from "react-redux";
+import { Skeleton } from "antd";
+const HeroSection = () => {
+  const [mainHeading, setMainHeading] = useState([]);
+  const [internal, setInternal] = useState([]);
+  const [betterHealth, setBetterHealth] = useState([]);
+  const [tessaGibson, setTessaGibson] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(
+      HeroSections(
+        setLoading,
+        setMainHeading,
+        setInternal,
+        setBetterHealth,
+        setTessaGibson,
+        dispatch
+      )
+    );
+  }, []);
+
   const btn2 = (
     <>
       <div className={styles?.btnText}>Book an Appointment</div>
@@ -11,7 +32,6 @@ function HeroSection() {
     </>
   );
   return (
-
     <>
       <section id={styles.mainHeroContainer}>
         <div className="container-fluid">
@@ -23,21 +43,56 @@ function HeroSection() {
             >
               <div className={styles.heroHeading}>
                 <h1 className={styles.mainHeading}>
-                  <div className={styles.mainHeadingInner}>Elysion</div>
+                  <div className={styles.mainHeadingInner}>
+                    {!loading ? (
+                      mainHeading
+                    ) : (
+                      <>
+                        <Skeleton />
+                      </>
+                    )}
+                  </div>
 
-                  <div className={styles.HeadingSm}>Internal & Integrative Medicine </div>
+                  <div className={styles.HeadingSm}>
+                    {!loading ? (
+                      internal
+                    ) : (
+                      <>
+                        <Skeleton />
+                      </>
+                    )}
+                  </div>
 
-                  <div className={styles.HeadingBig}>Better Health Begins Here</div>
+                  <div className={styles.HeadingBig}>
+                    {!loading ? (
+                      betterHealth
+                    ) : (
+                      <>
+                        <Skeleton />
+                      </>
+                    )}
+                  </div>
                 </h1>
                 <hr className={styles.hr} />
                 <div className={styles.details}>
-                  <p>Tessa Gibson M.D., C.F.N.C.</p>
+                  <p>
+                   
+                    {!loading ? (
+                      tessaGibson
+                    ) : (
+                      <>
+                        <Skeleton />
+                      </>
+                    )}
+                  </p>
                 </div>
-
 
                 <div className={styles.freeCon}>
                   {/* <Link href="/book-on-appointment"> */}
-                  <Link target="_blank" href="https://elysionhealth.md-hq.com/schedule_visit">
+                  <Link
+                    target="_blank"
+                    href="https://elysionhealth.md-hq.com/schedule_visit"
+                  >
                     <CommanButton
                       className={styles.heroButton}
                       label="Book an Appointment"
@@ -61,9 +116,6 @@ function HeroSection() {
                         objectFit: 'cover',
                       }}
                     /> */}
-
-
-
                 </div>
               </div>
             </div>
@@ -99,6 +151,6 @@ function HeroSection() {
       </section>
     </>
   );
-}
+};
 
 export default HeroSection;
