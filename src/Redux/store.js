@@ -15,6 +15,8 @@ import cartVariantSlice from "../Redux/CartCreate/CartCreate";
 // import AppoinmentDateSlice from "../Redux/AppoinmentDate/appoinmentDate";
 import { AppoinmentDateSlice } from "./Appoinment/appointDate";
 import { appointmentSlice } from "./Appoinment/appointmentDetails";
+
+
 const persistConfig = {
   key: "root",
   storage,
@@ -29,6 +31,7 @@ const persistedReducer = persistReducer(
     appointmentSlice: appointmentSlice,
   })
 );
+
 
 export const store = configureStore({
   reducer: persistedReducer,
