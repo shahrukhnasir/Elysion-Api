@@ -25,3 +25,4 @@ export const BLOG_CONTENT = `content-pages/view/blog`;
 export const SERVICE_PROVIDER = `service-provider`;
 export const SERVICE_PROVIDER_ID = `service-provider/view/`;
 export const SLOTS = `slots/get-slots/`
+export const SLOTS_AVAILABLE = `slots/available`

@@ -7,36 +7,22 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { AllServices } from "../../../Service/HomePageService";
 import {
+  CheckSlotsHandler,
   DoctorDetails,
   SelectServiceProvider,
 } from "../../../Service/ServiceProviders";
+import { setSelectService } from "../../../Redux/Appoinment/selectService";
 import Skeleton from "react-loading-skeleton";
-const service = [
-  {
-    Title: "Internal and integrative medicine",
-  },
 
-  {
-    Title: "Family Medicine",
-  },
-  {
-    Title: "Functional Nutrition ",
-  },
-
-  {
-    Title: "Lifestyle Management",
-  },
-
-  {
-    Title: "Weight Loss Management",
-  },
-
-  {
-    Title: "IV Hydration and Vitamin Therapy",
-  },
-];
 const NewPatient = () => {
   const token = useSelector((state) => state?.authSlice?.authToken);
+  const currentDate = useSelector((state) => state?.currentDate?.currentDate);
+  const doc_Id = useSelector(
+    (state) => state?.appointment?.appointment?.doc_id
+  );
+  console.log(token,'tokentokentoken');
+  const time = useSelector((state) => state?.appointment?.appointment?.from);
+
   const dispatch = useDispatch();
   const router = useRouter();
   const [service, setService] = useState([]);
@@ -45,15 +31,25 @@ const NewPatient = () => {
   const [allService, setServicesData] = useState([]);
 
   const [selectedOption, setSelectedOption] = useState("");
+  const [selectedService, setSelectedService] = useState("");
   const [isValid, setIsValid] = useState(false);
+  const [isServiceValid, setIsServiceValid] = useState(false);
+  const [availableTime, setAvailableSlots] = useState({
+    doc_id: doc_Id,
+    time: time,
+    date: currentDate,
+  });
+
+  console.log(availableTime);
   const slug = router.query?.docId;
+
+  //👇 Service Providers Api implement and All Services implement
   useEffect(() => {
     dispatch(SelectServiceProvider(token, setLoading, setService));
     dispatch(AllServices(setLoading, setServicesData));
-  }, []);
+  }, [token]);
 
-
-
+  //👇Doctor Details Api implementation
   useEffect(() => {
     if (slug) {
       dispatch(DoctorDetails(slug, token, setLoading, setDocDetails));
@@ -64,22 +60,31 @@ const NewPatient = () => {
       pathname: "/followup",
     });
   };
-
+  //👇Hanlde Next page Function With 👇 Slots Available Api implementation
   const handleNext = (e) => {
     e.preventDefault();
-    console.log(e, "handleNext");
+    // const token = useSelector((state) => state?.authSlice?.authToken);
 
-    if (selectedOption !== "") {
+    if (selectedOption !== "" && selectedService !== "") {
       router.push({
         pathname: "/followup",
         query: { docId: selectedOption },
       });
+      setIsValid(false);
+      setIsServiceValid(false);
+
+      let data = new FormData();
+      data.append("doc_id", availableTime?.doc_id);
+      data.append("time", availableTime?.time);
+      data.append("date", availableTime?.currentDate);
+      dispatch(CheckSlotsHandler(token, data, setLoading));
     } else {
       router.push({
         pathname: "/new-patient",
         query: { docId: selectedOption },
       });
       setIsValid(true);
+      setIsServiceValid(true);
     }
   };
 
@@ -94,6 +99,17 @@ const NewPatient = () => {
     setIsValid(selectedValue !== "");
     setIsValid(false);
   };
+
+  const handleSelectService = (e) => {
+    const selectedValue = e.target.value;
+    setSelectedService(selectedValue);
+    setIsServiceValid(selectedValue !== "");
+    setIsServiceValid(false);
+    dispatch(setSelectService(selectedValue));
+    // console.log(selectedValue, "Service=========");
+    // console.log(allService,"allService");
+  };
+
   return (
     <NewPatientLayout heading="Request Appoinment">
       <div className="container">
@@ -117,7 +133,11 @@ const NewPatient = () => {
                     </option>
                   ))}
                 </select>
-                {isValid ? <p style={{ color: "red" }}>Please select</p> : ""}
+                {isValid ? (
+                  <p style={{ color: "red" }}>Please select provider</p>
+                ) : (
+                  ""
+                )}
               </>
             ) : (
               <>
@@ -160,19 +180,28 @@ const NewPatient = () => {
                 <select
                   id="inputState"
                   className={`${styles.selectField} form-select`}
-                  onChange={(e) => handleSelectChange(e)}
+                  onChange={(e) => handleSelectService(e)}
+                  value={selectedService}
                 >
-                  <option selected className={styles.optionField}>
+                  <option value="" className={styles.optionField}>
                     Select Service
                   </option>
-                  {allService.map((item, i) => {
-                    return (
-                      <option className={styles.optionField}>
-                        {item?.name}
-                      </option>
-                    );
-                  })}
+
+                  {allService?.map((item, i) => (
+                    <option
+                      key={i}
+                      value={item?.id}
+                      className={styles.optionField}
+                    >
+                      {item?.name}
+                    </option>
+                  ))}
                 </select>
+                {isServiceValid ? (
+                  <p style={{ color: "red" }}>Please select service</p>
+                ) : (
+                  ""
+                )}
               </>
             ) : (
               <>
@@ -208,7 +237,7 @@ const NewPatient = () => {
                           <img
                             src={docDetails?.image_url}
                             className="img-fluid rounded-start"
-                            alt="img"
+                            alt="Dr-image"
                           />
                         </div>
                       </div>
@@ -238,7 +267,9 @@ const NewPatient = () => {
                   </div>
                 </>
               ) : (
-                <>Select one</>
+                <>
+                  <Skeleton avatar paragraph={{ rows: 4 }} loading={loading} />
+                </>
               )}
             </div>
           </div>

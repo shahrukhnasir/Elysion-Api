@@ -5,9 +5,52 @@ import "react-calendar/dist/Calendar.css";
 //css
 import styles from "../NewPatientLayout/NewPatientLayout.module.css";
 import TopLayout from "../../components/TopLayout/TopLayout";
+import TimeButton from "../../components/TimeButton/TimeButton";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { Slots } from "../../Service/ServiceProviders";
+import { setAppointmentDate } from "../../Redux/Appoinment/appointDate";
+import { setAppointmentDetails } from "../../Redux/Appoinment/appointmentDetails";
 const NewPatientLayout = ({ children, heading }) => {
-  // const [value, onChange] = useState(new Date());
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date("2024-01-02"));
+  const [slots, setSlots] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [getVariations, setVariations] = useState([]);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const slug = router.query?.docId;
+  const token = useSelector((state) => state?.authSlice?.authToken);
+
+  //🤞Date Formatting 'YYYY-MM-DD' format
+  var year = date.getFullYear();
+  var month = ("0" + (date.getMonth() + 1)).slice(-2);
+  var day = ("0" + date.getDate()).slice(-2);
+  var formattedDate = year + "-" + month + "-" + day;
+
+  //🤞Slots Clicked Function
+  const variationClick = (value) => {
+    console.log(value, "value");
+    if (getVariations.includes(value)) {
+      const removal = getVariations.filter((varr) => varr !== value);
+      console.log(removal);
+      setVariations(removal);
+      dispatch(setAppointmentDetails(value));
+    } else {
+      setVariations([...getVariations, value]);
+    }
+  };
+  //🤞Date Select set Redux
+
+  const dateSeelectHandler = () =>{
+    dispatch(setAppointmentDate(formattedDate));
+  }
+
+
+
+  //Slots Api
+  useEffect(() => {
+    dispatch(Slots(slug, token, setLoading, setSlots));
+  }, [slug, token]);
 
   return (
     <>
@@ -26,37 +69,79 @@ const NewPatientLayout = ({ children, heading }) => {
           <div className="row">
             <div className="col-lg-8">{children}</div>
             <div className="col-lg-4">
-              <span className={styles.selectDate}>
+              <span className={styles.selectDate} >
                 Select Date As per Available Time
               </span>
 
               <div className="calendar-container">
-                <Calendar onChange={setDate} value={date} selectRange={false} />
+                <Calendar onChange={setDate}  onClick={(e)=> dateSeelectHandler(e)} value={date} selectRange={false} />
               </div>
               <div className="row" id={styles.availableTime}>
-                <span className={styles.aTime}>Available Time</span>
-                <div className="col p-0 my-1 mx-1">
-                  <CommanButton label="9:30 AM" className={styles.btn} />
-                </div>
-                <div className="col p-0 my-1 mx-1">
-                  <CommanButton label="10:30 AM" className={styles.btn} />
-                </div>
-                <div className="col p-0 my-1 mx-1">
-                  <CommanButton label="1:30 AM" className={styles.btn} />
-                </div>
+                {slots && slots?.length > 0 ? (
+                  <>
+                    {!loading ? (
+                      <div>
+                        {slots.map((item) => {
+                          const selected = getVariations?.includes(item);
+                          return (
+                            <div className="col-lg-6" key={item?.id}>
+                              <div id={styles.miniCard}>
+                                <TimeButton
+                                  style={{
+                                    backgroundColor: `${
+                                      selected ? "#1c3247" : "#ffffff"
+                                    }`,
+                                    color: `${selected ? "#fff" : "#000"}`,
+                                    border: `${
+                                      selected
+                                        ? "1px solid #1c3247"
+                                        : "1px solid #1c3247"
+                                    }`,
+                                  }}
+                                  onClick={() => variationClick(item)}
+                                  from={item.from}
+                                  to={item.from}
+                                  className={styles.btn}
+                                  day={item?.day}
+                                />
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <>
+                        <div className="text-center">
+                          <TimeButton
+                            style={{
+                              backgroundColor: `${"#1c3247"}`,
+                              color: `${"#fff"}`,
+                            }}
+                            from="Waiting"
+                            to="..."
+                            className={styles.btn}
+                          />
+                        </div>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <span className="text-center">
+                      <TimeButton
+                        style={{
+                          backgroundColor: `${"#1c3247"}`,
+                          color: `${"#fff"}`,
+                        }}
+                        from="No Slots"
+                        to="Available"
+                        className={styles.btn}
+                       
+                      />
+                    </span>
+                  </>
+                )}
               </div>
-              <div className="row" id={styles.availableTime}>
-                <div className="col p-0 my-1 mx-1">
-                  <CommanButton label="2:30 AM" className={styles.btn} />
-                </div>
-                <div className="col p-0 my-1 mx-1">
-                  <CommanButton label="6:30 AM" className={styles.btn} />
-                </div>
-                <div className="col p-0 my-1 mx-1">
-                  <CommanButton label="8:30 AM" className={styles.btn} />
-                </div>
-              </div>
-           
             </div>
           </div>
         </div>

@@ -27,6 +27,7 @@ import {
   SERVICE_PROVIDER_ID,
   SIGN_UP,
   SLOTS,
+  SLOTS_AVAILABLE,
 } from "./EndPoint";
 import { deleteMethod, getMethod, postMethod } from "./Config";
 
@@ -134,4 +135,7 @@ export const ServiceProviderById = (slug, token, data) => {
 
 export const SlotById = (slug, token, data) => {
   return getMethod(`${SLOTS}${slug}`, token, data);
+};
+export const SlotsAvailable = (token, data) => {
+  return postMethod(`${SLOTS_AVAILABLE}`, token, data);
 };

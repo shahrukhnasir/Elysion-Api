@@ -10,28 +10,35 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import authSlice from "./Auth/authSlice";
-import cartVariantSlice from "../Redux/CartCreate/CartCreate";
-// import AppoinmentDateSlice from "../Redux/AppoinmentDate/appoinmentDate";
-import { AppoinmentDateSlice } from "./Appoinment/appointDate";
-import { appointmentSlice } from "./Appoinment/appointmentDetails";
 
+import authSlice from "../Redux/Auth/authSlice";
+import AppoinmentDateSlice from "./Appoinment/appointDate";
+import appointmentSlice from "./Appoinment/appointmentDetails";
+import serviceSlice from "./Appoinment/selectService";
 
 const persistConfig = {
   key: "root",
   storage,
 };
 
+// const persistedReducer = persistReducer(
+//   persistConfig,
+//   combineReducers({
+//     authSlice: authSlice,
+//     currentDate: AppoinmentDateSlice,
+//     appointment: appointmentSlice,
+//     selectService: serviceSlice,
+//   })
+// );
 const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
     authSlice: authSlice,
-    cartVariantSlice: cartVariantSlice,
-    AppoinmentDateSlice:AppoinmentDateSlice ,
-    appointmentSlice: appointmentSlice,
+    currentDate: AppoinmentDateSlice,
+    appointment: appointmentSlice,
+    selectService: serviceSlice,
   })
 );
-
 
 export const store = configureStore({
   reducer: persistedReducer,

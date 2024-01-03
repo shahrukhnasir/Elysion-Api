@@ -53,40 +53,9 @@ const BookOnAappointment = () => {
         <NewPatientLayout heading="Request Appoinment">
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-6">
-                        <label
-                            for="inputState"
-                            className={`${styles.Label} form-label`}
-                        >
-                            Provider
-                        </label>
-                        {/* <button onClick={HandleServiceProvider}>
+                    
 
-                            Click
-                        </button> */}
-                        <select
-                            id="inputState"
-                            className={`${styles.selectField} form-select`}
-                            onChange={HandleServiceProvider}
-                        >
-
-                            <option selected className={styles.optionField}>
-                                Dr Henry jerry
-                            </option>
-                            <option className={styles.optionField} >
-
-                                Dr Henry jerry
-
-                            </option>
-
-
-                            <option className={styles.optionField}>
-                                Dr Hastie Lamyan
-                            </option>
-                        </select>
-                    </div>
-
-                    <div className="col-lg-6">
+                    <div className="col-lg-8">
                         <label
                             for="inputState"
                             className={`${styles.Label} form-label`}

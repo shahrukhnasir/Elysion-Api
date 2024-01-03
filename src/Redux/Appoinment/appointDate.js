@@ -8,6 +8,7 @@ const AppointmentDateSlice = createSlice({
   reducers: {
     setAppointmentDate: (state, action) => {
       state.currentDate = action.payload;
+      // localStorage.setItem('currentDate', action.payload);
     },
     
   },
