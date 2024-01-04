@@ -51,7 +51,9 @@ export const Slots = (slug, token, setLoading, setSlots) => () => {
 };
 //Slots available
 export const CheckSlotsHandler =
-  (token, data, setLoading) => async () => {
+  (token, data, setLoading,  router) => async () => {
+    console.log(data);
+    setLoading(true);
     try {
       const res = await SlotsAvailable(token, data);
 
@@ -62,27 +64,31 @@ export const CheckSlotsHandler =
       //   time: "",
       //   date: "",
       // });
-      if(res){
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: res?.data?.response?.data?.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        
-      }
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Successfully Done",
+        text: res?.data?.response?.data?.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      router.push("/confirmservice");
     } catch (error) {
-      console.error("Error :", error);
+      console.error("Error:", error);
       setLoading(false);
 
       Swal.fire({
         position: "center",
         icon: "error",
-        title: error.response?.data?.message || "An error occurred",
-        text: error.response?.data?.message  || "An error occurred",
-        showConfirmButton: false,
-          timer: 1500,
+        title:
+          error.response?.data?.message && "Select the correct Time & Date",
+        text: error.response?.data?.message || "An error occurred",
+        showConfirmButton: true,
+        customClass: {
+          confirmButton: "theme-button-bg",
+        },
       });
     }
   };

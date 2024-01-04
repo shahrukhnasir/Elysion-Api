@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TopLayout from "../../../components/TopLayout/TopLayout";
 import styles from "../ConfirmService/ConfirmService.module.css";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
 import CommanButton from "../../../components/CommanButton/CommanButton";
+
+import { getAllAServices } from "../../../Redux/AllService/allServices";
+import { Skeleton } from "antd";
 const ConfirmService = () => {
+  const [loading, setLoading] = useState(false);
+  const service = useSelector(
+    (state) => state?.AllServiceSlice?.featuredProducts
+  );
+  const dispacth = useDispatch();
+  const slug = useSelector((state) => state?.selectService?.selectService);
+  console.log(slug, "slug");
+  useEffect(() => {
+    dispacth(getAllAServices(slug));
+  }, []);
+  console.log(service, "service");
+
   return (
     <>
       <TopLayout
@@ -31,7 +47,13 @@ const ConfirmService = () => {
                       </div>
 
                       <div className="col-lg-6 p-0">
-                        <article className={styles.cardDetail}>$150.0</article>
+                        {!loading ? (
+                          <article className={styles.cardDetail}>
+                            ${service?.price}
+                          </article>
+                        ) : (
+                          <Skeleton/>
+                        )}
                       </div>
                     </div>
 
@@ -55,7 +77,7 @@ const ConfirmService = () => {
 
                       <div className="col-lg-6 p-0">
                         <article className={styles.cardDetail}>
-                          Functional Nutrition
+                          {service?.name}
                         </article>
                       </div>
                     </div>
@@ -95,11 +117,14 @@ const ConfirmService = () => {
                 </div>
               </div>
 
-
-
               <div className={styles.alert}>
-                <span className={styles.alertImage}><img src="./images/!.png" alt="img" /></span>
-                <span className={styles.alertText}>You are advised to pay on visit to place at the time of the appointment.</span>
+                <span className={styles.alertImage}>
+                  <img src="./images/!.png" alt="img" />
+                </span>
+                <span className={styles.alertText}>
+                  You are advised to pay on visit to place at the time of the
+                  appointment.
+                </span>
               </div>
             </div>
           </div>

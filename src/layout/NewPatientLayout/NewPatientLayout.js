@@ -20,13 +20,13 @@ const NewPatientLayout = ({ children, heading }) => {
   const router = useRouter();
   const slug = router.query?.docId;
   const token = useSelector((state) => state?.authSlice?.authToken);
-
   //🤞Date Formatting 'YYYY-MM-DD' format
-  var year = date.getFullYear();
-  var month = ("0" + (date.getMonth() + 1)).slice(-2);
-  var day = ("0" + date.getDate()).slice(-2);
-  var formattedDate = year + "-" + month + "-" + day;
-
+  const formatDate = (date) => {
+    var year = date.getFullYear();
+    var month = ("0" + (date.getMonth() + 1)).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+    return year + "-" + month + "-" + day;
+  };
   //🤞Slots Clicked Function
   const variationClick = (value) => {
     console.log(value, "value");
@@ -38,20 +38,22 @@ const NewPatientLayout = ({ children, heading }) => {
     } else {
       setVariations([...getVariations, value]);
     }
+    console.log(value, "valuevaluevalue");
   };
   //🤞Date Select set Redux
-
-  const dateSeelectHandler = () =>{
-    dispatch(setAppointmentDate(formattedDate));
-  }
-
-
-
+  const dateSelectHandler = (selectedDate) => {
+    setDate(selectedDate);
+    console.log(formatDate(selectedDate), "selectedDate");
+    dispatch(setAppointmentDate(formatDate(selectedDate)));
+  };
   //Slots Api
-  useEffect(() => {
-    dispatch(Slots(slug, token, setLoading, setSlots));
-  }, [slug, token]);
-
+  useEffect(
+    () => {
+      dispatch(Slots(slug, token, setLoading, setSlots));
+    },
+    [slug, token],
+    slots
+  );
   return (
     <>
       <section>
@@ -69,24 +71,38 @@ const NewPatientLayout = ({ children, heading }) => {
           <div className="row">
             <div className="col-lg-8">{children}</div>
             <div className="col-lg-4">
-              <span className={styles.selectDate} >
+              <span className={styles.selectDate}>
                 Select Date As per Available Time
               </span>
 
               <div className="calendar-container">
-                <Calendar onChange={setDate}  onClick={(e)=> dateSeelectHandler(e)} value={date} selectRange={false} />
+                <Calendar
+                  onChange={dateSelectHandler}
+                  value={date}
+                  selectRange={false}
+                />
               </div>
+
               <div className="row" id={styles.availableTime}>
                 {slots && slots?.length > 0 ? (
                   <>
                     {!loading ? (
-                      <div>
+                      <>
+                        <span className="aTime">Available Time</span>
                         {slots.map((item) => {
                           const selected = getVariations?.includes(item);
                           return (
                             <div className="col-lg-6" key={item?.id}>
                               <div id={styles.miniCard}>
                                 <TimeButton
+                                  from={item.from}
+                                  to={item.to}
+                                  day={item?.day}
+                                  checked={selected}
+                                  onClick={() => variationClick(item)}
+                                  className={styles.btn}
+                                />
+                                {/* <TimeButton
                                   style={{
                                     backgroundColor: `${
                                       selected ? "#1c3247" : "#ffffff"
@@ -100,46 +116,36 @@ const NewPatientLayout = ({ children, heading }) => {
                                   }}
                                   onClick={() => variationClick(item)}
                                   from={item.from}
-                                  to={item.from}
+                                  to={item.to}
                                   className={styles.btn}
                                   day={item?.day}
-                                />
+                                  checked={selected}
+                                /> */}
                               </div>
                             </div>
                           );
                         })}
-                      </div>
-                    ) : (
-                      <>
-                        <div className="text-center">
-                          <TimeButton
-                            style={{
-                              backgroundColor: `${"#1c3247"}`,
-                              color: `${"#fff"}`,
-                            }}
-                            from="Waiting"
-                            to="..."
-                            className={styles.btn}
-                          />
-                        </div>
                       </>
+                    ) : (
+                      <div className="text-center">
+                        <TimeButton
+                         
+                          from="Waiting"
+                          to="..."
+                          className={styles.btn}
+                        />
+                      </div>
                     )}
                   </>
                 ) : (
-                  <>
-                    <span className="text-center">
-                      <TimeButton
-                        style={{
-                          backgroundColor: `${"#1c3247"}`,
-                          color: `${"#fff"}`,
-                        }}
-                        from="No Slots"
-                        to="Available"
-                        className={styles.btn}
-                       
-                      />
-                    </span>
-                  </>
+                  <div className="text-center">
+                    <TimeButton
+                      from="No Slots"
+                      to="Available"
+                      day={''}
+                      className={styles.btn}
+                    />
+                  </div>
                 )}
               </div>
             </div>

@@ -137,5 +137,5 @@ export const SlotById = (slug, token, data) => {
   return getMethod(`${SLOTS}${slug}`, token, data);
 };
 export const SlotsAvailable = (token, data) => {
-  return postMethod(`${SLOTS_AVAILABLE}`, token, data);
+  return postMethod(`${SLOTS_AVAILABLE}`,data,  token);
 };

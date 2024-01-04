@@ -7,11 +7,10 @@ const appointmentSlice = createSlice({
   },
   reducers: {
     setAppointmentDetails: (state, action) => {
-      return {
-        ...state,
-        appointment: action.payload,
-      };
-    },
+      state.appointment = action.payload;
+      // localStorage.setItem('appointment', action.payload);
+      },
+  
   },
 });
 

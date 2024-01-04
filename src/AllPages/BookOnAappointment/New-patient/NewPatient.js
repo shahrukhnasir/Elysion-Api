@@ -17,10 +17,6 @@ import Skeleton from "react-loading-skeleton";
 const NewPatient = () => {
   const token = useSelector((state) => state?.authSlice?.authToken);
   const currentDate = useSelector((state) => state?.currentDate?.currentDate);
-  const doc_Id = useSelector(
-    (state) => state?.appointment?.appointment?.doc_id
-  );
-  console.log(token,'tokentokentoken');
   const time = useSelector((state) => state?.appointment?.appointment?.from);
 
   const dispatch = useDispatch();
@@ -29,20 +25,19 @@ const NewPatient = () => {
   const [docDetails, setDocDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [allService, setServicesData] = useState([]);
-
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedService, setSelectedService] = useState("");
   const [isValid, setIsValid] = useState(false);
   const [isServiceValid, setIsServiceValid] = useState(false);
-  const [availableTime, setAvailableSlots] = useState({
-    doc_id: doc_Id,
-    time: time,
-    date: currentDate,
-  });
+  // const [availableTime, setAvailableSlots] = useState({
+  //   doc_id: doc_Id,
+  //   time: time,
+  //   date: currentDate,
+  // });
 
-  console.log(availableTime);
   const slug = router.query?.docId;
 
+  console.log("doc_id:", slug, "time:", time, "date:", currentDate);
   //👇 Service Providers Api implement and All Services implement
   useEffect(() => {
     dispatch(SelectServiceProvider(token, setLoading, setService));
@@ -54,33 +49,34 @@ const NewPatient = () => {
     if (slug) {
       dispatch(DoctorDetails(slug, token, setLoading, setDocDetails));
     }
-  }, [slug, token]);
+  }, [slug, token, currentDate, time]);
   const HandleFollowUp = (e) => {
     router.push({
       pathname: "/followup",
     });
   };
+  console.log(selectedOption, "selectedOption");
   //👇Hanlde Next page Function With 👇 Slots Available Api implementation
   const handleNext = (e) => {
     e.preventDefault();
     // const token = useSelector((state) => state?.authSlice?.authToken);
-
     if (selectedOption !== "" && selectedService !== "") {
       router.push({
-        pathname: "/followup",
+        // pathname: "/followup",
         query: { docId: selectedOption },
       });
+      console.log();
       setIsValid(false);
       setIsServiceValid(false);
 
       let data = new FormData();
-      data.append("doc_id", availableTime?.doc_id);
-      data.append("time", availableTime?.time);
-      data.append("date", availableTime?.currentDate);
-      dispatch(CheckSlotsHandler(token, data, setLoading));
+      data.append("doc_id", slug);
+      data.append("time", time);
+      data.append("date", currentDate);
+      dispatch(CheckSlotsHandler(token, data, setLoading, router));
     } else {
       router.push({
-        pathname: "/new-patient",
+        // pathname: "/new-patient",
         query: { docId: selectedOption },
       });
       setIsValid(true);

@@ -1,20 +1,20 @@
 import styles from "../TimeButton/TimeButton.module.css";
 
-const TimeButton = ({ from, style, onClick, className, to, day, onChange }) => {
+const TimeButton = ({ from, to, day, onClick, className, onChange }) => {
   return (
-    <span
-      className={`${styles.GeneralButton} ${className}`}
-      onClick={onClick}
-      onChange={onChange}
-    >
-      <button style={style}>
-        <span>
-          {from} - {to}
-        </span>
-        <br />
-        {day}
-      </button>
-    </span>
+    <div className={styles.timeCheckButton}>
+      <label className={`${styles.GeneralButton} ${className}`}>
+        <input
+          type="radio"
+          name="timeButton"
+          onChange={onChange}
+          onClick={onClick}
+          hidden
+        />
+        <span className={styles.current_radio}>{`${from} - ${to} ${day}`}</span>
+      </label>
+    </div>
   );
 };
+
 export default TimeButton;
