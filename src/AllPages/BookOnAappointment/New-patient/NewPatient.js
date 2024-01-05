@@ -29,12 +29,6 @@ const NewPatient = () => {
   const [selectedService, setSelectedService] = useState("");
   const [isValid, setIsValid] = useState(false);
   const [isServiceValid, setIsServiceValid] = useState(false);
-  // const [availableTime, setAvailableSlots] = useState({
-  //   doc_id: doc_Id,
-  //   time: time,
-  //   date: currentDate,
-  // });
-
   const slug = router.query?.docId;
 
   console.log("doc_id:", slug, "time:", time, "date:", currentDate);

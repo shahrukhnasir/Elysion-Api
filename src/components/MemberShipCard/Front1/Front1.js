@@ -7,6 +7,7 @@ import { Skeleton } from "antd";
 const Front1 = () => {
   const [member, setMember] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [memberOne, setMemberOne] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(MemberShipCard(setLoading, setMember, dispatch));
@@ -14,10 +15,16 @@ const Front1 = () => {
   const memberCard = member?.[0];
   const words = memberCard?.description?.split(".");
   const list = words;
-
+  const month = "month";
+  const getId = (mem) => {
+    setMemberOne({
+      ...mem,month:month,
+    })
+  };
+  console.log(memberOne, "memberOne");
   return (
     <>
-      <div className={styles.flipcardfront}>
+      <div className={styles.flipcardfront} >
         <div>
           <div className={`${styles.cardBody} card-body`}>
             <h6 className={`${styles.carTitle}`}>{memberCard?.name}</h6>
@@ -25,7 +32,7 @@ const Front1 = () => {
             <h6 className={`${styles.SubTitle}`}>
               <sup className={styles.card3SmText}>$</sup>
               <span className={styles.BigText}>
-                {memberCard?.price && memberCard.price.substring(0, 3)}
+                {memberCard?.price && memberCard.price}
               </span>
               /Mo
             </h6>
@@ -61,7 +68,10 @@ const Front1 = () => {
             </ul>
 
             <div className="">
-              <MemberButton label="Join Now" />
+              <MemberButton
+                label="Join Now"
+                onClick={() => getId(memberCard)}
+              />
             </div>
           </div>
         </div>

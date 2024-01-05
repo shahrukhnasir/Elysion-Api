@@ -12,6 +12,7 @@ import {
   FORGOT_PASSWORD,
   FREE_CONSULTATION,
   HERO_SECTION,
+  LAST_VISIT,
   LOGIN,
   MEDICAL_SERVICES,
   MEET_DOCTOR,
@@ -28,6 +29,7 @@ import {
   SIGN_UP,
   SLOTS,
   SLOTS_AVAILABLE,
+  SLOTS_CREATE_CHECK_OUT,
 } from "./EndPoint";
 import { deleteMethod, getMethod, postMethod } from "./Config";
 
@@ -104,7 +106,9 @@ export const Membership = (data) => {
 export const AddToCart = (token, data) => {
   return postMethod(`${ADD_TO_CART}`, data, token);
 };
-
+export const SlotCreateCheckOut = (token, data) => {
+  return postMethod(`${SLOTS_CREATE_CHECK_OUT}`, data, token);
+};
 export const AddToCartList = (data, token) => {
   return getMethod(`${ADD_TO_CART_LIST}`, data, token);
 };
@@ -137,5 +141,8 @@ export const SlotById = (slug, token, data) => {
   return getMethod(`${SLOTS}${slug}`, token, data);
 };
 export const SlotsAvailable = (token, data) => {
-  return postMethod(`${SLOTS_AVAILABLE}`,data,  token);
+  return postMethod(`${SLOTS_AVAILABLE}`, data, token);
+};
+export const LastVisitFollowUp = (token, data) => {
+  return getMethod(`${LAST_VISIT}`, token, data);
 };

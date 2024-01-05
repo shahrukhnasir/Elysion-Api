@@ -18,7 +18,7 @@ const NewPatientLayout = ({ children, heading }) => {
   const [getVariations, setVariations] = useState([]);
   const dispatch = useDispatch();
   const router = useRouter();
-  const slug = router.query?.docId;
+  const slug = router.query?.docId || router.query?.service;
   const token = useSelector((state) => state?.authSlice?.authToken);
   //🤞Date Formatting 'YYYY-MM-DD' format
   const formatDate = (date) => {

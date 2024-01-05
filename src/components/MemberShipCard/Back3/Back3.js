@@ -23,7 +23,7 @@ const Back3 = () => {
             <hr />
             <h6 className={`${styles.SubTitle}`}>
               <sup className={styles.card3SmText}>$</sup>{" "}
-              <span className={styles.BigText}>        {memberCard?.price && memberCard.price.substring(3, 10)}</span> /Yr
+              <span className={styles.BigText}>        {memberCard?.price && memberCard.price * 12}</span> /Yr
             </h6>
 
             <ul className={styles.pricingListOverFlow}>

@@ -17,7 +17,7 @@ const MemberButton = ({ label, style, onClick, className}) => {
       style={style}
       onClick={onClick}
     >
-      <button onClick={handleLink}>
+      <button onClick={onClick}>
         {label}
          </button>
     </span>
