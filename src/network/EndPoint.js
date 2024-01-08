@@ -28,3 +28,5 @@ export const SLOTS = `slots/get-slots/`
 export const SLOTS_AVAILABLE = `slots/available`
 export const SLOTS_CREATE_CHECK_OUT = `slots/create`
 export const LAST_VISIT =`slots/last-visit`
+export const USER_SUBSCRIPTION_CREATE =`user-subscription/create`
+export const USER_SUBSCRIPTION = `memberships/view/`

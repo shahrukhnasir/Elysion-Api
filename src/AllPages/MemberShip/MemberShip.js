@@ -46,7 +46,8 @@ const MemberShip = () => {
               >
                 <div className={styles.flipCardInner}>
                   <div className={styles.flipCardFront}>
-                    <Front1 />
+                    <Front1 className={styles.button}
+                    />
                   </div>
                   <div className={styles.flipCardBack}>
                     <Back1 />

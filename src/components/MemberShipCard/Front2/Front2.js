@@ -4,6 +4,7 @@ import MemberButton from "../../MemberButton/MemberButton";
 import { useDispatch } from "react-redux";
 import { MemberShipCard } from "../../../Service/MemberShipService";
 import { Skeleton } from "antd";
+import { useRouter } from "next/router";
 const Front2 = () => {
   const [member, setMember] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -14,6 +15,16 @@ const Front2 = () => {
   const memberCard = member?.[1];
   const words = memberCard?.description?.split(".");
   const list = words;
+
+  const router = useRouter();
+  const getId = (slug) => {
+
+    console.log(slug,memberCard,"slugslug");
+    router.push({
+      pathname: "checkout-member",
+      query: { id: slug },
+    });
+  };
   return (
     <>
       <div className={styles.flipcardfront}>
@@ -59,6 +70,7 @@ const Front2 = () => {
            
               <MemberButton label="Join Now" 
               className={styles.lightBtn}
+              onClick={() => getId(memberCard?.id)}
               />
            
           </div>

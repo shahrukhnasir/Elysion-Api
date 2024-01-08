@@ -1,430 +1,272 @@
-import React, { useState } from 'react'
-import styles from '../CheckOutDetails2/CheckOutDetails2.module.css';
+import React, { useEffect, useState } from "react";
+import styles from "../CheckOutDetails2/CheckOutDetails2.module.css";
 
-import CommanButton from '../../components/CommanButton/CommanButton';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import CommanButton from "../../components/CommanButton/CommanButton";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import StripeCheckout from "react-stripe-checkout";
+import {
+  UserSubscription,
+  UserSubscriptionCreate,
+} from "../../Service/Subscription";
 const CheckOutDetails2 = () => {
-    const [error, setError] = useState(false);
-    const [fName, setfName] = useState("");
-    const [lName, setLname] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [address, setAddress] = useState("");
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [selectedMem, setSelectedOption] = useState("");
+  const [isValid, setIsValid] = useState(false);
+  const token = useSelector((state) => state?.authSlice?.authToken);
+  const [striptoken, setStriptoken] = useState();
+  // const [type, setType] = useState("Select");
+  const [subDetails, setSubscriptionDetails] = useState([]);
+  const onToken = (isToken) => {
+    setStriptoken(isToken?.id);
+  };
+  const slug = router?.query?.id;
+  const handleChange = (e) => {
+    e.preventDefault();
+    // setType(e.target.value);
 
-    const [city, setCity] = useState("");
-    const [zip, setZip] = useState("");
+    const selectedValue = e.target.value;
+    setSelectedOption(selectedValue);
+    setIsValid(selectedValue !== "");
+    setIsValid(false);
+  };
+  // console.log(selectedMem, "typetype");
+  // const HandleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setIsValid(false);
+  //   setLoading(true);
+  //   try {
+  //     if (selectedMem !== "") {
+  //       setIsValid(true);
+  //     } else if (striptoken) {
+  //       let data = new FormData();
+  //       data.append("type", selectedMem);
+  //       data.append("subscription_id", slug);
+  //       data.append("stripeToken", striptoken);
+  //       dispatch(UserSubscriptionCreate(token, data, setLoading, router));
+  //     }
+  //   } catch (error) {
+  //     console.error("Error submitting form:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
-    const [cartNumber, setcartNumber] = useState("");
-    const [expirDate, setExpirDate] = useState("");
-    const [cvv, setCvv] = useState("");
-
-    const router = useRouter();
-    const HandleSubmit = (e, id, urlPath) => {
-        e.preventDefault();
-        if (email.length === 0) {
-            setError(true);
-
-            return;
-        }
-
-        router.push({
-            pathname: urlPath,
-            query: { id: id },
-        });
+  const HandleSubmit = async (e) => {
+    e.preventDefault();
+    setIsValid(false);
+    setLoading(true);
+    try {
+      if (striptoken){
+        let data = new FormData();
+        data.append("type", selectedMem);
+        data.append("subscription_id", slug);
+        data.append("stripeToken", striptoken);
+        dispatch(UserSubscriptionCreate(token, data, setLoading, router));
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setLoading(false);
     }
-    return (
-        <>
+  };
+  
+  const calculatePrice = () => {
+    if (selectedMem === "annually") {
+      return subDetails?.price * 12 + 150;
+    } else {
+      return subDetails?.price * 1 + 150;
+    }
+  };
+  useEffect(() => {
+    dispatch(UserSubscription(slug, token, setLoading, setSubscriptionDetails));
+  }, [slug, token]);
+  return (
+    <>
+      <div className="container-fluid p-0">
+        <div className={styles.ProfileTopSection}>
+          <div className={styles.Title}>
+            <h2>Checkout</h2>
+          </div>
+        </div>
 
+        <div className="container py-5">
+          <div className={`${styles.rowReverse} row`}>
+            <div className="col-lg-5 offset-lg-1">
+              {/* Heading */}
+              <div className="py-3">
+                <h1 className={styles.cartHeading}>Select Membership Plan</h1>
+              </div>
+              <div className={styles.plan}>
+                <label
+                  className={`${styles.month} form-check-label`}
+                  htmlFor="subscriptionToggle"
+                ></label>
+                <select
+                  className={`${styles.formSelect} form-select`}
+                  value={selectedMem}
+                  onChange={(e) => handleChange(e)}
+                  id={styles.subscriptionToggle}
+                >
+                  <option value="Select">Select</option>
+                  <option value="monthly" name="monthly">
+                    Monthly
+                  </option>
+                  <option value="annually" name="annually">
+                    Annually
+                  </option>
+                  {isValid ? <p style={{ color: "red" }}>Please select</p> : ""}
+                </select>
+                
+              </div>
 
-            <div className="container-fluid p-0">
-                <div className={styles.ProfileTopSection}>
-                    <div className={styles.Title}>
-                        <h2>Checkout
-                        </h2>
-                    </div>
-                </div>
-
-                <div className="container py-5">
-                    <div className={`${styles.rowReverse} row`}>
-                        <div className="col-lg-5 offset-lg-1">
-                            {/* Heading */}
-                            <div className='py-3'>
-                                <h1 className={styles.cartHeading}> Enter Billing Information</h1>
-                            </div>
-                            {/* Billing Details */}
-                            <div className="row">
-                                <div className="col-lg-6">
-                                    <input
-                                        type="text"
-                                        className={`${styles.inputField} form-control`}
-                                        placeholder="First Name"
-                                        value={fName}
-                                        onChange={(e) => {
-                                            setfName(e.target.value);
-                                        }}
-                                    />
-
-                                    <div className="pb-2">
-                                        {error && fName.length <= 0 ? (
-                                            <span className={styles.warning}>
-                                                First Name can't be Empty!
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-6">
-                                    <input
-                                        type="text"
-                                        className={`${styles.inputField} form-control`}
-                                        placeholder="Last Name"
-                                        value={lName}
-                                        onChange={(e) => {
-                                            setLname(e.target.value);
-                                        }}
-                                    />
-
-                                    <div className="pb-2">
-                                        {error && lName.length <= 0 ? (
-                                            <span className={styles.warning}>
-                                                Last Name can't be Empty!
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                <div className="col-lg-6">
-                                    <input
-                                        type="text"
-                                        className={`${styles.inputField} form-control`}
-                                        placeholder="Email"
-                                        value={email}
-                                        onChange={(e) => {
-                                            setEmail(e.target.value);
-                                        }}
-                                    />
-
-                                    <div className="pb-2">
-                                        {error && email.length <= 0 ? (
-                                            <span className={styles.warning}>
-                                                Email can't be Empty!
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-6">
-                                    <input
-                                        type="text"
-                                        className={`${styles.inputField} form-control`}
-                                        placeholder="Phone"
-                                        value={phone}
-                                        onChange={(e) => {
-                                            setPhone(e.target.value);
-                                        }}
-                                    />
-
-                                    <div className="pb-2">
-                                        {error && phone.length <= 0 ? (
-                                            <span className={styles.warning}>
-                                                Last Name can't be Empty!
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div className="col-lg-12">
-                                <input
-                                    type="text"
-                                    className={`${styles.inputField} form-control`}
-                                    placeholder="Address"
-                                    value={address}
-                                    onChange={(e) => {
-                                        setAddress(e.target.value);
-                                    }}
-                                />
-
-                                <div className="pb-2">
-                                    {error && address.length <= 0 ? (
-                                        <span className={styles.warning}>
-                                            Address can't be Empty!
-                                        </span>
-                                    ) : (
-                                        ""
-                                    )}
-                                </div>
-                            </div>
-
-
-                            <div className="row">
-                                <div className="col-lg-6">
-                                    <input
-                                        type="text"
-                                        className={`${styles.inputField} form-control`}
-                                        placeholder="City"
-                                        value={city}
-                                        onChange={(e) => {
-                                            setCity(e.target.value);
-                                        }}
-                                    />
-
-                                    <div className="pb-2">
-                                        {error && city.length <= 0 ? (
-                                            <span className={styles.warning}>
-                                                City can't be Empty!
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-6">
-                                    <input
-                                        type="text"
-                                        className={`${styles.inputField} form-control`}
-                                        placeholder="Zip Code"
-                                        value={zip}
-                                        onChange={(e) => {
-                                            setZip(e.target.value);
-                                        }}
-                                    />
-
-                                    <div className="pb-2">
-                                        {error && zip.length <= 0 ? (
-                                            <span className={styles.warning}>
-                                                Zip CodeLast Name can't be Empty!
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.plan}>
-
-                                <span className={`${styles.month} form-check-label`} for="flexSwitchCheckChecked">Monthly</span>
-                                <span className="form-check form-switch">
-                                    <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" />
-                                </span>
-                                <span className={`${styles.annual} form-check-label`} for="flexSwitchCheckChecked">Annually</span>
-                            </div>
-
-
-
-                            {/* Heading */}
-                            <div className="row py-3">
-                                <div className="col-lg-6">
-                                    <h1 className={styles.cartDetails}>  Enter Card Details</h1>
-                                </div>
-
-                                <div className="col-lg-6">
-                                    <span className={styles.cartImage}><img src="./images/visa.png" className='img-fluid' alt="img" /></span>
-                                </div>
-                            </div>
-
-
-                            {/* Enter Card Details */}
-
-
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <label htmlFor="" className={styles.labelInput}>Card Number</label>
-                                    <input
-                                        type="number"
-                                        className={`${styles.inputField} form-control`}
-                                        placeholder="Enter Card Number"
-                                        value={cartNumber}
-                                        onChange={(e) => {
-                                            setcartNumber(e.target.value);
-                                        }}
-                                    />
-
-                                    <div className="pb-2">
-                                        {error && cartNumber.length <= 0 ? (
-                                            <span className={styles.warning}>
-                                                Cart Number can't be Empty!
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div className="row">
-                                <div className="col-lg-6">
-                                    <label htmlFor="" className={styles.labelInput}>Expiry date</label>
-                                    <input
-                                        type="text"
-                                        className={`${styles.inputField} form-control`}
-                                        placeholder="MM/YY"
-                                        value={expirDate}
-                                        onChange={(e) => {
-                                            setExpirDate(e.target.value);
-                                        }}
-                                    />
-
-                                    <div className="pb-2">
-                                        {error && expirDate.length <= 0 ? (
-                                            <span className={styles.warning}>
-                                                Expiry Date can't be Empty!
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </div>
-                                </div>
-
-
-                                <div className="col-lg-6">
-                                    <label htmlFor="" className={styles.labelInput}>CVV</label>
-                                    <input
-                                        type="number"
-                                        className={`${styles.inputField} form-control`}
-                                        placeholder="CVV"
-                                        value={cvv}
-                                        onChange={(e) => {
-                                            setCvv(e.target.value);
-                                        }}
-                                    />
-
-                                    <div className="pb-2">
-                                        {error && cvv.length <= 0 ? (
-                                            <span className={styles.warning}>
-                                                CVV can't be Empty!
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                            {/* Enter Card Details */}
-
-                            <div className="py-3">
-                                <CommanButton
-                                    onClick={(e) => HandleSubmit(e, 5, "/thank-you")}
-                                    label="Add Card"
-                                    className={styles.cartButton}
-                                />
-                            </div>
-                        </div>
-
-
-
-
-
-                        <div className="col-lg-6">
-                            <div className={styles.card}>
-
-                                <h1 className={styles.cardTopHeading}>Premium</h1>
-
-                                <div className="row">
-                                    <div className="col-lg-6">
-                                        <article className={styles.cardTitle}>
-                                            Membership Fee
-                                        </article>
-                                    </div>
-
-                                    <div className="col-lg-6 p-0">
-                                        <article className={styles.cardDetail}>$120.0</article>
-                                    </div>
-                                </div>
-
-                                <div className="row">
-                                    <div className="col-lg-6">
-                                        <article className={styles.cardTitle}>
-                                            Administration charges
-                                        </article>
-                                    </div>
-
-                                    <div className="col-lg-6 p-0">
-                                        <article className={styles.cardDetail}>$150.0 </article>
-                                    </div>
-                                </div>
-                                <hr />
-
-                                <div className="row">
-                                    <div className="col-lg-6">
-                                        <h1 className={styles.cardTextBlue}>Total</h1>
-                                    </div>
-
-                                    <div className="col-lg-6">
-                                        <h1 className={styles.cardLastPrice}>$270.0</h1>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            {/*  */}
-                            <div className={styles.alert}>
-                                <span className={styles.alertImage}>
-                                    <img src="./images/!.png" alt="img" />
-                                </span>
-                                <span className={styles.alertText}>
-                                    For Membership. There is no refund and cancellation policy
-                                </span>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-                <div className="container py-5">
-                    <hr />
-
-                    <div className="row">
-                        <div className="col-lg-5 offset-lg-1">
-                            <span>
-                                {" "}
-                                <input
-                                    class="form-check-input me-2"
-                                    type="checkbox"
-                                    value=""
-                                    id="flexCheckDefault"
-                                />
-                            </span>
-                            <span className={styles.tCheckBoxText}>
-                                I hereby agree to the
-                                <Link href="/termservice">
-                                    <span className={styles.tCondition}>Terms & Conditions</span>
-                                </Link>
-                            </span>
-                        </div>
-                        <div className="col-lg-6">
-                            <div className={styles.checkOutLast}>
-                                <CommanButton
-                                    onClick={(e) => HandleSubmit(e, 5, "/thank-you")}
-                                    label="Checkout"
-                                />
-                            </div>
-
-
-
-                        </div>
-                    </div>
-                </div>
+              <div className="py-3">
+                <>
+                  {striptoken ? (
+                    ""
+                  ) : (
+                    <StripeCheckout
+                      token={onToken}
+                      stripeKey="pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3"
+                      currency="USD"
+                      amount={calculatePrice(selectedMem)}
+                    >
+                      <CommanButton
+                        label="add to card"
+                        onClick={HandleSubmit}
+                        className={styles.cartButton}
+                      />
+                    </StripeCheckout>
+                  )}
+                </>
+              </div>
             </div>
-        </>
-    )
-}
 
-export default CheckOutDetails2
+            <div className="col-lg-6">
+              <div className={styles.card}>
+                <h1 className={styles.cardTopHeading}>{subDetails?.name}</h1>
+
+                <div className="row">
+                  <div className="col-lg-6">
+                    <article className={styles.cardTitle}>
+                      Membership Fee
+                    </article>
+                  </div>
+
+                  <div className="col-lg-6 p-0">
+                    <article className={styles.cardDetail}>
+                      {selectedMem === "annually" ? (
+                        <>
+                          <span>${subDetails?.price * 12}</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>${subDetails?.price}</span>
+                        </>
+                      )}
+                    </article>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-lg-6">
+                    <article className={styles.cardTitle}>
+                      Membership Type
+                    </article>
+                  </div>
+
+                  <div className="col-lg-6 p-0">
+                    <article className={styles.cardDetail}>
+                      {" "}
+                      {selectedMem}
+                    </article>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-lg-6">
+                    <article className={styles.cardTitle}>
+                      Administration charges
+                    </article>
+                  </div>
+
+                  <div className="col-lg-6 p-0">
+                    <article className={styles.cardDetail}>$150.0 </article>
+                  </div>
+                </div>
+                <hr />
+
+                <div className="row">
+                  <div className="col-lg-6">
+                    <h1 className={styles.cardTextBlue}>Total</h1>
+                  </div>
+
+                  <div className="col-lg-6">
+                    <h1 className={styles.cardLastPrice}>
+                      {calculatePrice(selectedMem)}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+              {/*  */}
+              <div className={styles.alert}>
+                <span className={styles.alertImage}>
+                  <img src="./images/!.png" alt="img" />
+                </span>
+                <span className={styles.alertText}>
+                  For Membership. There is no refund and cancellation policy
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="container py-5">
+          <hr />
+
+          <div className="row">
+            <div className="col-lg-5 offset-lg-1">
+              <span>
+                {" "}
+                <input
+                  class="form-check-input me-2"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckDefault"
+                />
+              </span>
+              <span className={styles.tCheckBoxText}>
+                I hereby agree to the
+                <Link href="/termservice">
+                  <span className={styles.tCondition}>Terms & Conditions</span>
+                </Link>
+              </span>
+            </div>
+            <div className="col-lg-6">
+              <div className={styles.checkOutLast}>
+                {!loading ? (
+                  <>
+                    {striptoken ? (
+                      <CommanButton onClick={HandleSubmit} label="Checkout" />
+                    ) : (
+                      ""
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <CommanButton label="Check..." />
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default CheckOutDetails2;

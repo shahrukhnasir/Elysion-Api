@@ -334,23 +334,15 @@ input[type=checkbox] {
     border-right: none !important
 }
 
-.form-switch .form-check-input {
-    height: 24px;
-    width: 48px
+/* CSS */
+
+
+/* Optionally, you can style the label */
+.form-check-label {
+    margin-right: 0; /* Adjust margin as needed */
 }
 
-.form-switch .form-check-input:focus {
-    border-color: rgba(0, 0, 0, .25);
-    outline: 0;
-    box-shadow: 0 0 0 0 transparent;
-    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba(0,0,0,0.25)'/></svg>")
-}
 
-.form-switch .form-check-input:checked {
-    background-color: #575755;
-    border: none;
-    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='#ffffff'/></svg>")
-}
 
 #upload-photo {
     opacity: 0;

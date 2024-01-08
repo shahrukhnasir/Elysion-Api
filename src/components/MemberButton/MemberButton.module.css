@@ -8,7 +8,7 @@
     font-family: var(--main-font-regular); 
     font-size: 13px;
     transform: translateY(0rem);
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;    transform: none !important;
 }
 
 
@@ -23,6 +23,7 @@
     font-family: var(--main-font-regular); 
     font-size: 13px;
     transition: all 0.3s ease-in-out;
+    transform: none !important;
 }
 /* 
 

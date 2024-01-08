@@ -4,6 +4,7 @@ import MemberButton from "../../MemberButton/MemberButton";
 import { MemberShipCard } from "../../../Service/MemberShipService";
 import { useDispatch } from "react-redux";
 import { Skeleton } from "antd";
+import { useRouter } from "next/router";
 const Back3 = () => {
   const [member, setMember] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -14,6 +15,15 @@ const Back3 = () => {
   const memberCard = member?.[2];
   const words = memberCard?.description?.split(".");
   const list = words;
+  
+
+  const router = useRouter();
+  const getId = (slug) => {
+    router.push({
+      pathname: "checkout-member",
+      query: { id: slug },
+    });
+  }
   return (
     <>
       <div className={styles.flipcardfront}>
@@ -59,7 +69,7 @@ const Back3 = () => {
             </ul>
 
             
-              <MemberButton label="Join Now" className={styles.lightBtn} />
+              <MemberButton label="Join Now" onClick={() => getId(memberCard?.id)} className={styles.lightBtn} />
          
           </div>
         </div>

@@ -30,6 +30,8 @@ import {
   SLOTS,
   SLOTS_AVAILABLE,
   SLOTS_CREATE_CHECK_OUT,
+  USER_SUBSCRIPTION,
+  USER_SUBSCRIPTION_CREATE,
 } from "./EndPoint";
 import { deleteMethod, getMethod, postMethod } from "./Config";
 
@@ -145,4 +147,11 @@ export const SlotsAvailable = (token, data) => {
 };
 export const LastVisitFollowUp = (token, data) => {
   return getMethod(`${LAST_VISIT}`, token, data);
+};
+export const Subscription = (token, data) => {
+  return postMethod(`${USER_SUBSCRIPTION_CREATE}`, data, token);
+};
+
+export const UserSubscriptionBuy = (slug, token, data) => {
+  return getMethod(`${USER_SUBSCRIPTION}${slug}`, token, data);
 };
