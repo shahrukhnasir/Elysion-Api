@@ -4,22 +4,38 @@ import styles from "../ConfirmService/ConfirmService.module.css";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import CommanButton from "../../../components/CommanButton/CommanButton";
-
 import { getAllAServices } from "../../../Redux/AllService/allServices";
 import { Skeleton } from "antd";
+import { Subscriptions } from "../../../Service/Subscription";
 const ConfirmService = () => {
+  const dispacth = useDispatch();
+  const [sub, setSubscription] = useState([]);
   const [loading, setLoading] = useState(false);
   const service = useSelector(
     (state) => state?.AllServiceSlice?.featuredProducts
   );
-  const dispacth = useDispatch();
+  const token = useSelector((state) => state?.authSlice?.authToken);
+
   const slug = useSelector((state) => state?.selectService?.selectService);
   console.log(slug, "slug");
   useEffect(() => {
     dispacth(getAllAServices(slug));
   }, []);
   console.log(service, "service");
+  useEffect(() => {
+    dispacth(Subscriptions(token, setLoading, setSubscription));
+  }, [token]);
+  console.log(sub, "subscription");
 
+  const calculatePrice = () => {
+    if (service && sub) {
+      const total = (service?.price || 0) - (sub?.discount || 0);
+      return (total * 20) / 100;
+    } else {
+      const total = service?.price || 0;
+      return (total * 20) / 100;
+    }
+  };
   return (
     <>
       <TopLayout
@@ -52,7 +68,7 @@ const ConfirmService = () => {
                             ${service?.price}
                           </article>
                         ) : (
-                          <Skeleton/>
+                          <Skeleton />
                         )}
                       </div>
                     </div>
@@ -65,7 +81,7 @@ const ConfirmService = () => {
                       </div>
 
                       <div className="col-lg-6 p-0">
-                        <article className={styles.cardDetail}>$12.00</article>
+                        <article className={styles.cardDetail}>{sub?.discount}%</article>
                       </div>
                     </div>
                     <div className="row">
@@ -90,7 +106,7 @@ const ConfirmService = () => {
                       </div>
 
                       <div className="col-lg-6">
-                        <h1 className={styles.cardLastPrice}>$170.0</h1>
+                        <h1 className={styles.cardLastPrice}>${calculatePrice()}</h1>
                       </div>
                     </div>
                   </div>

@@ -236,7 +236,7 @@ export const CheckOutHandler =
         showConfirmButton: false,
         timer: 1500,
       });
-      route.push('thankyou')
+      route.push('myorders')
       }
       
     } catch (error) {

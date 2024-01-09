@@ -8,6 +8,7 @@ import { SlotCheckOutHandler } from "../../../Service/ServiceProviders";
 import { useDispatch, useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { getAllAServices } from "../../../Redux/AllService/allServices";
+import { Subscriptions } from "../../../Service/Subscription";
 const CheckOut = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -19,8 +20,11 @@ const CheckOut = () => {
   const docId = useSelector((state) => state?.appointment?.appointment?.doc_id);
   const serviceId = useSelector((state) => state?.selectService?.selectService);
   const slug = useSelector((state) => state?.selectService?.selectService);
-  const service = useSelector((state) => state?.AllServiceSlice?.featuredProducts);
+  const service = useSelector(
+    (state) => state?.AllServiceSlice?.featuredProducts
+  );
   const [striptoken, setStriptoken] = useState();
+  const [sub, setSubscription] = useState([]);
   console.log(token, "token");
   const onToken = (token) => {
     setStriptoken(token?.id);
@@ -91,7 +95,28 @@ const CheckOut = () => {
   useEffect(() => {
     dispatch(getAllAServices(slug));
   }, []);
+  useEffect(() => {
+    dispatch(Subscriptions(token, setLoading, setSubscription));
+  }, [token]);
 
+  const calculatePrice = () => {
+    if (service && sub) {
+      const total = (service?.price || 0) - (sub?.discount || 0);
+      return (total * 20) / 100;
+    } else {
+      const total = service?.price || 0;
+      return (total * 20) / 100;
+    }
+  };
+  // const calculatePrice = () => {
+  //   if (service && sub) {
+  //     const total = service?.price - sub?.discount;
+  //     return (total * 100) / 20;
+  //   } else {
+  //     const total = service?.price;
+  //     return (total * 100) / 20;
+  //   }
+  // };
   return (
     <>
       <TopLayout
@@ -239,7 +264,9 @@ const CheckOut = () => {
                   </div>
 
                   <div className="col-lg-6 p-0">
-                    <article className={styles.cardDetail}>${service?.price}</article>
+                    <article className={styles.cardDetail}>
+                      ${service?.price}
+                    </article>
                   </div>
                 </div>
 
@@ -251,7 +278,9 @@ const CheckOut = () => {
                   </div>
 
                   <div className="col-lg-6 p-0">
-                    <article className={styles.cardDetail}>$12.00</article>
+                    <article className={styles.cardDetail}>
+                      {sub?.discount}%
+                    </article>
                   </div>
                 </div>
                 <hr />
@@ -262,7 +291,9 @@ const CheckOut = () => {
                   </div>
 
                   <div className="col-lg-6">
-                    <h1 className={styles.cardLastPrice}>${service?.price + 12} </h1>
+                    <h1 className={styles.cardLastPrice}>
+                      ${calculatePrice()}
+                    </h1>
                   </div>
                 </div>
               </div>
@@ -310,7 +341,7 @@ const CheckOut = () => {
                     <StripeCheckout
                       token={onToken}
                       stripeKey="pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3"
-                      // amount={finalTotal}
+                      amount={calculatePrice}
                       currency="USD"
                     >
                       <CommanButton

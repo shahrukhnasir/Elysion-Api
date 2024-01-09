@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { Subscription, UserSubscriptionBuy } from "../network/Network";
+import { Subscription, UserSubscriptionBuy , UserSubscriptions} from "../network/Network";
 
 // User Subscription Create
 export const UserSubscriptionCreate =
@@ -7,8 +7,6 @@ export const UserSubscriptionCreate =
     setLoading(true);
     Subscription(token, data)
       .then((res) => {
-        // console.log(res, "res");
-        // console.log(res, ":R?ESULT_CHECKING");
         setLoading(false);
         Swal.fire({
           position: "center",
@@ -34,13 +32,27 @@ export const UserSubscriptionCreate =
       });
   };
 
-// User Subscription
+// User Subscription BY ID
 export const UserSubscription =
   (slug, token, setLoading, setSubscriptionDetails) => () => {
     setLoading(true);
     UserSubscriptionBuy(slug, token)
       .then((res) => {
         setSubscriptionDetails(res?.data?.response?.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+// User Subscription By Token
+export const Subscriptions =
+  (token, setLoading, setSubscription) => () => {
+    setLoading(true);
+    UserSubscriptions(token)
+      .then((res) => {
+        setSubscription(res?.data?.response?.data?.subscription);
         setLoading(false);
       })
       .catch((err) => {

@@ -18,6 +18,7 @@ import {
   MEET_DOCTOR,
   MEMBER_SHIP,
   NEWS__LATTER,
+  ORDERS,
   OTP_NEW_PASSWORD,
   PRODUCT,
   REMOVED_TO_ALL,
@@ -28,9 +29,13 @@ import {
   SERVICE_PROVIDER_ID,
   SIGN_UP,
   SLOTS,
+  SLOTS_APPOINTMENT_CANCEL,
   SLOTS_AVAILABLE,
   SLOTS_CREATE_CHECK_OUT,
+  SLOTS_MY_APPOINTMENTS,
   USER_SUBSCRIPTION,
+  USER_SUBSCRIPTION_BY_ID,
+  USER_SUBSCRIPTION_BY_TOKEN,
   USER_SUBSCRIPTION_CREATE,
 } from "./EndPoint";
 import { deleteMethod, getMethod, postMethod } from "./Config";
@@ -153,5 +158,19 @@ export const Subscription = (token, data) => {
 };
 
 export const UserSubscriptionBuy = (slug, token, data) => {
-  return getMethod(`${USER_SUBSCRIPTION}${slug}`, token, data);
+  return getMethod(`${USER_SUBSCRIPTION_BY_ID}${slug}`, token, data);
+};
+export const UserSubscriptions = (token, data) => {
+  return getMethod(`${USER_SUBSCRIPTION_BY_TOKEN}`, token, data);
+};
+
+export const SlotsMyAppointments = (token, data) => {
+  return getMethod(`${SLOTS_MY_APPOINTMENTS}`, token, data);
+};
+
+export const SlotsAppointmentCancel = (slug, token, data) => {
+  return getMethod(`${SLOTS_APPOINTMENT_CANCEL}${slug}`, token, data);
+};
+export const MyOrdersList = (token, data) => {
+  return getMethod(`${ORDERS}`, token, data);
 };

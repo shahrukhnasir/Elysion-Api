@@ -4,10 +4,15 @@ import styles from "../MyOrders/MyOrdersScreen.module.css";
 import { MdOutlineClose } from "react-icons/md";
 import Link from "next/link";
 import CommanButton from "../../../components/CommanButton/CommanButton";
-import CommonModal from "../../../components/CommanModal/CommanModal"
-import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import CommonModal from "../../../components/CommanModal/CommanModal";
+import { useDispatch, useSelector } from "react-redux";
+import { OrderList } from "../../../Service/PatientPortal";
+import { Skeleton } from "antd";
 const MyOrdersScreen = () => {
+  const token = useSelector((state) => state?.authSlice?.authToken);
   const [orderFinished, setOrderFinished] = useState("");
+  const [order, setOrderList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalDetail, setModalDetail] = useState("");
 
@@ -46,6 +51,7 @@ const MyOrdersScreen = () => {
       ACTION: "View Detail",
     },
   ];
+  const dispatch = useDispatch();
 
   const handleModal = (item) => {
     setIsModalOpen(true);
@@ -57,6 +63,11 @@ const MyOrdersScreen = () => {
   const orderFinishedHandler = (item) => {
     setOrderFinished(item?.orderStatus);
   };
+
+  useEffect(() => {
+    dispatch(OrderList(token, setLoading, setOrderList));
+  }, []);
+  console.log(order, "order");
 
   return (
     <>
@@ -111,50 +122,73 @@ const MyOrdersScreen = () => {
                 <th scope="col" className={styles.tHead}></th>
               </tr>
             </thead>
+            {!loading ? (
+              <tbody>
+                {order.map((item, index) => {
+                  if (item.order_status == "completed") {
+                  }
 
-            <tbody>
-              {Data.map((item, index) => {
-                if (item.orderStatus == "Completed") {
-                }
+                  return (
+                    <tr key={index}>
+                      <td className={styles.tData}>#{item?.id}</td>
 
-                return (
+                      <td className={styles.tData}>
+                        ${Math.ceil(item?.total_amount)}
+                      </td>
+                      <td className={styles.tData}>
+                        {new Date(item.created_at).toLocaleDateString()}
+                      </td>
+                      <td className={styles.tDataBtn}>
+                        <button className={styles.dataStatusBtn}>
+                          {item.order_status}
+                        </button>
+                      </td>
+                      <td className={styles.tDataBtn}>
+                        <button
+                          type="button"
+                          id={styles.dataActionBtn}
+                          onClick={() => handleModal(item)}
+                        >
+                          View
+                        </button>
+                      </td>
+
+                      <td onClick={() => orderFinishedHandler(item)}>
+                        <span type="button" onClick={() => handleModal(item)}>
+                          {item.order_status == "completed" && (
+                            <img
+                              src="./images/myorder.png"
+                              className={styles.OrderModalIcon}
+                            />
+                          )}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            ) : (
+              <>
+                <tbody>
                   <tr>
-                    <td className={styles.tData}>{item.OrderID}</td>
-
-                    <td className={styles.tData}>{item.Amount}</td>
-                    <td className={styles.tData}>{item.DATE}</td>
-                    <td className={styles.tDataBtn}>
-                      <button className={styles.dataStatusBtn}>
-                        {item.orderStatus}
-                      </button>
+                    <td>
+                      <Skeleton />
                     </td>
-                    <td className={styles.tDataBtn}>
-                      <button
-                        type="button"
-                        id={styles.dataActionBtn}
-                        onClick={() => handleModal(item)}
-                      >
-                        {item.ACTION}
-                      </button>
+                    <td>
+                      <Skeleton />
                     </td>
-
-                    <td onClick={() => orderFinishedHandler(item)}>
-                      <span type="button" onClick={() => handleModal(item)}>
-                        {item.orderStatus == "Completed" && (
-                          <img
-                            src="./images/myorder.png"
-                            className={styles.OrderModalIcon}
-                          />
-                        )}
-                      </span>
+                    <td>
+                      <Skeleton />
+                    </td>
+                    <td>
+                      <Skeleton />
                     </td>
                   </tr>
-                );
-              })}
-            </tbody>
+                </tbody>
+              </>
+            )}
           </table>
         </div>
-
 
         <CommonModal isOpen={isModalOpen} onClose={closeModal}>
           <div className={`${styles.modalBody} modal-body`}>
@@ -177,7 +211,7 @@ const MyOrdersScreen = () => {
                         <th scope="col" className={styles.tHead}>
                           Price
                         </th>
-                        
+
                         <th scope="col" className={styles.tHead}>
                           SUBTOTAL
                         </th>
@@ -188,22 +222,33 @@ const MyOrdersScreen = () => {
                     <tbody>
                       <tr className={styles.tRow}>
                         <td className={styles.tData}>
-                          <img src="images/product/product4.png" className={styles.pro_img} alt="" />
+                          <img
+                            src={modalDetail?.details?.map(
+                              (item, i) => item?.product?.thumbnail_url
+                            )}
+                            className={styles.pro_img}
+                            alt=""
+                          />
                         </td>
 
                         <td className={styles.tData}>
                           <div className="">
-                          Trix 400mg
+                            {modalDetail?.details?.map(
+                              (item) => item?.product?.title
+                            )}
                           </div>
                         </td>
-                        <td className={styles.tData}>200.00</td>
-                      
+                        <td className={styles.tData}>
+                          ${modalDetail?.total_amount}
+                        </td>
 
-                        <td className={styles.tData}>500.00</td>
+                        <td className={styles.tData}>
+                          ${Math.ceil(modalDetail?.total_amount)}
+                        </td>
                       </tr>
                     </tbody>
                   </table>
-                 
+
                   <div className={styles.order_details}>
                     <h3>ORDER DETAILS</h3>
                     <div className={styles.dvforflex}>
@@ -213,7 +258,7 @@ const MyOrdersScreen = () => {
                         </div>
                       </div>
                       <div className={styles.forprice}>
-                        <h4>$152.00</h4>
+                        <h4>${Math.ceil(modalDetail?.total_amount)}</h4>
                       </div>
                     </div>
 
@@ -224,7 +269,7 @@ const MyOrdersScreen = () => {
                         </div>
                       </div>
                       <div className={styles.forprice}>
-                        <h4>$152.00</h4>
+                        <h4>$50</h4>
                       </div>
                     </div>
                     <div className={styles.dvforflex}>
@@ -234,7 +279,7 @@ const MyOrdersScreen = () => {
                         </div>
                       </div>
                       <div className={styles.forprice}>
-                        <h4>$1622.00</h4>
+                        <h4>${Math.ceil(modalDetail?.total_amount) + 50}</h4>
                       </div>
                     </div>
                     <div className={styles.dvforflex}>
@@ -244,7 +289,7 @@ const MyOrdersScreen = () => {
                         </div>
                       </div>
                       <div className={styles.forprice}>
-                        <h4>Completed</h4>
+                        <h4>{modalDetail?.order_status}</h4>
                       </div>
                     </div>
                   </div>
@@ -280,9 +325,7 @@ const MyOrdersScreen = () => {
                   id="staticBackdropLabel"
                 >
                   Order ID
-                  <span className={styles.modalId}>
-                    #5681740{modalDetail?.id}
-                  </span>
+                  <span className={styles.modalId}>#{modalDetail?.id}</span>
                 </h6>
 
                 <div className={styles.orderProductSection}>

@@ -206,7 +206,7 @@ const CheckOutDetails2 = () => {
 
                   <div className="col-lg-6">
                     <h1 className={styles.cardLastPrice}>
-                      {calculatePrice(selectedMem)}
+                      ${calculatePrice(selectedMem)}
                     </h1>
                   </div>
                 </div>
