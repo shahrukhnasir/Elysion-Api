@@ -207,7 +207,7 @@ const Footer = () => {
 								<ul className={styles.iconsSection}>
 									<li className="text-white">
 										<div className={styles.rouded}>
-											<Link href="https://www.instagram.com/elysionhealth/?igshid=NGVhN2U2NjQ0Yg%3D%3D&utm_source=qr%C2%A0%C2%A0%C2%A0And">
+											<Link target="_blank" href="https://www.instagram.com/elysionhealth/?igshid=NGVhN2U2NjQ0Yg%3D%3D&utm_source=qr%C2%A0%C2%A0%C2%A0And">
 												<FaInstagram  className={styles.icon} />
 											</Link>
 										</div>
@@ -215,7 +215,7 @@ const Footer = () => {
 
 									<li className="text-white">
 										<div className={styles.rouded}>
-											<Link href="https://www.facebook.com/elysionhealth?mibextid=LQQJ4d%20Can">
+											<Link  target="_blank" href="https://www.facebook.com/elysionhealth?mibextid=LQQJ4d%20Can">
 												<FaFacebookF className={styles.icon} />
 											</Link>
 											
@@ -223,7 +223,7 @@ const Footer = () => {
 									</li>
 									<li className="text-white">
 										<div className={styles.rouded}>
-											<Link href="https://www.tiktok.com/@tlgibsonmatrix?_t=8iIqXf7JMvC&_r=1%C2%A0">
+											<Link target="_blank" href="https://www.tiktok.com/@tlgibsonmatrix?_t=8iIqXf7JMvC&_r=1%C2%A0">
 												<FaTiktok  className={styles.icon} />
 											</Link>
 										</div>
