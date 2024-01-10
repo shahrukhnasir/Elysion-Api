@@ -12,7 +12,7 @@ import {
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
 const MyCart = () => {
-  const     router = useRouter()
+  const router = useRouter();
   // const Data = [
   //   {
   //     id: 1,
@@ -60,28 +60,27 @@ const MyCart = () => {
 
   useEffect(() => {
     dispatch(AddToCartListHandler(token, setAddCartList, setLoading, dispatch));
-  }, [ AddToCartListHandler]);
+  }, []);
 
   const handleRemovedById = (slug) => {
-    // e.preventDefault()
-
     if (slug) {
-      dispatch(RemovedToCartHandler(slug, token, setLoading, setAddCartList,router));
-      // dispatch(
-      //   AddToCartListHandler(token, setAddCartList, setLoading, dispatch)
-      // );
-      console.log(slug,'useRouter');
-      // router.reload();
+      dispatch(
+        RemovedToCartHandler(slug, token, setLoading, setAddCartList, router)
+      );
+      const updatedCartList = cartList.filter((item) => item.id !== slug);
+      setAddCartList(updatedCartList);
     }
   };
 
   const handleClearAll = () => {
     dispatch(RemovedAllHandler(token, setLoading));
-    router.reload();
-    setAddCartList([]);
+    setAddCartList("");
   };
 
-  console.log(cartList, "cartList");
+  const total = () => {
+    const totalSum = cartList.reduce((acc, item) => acc + item.sub_total, 0);
+    return totalSum ;
+  };
 
   return (
     <>
@@ -112,50 +111,50 @@ const MyCart = () => {
                   <th scope="col" className={styles.tHead}>
                     SUB TOTAL
                   </th>
-
                   <th scope="col" className={styles.tHead}></th>
                 </tr>
               </thead>
-              {!loading ? (
-                <>
-                  {cartList  ? (
-                    cartList.map((item, i) => (
-                      <tbody key={i}>
-                        <tr>
-                          <td className={styles.tData}>
-                            {item?.product?.title}
-                          </td>
-                          <td className={styles.tDataImage}>
-                            <img
-                              className="w-25"
-                              src={item?.product?.thumbnail_url}
-                              alt="image"
-                            />
-                            {item?.title}
-                          </td>
-                          <td className={styles.tData}>{item?.price}</td>
-                          <td className={styles.tData}>{item?.qty}</td>
-                          <td className={styles.tData}>{item?.sub_total}</td>
-                          <td
-                            className={styles.dataCross}
-                            onClick={() => handleRemovedById(item?.id)}
-                          >
-                            <Link href="">
-                              <MdOutlineClose className={styles.crossIcon} />
-                            </Link>
-                          </td>
-                        </tr>
-                      </tbody>
-                    ))
-                  ) : (
-                    <tbody>
-                      <tr className="text-center">
-                        <td colSpan="6 ">Product not added</td>
-                      </tr>
-                    </tbody>
-                  )}
-                </>
-              ) : (
+              {!loading && cartList && cartList.length > 0 && (
+                <tbody>
+                  {cartList.map((item, i) => (
+    
+                  <>
+                    <tr key={i}>
+                      <td className={styles.tData}>{item?.product?.title}</td>
+                      <td className={styles.tDataImage}>
+                        <img
+                          className="w-25"
+                          src={item?.product?.thumbnail_url}
+                          alt="image"
+                          />
+                        {item?.title}
+                      </td>
+                      <td className={styles.tData}>{item?.price}</td>
+                      <td className={styles.tData}>{item?.qty}</td>
+                      <td className={styles.tData}>{item?.sub_total}</td>
+                      <td
+                        className={styles.dataCross}
+                        onClick={() => handleRemovedById(item?.id)}
+                        >
+                        <Link href="">
+                          <MdOutlineClose className={styles.crossIcon} />
+                        </Link>
+                      </td>
+                    </tr>
+                        </>
+                  ))}
+                </tbody>
+              )}
+              {!loading && (!cartList || cartList.length === 0) && (
+                <tbody>
+                  <tr className="text-center">
+                    <td colSpan="6" className={styles.tHead}>
+                      Product not added
+                    </td>
+                  </tr>
+                </tbody>
+              )}
+              {loading && (
                 <tbody>
                   <tr>
                     <td colSpan="6">
@@ -182,32 +181,44 @@ const MyCart = () => {
                     </span>
                   </div>
                 </div>
-                <div className="col-lg-6">
-                  <div className="row">
-                    <div className="col-lg-8">
-                      {" "}
-                      <span className={styles.subTotal}>Total</span>
-                    </div>
-                    <div className="col-lg-4">
-                      {" "}
-                      <span className={styles.subPrice}>$ 700.15</span>
+                {cartList?.length > 0 ? (
+                  <div className="col-lg-6">
+                    <div className="row">
+                      <div className="col-lg-8">
+                        {" "}
+                        <span className={styles.subTotal}>Total</span>
+                      </div>
+                      <div className="col-lg-4">
+                        {" "}
+                        <span className={styles.subPrice}>
+                          $ {total(cartList)}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>
-          <div className="float-start py-3" id={styles.payment}>
-            <CommanButton label="ClearList" onClick={handleClearAll} />
-          </div>
-          <div className="float-end py-3" id={styles.payment}>
-            <Link href="/checkout-details">
-              <CommanButton
-                label="Proceed to Payment"
-                className={styles.p_payment}
-              />
-            </Link>
-          </div>
+          {cartList?.length > 0 ? (
+            <>
+              <div className="float-start py-3" id={styles.payment}>
+                <CommanButton label="ClearList" onClick={handleClearAll} />
+              </div>
+              <div className="float-end py-3" id={styles.payment}>
+                <Link href="/checkout-details">
+                  <CommanButton
+                    label="Proceed to Payment"
+                    className={styles.p_payment}
+                  />
+                </Link>
+              </div>
+            </>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </>

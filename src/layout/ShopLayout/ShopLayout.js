@@ -2,77 +2,49 @@ import React, { useEffect, useState } from "react";
 import styles from "../ShopLayout/ShopLayout.module.css";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import { useDispatch } from "react-redux";
-import {
-  CatProductById,
-  CategoryList,
-  ProductList,
-  SearchProducts,
-} from "../../Service/CartService";
+import { CategoryList, productData } from "../../Service/CartService";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
-import { baseUrl } from "../../network/baseUrl";
-import axios from "axios";
-const ShopLayout = () => {
 
+const ShopLayout = () => {
   const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [catByProductId, setCatByProdutId] = useState([]);
-  const [catByProductList, setCatByProductList] = useState([]);
-  const [slug, setSlug] = useState([]);
-  const [showAllProduct, setAllProducts] = useState(false);
+  const [slug, setSlug] = useState("");
   const dispatch = useDispatch();
-  const route = useRouter();
-  const { query } = useRouter();
-  const slugs = query?.pid;
-  useEffect(() => {
-    dispatch(CategoryList(setLoading, setCategory, dispatch));
-    dispatch(ProductList(setLoading, setProducts, dispatch));
-  }, []);
+  const router = useRouter();
+
+  const [productss, setProduct] = useState([]);
 
   useEffect(() => {
-    dispatch(
-      CatProductById(setCatByProdutId, slug, setCatByProductList, setLoading)
-    );
-  }, [slug]);
+    dispatch(CategoryList(setLoading, setCategory, dispatch));
+  }, []);
 
   const filterCatHandler = (e, id) => {
     e.preventDefault();
-    // setSearchQuery("")
     setSlug(id);
   };
   const AllCatHandler = (e) => {
     e.preventDefault();
-    setAllProducts(true);
-    setCatByProductList(products);
-    // setSearchQuery("")
+    router.push("/shop");
+    router.reload();
   };
 
   const handleProductDetail = (productId) => {
-    route.push(`/shop/product/${productId}`);
+    router.push(`/shop/product/${productId}`);
   };
 
   // Search Api intrgrated
   const [search, setSearchQuery] = useState("");
-  const [searchResults, setSearch] = useState([]);
-  const [searchProduct, setSearchProduct] = useState([]);
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-
-    if (search === "") {
-      setSearchProduct(catByProductList);
-    }
   };
 
   useEffect(() => {
-    if (search.trim() !== "") {
-      dispatch(SearchProducts(slug, search, setSearchProduct, setSearch));
-    } else {
-      setSearchProduct([]);
-    }
-  }, [search]);
-  console.log(products, "products");
+    dispatch(productData(slug, search, setProduct, setLoading));
+  }, [slug, search]);
+
+  console.log(productss, "productssproductss");
 
   return (
     <>
@@ -142,7 +114,7 @@ const ShopLayout = () => {
 
             <div className="col-lg-9">
               <div className="container">
-                <div className="row">
+                {/* <div className="row">
                   {!loading ? (
                     <>
                       {searchProduct && searchProduct.length > 0 ? (
@@ -201,6 +173,34 @@ const ShopLayout = () => {
                     <>
                       <Skeleton />
                     </>
+                  )}
+                </div> */}
+                <div className="row">
+                  {!loading ? (
+                    <>
+                      {productss && productss.length > 0 ? (
+                        productss.map((item, i) => (
+                          <div className="col-lg-4" key={i}>
+                            <ProductCard
+                              image={item?.thumbnail_url}
+                              Title={item?.title}
+                              Descriptions={item?.description}
+                              Price={item?.price}
+                              id={item?.id}
+                              onClick={() => handleProductDetail(item?.id)}
+                            />
+                          </div>
+                        ))
+                      ) : (
+                        <div className="col-lg-2">
+                        <p className={styles.Title}>
+                          <h2>Product not found</h2>
+                        </p>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <Skeleton />
                   )}
                 </div>
 

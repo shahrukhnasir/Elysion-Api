@@ -71,6 +71,7 @@ font-size: 30px;
 .heartIcon{
   font-size: 30px;
   color: #1c3247;
+  cursor: pointer;
 }
 
 .qtyBtn{

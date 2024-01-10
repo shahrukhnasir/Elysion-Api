@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "../ProductDetail/ProductDetails.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { FaRegHeart } from "react-icons/fa";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import CommanButton from "../../components/CommanButton/CommanButton";
@@ -19,6 +20,7 @@ import {
 import SliderProductCard from "../../components/SliderProductCard/SliderProductCard";
 import {
   AddToCartHandler,
+  WishListAddToListProduct,
   getProductDetailById,
 } from "../../Service/CartService";
 import { Skeleton } from "antd";
@@ -118,8 +120,17 @@ const ProductDetail = () => {
   const [milliGram, setMiliId] = useState([]);
   const [variantId, setVariantId] = useState();
   const [tab, setTab] = useState(0);
+  const [heartClick, setHeartClick] = useState(false);
+
   const token = useSelector((state) => state?.authSlice?.authToken);
 
+  const heartClickHandler = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("product_id", slug);
+    dispatch(WishListAddToListProduct(token, data,setHeartClick));
+    setHeartClick(true);
+  };
   const updateSteps = (amount) => {
     setSteps((prevState) => {
       const updatedSteps = prevState + amount;
@@ -127,7 +138,7 @@ const ProductDetail = () => {
       return updatedSteps;
     });
   };
-  console.log(productDetail,"productDetail");
+  console.log(productDetail, "productDetail");
   const AddToCartHandle = async (e) => {
     if (token) {
       e.preventDefault();
@@ -271,7 +282,17 @@ const ProductDetail = () => {
                   </div>
 
                   <div className="col-lg-6" id={styles.heart_icon_sec}>
-                    <BsSuitHeartFill className={styles.heartIcon} />
+                    {heartClick ? (
+                      <BsSuitHeartFill
+                        onClick={(e) => heartClickHandler(e)}
+                        className={styles.heartIcon}
+                      />
+                    ) : (
+                      <FaRegHeart
+                        onClick={(e) => heartClickHandler(e)} 
+                        className={styles.heartIcon}
+                      />
+                    )}
                   </div>
                 </div>
                 <p className={styles.desc}>

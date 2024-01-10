@@ -1,7 +1,15 @@
+
+
 .theme-button-bg {
     background-color: #1c3247 !important;
-    border: none !important;
-    outline: none !important;
+    border: #1c3247 !important;
+    outline: #1c3247 !important;
+}
+
+.theme-button-bg:focus-visible {
+    background-color: #1c3247 !important;
+    border: #1c3247 !important;
+    outline: #1c3247 !important;
 }
 .PatientcardBodyEven,
 .PatientcardBodyOdd,

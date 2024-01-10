@@ -10,6 +10,8 @@ import {
   RemovedToAll,
   RemovedToCart,
   SearchProduct,
+  WishList,
+  getProducts,
 } from "../network/Network";
 import "sweetalert2/dist/sweetalert2.min.css";
 
@@ -99,6 +101,7 @@ export const SearchProducts =
       }
     } catch (err) {
       console.error(err);
+      setSearchProduct([]);
     }
   };
 
@@ -193,7 +196,7 @@ export const RemovedAllHandler =
     // setLoading(true);
     try {
       const res = await RemovedToAll(token, data);
-      console.log(res?.data?.message === "success");
+      console.log(res?.data, "RRRRRRRRRRRRR");
       if (res?.data?.message === "success") {
         // setLoading(false);
         await Swal.fire({
@@ -222,23 +225,22 @@ export const RemovedAllHandler =
 
 ////👇Check Out
 export const CheckOutHandler =
-  (token, data, setLoading,route) => async (dispatch) => {
+  (token, data, setLoading, route) => async (dispatch) => {
     setLoading(true);
     try {
       const res = await CheckOut(token, data);
       console.log(res);
       if (res?.data?.message === "success") {
-      setLoading(false);
-      await Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Order successfully completed",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      route.push('myorders')
+        setLoading(false);
+        await Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Order successfully completed",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        route.push("myorders");
       }
-      
     } catch (error) {
       // setLoading(false);
       // console.error(error?.response?.data?.message,"///////", );
@@ -252,5 +254,57 @@ export const CheckOutHandler =
         timer: 1500,
       });
       // setLoading(false);
+    }
+  };
+
+////👇// WishList Add Product List
+export const WishListAddToListProduct = (token, data, setHeartClick) => () => {
+  setHeartClick(false);
+  WishList(token, data)
+    .then((res) => {
+      if (res) {
+        setHeartClick(true);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Add WishList successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      if(res?.message)
+      setHeartClick(true);
+    })
+    .catch((res) => {
+      Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "if you want to remove this go to wishlist",
+        text: res?.response?.data?.message,
+        showConfirmButton: true,
+        customClass: {
+          confirmButton: "theme-button-bg",
+        },
+      });
+    });
+};
+
+// Product
+
+export const productData =
+  (slug, search,  setProduct, setLoading) => async () => {
+    setLoading(true);
+
+    try {
+      const response = await getProducts(slug, search);
+      const responseData = response?.data?.response?.data?.data !== undefined ? response?.data?.response?.data?.data : response?.data?.response?.data;
+       console.log(responseData,"dskhjasdhads")
+      // setCatByProdutId(slug);
+      setProduct(responseData);
+      setLoading(false);
+    } catch (err) {
+      console.error(err, "error loading");
+      setProduct([]);
+      setLoading(false);
     }
   };

@@ -31,6 +31,7 @@ export const LAST_VISIT = `slots/last-visit`;
 export const USER_SUBSCRIPTION_CREATE = `user-subscription/create`;
 export const USER_SUBSCRIPTION_BY_ID = `memberships/view/`;
 export const USER_SUBSCRIPTION_BY_TOKEN = `user-subscription`;
+export const WISHLIST_ADD = `wishlist/create`   
 // Profile/
 export const SLOTS_MY_APPOINTMENTS = `slots/my-appointments`;
 export const SLOTS_APPOINTMENT_CANCEL = `slots/cancel-appointment/`;
