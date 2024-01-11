@@ -1,35 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProfileLayout from "../../../layout/ProfileDashboard/ProfileLayout";
 import styles from "../ProfileScreen/ProfileScreen.module.css";
 import CommanButton from "../../../components/CommanButton/CommanButton";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  MyProfileImageUpload,
+  Profile,
+  MyUpdateProfile,
+} from "../../../Service/PatientPortal";
+import { Skeleton } from "antd";
 const EditProfileScreen = () => {
-
-  const router = useRouter()
+  const router = useRouter();
+  const token = useSelector((state) => state?.authSlice?.authToken);
   const [error, setError] = useState(false);
   const [lname, setLname] = useState("");
-  const [email, setEmail] = useState("");
   const [fname, setFname] = useState("");
   const [phone, setPhone] = useState("");
-  const [DoB, setDoB] = useState("");
+  const dispatch = useDispatch();
+  const [myProfile, setMyProfile] = useState([]);
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    dispatch(Profile(token, setLoading, setMyProfile));
+  }, [token, file]);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+  const profileUpload = () => {
+    const data = new FormData();
+    data.append("profile_pic", file);
+    dispatch(MyProfileImageUpload(data, token, setLoading));
+  };
   const HandleSubmit = (e) => {
     e.preventDefault();
-    if (
-      lname.length === 0 ||
-      email.length === 0 ||
-      fname.length === 0 ||
-      phone.length === 0 ||
-      DoB.length === 0
-    ) {
+    if (lname.length === 0 || fname.length === 0 || phone.length === 0) {
       setError(true);
-
       return;
     }
 
-    router.push({
-      pathname: "/profile",
-      // query: { name: 'Someone' }
-    });
+    let data = new FormData();
+    data.append("first_name", fname);
+    data.append("last_name", lname);
+    data.append("mobile", phone);
+    dispatch(MyUpdateProfile(data, token, setLoading,router));
+    // router.push({
+    //   pathname: "/profile",
+    // });
   };
   return (
     <ProfileLayout Heading="Edit My Profile" pageName="Edit User Profile">
@@ -40,16 +59,32 @@ const EditProfileScreen = () => {
               <div className="row g-0">
                 <div className="col-lg-1">
                   <img
-                    src="./images/profileMan.png"
+                    src={
+                      !loading ? (
+                        myProfile?.profile_pic_url
+                      ) : (
+                        <Skeleton avatar />
+                      )
+                    }
                     className="img-fluid rounded-start"
-                    alt="..."
+                    alt="Profile"
                   />
                 </div>
                 <div className="col-lg-11">
                   <div className={styles.cardBody}>
-                    <h5 className={styles.cardTitle}>John Doe</h5>
-                    <label for="upload-photo" className={styles.cardText}>Edit Display Image</label>
-                    <input type="file" name="photo" id="upload-photo" />
+                    <h5 className={styles.cardTitle}>
+                      {!loading ? myProfile?.first_name : <Skeleton />}
+                    </h5>
+                    <label for="upload-photo" className={styles.cardText}>
+                      Edit Display Image
+                    </label>
+                    <input
+                      type="file"
+                      name="photo"
+                      onChange={handleFileChange}
+                      onClick={profileUpload}
+                      id="upload-photo"
+                    />
                   </div>
                 </div>
               </div>
@@ -63,12 +98,13 @@ const EditProfileScreen = () => {
                 </label>
                 <input
                   type="text"
+                  placeholder={myProfile?.first_name}
                   value={fname}
                   onChange={(e) => {
                     setFname(e.target.value);
                   }}
                   className={`${styles.inputField} form-control`}
-                  placeholder="First Name"
+               
                 />
                 {error && fname.length <= 0 ? (
                   <span className={styles.warning}>
@@ -90,7 +126,7 @@ const EditProfileScreen = () => {
                     setLname(e.target.value);
                   }}
                   className={`${styles.inputField} form-control`}
-                  placeholder="Last Name"
+                  placeholder={myProfile?.last_name}
                 />
                 {error && lname.length <= 0 ? (
                   <div className={styles.warning}>
@@ -100,25 +136,7 @@ const EditProfileScreen = () => {
                   ""
                 )}
               </div>
-              <div className="col-lg-6">
-                <label htmlFor="" className={styles.Label}>
-                  Email
-                </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  className={`${styles.inputField} form-control`}
-                  placeholder="Email"
-                />
-                {error && email.length <= 0 ? (
-                  <div className={styles.warning}>Email can't be Empty!</div>
-                ) : (
-                  ""
-                )}
-              </div>
+
               <div className="col-lg-6">
                 <label htmlFor="" className={styles.Label}>
                   Phone
@@ -130,7 +148,7 @@ const EditProfileScreen = () => {
                     setPhone(e.target.value);
                   }}
                   className={`${styles.inputField} form-control`}
-                  placeholder="Phone"
+                  placeholder={myProfile?.mobile}
                 />
                 {error && phone.length <= 0 ? (
                   <div className={styles.warning}>Phone can't be Empty!</div>
@@ -139,28 +157,8 @@ const EditProfileScreen = () => {
                 )}
               </div>
 
-              <div className="col-lg-6">
-                <label htmlFor="" className={styles.Label}>
-                  Date of Birth
-                </label>
-                <input
-                  type="date"
-                  value={DoB}
-                  onChange={(e) => {
-                    setDoB(e.target.value);
-                  }}
-                  className={`${styles.inputField} form-control`}
-                  placeholder="Date of Birth"
-                />
-                {error && DoB.length <= 0 ? (
-                  <div className={styles.warning}>DOB can't be Empty!</div>
-                ) : (
-                  ""
-                )}
-              </div>
-
               <div className="col-lg-12">
-                <CommanButton onClick={HandleSubmit} label="Save" />
+                <CommanButton label="Save" onClick={HandleSubmit} />
               </div>
             </div>
           </div>

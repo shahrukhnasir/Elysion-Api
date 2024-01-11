@@ -1,4 +1,4 @@
-import React, { Children, useState } from "react";
+import React, { Children, useEffect, useState } from "react";
 import styles from "../../layout/ProfileDashboard/ProfileLayout.module.css";
 import ProfileTopHeader from "../../components/ProfileTopHeader/ProfileTopHeader";
 import Link from "next/link";
@@ -13,6 +13,8 @@ import { IoMdHome } from "react-icons/io";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../Redux/Auth/authSlice";
+import { MyProfileImageUpload, Profile } from "../../Service/PatientPortal";
+import { Skeleton } from "antd";
 const Menu = [
   {
     icon: <BsPerson />,
@@ -22,18 +24,18 @@ const Menu = [
   {
     icon: <SlLock />,
     label: "Change Password",
-    route: "/change-password",
+    route: "/edit-change-password",
   },
   {
     icon: <BsCalendar2Check />,
     label: "My Appointments",
     route: "/appointments",
   },
-  {
-    icon: <RiFileList3Line />,
-    label: "Appointment Waiting List",
-    route: "/appointment-waiting-list",
-  },
+  // {
+  //   icon: <RiFileList3Line />,
+  //   label: "Appointment Waiting List",
+  //   route: "/appointment-waiting-list",
+  // },
   {
     icon: <TbBox />,
     label: "My Orders",
@@ -59,13 +61,30 @@ const Menu = [
   // },
 ];
 const ProfileLayout = ({ children, Heading, pageName }) => {
+  
   const dispatch = useDispatch();
   const location = useRouter().pathname;
   const router = useRouter();
-  const Istoken = useSelector((state) => state?.authSlice?.authToken);
+  const token = useSelector((state) => state?.authSlice?.authToken);
+  const [myProfile, setMyProfile] = useState([]);
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    dispatch(Profile(token, setLoading, setMyProfile));
+  }, [token,file]);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+  const profileUpload = () => {
+    const data = new FormData();
+    data.append("profile_pic", file);
+    dispatch(MyProfileImageUpload(data, token, setLoading));
+  };
   const handleLogOut = (e) => {
     e.preventDefault();
-    if (Istoken) {
+    if (token) {
       dispatch(logout());
       router.push("/signin");
     }
@@ -131,7 +150,44 @@ const ProfileLayout = ({ children, Heading, pageName }) => {
               </div>
             </div>
 
-            <div className="col-lg-7">{children}</div>
+            <div className="col-lg-7">
+              
+            <div className="mb-3">
+              <div className="row g-0">
+                <div className="col-lg-1">
+                  <img
+                    src={
+                      !loading ? (
+                        myProfile?.profile_pic_url
+                      ) : (
+                        <Skeleton avatar />
+                      )
+                    }
+                    className="img-fluid rounded-start"
+                    alt="Profile"
+                  />
+                </div>
+                <div className="col-lg-11">
+                  <div className={styles.cardBody}>
+                    <h5 className={styles.cardTitle}>
+                      {!loading ? myProfile?.first_name : <Skeleton />}
+                    </h5>
+                    <label for="upload-photo" className={styles.cardText}>
+                      Edit Display Image
+                    </label>
+                    <input
+                      type="file"
+                      name="photo"
+                      onChange={handleFileChange}
+                      onClick={profileUpload}
+                      id="upload-photo"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+              {children}
+              </div>
           </div>
         </div>
       </div>

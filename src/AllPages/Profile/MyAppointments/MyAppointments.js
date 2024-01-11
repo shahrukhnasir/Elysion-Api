@@ -57,36 +57,21 @@ const MyAppointments = () => {
       id: 3,
       name: "canceled",
     },
+    {
+      id: 4,
+      name: "waiting",
+    },
   ];
   return (
     <>
       <ProfileLayout Heading="My Appointments" pageName="My Appointments">
         <div className={`${styles.TopCatSection} container`}>
           <div className="row">
-            <div className="col-lg-6">
-              <div className="mb-3">
-                <div className="row g-0">
-                  <div className="col-lg-2">
-                    <img
-                      src="./images/profileMan.png"
-                      className="img-fluid rounded-start"
-                      alt="..."
-                    />
-                  </div>
-                  <div className="col-lg-10">
-                    <div className={styles.cardBody}>
-                      <h5 className={styles.cardTitle}>John Doe</h5>
-                      <label for="upload-photo" className={styles.cardText}>
-                        Edit Display Image
-                      </label>
-                      <input type="file" name="photo" id="upload-photo" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="col-lg-4">
+             
             </div>
 
-            <div className="col-lg-6">
+            <div className="col-lg-8">
               <div id={styles.filterBox}>
                 {filterCats?.map((item, i) => (
                   <button

@@ -1,6 +1,7 @@
 import {
   ADD_TO_CART,
   ADD_TO_CART_LIST,
+  ALL_WISHLIST_DELETE,
   BLOGS,
   BLOG_CONTENT,
   CATEGORIES,
@@ -17,6 +18,8 @@ import {
   MEDICAL_SERVICES,
   MEET_DOCTOR,
   MEMBER_SHIP,
+  MY_PROFILE,
+  MY_PROFILE_IMAGE,
   NEWS__LATTER,
   ORDERS,
   OTP_NEW_PASSWORD,
@@ -33,11 +36,15 @@ import {
   SLOTS_AVAILABLE,
   SLOTS_CREATE_CHECK_OUT,
   SLOTS_MY_APPOINTMENTS,
+  UPDATE_PASSWORD,
+  UPDATE_PROFILE,
   USER_SUBSCRIPTION,
   USER_SUBSCRIPTION_BY_ID,
   USER_SUBSCRIPTION_BY_TOKEN,
   USER_SUBSCRIPTION_CREATE,
+  WISHLIST,
   WISHLIST_ADD,
+  WISHLIST_DELETE_BY_ID,
 } from "./EndPoint";
 import { deleteMethod, getMethod, postMethod } from "./Config";
 
@@ -98,46 +105,42 @@ export const getProducts = (slug, search, data) => {
   //   endpoint;
   // }
 
-  if(slug && !search){
+  if (slug && !search) {
+    endpoint += `${
+      slug && !search && `?filter_by=${"category"}&value=${slug}`
+    }`;
+  } else if (!slug && search) {
+    endpoint += `${
+      !slug && search && `?filter_by=${"search"}&value=${search}`
+    }`;
+  } else if (slug && search) {
     endpoint += `${
       slug &&
-      (!search &&
-        `?filter_by=${"category"}&value=${slug}`)
+      search &&
+      `?filter_by=${"categorysearch"}&category=${slug}&value=${search}
+        `
     }`;
-  }else if(!slug && search){
-    endpoint += `${
-      !slug &&
-      (search &&
-        `?filter_by=${"search"}&value=${search}`)
-    }`;
-  }else if(slug && search){
-    endpoint += `${
-      slug &&
-      (search &&
-        `?filter_by=${"categorysearch"}&category=${slug}&value=${search}
-        `)
-    }`;
-  }else{
+  } else {
     endpoint;
   }
 
   return getMethod(endpoint, data);
 };
 
-export const Products = (data) => {
-  return getMethod(`${PRODUCT}`, data);
+export const Products = (slug, data) => {
+  return getMethod(`${PRODUCT}${slug}`, data);
 };
 
-export const CatByProducts = (slug, data) => {
-  return getMethod(`${PRODUCT}?filter_by=category&value=${slug}`, data);
-};
+// export const CatByProducts = (slug, data) => {
+//   return getMethod(`${PRODUCT}?filter_by=category&value=${slug}`, data);
+// };
 
-export const SearchProduct = (slug, search, data) => {
-  return getMethod(
-    `${PRODUCT}?filter_by=categorysearch&category=${slug}&value=${search}`,
-    data
-  );
-};
+// export const SearchProduct = (slug, search, data) => {
+//   return getMethod(
+//     `${PRODUCT}?filter_by=categorysearch&category=${slug}&value=${search}`,
+//     data
+//   );
+// };
 
 export const ProductDetails = (slug, data) => {
   return getMethod(`${PRODUCT}/${slug}`, data);
@@ -218,4 +221,29 @@ export const SlotsAppointmentCancel = (slug, token, data) => {
 };
 export const MyOrdersList = (token, data) => {
   return getMethod(`${ORDERS}`, token, data);
+};
+
+export const GetWishList = (token, data) => {
+  return getMethod(`${WISHLIST}`, token, data);
+};
+
+export const MyProfile = (token, data) => {
+  return getMethod(`${MY_PROFILE}`, token, data);
+};
+export const MyProfileImage = (token, data) => {
+  return postMethod(`${MY_PROFILE_IMAGE}`, token, data);
+};
+export const UpdateProfile = (token, data) => {
+  return postMethod(`${UPDATE_PROFILE}`, token, data);
+};
+
+export const UpdatePassword = (token, data) => {
+  return postMethod(`${UPDATE_PASSWORD}`, token, data);
+};
+
+export const WishListDeleteById = (slug, token, data) => {
+  return deleteMethod(`${WISHLIST_DELETE_BY_ID}${slug}`, token, data);
+};
+export const WishListDelete = (token, data) => {
+  return deleteMethod(`${ALL_WISHLIST_DELETE}`, token, data);
 };

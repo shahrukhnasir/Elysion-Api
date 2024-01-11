@@ -72,34 +72,9 @@ const MyOrdersScreen = () => {
   return (
     <>
       <ProfileLayout Heading="My Orders" pageName="My Orders">
-        <div className={`${styles.TopCatSection} container`}>
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="mb-3">
-                <div className="row g-0">
-                  <div className="col-lg-2">
-                    <img
-                      src="./images/profileMan.png"
-                      className="img-fluid rounded-start"
-                      alt="..."
-                    />
-                  </div>
-                  <div className="col-lg-10">
-                    <div className={styles.cardBody}>
-                      <h5 className={styles.cardTitle}>John Doe</h5>
-                      <label for="upload-photo" className={styles.cardText}>
-                        Edit Display Image
-                      </label>
-                      <input type="file" name="photo" id="upload-photo" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        
 
-        <div className={`${styles.AppointmentContainer} container`}>
+        <div className={`${styles.AppointmentContainer} container  py-3`}>
           <table className="table table-responsive" id={styles.tableOuterBody}>
             <thead className={`${styles.TSection}`}>
               <tr>

@@ -1,92 +1,75 @@
 import React, { useEffect, useState } from "react";
-import ProfileLayout from '../../../layout/ProfileDashboard/ProfileLayout'
+import ProfileLayout from "../../../layout/ProfileDashboard/ProfileLayout";
 import styles from "../MyWishlist/MyWishlist.module.css";
 import { MdOutlineClose } from "react-icons/md";
 import Link from "next/link";
 import { IoIosCall } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  AllRemovedWishListHandler,
+  MyWishList,
+  RemovedWishListHandler,
+} from "../../../Service/PatientPortal";
+import { useRouter } from "next/router";
+import Skeleton from "react-loading-skeleton";
 const MyWishlist = () => {
+  const router = useRouter();
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [modalDetail, setModalDetail] = useState("");
-
+  const [wishList, setWishList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const token = useSelector((state) => state?.authSlice?.authToken);
   const handleModal = (item) => {
     setShowModal(true);
     setModalDetail(item);
   };
-  const Data = [
-    {
-      id: 1,
-      sNo: "01",
-      productName: "Lorem ipsum Dolor",
-      productImage:"./images/modalproduct.png",
-      productPrice:"$158.07 ",
-      stockStatus: "In Stock",
-      action: "Add to Cart",
-    },
+  useEffect(() => {
+    dispatch(MyWishList(token, setLoading, setWishList));
+  }, []);
 
-    {
-      id: 2,
-      sNo: "02",
-      productName: "Lorem ipsum Dolor",
-      productImage:"./images/modalproduct.png",
-      productPrice:"$138.07 ",
-      stockStatus: "In Stock",
-      action: "Add to Cart",
-    },
+  const AddToCartHandler = (productId) => {
+    router.push(`/shop/product/${productId}`);
+  };
 
-    {
-      id: 3,
-      sNo: "03",
-      productName: "Lorem ipsum Dolor",
-      productImage:"./images/modalproduct.png",
-      productPrice:"$178.07 ",
-      stockStatus: "In Stock",
-      action: "Add to Cart",
-    },
-  ];
+  {
+  }
+  const handleRemovedById = (slug) => {
+    // console.log(slug,'slug');
+    // return;
+    if (slug) {
+      dispatch(RemovedWishListHandler(slug, token, setLoading));
+      const updatedWishList = wishList.filter((item) => item.id !== slug);
+      setWishList(updatedWishList);
+    }
+  };
+
+  const allClearhandler = (e) => {
+    e.preventDefault();
+    dispatch(AllRemovedWishListHandler(token, setLoading));
+    setWishList([]);
+  };
   return (
     <>
       <ProfileLayout Heading="My Appointments" pageName="My Appointments">
-        <div className={`${styles.TopCatSection} container`}>
-          <div className="row">
-            <div className="col-lg-6">
-              <div className="mb-3">
-                <div className="row g-0">
-                  <div className="col-lg-2">
-                    <img
-                      src="./images/profileMan.png"
-                      className="img-fluid rounded-start"
-                      alt="..."
-                    />
-                  </div>
-                  <div className="col-lg-10">
-                    <div className={styles.cardBody}>
-                      <h5 className={styles.cardTitle}>John Doe</h5>
-                      <label for="upload-photo" className={styles.cardText}>Edit Display Image</label>
-                    <input type="file" name="photo" id="upload-photo" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className={`${styles.TopCatSection} container`}>  </div>
 
         <div className={`${styles.AppointmentContainer} container`}>
           <table className="table table-responsive" id={styles.tableOuterBody}>
             <thead className={`${styles.TSection}`}>
               <tr>
                 <th scope="col" className={styles.tHead}>
-                S.No
+                  S.No
                 </th>
                 <th scope="col" className={styles.tHead}>
-                Product Name
+                  Product Name
                 </th>
                 <th scope="col" className={styles.tHead}>
-                Price
+                  Price
                 </th>
-             
+
                 <th scope="col" className={styles.tHead}>
-                Stock Status
+                  Stock Status
                 </th>
                 <th scope="col" className={styles.tHead}>
                   ACTION
@@ -94,42 +77,64 @@ const MyWishlist = () => {
                 <th scope="col" className={styles.tHead}></th>
               </tr>
             </thead>
-            {Data.map((item) => {
-              return (
-                <tbody>
-                  <tr>
-                    <td className={styles.tData}>{item.sNo}</td>
-                    <td className={styles.tData}><img className="w-25" src={item?.productImage} alt="" /> {item.productName}</td>
-                    <td className={styles.tData}>{item.productPrice}</td>
-                    <td className={styles.tData}>{item.stockStatus}</td>
-                   <td className={styles.tDataBtn}>
-                      <button
-                        type="button"
-                   
-                        id={styles.dataActionBtn}
-                 
-                      >
-                        {item.action}
-                      </button>
-                    </td>
-
-                    <td>
-                      <Link href="">
-                        <MdOutlineClose className={styles.crossIcon} />
-                      </Link>{" "}
-                    </td>
-                  </tr>
-                </tbody>
-              );
-            })}
+            {!loading ? (
+              <>
+                {wishList?.map((item, i) => (
+                  <tbody>
+                    <tr key={`${i}`}>
+                      <td className={styles.tData}>#{i + 1}</td>
+                      <td className={styles.tData}>
+                        <img
+                          className={styles.prodcut_image}
+                          src={item?.product?.thumbnail_url}
+                          alt=""
+                        />{" "}
+                        {item.productName}
+                      </td>
+                      <td className={styles.tData}>
+                        {item.product?.unit_price}
+                      </td>
+                      <td className={styles.tData}>{item?.product?.qty}</td>
+                      <td className={styles.tDataBtn}>
+                        <button
+                          type="button"
+                          onClick={() => AddToCartHandler(item?.product?.id)}
+                          id={styles.dataActionBtn}
+                        >
+                          Add to Cart
+                        </button>
+                      </td>
+                      <td>
+                        <Link href="">
+                          <MdOutlineClose
+                            onClick={() => handleRemovedById(item?.id)}
+                            className={styles.crossIcon}
+                          />
+                        </Link>{" "}
+                      </td>
+                    </tr>
+                  </tbody>
+                ))}
+              </>
+            ) : (
+              <Skeleton />
+            )}
           </table>
 
           <div>
-            <div className="row pb-3">
-             <span className={styles.clearWishList}>Clear Wishlist</span>
-
-            
-            </div>
+            {wishList?.length > 0 ? (
+              <div className="row pb-3">
+                <Link
+                  href=""
+                  className={styles.clearWishList}
+                  onClick={allClearhandler}
+                >
+                  Clear Wishlist
+                </Link>
+              </div>
+            ) : (
+              "Product List is Empty"
+            )}
           </div>
         </div>
         {/* // <!-- Modal --> */}

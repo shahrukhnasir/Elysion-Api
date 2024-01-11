@@ -1,167 +1,77 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileLayout from "../../../layout/ProfileDashboard/ProfileLayout";
 import styles from "../ProfileScreen/ProfileScreen.module.css";
 import CommanButton from "../../../components/CommanButton/CommanButton";
-import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from "react-redux";
+import { MyProfileImageUpload, Profile } from "../../../Service/PatientPortal";
+import Link from "next/link";
+import { Skeleton } from "antd";
 const ProfileScreen = () => {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state?.authSlice?.authToken);
+  const [myProfile, setMyProfile] = useState([]);
+  const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const router = useRouter()
-  const [error, setError] = useState(false);
-  const [lname, setLname] = useState("");
-  const [email, setEmail] = useState("");
-  const [fname, setFname] = useState("");
-  const [phone, setPhone] = useState("");
-  const [DoB, setDoB] = useState("");
-  const HandleSubmit = (e) => {
-    e.preventDefault();
-    if (
-      lname.length === 0 ||
-      email.length === 0 ||
-      fname.length === 0 ||
-      phone.length === 0 ||
-      DoB.length === 0
-    ) {
-      setError(true);
+  useEffect(() => {
+    dispatch(Profile(token, setLoading, setMyProfile));
+  }, [token,file]);
 
-      return;
-    }
-
-    router.push({
-      pathname: "/edit-profile",
-      // query: { name: 'Someone' }
-    });
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+  const profileUpload = () => {
+    const data = new FormData();
+    data.append("profile_pic", file);
+    dispatch(MyProfileImageUpload(data, token, setLoading));
   };
   return (
     <ProfileLayout Heading="My Profile" pageName="User Profile">
       <>
         <div className={styles.ProfileContainer}>
           <div className="container">
-            <div className="mb-3">
-              <div className="row g-0">
-                <div className="col-lg-1">
-                  <img
-                    src="./images/profileMan.png"
-                    className="img-fluid rounded-start"
-                    alt="..."
-                  />
-                </div>
-                <div className="col-lg-11">
-                  <div className={styles.cardBody}>
-                    <h5 className={styles.cardTitle}>John Doe</h5>
-                    <label for="upload-photo" className={styles.cardText}>Edit Display Image</label>
-                    <input type="file" name="photo" id="upload-photo" />
-                    
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <div className="row">
               <div className="col-lg-6">
                 <label htmlFor="" className={styles.Label}>
-                  {" "}
+                 
                   First Name
                 </label>
-                <input
-                  type="text"
-                  value={fname}
-                  onChange={(e) => {
-                    setFname(e.target.value);
-                  }}
-                  className={`${styles.inputField} form-control`}
-                  placeholder="First Name"
-                />
-                {error && fname.length <= 0 ? (
-                  <span className={styles.warning}>
-                    First Name can't be Empty!
-                  </span>
-                ) : (
-                  ""
-                )}
+
+                <p className={styles.mainText}>
+                  {!loading ? myProfile?.first_name : <Skeleton />}
+                </p>
               </div>
               <div className="col-lg-6">
                 <label htmlFor="" className={styles.Label}>
                   {" "}
                   Last Name
                 </label>
-                <input
-                  type="text"
-                  value={lname}
-                  onChange={(e) => {
-                    setLname(e.target.value);
-                  }}
-                  className={`${styles.inputField} form-control`}
-                  placeholder="Last Name"
-                />
-                {error && lname.length <= 0 ? (
-                  <div className={styles.warning}>
-                    Last Name can't be Empty!
-                  </div>
-                ) : (
-                  ""
-                )}
+                <p className={styles.mainText}>
+                  {" "}
+                  {!loading ? myProfile?.last_name : <Skeleton />}
+                </p>
               </div>
               <div className="col-lg-6">
                 <label htmlFor="" className={styles.Label}>
                   Email
                 </label>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  className={`${styles.inputField} form-control`}
-                  placeholder="Email"
-                />
-                {error && email.length <= 0 ? (
-                  <div className={styles.warning}>Email can't be Empty!</div>
-                ) : (
-                  ""
-                )}
+                <p className={styles.mainText}>
+                  {!loading ? myProfile?.email : <Skeleton />}
+                </p>
               </div>
               <div className="col-lg-6">
                 <label htmlFor="" className={styles.Label}>
                   Phone
                 </label>
-                <input
-                  type="number"
-                  value={phone}
-                  onChange={(e) => {
-                    setPhone(e.target.value);
-                  }}
-                  className={`${styles.inputField} form-control`}
-                  placeholder="Phone"
-                />
-                {error && phone.length <= 0 ? (
-                  <div className={styles.warning}>Phone can't be Empty!</div>
-                ) : (
-                  ""
-                )}
+                <p className={styles.mainText}>
+                  {!loading ? myProfile?.mobile : <Skeleton />}
+                </p>
               </div>
 
-              <div className="col-lg-6">
-                <label htmlFor="" className={styles.Label}>
-                  Date of Birth
-                </label>
-                <input
-                  type="date"
-                  value={DoB}
-                  onChange={(e) => {
-                    setDoB(e.target.value);
-                  }}
-                  className={`${styles.inputField} form-control`}
-                  placeholder="Date of Birth"
-                />
-                {error && DoB.length <= 0 ? (
-                  <div className={styles.warning}>DOB can't be Empty!</div>
-                ) : (
-                  ""
-                )}
-              </div>
-
-              <div className="col-lg-12">
-                <CommanButton onClick={HandleSubmit} label="Edit" />
+              <div className="col-lg-12 pt-5">
+                <Link href="/edit-profile">
+                  <CommanButton label="Edit" />
+                </Link>
               </div>
             </div>
           </div>

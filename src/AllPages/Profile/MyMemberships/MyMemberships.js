@@ -2,52 +2,33 @@ import React, { useEffect, useState } from "react";
 import ProfileLayout from "../../../layout/ProfileDashboard/ProfileLayout";
 import styles from "../MyMemberships/MyMemberships.module.css";
 import { MdOutlineClose } from "react-icons/md";
-import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
 import { IoIosCall } from "react-icons/io";
+import { Subscriptions } from "../../../Service/Subscription";
+import Link from "next/link";
 const MyMemberships = () => {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state?.authSlice?.authToken);
   const [showModal, setShowModal] = useState(false);
   const [modalDetail, setModalDetail] = useState("");
-
+  const [sub, setSubscription] = useState([]);
+  const [status, setSatus] = useState([]);
+  const [loading, setLoading] = useState(false);
   const handleModal = (item) => {
     setShowModal(true);
     setModalDetail(item);
   };
-  const Data = [
-    {
-      id: 1,
-      mymembership: "Professional-Package",
-      amountPaid: "$500/per month",
-      status: "Your Membership will Expire in 28 days",
-      action: "Renew Now",
-    },
-  ];
+
+  useEffect(() => {
+    dispatch(Subscriptions(token, setLoading, setSubscription, setSatus));
+  }, [token]);
+
+  console.log(sub, "jnsdjgn");
+
   return (
     <>
       <ProfileLayout Heading="My Appointments" pageName="My Appointments">
-        <div className={`${styles.TopCatSection} container`}>
-          <div className="row">
-            <div className="col-lg-6">
-              <div className="mb-3">
-                <div className="row g-0">
-                  <div className="col-lg-2">
-                    <img
-                      src="./images/profileMan.png"
-                      className="img-fluid rounded-start"
-                      alt="..."
-                    />
-                  </div>
-                  <div className="col-lg-10">
-                    <div className={styles.cardBody}>
-                      <h5 className={styles.cardTitle}>John Doe</h5>
-                      <label for="upload-photo" className={styles.cardText}>Edit Display Image</label>
-                    <input type="file" name="photo" id="upload-photo" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className={`${styles.TopCatSection} container`}></div>
 
         <div className={`${styles.AppointmentContainer} container`}>
           <table className="table table-responsive" id={styles.tableOuterBody}>
@@ -64,40 +45,40 @@ const MyMemberships = () => {
                 <th scope="col" className={styles.tHead}>
                   Status
                 </th>
-                <th scope="col" className={styles.tHead}>
+                {/* <th scope="col" className={styles.tHead}>
                   ACTION
-                </th>
+                </th> */}
               </tr>
             </thead>
-            {Data.map((item) => {
-              return (
-                <tbody>
-                  <tr>
-                    <td className={styles.tData}>{item.mymembership}</td>
-                    <td className={styles.tData}>{item.amountPaid}</td>
-                    <td className={styles.tData}>{item.status}</td>
 
-                    <td className={styles.tDataBtn}>
-                      <button type="button" id={styles.dataActionBtn}>
-                        {item?.action}
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              );
-            })}
+            <tbody>
+              <tr>
+                <td className={styles.tData}>{sub?.name}</td>
+                <td className={styles.tData}>
+                  {/* {status.type == "annually" ? }{sub.price}:"" */}
+                  {status.type === "annually" ? sub.price * 12 : sub.price * 1}
+                </td>
+                <td className={styles.tData}>{status.type}</td>
+
+                <td className={styles.tDataBtn}>
+                  {/* <Link
+                    href="membership"
+                    type="button"
+                    id={styles.dataActionBtn}
+                  >
+                    Renew Now
+                  </Link> */}
+                </td>
+              </tr>
+            </tbody>
           </table>
 
           <div>
             <div className="row ms-3">
               <div className="col-lg-6 mt-3">
-               
-                  <span className={styles.extraInfoText}>
+                <span className={styles.extraInfoText}>
                   Need Help With Account?
-                  </span>
-
-            
-            
+                </span>
               </div>
 
               <div className="col-lg-6">
@@ -111,7 +92,9 @@ const MyMemberships = () => {
                     <span>
                       <IoIosCall className={styles.contactIcon} />
                     </span>{" "}
-                    <span className={styles.contactNum}>0123 456 7890</span>
+                    <a href="tel:+470-300-2259" className={styles.contactNum}>
+                      470-300-2259
+                    </a>
                   </div>
                 </div>
               </div>

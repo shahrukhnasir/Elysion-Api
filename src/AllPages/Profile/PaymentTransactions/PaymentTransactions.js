@@ -61,27 +61,7 @@ const PaymentTransactions = () => {
                 pageName="Payment & Transactions"
             >
                 <div className={`${styles.TopCatSection} container`}>
-                    <div className="row">
-                        <div className="col-lg-12">
-                            <div className="mb-3">
-                                <div className="row g-0">
-                                    <div className="col-lg-2">
-                                        <img
-                                            src="./images/profileMan.png"
-                                            className="img-fluid rounded-start"
-                                            alt="..."
-                                        />
-                                    </div>
-                                    <div className="col-lg-10">
-                                        <div className={styles.cardBody}>
-                                            <h5 className={styles.cardTitle}>John Doe</h5>
-                                            <p className={styles.cardText}>Edit Display Image</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                   
                 </div>
 
                 <div className={`${styles.AppointmentContainer} container`}>

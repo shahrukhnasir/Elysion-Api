@@ -16,7 +16,7 @@ export const UserSubscriptionCreate =
           showConfirmButton: false,
           timer: 1500,
         });
-        router.push("/thankyou");
+        router.push("/my-memberships");
       })
       .catch((error) => {
         console.log(error);
@@ -48,11 +48,12 @@ export const UserSubscription =
   };
 // User Subscription By Token
 export const Subscriptions =
-  (token, setLoading, setSubscription) => () => {
+  (token, setLoading, setSubscription,setSatus) => () => {
     setLoading(true);
     UserSubscriptions(token)
       .then((res) => {
         setSubscription(res?.data?.response?.data?.subscription);
+        setSatus(res?.data?.response?.data);
         setLoading(false);
       })
       .catch((err) => {

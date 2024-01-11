@@ -31,9 +31,16 @@ export const LAST_VISIT = `slots/last-visit`;
 export const USER_SUBSCRIPTION_CREATE = `user-subscription/create`;
 export const USER_SUBSCRIPTION_BY_ID = `memberships/view/`;
 export const USER_SUBSCRIPTION_BY_TOKEN = `user-subscription`;
-export const WISHLIST_ADD = `wishlist/create`   
+export const WISHLIST_ADD = `wishlist/create`;
 // Profile/
+export const MY_PROFILE = `me`;
+export const MY_PROFILE_IMAGE = `me/update-profile-picture`;
+export const UPDATE_PROFILE = `me/update-profile`;
+export const UPDATE_PASSWORD = `me/change-password`;
 export const SLOTS_MY_APPOINTMENTS = `slots/my-appointments`;
 export const SLOTS_APPOINTMENT_CANCEL = `slots/cancel-appointment/`;
 export const SLOTS_APPOINTMENT_WAITING_LIST = `slots/get-waiting-list`;
 export const ORDERS = `orders`;
+export const WISHLIST = `wishlist`;
+export const WISHLIST_DELETE_BY_ID = `wishlist/delete/`
+export  const ALL_WISHLIST_DELETE = `wishlist/delete-all`
