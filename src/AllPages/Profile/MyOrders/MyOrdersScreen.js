@@ -16,41 +16,6 @@ const MyOrdersScreen = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalDetail, setModalDetail] = useState("");
 
-  const Data = [
-    {
-      id: 1,
-      OrderID: "ID #01094658",
-      Amount: "$150.0",
-      DATE: "8-Oct-2022",
-      orderStatus: "Shipped",
-      ACTION: "View Detail",
-    },
-
-    {
-      id: 2,
-      OrderID: "ID #01094658",
-      Amount: "$160.0",
-      DATE: "8-Oct-2022",
-      orderStatus: "Shipped",
-      ACTION: "View Detail",
-    },
-    {
-      id: 3,
-      OrderID: "ID #01094658",
-      Amount: "$150.0",
-      DATE: "8-Oct-2022",
-      orderStatus: "Shipped",
-      ACTION: "View Detail",
-    },
-    {
-      id: 4,
-      OrderID: "ID #01094658",
-      Amount: "$150.0",
-      DATE: "8-Oct-2022",
-      orderStatus: "Completed",
-      ACTION: "View Detail",
-    },
-  ];
   const dispatch = useDispatch();
 
   const handleModal = (item) => {
@@ -67,13 +32,10 @@ const MyOrdersScreen = () => {
   useEffect(() => {
     dispatch(OrderList(token, setLoading, setOrderList));
   }, []);
-  console.log(order, "order");
 
   return (
     <>
       <ProfileLayout Heading="My Orders" pageName="My Orders">
-        
-
         <div className={`${styles.AppointmentContainer} container  py-3`}>
           <table className="table table-responsive" id={styles.tableOuterBody}>
             <thead className={`${styles.TSection}`}>
