@@ -111,7 +111,7 @@ const MyOrdersScreen = () => {
                         ${Math.ceil(item?.total_amount)}
                       </td>
                       <td className={styles.tData}>
-                        {new Date(item.created_at).toLocaleDateString()}
+                        {new Date(item.updated_at).toDateString()}
                       </td>
                       <td className={styles.tDataBtn}>
                         <button className={styles.dataStatusBtn}>

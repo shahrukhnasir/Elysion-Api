@@ -23,6 +23,7 @@ import {
   NEWS__LATTER,
   ORDERS,
   OTP_NEW_PASSWORD,
+  PAYMENT_TRANSACTIONS_RECORD,
   PRODUCT,
   REMOVED_TO_ALL,
   REMOVED_TO_CART,
@@ -246,4 +247,7 @@ export const WishListDeleteById = (slug, token, data) => {
 };
 export const WishListDelete = (token, data) => {
   return deleteMethod(`${ALL_WISHLIST_DELETE}`, token, data);
+};
+export const PaymentTransactionRecords = (token, data) => {
+  return deleteMethod(`${PAYMENT_TRANSACTIONS_RECORD}`, token, data);
 };

@@ -4,6 +4,7 @@ import {
   MyOrdersList,
   MyProfile,
   MyProfileImage,
+  PaymentTransactionRecords,
   SlotsAppointmentCancel,
   SlotsMyAppointments,
   UpdatePassword,
@@ -262,4 +263,20 @@ export const AllRemovedWishListHandler = (token, setLoading) => async () => {
     });
     setLoading(false);
   }
+};
+
+//👇My Payment Transactions
+export const PaymentTransaction = (token, setLoading, setTransactions) => () => {
+  setLoading(true);
+
+  PaymentTransactionRecords(token)
+    .then((res) => {
+      setTransactions(res?.data?.response?.data?.data);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.log(error);
+      setLoading(false);
+     
+    });
 };

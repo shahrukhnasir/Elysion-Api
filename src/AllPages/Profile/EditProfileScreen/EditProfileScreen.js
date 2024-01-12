@@ -55,40 +55,7 @@ const EditProfileScreen = () => {
       <>
         <div className={styles.ProfileContainer}>
           <div className="container">
-            <div className="mb-3">
-              <div className="row g-0">
-                <div className="col-lg-1">
-                  <img
-                    src={
-                      !loading ? (
-                        myProfile?.profile_pic_url
-                      ) : (
-                        <Skeleton avatar />
-                      )
-                    }
-                    className="img-fluid rounded-start"
-                    alt="Profile"
-                  />
-                </div>
-                <div className="col-lg-11">
-                  <div className={styles.cardBody}>
-                    <h5 className={styles.cardTitle}>
-                      {!loading ? myProfile?.first_name : <Skeleton />}
-                    </h5>
-                    <label for="upload-photo" className={styles.cardText}>
-                      Edit Display Image
-                    </label>
-                    <input
-                      type="file"
-                      name="photo"
-                      onChange={handleFileChange}
-                      onClick={profileUpload}
-                      id="upload-photo"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+          
 
             <div className="row">
               <div className="col-lg-6">

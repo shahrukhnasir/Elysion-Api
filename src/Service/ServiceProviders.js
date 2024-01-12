@@ -139,7 +139,7 @@ export const SlotCheckOutHandler =
     try {
       const res = await SlotCreateCheckOut(token, data);
       console.log(res,'success');
-      if (res?.data?.message === "success") {
+      // if (res?.data?.message === "success") {
       setLoading(false);
       await Swal.fire({
         position: "center",
@@ -148,8 +148,8 @@ export const SlotCheckOutHandler =
         showConfirmButton: false,
         timer: 1500,
       });
-      route.push('/thankyou')
-      }
+      route.push('/appointments')
+      // }
       
     } catch (error) {
       await Swal.fire({

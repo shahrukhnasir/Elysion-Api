@@ -9,6 +9,7 @@ import {
   AppointmentCancel,
   MyAppointment,
 } from "../../../Service/PatientPortal";
+import { Skeleton } from "antd";
 const MyAppointments = () => {
   const [getCat, setCat] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,7 +22,6 @@ const MyAppointments = () => {
   const openModal = (item) => {
     setIsModalOpen(true);
     setModalDetail(item);
-    console.log("Modal opened");
   };
 
   const closeModal = () => {
@@ -37,12 +37,11 @@ const MyAppointments = () => {
   useEffect(() => {
     dispatch(MyAppointment(token, setLoading, setMyApp));
   }, [token, setMyApp]);
-
   //   MyAppointment cancled
-  const hanldeCancel = (e, slug) => {
-    e.preventDefault();
-    console.log(slug, "Slug_I");
+  const hanldeCancel = (slug) => {
     dispatch(AppointmentCancel(slug, token, setLoading));
+    const updatedAppointmentList = data?.filter((item) => item.id !== slug);
+    setMyApp(updatedAppointmentList);
   };
   const filterCats = [
     {
@@ -67,9 +66,7 @@ const MyAppointments = () => {
       <ProfileLayout Heading="My Appointments" pageName="My Appointments">
         <div className={`${styles.TopCatSection} container`}>
           <div className="row">
-            <div className="col-lg-4">
-             
-            </div>
+            <div className="col-lg-4"></div>
 
             <div className="col-lg-8">
               <div id={styles.filterBox}>
@@ -115,94 +112,121 @@ const MyAppointments = () => {
                 <th scope="col" className={styles.tHead}></th>
               </tr>
             </thead>
-            {data.map((item, i) => {
-              if (getCat == "" || getCat == "All") {
-                return (
-                  <tbody>
-                    <tr key={i}>
-                      <td className={styles.tData}>#{item.id}</td>
-                      <td className={styles.tData}>{item.service?.name}</td>
-                      <td className={styles.tData}>{item.total}</td>
-                      <td className={styles.tData}>{item.date}</td>
-                      <td className={styles.tDataBtn}>
-                        <button className={styles.dataStatusBtn}>
-                          {item.status}
-                        </button>
-                      </td>
-                      <td className={styles.tDataBtn}>
-                        <button
-                          type="button"
-                          id={styles.dataActionBtn}
-                          onClick={() => openModal(item)}
-                        >
-                          View
-                        </button>
-                      </td>
-
-                      <td className={styles.tDataBtn}>
-                        {item.status == "canceled" ? (
-                          ""
-                        ) : (
-                          <>
-                            <button
-                              id={styles.dataActionBtn}
-                              href=""
-                              onClick={(e) => hanldeCancel(e, item?.id)}
-                            >
-                              Cancel
+            {!loading ? (
+              <>
+                {data.map((item, i) => {
+                  if (getCat == "" || getCat == "All") {
+                    return (
+                      <tbody>
+                        <tr key={i}>
+                          <td className={styles.tData}>#{item.id}</td>
+                          <td className={styles.tData}>{item.service?.name}</td>
+                          <td className={styles.tData}>{item.total}</td>
+                          <td className={styles.tData}>
+                            {new Date(item.updated_at).toDateString()}
+                          </td>
+                          <td className={styles.tDataBtn}>
+                            <button className={styles.dataStatusBtn}>
+                              {item.status}
                             </button>
-                          </>
-                        )}
-                      </td>
-                    </tr>
-                  </tbody>
-                );
-              } else {
-                if (item?.status == getCat) {
-                  return (
-                    <tbody>
-                      <tr>
-                        <td className={styles.tData}>#{item.id}</td>
-                        <td className={styles.tData}>{item.service?.name}</td>
-                        <td className={styles.tData}>{item.total}</td>
-                        <td className={styles.tData}>{item.date}</td>
-                        <td className={styles.tDataBtn}>
-                          <button className={styles.dataStatusBtn}>
-                            {item.status}
-                          </button>
-                        </td>
-                        <td className={styles.tDataBtn}>
-                          <button
-                            type="button"
-                            // onClick={openModal}
-                            id={styles.dataActionBtn}
-                            onClick={() => openModal(item)}
-                          >
-                            View
-                          </button>
-                        </td>
+                          </td>
+                          <td className={styles.tDataBtn}>
+                            <button
+                              type="button"
+                              id={styles.dataActionBtn}
+                              onClick={() => openModal(item)}
+                            >
+                              View
+                            </button>
+                          </td>
 
-                        <td className={styles.tDataBtn}>
-                          {item.status == "canceled" ? (
-                            ""
-                          ) : (
-                            <>
-                              <button
-                                id={styles.dataActionBtn}
-                                href=""
-                                onClick={(e) => hanldeCancel(e, item?.id)}
-                              >
-                                Cancel
+                          <td className={styles.tDataBtn}>
+                            {item.status == "canceled" ? (
+                              ""
+                            ) : (
+                              <>
+                                <button
+                                  id={styles.dataActionBtn}
+                                  href=""
+                                  onClick={() => hanldeCancel(item?.id)}
+                                >
+                                  Cancel
+                                </button>
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                      </tbody>
+                    );
+                  } else {
+                    if (item?.status == getCat) {
+                      return (
+                        <tbody>
+                          <tr>
+                            <td className={styles.tData}>#{item.id}</td>
+                            <td className={styles.tData}>
+                              {item.service?.name}
+                            </td>
+                            <td className={styles.tData}>{item.total}</td>
+                            <td className={styles.tData}>{item.date}</td>
+                            <td className={styles.tDataBtn}>
+                              <button className={styles.dataStatusBtn}>
+                                {item.status}
                               </button>
-                            </>
-                          )}
-                        </td>
-                      </tr>
-                    </tbody>
-                  );
-                }
-              }
-            })}
+                            </td>
+                            <td className={styles.tDataBtn}>
+                              <button
+                                type="button"
+                                // onClick={openModal}
+                                id={styles.dataActionBtn}
+                                onClick={() => openModal(item)}
+                              >
+                                View
+                              </button>
+                            </td>
+
+                            <td className={styles.tDataBtn}>
+                              {item.status == "canceled" ? (
+                                ""
+                              ) : (
+                                <>
+                                  <button
+                                    id={styles.dataActionBtn}
+                                    href=""
+                                    onClick={() => hanldeCancel(item?.id)}
+                                  >
+                                    Cancel
+                                  </button>
+                                </>
+                              )}
+                            </td>
+                          </tr>
+                        </tbody>
+                      );
+                    }
+                  }
+                })}
+              </>
+            ) : (
+              <>
+                <tbody>
+                  <tr>
+                    <td>
+                      <Skeleton />
+                    </td>
+                    <td>
+                      <Skeleton />
+                    </td>
+                    <td>
+                      <Skeleton />
+                    </td>
+                    <td>
+                      <Skeleton />
+                    </td>
+                  </tr>
+                </tbody>
+              </>
+            )}
           </table>
         </div>
 
