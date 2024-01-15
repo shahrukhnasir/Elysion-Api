@@ -52,91 +52,95 @@ const MyWishlist = () => {
   return (
     <>
       <ProfileLayout Heading="My Appointments" pageName="My Appointments">
-        <div className={`${styles.TopCatSection} container`}>  </div>
+        <div className={`${styles.TopCatSection} container`}> </div>
 
         <div className={`${styles.AppointmentContainer} container`}>
-          <table className="table table-responsive" id={styles.tableOuterBody}>
-            <thead className={`${styles.TSection}`}>
-              <tr>
-                <th scope="col" className={styles.tHead}>
-                  S.No
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  Product Name
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  Price
-                </th>
+          {wishList?.length > 0 ? (
+            <>
+            <table
+              className="table table-responsive"
+              id={styles.tableOuterBody}
+            >
+              <thead className={`${styles.TSection}`}>
+                <tr>
+                  <th scope="col" className={styles.tHead}>
+                    S.No
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    Product Name
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    Price
+                  </th>
 
-                <th scope="col" className={styles.tHead}>
-                  Stock Status
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  ACTION
-                </th>
-                <th scope="col" className={styles.tHead}></th>
-              </tr>
-            </thead>
-            {!loading ? (
-              <>
-                {wishList?.map((item, i) => (
-                  <tbody>
-                    <tr key={`${i}`}>
-                      <td className={styles.tData}>#{i + 1}</td>
-                      <td className={styles.tData}>
-                        <img
-                          className={styles.prodcut_image}
-                          src={item?.product?.thumbnail_url}
-                          alt=""
-                        />{" "}
-                        {item.productName}
-                      </td>
-                      <td className={styles.tData}>
-                        {item.product?.unit_price}
-                      </td>
-                      <td className={styles.tData}>{item?.product?.qty}</td>
-                      <td className={styles.tDataBtn}>
-                        <button
-                          type="button"
-                          onClick={() => AddToCartHandler(item?.product?.id)}
-                          id={styles.dataActionBtn}
-                        >
-                          Add to Cart
-                        </button>
-                      </td>
-                      <td>
-                        <Link href="">
-                          <MdOutlineClose
-                            onClick={() => handleRemovedById(item?.id)}
-                            className={styles.crossIcon}
-                          />
-                        </Link>{" "}
-                      </td>
-                    </tr>
-                  </tbody>
-                ))}
-              </>
-            ) : (
-              <Skeleton />
-            )}
-          </table>
-
-          <div>
-            {wishList?.length > 0 ? (
-              <div className="row pb-3">
-                <Link
-                  href=""
-                  className={styles.clearWishList}
-                  onClick={allClearhandler}
-                >
-                  Clear Wishlist
-                </Link>
-              </div>
-            ) : (
-              "Product List is Empty"
-            )}
-          </div>
+                  <th scope="col" className={styles.tHead}>
+                    Stock Status
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    ACTION
+                  </th>
+                  <th scope="col" className={styles.tHead}></th>
+                </tr>
+              </thead>
+              {!loading ? (
+                <>
+                  {wishList?.map((item, i) => (
+                    <tbody>
+                      <tr key={`${i}`}>
+                        <td className={styles.tData}>#{i + 1}</td>
+                        <td className={styles.tData}>
+                          <img
+                            className={styles.prodcut_image}
+                            src={item?.product?.thumbnail_url}
+                            alt=""
+                          />{" "}
+                          {item.productName}
+                        </td>
+                        <td className={styles.tData}>
+                          {item.product?.unit_price}
+                        </td>
+                        <td className={styles.tData}>{item?.product?.qty}</td>
+                        <td className={styles.tDataBtn}>
+                          <button
+                            type="button"
+                            onClick={() => AddToCartHandler(item?.product?.id)}
+                            id={styles.dataActionBtn}
+                          >
+                            Add to Cart
+                          </button>
+                        </td>
+                        <td>
+                          <Link href="">
+                            <MdOutlineClose
+                              onClick={() => handleRemovedById(item?.id)}
+                              className={styles.crossIcon}
+                            />
+                          </Link>{" "}
+                        </td>
+                      </tr>
+                    </tbody>
+                  ))}
+                </>
+              ) : (
+                <Skeleton />
+              )}
+             
+            </table>
+             <Link
+             href=""
+             className={styles.clearWishList}
+             onClick={allClearhandler}
+           >
+             Clear Wishlist
+           </Link>
+           </>
+          ) : (
+            <div className={`${styles.tData} text-center`}>
+              WishList is Empty
+            </div>
+          )}
         </div>
+
         {/* // <!-- Modal --> */}
         <div
           className="modal fade"

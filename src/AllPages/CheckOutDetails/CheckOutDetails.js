@@ -82,7 +82,7 @@ const CheckOutDetails = () => {
           data.append(`cart[${cart?.id}]`, i.id);
         });
 
-        dispatch(CheckOutHandler(token, data, setLoading,router));
+        dispatch(CheckOutHandler(token, data, setLoading, router));
       }
 
       // Validate form fields
@@ -614,23 +614,51 @@ const CheckOutDetails = () => {
                   </StripeCheckout>
                 )}
               </div>
+              <div className="col-lg-12">
+              <div className={styles.checkOutLast}>
+                {striptoken ? (
+                  <>
+                    <CommanButton onClick={HandleSubmit} label="Checkout" />
+                  </>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
             </div>
 
             <div className="col-lg-6">
               <div className={styles.card}>
                 <h1 className={styles.cardTopHeading}>Order Summary</h1>
-                <div class="row g-0">
-                  <div class="col-lg-2">
-                    <img
-                      src="./images/modalproduct.png"
-                      class="img-fluid rounded-start"
-                      alt="..."
-                    />
+                {cartList?.map((item, i) => (
+                  <div className="row g-0" key={i}>
+                    <div className="col-lg-2">
+              
+                      <img
+                        src={item?.product?.thumbnail_url}
+                        className="img-fluid rounded-start"
+                        alt="..."
+                      />
+                    </div>
+                    <div className="col-lg-6">
+                      <span className={styles.pName}>
+                        {item?.product?.title}
+                      </span>
+                    </div>
+
+                    <div className="col-lg-2">
+                      <span className={styles.pName}>
+                        {item?.qty}
+                      </span>
+                    </div>
+                    <div className="col-lg-2">
+                      <span className={styles.pName}>
+                        ${item?.price}
+                      </span>
+                    </div>
                   </div>
-                  <div class="col-lg-10">
-                    <span className={styles.pName}>Lorem ipsum dolor</span>
-                  </div>
-                </div>
+                ))}
+
                 <div className="row">
                   <div className="col-lg-6">
                     <article className={styles.cardTitle}>Item Qty</article>
@@ -641,7 +669,7 @@ const CheckOutDetails = () => {
                   </div>
                 </div>
 
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-lg-6">
                     <article className={styles.cardTitle}>
                       Promo Applied
@@ -649,9 +677,9 @@ const CheckOutDetails = () => {
                   </div>
 
                   <div className="col-lg-6 p-0">
-                    <article className={styles.cardDetail}>$158.07 </article>
+                    <article className={styles.cardDetail}>${finalTotal - 5}</article>
                   </div>
-                </div>
+                </div> */}
                 <hr />
 
                 <div className="row">
@@ -689,18 +717,7 @@ const CheckOutDetails = () => {
                 </Link>
               </span>
             </div>
-            <div className="col-lg-6">
-              <div className={styles.checkOutLast}>
-                {striptoken ? (
-                  <>
-                    <CommanButton onClick={HandleSubmit} label="Checkout" />
-                  </>
-                ):
-                
-                ""}
-
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>

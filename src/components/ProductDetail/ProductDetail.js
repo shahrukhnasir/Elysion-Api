@@ -54,7 +54,7 @@ const ProductDetail = () => {
   };
   console.log(productDetail, "productDetail");
   const AddToCartHandle = async (e) => {
-    if (token) {
+    // if (token) {
       e.preventDefault();
       setLoading(true);
       let data = new FormData();
@@ -64,9 +64,9 @@ const ProductDetail = () => {
       data.append("qty", steps);
       dispatch(AddToCartHandler(token, data, setLoading, router));
       console.log(loading, "loadingloadingloadingloading");
-    } else {
-      alert("first signin");
-    }
+    // } else {
+    //   alert("first signin");
+    // }
   };
   const router = useRouter();
   const dispatch = useDispatch();

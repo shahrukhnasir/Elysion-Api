@@ -75,35 +75,38 @@ const PaymentTransactions = () => {
         <div className={`${styles.TopCatSection} container`}></div>
 
         <div className={`${styles.AppointmentContainer} container`}>
-          <table className="table table-responsive" id={styles.tableOuterBody}>
-            <thead className={`${styles.TSection}`}>
-              <tr>
-                <th scope="col" className={styles.tHead}>
-                  S no
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  Transaction ID
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  Order Type
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  DATE
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  Amount
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  Transaction Status
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  ACTION
-                </th>
-              </tr>
-            </thead>
-            {!loading ? (
-              <>
-                {transsaction && transsaction.length > 0 ? (
+          {transsaction && transsaction.length > 0 ? (
+            <table
+              className="table table-responsive"
+              id={styles.tableOuterBody}
+            >
+              <thead className={`${styles.TSection}`}>
+                <tr>
+                  <th scope="col" className={styles.tHead}>
+                    S no
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    Transaction ID
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    Order Type
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    DATE
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    Amount
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    Transaction Status
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    ACTION
+                  </th>
+                </tr>
+              </thead>
+              {!loading ? (
+                <>
                   <>
                     {transsaction?.map((item, i) => {
                       return (
@@ -126,41 +129,42 @@ const PaymentTransactions = () => {
                       );
                     })}
                   </>
-                ) : (
-                  "Transaction Not Available"
-                )}
-              </>
-            ) : (
-              <>
-                <tbody>
-                  <tr>
-                    <td>
-                      <Skeleton />
-                    </td>
-                    <td>
-                      <Skeleton />
-                    </td>
-                    <td>
-                      <Skeleton />
-                    </td>
-                    <td>
-                      <Skeleton />
-                    </td>
-                    <td>
-                      <Skeleton />
-                    </td>
-                    <td>
-                      <Skeleton />
-                    </td>
-                    <td>
-                      <Skeleton />
-                    </td>
-                  </tr>
-                </tbody>
-              </>
-            )}
-          </table>
-
+                </>
+              ) : (
+                <>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <Skeleton />
+                      </td>
+                      <td>
+                        <Skeleton />
+                      </td>
+                      <td>
+                        <Skeleton />
+                      </td>
+                      <td>
+                        <Skeleton />
+                      </td>
+                      <td>
+                        <Skeleton />
+                      </td>
+                      <td>
+                        <Skeleton />
+                      </td>
+                      <td>
+                        <Skeleton />
+                      </td>
+                    </tr>
+                  </tbody>
+                </>
+              )}
+            </table>
+          ) : (
+            <div className={`${styles.tData} text-center`}>
+              Transactions is Empty
+            </div>
+          )}
           {/* <div className={styles.paginationSec}>
             <nav aria-label="Page navigation example ">
               <ul className={`pagination`}>

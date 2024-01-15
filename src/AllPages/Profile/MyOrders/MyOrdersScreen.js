@@ -37,94 +37,103 @@ const MyOrdersScreen = () => {
     <>
       <ProfileLayout Heading="My Orders" pageName="My Orders">
         <div className={`${styles.AppointmentContainer} container  py-3`}>
-          <table className="table table-responsive" id={styles.tableOuterBody}>
-            <thead className={`${styles.TSection}`}>
-              <tr>
-                <th scope="col" className={styles.tHead}>
-                  Order ID
-                </th>
+          {order?.length > 0 ? (
+            <table
+              className="table table-responsive"
+              id={styles.tableOuterBody}
+            >
+              <thead className={`${styles.TSection}`}>
+                <tr>
+                  <th scope="col" className={styles.tHead}>
+                    Order ID
+                  </th>
 
-                <th scope="col" className={styles.tHead}>
-                  Amount
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  DATE
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  Order Status
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  ACTION
-                </th>
-                <th scope="col" className={styles.tHead}></th>
-              </tr>
-            </thead>
-            {!loading ? (
-              <tbody>
-                {order.map((item, index) => {
-                  if (item.order_status == "completed") {
-                  }
+                  <th scope="col" className={styles.tHead}>
+                    Amount
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    DATE
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    Order Status
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    ACTION
+                  </th>
+                  <th scope="col" className={styles.tHead}></th>
+                </tr>
+              </thead>
+              {!loading ? (
+                <tbody>
+                  {order.map((item, index) => {
+                    if (item.order_status == "completed") {
+                    }
 
-                  return (
-                    <tr key={index}>
-                      <td className={styles.tData}>#{item?.id}</td>
+                    return (
+                      <tr key={index}>
+                        <td className={styles.tData}>#{item?.id}</td>
 
-                      <td className={styles.tData}>
-                        ${Math.ceil(item?.total_amount)}
-                      </td>
-                      <td className={styles.tData}>
-                        {new Date(item.updated_at).toDateString()}
-                      </td>
-                      <td className={styles.tDataBtn}>
-                        <button className={styles.dataStatusBtn}>
-                          {item.order_status}
-                        </button>
-                      </td>
-                      <td className={styles.tDataBtn}>
-                        <button
-                          type="button"
-                          id={styles.dataActionBtn}
-                          onClick={() => handleModal(item)}
-                        >
-                          View
-                        </button>
-                      </td>
+                        <td className={styles.tData}>
+                          ${Math.ceil(item?.total_amount)}
+                        </td>
+                        <td className={styles.tData}>
+                          {new Date(item.updated_at).toDateString()}
+                        </td>
+                        <td className={styles.tDataBtn}>
+                          <button className={styles.dataStatusBtn}>
+                            {item.order_status}
+                          </button>
+                        </td>
+                        <td className={styles.tDataBtn}>
+                          <button
+                            type="button"
+                            id={styles.dataActionBtn}
+                            onClick={() => handleModal(item)}
+                          >
+                            View
+                          </button>
+                        </td>
 
-                      <td onClick={() => orderFinishedHandler(item)}>
-                        <span type="button" onClick={() => handleModal(item)}>
-                          {item.order_status == "completed" && (
-                            <img
-                              src="./images/myorder.png"
-                              className={styles.OrderModalIcon}
-                            />
-                          )}
-                        </span>
+                        <td onClick={() => orderFinishedHandler(item)}>
+                          <span type="button" onClick={() => handleModal(item)}>
+                            {item.order_status == "completed" && (
+                              <img
+                                src="./images/myorder.png"
+                                className={styles.OrderModalIcon}
+                              />
+                            )}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              ) : (
+                <>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <Skeleton />
+                      </td>
+                      <td>
+                        <Skeleton />
+                      </td>
+                      <td>
+                        <Skeleton />
+                      </td>
+                      <td>
+                        <Skeleton />
                       </td>
                     </tr>
-                  );
-                })}
-              </tbody>
-            ) : (
-              <>
-                <tbody>
-                  <tr>
-                    <td>
-                      <Skeleton />
-                    </td>
-                    <td>
-                      <Skeleton />
-                    </td>
-                    <td>
-                      <Skeleton />
-                    </td>
-                    <td>
-                      <Skeleton />
-                    </td>
-                  </tr>
-                </tbody>
-              </>
-            )}
-          </table>
+                  </tbody>
+                </>
+              )}
+            </table>
+          ) : (
+            <div className={`${styles.tData} text-center`}>
+              WishList is Empty
+            </div>
+          )}
         </div>
 
         <CommonModal isOpen={isModalOpen} onClose={closeModal}>

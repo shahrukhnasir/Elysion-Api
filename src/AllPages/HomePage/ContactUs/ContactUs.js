@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { IoMdCall } from "react-icons/io";
 import { PostContactHandler } from "../../../Service/contactService";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
 const ContactUs = () => {
   const dispatch = useDispatch();
@@ -30,13 +31,38 @@ const ContactUs = () => {
     if (
       chatFields.name.length === 0 ||
       chatFields.lName.length === 0 ||
-      chatFields.number.length === 0 ||
       chatFields.email.length === 0 ||
       chatFields.message.length === 0
     ) {
       setError(true);
       return;
     }
+      // Phone validation
+  if (!chatFields.number || chatFields.number.length < 10 || chatFields.number.length > 20) {
+    Swal.fire({
+      position: "center",
+      icon: "error",
+      title: (chatFields.number.length < 10 && "Phone number must be between 10 to 20 digits") || (chatFields.number.length > 20 && "Phone number is too long"),
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    setError(true);
+    return;
+  }
+ // Email validation
+  const emailValidationPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
+    Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Please provide a valid email address",
+        showConfirmButton: false,
+        timer: 1500,
+    });
+    setError(true);
+    return;
+}
     setError(false);
     setLoading(true);
     let data = new FormData();

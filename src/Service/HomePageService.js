@@ -4,6 +4,7 @@ import {
   BlogContent,
   Faqs,
   FindLocation,
+  Footer,
   HeroSectionContent,
   MedicalServiceContent,
   MeetDoctorContent,
@@ -111,20 +112,21 @@ export const ServicesById =
     }
   };
 
-////👇// Find Location 
-export const FindLocationContent = (setLoading, setFindLocation,setLocationDetails) => (dispatch) => {
-  setLoading(true);
-  FindLocation()
-    .then((res) => {
-      setFindLocation(res?.data?.response?.data?.[0]?.name);
-      setLocationDetails(res?.data?.response?.data?.[0]?.value);
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.log(err);
-      setLoading(false);
-    });
-};
+////👇// Find Location
+export const FindLocationContent =
+  (setLoading, setFindLocation, setLocationDetails) => (dispatch) => {
+    setLoading(true);
+    FindLocation()
+      .then((res) => {
+        setFindLocation(res?.data?.response?.data?.[0]?.name);
+        setLocationDetails(res?.data?.response?.data?.[0]?.value);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
 
 // 👇FAQ's//
 export const FaqContent = (setLoading, setFaq) => (dispatch) => {
@@ -142,73 +144,85 @@ export const FaqContent = (setLoading, setFaq) => (dispatch) => {
 };
 
 // 👇Footer NewsLatter//////////
-export const FooterNewsLatterEmail = (data, setLoading, setChatFields,router) => () => {
-  
-  try {
-    NewsLatter(data)
-    .then((res) => {
-        console.log(res,"Success");
-        setLoading(false);
-        setChatFields({
-          email: "",
-
+export const FooterNewsLatterEmail =
+  (data, setLoading, setChatFields, router) => () => {
+    try {
+      NewsLatter(data)
+        .then((res) => {
+          setLoading(false);
+          setChatFields({
+            email: "",
+          });
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Email Send Successfully",
+            showConfirmButton: false,
+            timer: 1500,
+            customClass: {
+              confirmButton: "theme-button-bg",
+            },
+          });
+          router.push("/thank-you");
+        })
+        .catch((error) => {
+          console.error("Error in SignUp:", error);
+          setLoading(false);
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Email  Failed",
+            text: "Please check your fields",
+            showConfirmButton: true,
+            customClass: {
+              confirmButton: "theme-button-bg",
+            },
+          });
         });
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Email Send Successfully",
-          showConfirmButton: false,
-          timer: 1500,
-          customClass: {
-            confirmButton: "theme-button-bg",
-          },
-          
-        });
-        router.push("/thank-you");
-      })
-      .catch((error) => {
-        console.error("Error in SignUp:", error);
-        setLoading(false);
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          title: "Email  Failed",
-          text: "Please check your fields",
-          showConfirmButton: true,
-          customClass: {
-            confirmButton: "theme-button-bg",
-          },
-        
-        });
+    } catch (error) {
+      console.error("Unexpected error in Email send:", error);
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Unexpected Error",
+        text: "An unexpected error occurred. Please try again later.",
+        showConfirmButton: true,
+        customClass: {
+          confirmButton: "theme-button-bg",
+        },
       });
-  } catch (error) {
-    console.error("Unexpected error in Email send:", error);
-    Swal.fire({
-      position: "center",
-      icon: "error",
-      title: "Unexpected Error",
-      text: "An unexpected error occurred. Please try again later.",
-      showConfirmButton: true,
-      customClass: {
-        confirmButton: "theme-button-bg",
-      },
-    });
+    }
+  };
+
+// 👇Blog Content//
+export const BlogsContent =
+  (setLoading, setBlogHeading, setBlogDes, setBlogImage) => (dispatch) => {
+    setLoading(true);
+    BlogContent()
+      .then((res) => {
+        setBlogHeading(res?.data?.response?.data?.[0]?.type);
+        setBlogDes(res?.data?.response?.data?.[0]?.value);
+        setBlogImage(res?.data?.response?.data?.[1]?.image_url);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
+// 👇Footer Api//
+export const FooterContent = (token, setLoading, setFooter) => async () => {
+  setLoading(true);
+
+  try {
+    const res = await Footer(token);
+    setFooter(res?.data?.response?.data);
+    // console.log(res?.data?.response?.data, "foooooooooo");
+  } catch (err) {
+    console.log(err);
+  } finally {
+    setLoading(false);
   }
 };
 
-// 👇Blog Content//
-export const BlogsContent = (setLoading, setBlogHeading,setBlogDes,setBlogImage) => (dispatch) => {
-  setLoading(true);
-  BlogContent()
-    .then((res) => {
-
-      setBlogHeading(res?.data?.response?.data?.[0]?.type);
-      setBlogDes(res?.data?.response?.data?.[0]?.value);
-      setBlogImage(res?.data?.response?.data?.[1]?.image_url);
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.log(err);
-      setLoading(false);
-    });
-};

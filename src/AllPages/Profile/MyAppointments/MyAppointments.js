@@ -69,106 +69,72 @@ const MyAppointments = () => {
             <div className="col-lg-4"></div>
 
             <div className="col-lg-8">
-              <div id={styles.filterBox}>
-                {filterCats?.map((item, i) => (
-                  <button
-                    className={
-                      getActiveCat === i
-                        ? styles.filterBtnActive
-                        : styles.filterBtn
-                    }
-                    onClick={(e) => filterCatHandler(e, item, i)}
-                  >
-                    {item?.name}
-                  </button>
-                ))}
-              </div>
+              {data && data.length > 0 ? (
+                <div id={styles.filterBox}>
+                  {filterCats?.map((item, i) => (
+                    <button
+                      className={
+                        getActiveCat === i
+                          ? styles.filterBtnActive
+                          : styles.filterBtn
+                      }
+                      onClick={(e) => filterCatHandler(e, item, i)}
+                    >
+                      {item?.name}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+               ''
+              )}
             </div>
           </div>
         </div>
 
         <div className={`${styles.AppointmentContainer} container`}>
-          <table className="table table-responsive" id={styles.tableOuterBody}>
-            <thead className={`${styles.TSection}`}>
-              <tr>
-                <th scope="col" className={styles.tHead}>
-                  Booking ID
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  Service
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  Fees
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  DATE
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  Status
-                </th>
-                <th scope="col" className={styles.tHead}>
-                  ACTION
-                </th>
-                <th scope="col" className={styles.tHead}></th>
-              </tr>
-            </thead>
-            {!loading ? (
-              <>
-                {data.map((item, i) => {
-                  if (getCat == "" || getCat == "All") {
-                    return (
-                      <tbody>
-                        <tr key={i}>
-                          <td className={styles.tData}>#{item.id}</td>
-                          <td className={styles.tData}>{item.service?.name}</td>
-                          <td className={styles.tData}>{item.total}</td>
-                          <td className={styles.tData}>
-                            {new Date(item.updated_at).toDateString()}
-                          </td>
-                          <td className={styles.tDataBtn}>
-                            <button className={styles.dataStatusBtn}>
-                              {item.status}
-                            </button>
-                          </td>
-                          <td className={styles.tDataBtn}>
-                            <button
-                              type="button"
-                              id={styles.dataActionBtn}
-                              onClick={() => openModal(item)}
-                            >
-                              View
-                            </button>
-                          </td>
-
-                          <td className={styles.tDataBtn}>
-                            {item.status == "canceled" ? (
-                              ""
-                            ) : (
-                              <>
-                                <button
-                                  id={styles.dataActionBtn}
-                                  href=""
-                                  onClick={() => hanldeCancel(item?.id)}
-                                >
-                                  Cancel
-                                </button>
-                              </>
-                            )}
-                          </td>
-                        </tr>
-                      </tbody>
-                    );
-                  } else {
-                    if (item?.status == getCat) {
+          {data && data.length > 0 ? (
+            <table
+              className="table table-responsive"
+              id={styles.tableOuterBody}
+            >
+              <thead className={`${styles.TSection}`}>
+                <tr>
+                  <th scope="col" className={styles.tHead}>
+                    Booking ID
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    Service
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    Fees
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    DATE
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    Status
+                  </th>
+                  <th scope="col" className={styles.tHead}>
+                    ACTION
+                  </th>
+                  <th scope="col" className={styles.tHead}></th>
+                </tr>
+              </thead>
+              {!loading ? (
+                <>
+                  {data.map((item, i) => {
+                    if (getCat == "" || getCat == "All") {
                       return (
                         <tbody>
-                          <tr>
+                          <tr key={i}>
                             <td className={styles.tData}>#{item.id}</td>
                             <td className={styles.tData}>
                               {item.service?.name}
                             </td>
                             <td className={styles.tData}>{item.total}</td>
-                            <td className={styles.tData}>{item.date}</td>
+                            <td className={styles.tData}>
+                              {new Date(item.updated_at).toDateString()}
+                            </td>
                             <td className={styles.tDataBtn}>
                               <button className={styles.dataStatusBtn}>
                                 {item.status}
@@ -177,7 +143,6 @@ const MyAppointments = () => {
                             <td className={styles.tDataBtn}>
                               <button
                                 type="button"
-                                // onClick={openModal}
                                 id={styles.dataActionBtn}
                                 onClick={() => openModal(item)}
                               >
@@ -203,31 +168,81 @@ const MyAppointments = () => {
                           </tr>
                         </tbody>
                       );
+                    } else {
+                      if (item?.status == getCat) {
+                        return (
+                          <tbody>
+                            <tr>
+                              <td className={styles.tData}>#{item.id}</td>
+                              <td className={styles.tData}>
+                                {item.service?.name}
+                              </td>
+                              <td className={styles.tData}>{item.total}</td>
+                              <td className={styles.tData}>{item.date}</td>
+                              <td className={styles.tDataBtn}>
+                                <button className={styles.dataStatusBtn}>
+                                  {item.status}
+                                </button>
+                              </td>
+                              <td className={styles.tDataBtn}>
+                                <button
+                                  type="button"
+                                  // onClick={openModal}
+                                  id={styles.dataActionBtn}
+                                  onClick={() => openModal(item)}
+                                >
+                                  View
+                                </button>
+                              </td>
+
+                              <td className={styles.tDataBtn}>
+                                {item.status == "canceled" ? (
+                                  ""
+                                ) : (
+                                  <>
+                                    <button
+                                      id={styles.dataActionBtn}
+                                      href=""
+                                      onClick={() => hanldeCancel(item?.id)}
+                                    >
+                                      Cancel
+                                    </button>
+                                  </>
+                                )}
+                              </td>
+                            </tr>
+                          </tbody>
+                        );
+                      }
                     }
-                  }
-                })}
-              </>
-            ) : (
-              <>
-                <tbody>
-                  <tr>
-                    <td>
-                      <Skeleton />
-                    </td>
-                    <td>
-                      <Skeleton />
-                    </td>
-                    <td>
-                      <Skeleton />
-                    </td>
-                    <td>
-                      <Skeleton />
-                    </td>
-                  </tr>
-                </tbody>
-              </>
-            )}
-          </table>
+                  })}
+                </>
+              ) : (
+                <>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <Skeleton />
+                      </td>
+                      <td>
+                        <Skeleton />
+                      </td>
+                      <td>
+                        <Skeleton />
+                      </td>
+                      <td>
+                        <Skeleton />
+                      </td>
+                    </tr>
+                  </tbody>
+                </>
+              )}
+            </table>
+          ) : (
+            <div className={`${styles.tData} text-center`}>
+              Appointments is Empty
+            </div>
+          )}
         </div>
 
         <CommonModal isOpen={isModalOpen} onClose={closeModal}>

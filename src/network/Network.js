@@ -32,6 +32,7 @@ import {
   SERVICE_PROVIDER,
   SERVICE_PROVIDER_ID,
   SIGN_UP,
+  SITE_SETTINGS,
   SLOTS,
   SLOTS_APPOINTMENT_CANCEL,
   SLOTS_AVAILABLE,
@@ -250,4 +251,8 @@ export const WishListDelete = (token, data) => {
 };
 export const PaymentTransactionRecords = (token, data) => {
   return deleteMethod(`${PAYMENT_TRANSACTIONS_RECORD}`, token, data);
+};
+
+export const Footer = (token, data) => {
+  return getMethod(`${SITE_SETTINGS}`, token, data);
 };

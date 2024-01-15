@@ -5,8 +5,6 @@ export const MemberShipCard = (setLoading, setMember) => (dispatch) => {
     Membership()
       .then((res) => {
         setMember(res?.data?.response?.data);
-
-        console.log(res?.data?.response?.data,'response');
         setLoading(false);
       })
       .catch((err) => {

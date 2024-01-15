@@ -31,47 +31,58 @@ const MyMemberships = () => {
         <div className={`${styles.TopCatSection} container`}></div>
 
         <div className={`${styles.AppointmentContainer} container`}>
-          <table className="table table-responsive" id={styles.tableOuterBody}>
-            <thead className={`${styles.TSection}`}>
-              <tr>
-                <th scope="col" className={styles.tHead}>
-                  My membership
-                </th>
+          {sub?.length > 0 ? (
+            <table
+              className="table table-responsive"
+              id={styles.tableOuterBody}
+            >
+              <thead className={`${styles.TSection}`}>
+                <tr>
+                  <th scope="col" className={styles.tHead}>
+                    My membership
+                  </th>
 
-                <th scope="col" className={styles.tHead}>
-                  Amount Paid
-                </th>
+                  <th scope="col" className={styles.tHead}>
+                    Amount Paid
+                  </th>
 
-                <th scope="col" className={styles.tHead}>
-                  Status
-                </th>
-                {/* <th scope="col" className={styles.tHead}>
+                  <th scope="col" className={styles.tHead}>
+                    Status
+                  </th>
+                  {/* <th scope="col" className={styles.tHead}>
                   ACTION
                 </th> */}
-              </tr>
-            </thead>
+                </tr>
+              </thead>
 
-            <tbody>
-              <tr>
-                <td className={styles.tData}>{sub?.name}</td>
-                <td className={styles.tData}>
-                  {/* {status.type == "annually" ? }{sub.price}:"" */}
-                  {status.type === "annually" ? sub.price * 12 : sub.price * 1}
-                </td>
-                <td className={styles.tData}>{status.type}</td>
+              <tbody>
+                <tr>
+                  <td className={styles.tData}>{sub?.name}</td>
+                  <td className={styles.tData}>
+                    {/* {status.type == "annually" ? }{sub.price}:"" */}
+                    {status.type === "annually"
+                      ? sub.price * 12
+                      : sub.price * 1}
+                  </td>
+                  <td className={styles.tData}>{status.type}</td>
 
-                <td className={styles.tDataBtn}>
-                  {/* <Link
+                  <td className={styles.tDataBtn}>
+                    {/* <Link
                     href="membership"
                     type="button"
                     id={styles.dataActionBtn}
                   >
                     Renew Now
                   </Link> */}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          ) : (
+            <div className={`${styles.tData} text-center`}>
+            WishList is Empty
+            </div>
+          )}
 
           <div>
             <div className="row ms-3">
