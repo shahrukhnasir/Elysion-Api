@@ -23,7 +23,7 @@ const Front1 = ({ className }) => {
     });
   };
 
-  console.log(memberCard,"memberCard");
+
   useEffect(() => {
     dispatch(MemberShipCard(setLoading, setMember, dispatch));
   }, []);

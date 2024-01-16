@@ -31,7 +31,7 @@ const NewPatient = () => {
   const [isServiceValid, setIsServiceValid] = useState(false);
   const slug = router.query?.docId;
 
-  console.log("doc_id:", slug, "time:", time, "date:", currentDate);
+
   //👇 Service Providers Api implement and All Services implement
   useEffect(() => {
     dispatch(SelectServiceProvider(token, setLoading, setService));
@@ -49,7 +49,7 @@ const NewPatient = () => {
       pathname: "/followup",
     });
   };
-  console.log(selectedOption, "selectedOption");
+
   //👇Hanlde Next page Function With 👇 Slots Available Api implementation
   const handleNext = (e) => {
     e.preventDefault();
@@ -59,7 +59,7 @@ const NewPatient = () => {
         // pathname: "/followup",
         query: { docId: selectedOption },
       });
-      console.log();
+
       setIsValid(false);
       setIsServiceValid(false);
 
@@ -96,8 +96,7 @@ const NewPatient = () => {
     setIsServiceValid(selectedValue !== "");
     setIsServiceValid(false);
     dispatch(setSelectService(selectedValue));
-    // console.log(selectedValue, "Service=========");
-    // console.log(allService,"allService");
+
   };
 
   return (

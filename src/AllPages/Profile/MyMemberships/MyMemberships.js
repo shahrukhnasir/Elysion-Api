@@ -23,8 +23,6 @@ const MyMemberships = () => {
     dispatch(Subscriptions(token, setLoading, setSubscription, setSatus));
   }, [token]);
 
-  console.log(sub, "jnsdjgn");
-
   return (
     <>
       <ProfileLayout Heading="My Appointments" pageName="My Appointments">

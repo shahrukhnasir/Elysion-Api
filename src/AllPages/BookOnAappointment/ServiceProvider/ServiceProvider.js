@@ -46,16 +46,12 @@ const ServiceProvider = () => {
   };
   const slug = router.query?.docId;
 
-  console.log(router.query);
-  console.log(slug, "docId");
 
   useEffect(() => {
     if (slug) {
       dispatch(DoctorDetails(slug, token, setLoading, setDocDetails));
     }
   }, [slug, token]);
-
-  console.log(docDetails, "docDetailsdocDetails");
 
   return (
     <NewPatientLayout heading="Request Appoinment">

@@ -151,12 +151,13 @@ const BrowseOurMedicalServices = () => {
           <div className="row">
             {!loading ? (
               <>
-                {servicesData.map((item) => {
+                {servicesData.map((item, key) => {
                   return (
                     <div
                       className="col-lg-4"
                       data-aos="fade-up"
                       data-aos-duration="2000"
+                      key={key}
                     >
                       <CommanCard
                         key={item.id}

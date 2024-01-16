@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 
 const AddictionMedicine = () => {
   const { query } = useRouter();
-  console.log(query);
+
   return (
     <>
       <div className="container-fluid p-0">

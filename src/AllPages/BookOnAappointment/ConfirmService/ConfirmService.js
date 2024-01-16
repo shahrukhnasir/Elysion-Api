@@ -17,15 +17,15 @@ const ConfirmService = () => {
   const token = useSelector((state) => state?.authSlice?.authToken);
 
   const slug = useSelector((state) => state?.selectService?.selectService);
-  console.log(slug, "slug");
+
   useEffect(() => {
     dispacth(getAllAServices(slug));
   }, []);
-  console.log(service, "service");
+
   useEffect(() => {
     dispacth(Subscriptions(token, setLoading, setSubscription));
   }, [token]);
-  console.log(sub, "subscription");
+
 
   const calculatePrice = () => {
     if (service && sub) {

@@ -25,10 +25,10 @@ const CheckOut = () => {
   );
   const [striptoken, setStriptoken] = useState();
   const [sub, setSubscription] = useState([]);
-  console.log(token, "token");
+
   const onToken = (token) => {
     setStriptoken(token?.id);
-    console.log(token, striptoken, "stripetoken");
+
   };
 
   const [checkOutField, setCheckOutFields] = useState({
@@ -91,7 +91,7 @@ const CheckOut = () => {
     }
   };
 
-  console.log(slug, "slug");
+
   useEffect(() => {
     dispatch(getAllAServices(slug));
   }, []);

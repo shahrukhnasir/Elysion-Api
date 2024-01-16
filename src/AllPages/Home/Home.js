@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import HeroSection from "../HomePage/HeroSection/HeroSection";
 import BrowseOurMedicalServices from "../HomePage/BrowseOurMedicalServices/BrowseOurMedicalServices";
 import FindLocation from "../HomePage/FindLocation/FindLocation";
@@ -8,21 +8,27 @@ import ContactUs from "../HomePage/ContactUs/ContactUs";
 import Accordions from "../HomePage/Accordions/Accordion";
 import Blogs from "../HomePage/Blogs/Blogs";
 import ProvidingBestMedicalServices from "../HomePage/ProvidingBestMedicalServices/ProvidingBestMedicalServices";
+import { useDispatch } from "react-redux";
+import { getAllServices } from "../../Redux/AllService/allServices";
 
 const Home = () => {
-	return (
-		<>
-			<HeroSection />
-			<ProvidingBestMedicalServices />
-			<BrowseOurMedicalServices />
-			<FindLocation />
-			<PatientResources />
-			<BecomeAmember />
-			<Blogs />
-			<Accordions />
-			<ContactUs />
-		</>
-	);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllServices());
+  }, []);
+  return (
+    <>
+      <HeroSection />
+      <ProvidingBestMedicalServices />
+      <BrowseOurMedicalServices />
+      <FindLocation />
+      <PatientResources />
+      <BecomeAmember />
+      <Blogs />
+      <Accordions />
+      <ContactUs />
+    </>
+  );
 };
 
 export default Home;

@@ -44,7 +44,6 @@ const ShopLayout = () => {
     dispatch(productData(slug, search, setProduct, setLoading));
   }, [slug, search]);
 
-  console.log(productss, "productssproductss");
 
   return (
     <>

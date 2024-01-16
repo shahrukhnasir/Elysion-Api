@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { IoMdCall } from "react-icons/io";
 import { baseUrl } from "../../network/baseUrl";
+import Swal from "sweetalert2";
 
 const ContactUsScreen = () => {
   const router = useRouter();
@@ -45,38 +46,32 @@ const ContactUsScreen = () => {
         return;
       }
       // Phone validation
-      if (
-        !chatFields.number ||
-        chatFields.number.length < 10 ||
-        chatFields.number.length > 20
-      ) {
+       // Phone validation
+       if (!chatFields.number || chatFields.number.length < 10 || chatFields.number.length > 20) {
         Swal.fire({
           position: "center",
           icon: "error",
-          title:
-            (chatFields.number.length < 10 &&
-              "Phone number must be between 10 to 20 digits") ||
-            (chatFields.number.length > 20 && "Phone number is too long"),
+          title: (chatFields.number.length < 10 && "Phone number must be between 10 to 20 digits") || (chatFields.number.length > 20 && "Phone number is too long"),
           showConfirmButton: false,
           timer: 1500,
         });
         setError(true);
         return;
       }
-      // Email validation
+     // Email validation
       const emailValidationPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
+    
+    if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
         Swal.fire({
-          position: "center",
-          icon: "error",
-          title: "Please provide a valid email address",
-          showConfirmButton: false,
-          timer: 1500,
+            position: "center",
+            icon: "error",
+            title: "Please provide a valid email address",
+            showConfirmButton: false,
+            timer: 1500,
         });
         setError(true);
         return;
-      }
+    }
       setError(false);
       setLoading(true);
       const response = await fetch(`${baseUrl}contact-us`, {

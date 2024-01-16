@@ -33,27 +33,7 @@ const CheckOutDetails2 = () => {
     setIsValid(selectedValue !== "");
     setIsValid(false);
   };
-  // console.log(selectedMem, "typetype");
-  // const HandleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setIsValid(false);
-  //   setLoading(true);
-  //   try {
-  //     if (selectedMem !== "") {
-  //       setIsValid(true);
-  //     } else if (striptoken) {
-  //       let data = new FormData();
-  //       data.append("type", selectedMem);
-  //       data.append("subscription_id", slug);
-  //       data.append("stripeToken", striptoken);
-  //       dispatch(UserSubscriptionCreate(token, data, setLoading, router));
-  //     }
-  //   } catch (error) {
-  //     console.error("Error submitting form:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+
 
   const HandleSubmit = async (e) => {
     e.preventDefault();

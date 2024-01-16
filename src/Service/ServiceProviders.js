@@ -54,7 +54,6 @@ export const Slots = (slug, token, setLoading, setSlots) => () => {
 //Slots available
 export const CheckSlotsHandler =
   (token, data, setLoading, router) => async () => {
-    console.log(data);
     setLoading(true);
     try {
       const res = await SlotsAvailable(token, data);
@@ -101,7 +100,7 @@ export const LastVisit = (token, setLoading, setLastVisit) => () => {
   LastVisitFollowUp(token)
     .then((res) => {
       setLastVisit(res?.data?.response?.data);
-      console.log(res, ":RESULT_CHECKING");
+
       setLoading(false);
       if (res == 404) {
         Swal.fire({
@@ -120,25 +119,24 @@ export const LastVisit = (token, setLoading, setLastVisit) => () => {
       Swal.fire({
         position: "center",
         icon: "info",
-        title:  error.response?.data?.message && "No Last Visit Select New Patient",
+        title:
+          error.response?.data?.message && "No Last Visit Select New Patient",
         text: error.response?.data?.message || "No Last Visit",
         showConfirmButton: true,
         customClass: {
           confirmButton: "theme-button-bg",
         },
-       
       });
     });
 };
 
-
 ////👇Check Out
 export const SlotCheckOutHandler =
-  (token, data, setLoading,route) => async (dispatch) => {
+  (token, data, setLoading, route) => async (dispatch) => {
     setLoading(true);
     try {
       const res = await SlotCreateCheckOut(token, data);
-      console.log(res,'success');
+     
       // if (res?.data?.message === "success") {
       setLoading(false);
       await Swal.fire({
@@ -148,17 +146,26 @@ export const SlotCheckOutHandler =
         showConfirmButton: false,
         timer: 1500,
       });
-      route.push('/appointments')
+      route.push("/appointments");
       // }
-      
     } catch (error) {
+      console.log(error, "errorerror");
       await Swal.fire({
         position: "center",
         icon: "error",
-        title: error?.response?.data?.message,
+        title:
+          error?.response?.data?.errors?.address ||
+          error?.response?.data?.errors?.city ||
+          error?.response?.data?.errors?.email ||
+          error?.response?.data?.errors?.first_name ||
+          error?.response?.data?.errors?.last_name ||
+          error?.response?.data?.errors?.phone ||
+          error?.response?.data?.errors?.zip_code,
         text: error?.response?.data?.message,
-        showConfirmButton: false,
-        timer: 1500,
+        showConfirmButton: true,
+        customClass: {
+          confirmButton: "theme-button-bg",
+        },
       });
       // setLoading(false);
     }

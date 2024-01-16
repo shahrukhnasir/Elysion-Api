@@ -9,7 +9,7 @@ export const LoginHandler = (data, setLoading, setChatFields, router, dispatch) 
     try {
       Login(data)
         .then((res) => {
-          console.log(res);
+
   
           const token = res?.data?.response?.data?.token;
           dispatch(setAuthToken(token));
@@ -67,7 +67,7 @@ export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
   try {
     SignUp(data)
     .then((res) => {
-        console.log(res,"Success");
+
         setLoading(false);
         setChatFields({
           fname: "",
@@ -127,7 +127,7 @@ export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
     try {
       ForgotPassword(data)
         .then((res) => {
-          console.log(res);
+        
           setLoading(false);
           setChatFields({
             email: "",
@@ -178,7 +178,7 @@ export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
   export const OtpNewPasswordHandler = (data, setLoading, setChatFields, router) => async () => {
     try {
       const res = await OtpChangePassword(data);
-      console.log(res);
+
   
       setLoading(false);
       setChatFields({

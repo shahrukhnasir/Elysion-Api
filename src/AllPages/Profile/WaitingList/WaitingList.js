@@ -12,7 +12,7 @@ const WaitingList = () => {
   const openModal = (item) => {
       setIsModalOpen(true);
       setModalDetail(item);
-      console.log("Modal opened");
+
   };
 
   const closeModal = () => {

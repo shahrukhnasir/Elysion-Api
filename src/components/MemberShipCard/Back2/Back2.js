@@ -19,7 +19,6 @@ const Back2 = () => {
   const router = useRouter();
   const getId = (slug) => {
 
-    console.log(slug,memberCard,"slugslug");
     router.push({
       pathname: "checkout-member",
       query: { id: slug },

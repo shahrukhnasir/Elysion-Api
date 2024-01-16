@@ -48,11 +48,11 @@ const ProductDetail = () => {
   const updateSteps = (amount) => {
     setSteps((prevState) => {
       const updatedSteps = prevState + amount;
-      console.log(updatedSteps, "//////////////////////////");
+
       return updatedSteps;
     });
   };
-  console.log(productDetail, "productDetail");
+
   const AddToCartHandle = async (e) => {
     // if (token) {
       e.preventDefault();
@@ -63,7 +63,6 @@ const ProductDetail = () => {
       data.append("product_miligram_id", milliGram);
       data.append("qty", steps);
       dispatch(AddToCartHandler(token, data, setLoading, router));
-      console.log(loading, "loadingloadingloadingloading");
     // } else {
     //   alert("first signin");
     // }
@@ -140,10 +139,7 @@ const ProductDetail = () => {
     );
     setMiliId(filteredMili?.[0]?.id);
   };
-  console.log(milliGram, "MiliGram");
-  console.log(variantId, "variantId");
-  console.log(slug, "ProductId");
-  console.log(productDetail?.user_id, "user_id");
+
   // const [cartFields, setCartFields] = useState({
   //   product_id: slug,
   //   product_variant_id: variantId,

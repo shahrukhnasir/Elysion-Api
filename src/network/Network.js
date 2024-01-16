@@ -83,6 +83,7 @@ export const AllServiceContent = (data) => {
 export const ServiceContentById = (slug, data) => {
   return getMethod(`${SERVICES_ID}/${slug}`, data);
 };
+
 export const FindLocation = (data) => {
   return getMethod(`${FIND_LOCATION}`, data);
 };

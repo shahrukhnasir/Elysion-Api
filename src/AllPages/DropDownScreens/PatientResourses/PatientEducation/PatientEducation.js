@@ -5,7 +5,6 @@ const PatientGuide = () => {
   const [tab, setTab] = useState(0);
 
   const handleTab = (tab) => {
-    console.log(tab)
     setTab(tab);
   }
   return (

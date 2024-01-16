@@ -81,6 +81,7 @@ export const AllServices = (setLoading, setServicesData) => (dispatch) => {
   setLoading(true);
   AllServiceContent()
     .then((res) => {
+    
       setServicesData(res?.data?.response?.data);
       setLoading(false);
     })
@@ -93,18 +94,18 @@ export const AllServices = (setLoading, setServicesData) => (dispatch) => {
 ////👇ALL Services By id
 export const ServicesById =
   (setServicesData, slug, setServiceDetails, setLoading) => (dispatch) => {
-    setLoading(true);
+    // setLoading(true);
     if (slug !== undefined) {
       try {
         ServiceContentById(slug)
           .then((res) => {
             setServicesData(slug);
             setServiceDetails(res?.data?.response?.data);
-            setLoading(false);
+            // setLoading(false);
           })
           .catch((err) => {
             console.log(err);
-            setLoading(false);
+            // setLoading(false);
           });
       } catch (err) {
         console.log(err);

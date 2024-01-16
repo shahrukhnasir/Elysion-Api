@@ -16,6 +16,7 @@ import AppoinmentDateSlice from "./Appoinment/appointDate";
 import appointmentSlice from "./Appoinment/appointmentDetails";
 import serviceSlice from "./Appoinment/selectService";
 // import AllServiceSlice from "./AllServices/AllServiceSlice"
+import ServiceSlice from "./AllService/serviceById";
 import AllServiceSlice from "./AllService/allServices"
 
 
@@ -40,6 +41,7 @@ const persistedReducer = persistReducer(
     currentDate: AppoinmentDateSlice,
     appointment: appointmentSlice,
     selectService: serviceSlice,
+    ServiceSlice:ServiceSlice,
     AllServiceSlice:AllServiceSlice,
   })
 );

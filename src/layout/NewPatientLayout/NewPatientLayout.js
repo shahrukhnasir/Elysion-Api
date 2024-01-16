@@ -29,21 +29,21 @@ const NewPatientLayout = ({ children, heading }) => {
   };
   //🤞Slots Clicked Function
   const variationClick = (value) => {
-    console.log(value, "value");
+
     if (getVariations.includes(value)) {
       const removal = getVariations.filter((varr) => varr !== value);
-      console.log(removal);
+
       setVariations(removal);
       dispatch(setAppointmentDetails(value));
     } else {
       setVariations([...getVariations, value]);
     }
-    console.log(value, "valuevaluevalue");
+
   };
   //🤞Date Select set Redux
   const dateSelectHandler = (selectedDate) => {
     setDate(selectedDate);
-    console.log(formatDate(selectedDate), "selectedDate");
+
     dispatch(setAppointmentDate(formatDate(selectedDate)));
   };
   //Slots Api

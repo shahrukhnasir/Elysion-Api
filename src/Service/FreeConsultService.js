@@ -7,7 +7,7 @@ export const FreeConsultation = (data, setLoading, setChatFields,router) => () =
   try {
     FreeConsult(data)
     .then((res) => {
-        console.log(res,"Success");
+
         setLoading(false);
         setChatFields({
           email: "",

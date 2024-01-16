@@ -31,7 +31,7 @@ export const MyProfileImageUpload = (token, data, setLoading) => async () => {
   setLoading(true);
   try {
     const res = await MyProfileImage(token, data);
-    console.log(res);
+
     setLoading(false);
     if (res) {
       await Swal.fire({
@@ -61,7 +61,7 @@ export const MyUpdateProfile =
     setLoading(true);
     try {
       const res = await UpdateProfile(token, data);
-      console.log(res, "update_profile");
+
       setLoading(false);
       if (res) {
         await Swal.fire({
@@ -92,7 +92,7 @@ export const UpdateMyPassword =
     setLoading(true);
     try {
       const res = await UpdatePassword(token, data);
-      console.log(res, "update_profile");
+
       setLoading(false);
       if (res) {
         await Swal.fire({
@@ -135,7 +135,7 @@ export const AppointmentCancel = (slug, token, setLoading) => () => {
   setLoading(true);
   SlotsAppointmentCancel(slug, token)
     .then((res) => {
-      console.log(res, "resaaaa");
+ 
       setLoading(false);
       Swal.fire({
         position: "center",
@@ -167,7 +167,7 @@ export const OrderList = (token, setLoading, setOrderList) => () => {
   MyOrdersList(token)
     .then((res) => {
       setOrderList(res?.data?.response?.data?.data);
-      console.log(res, "resaaaa");
+
       setLoading(false);
     })
     .catch((error) => {

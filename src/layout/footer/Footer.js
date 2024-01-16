@@ -25,7 +25,7 @@ const Footer = () => {
   useEffect(() => {
     dispatch(FooterContent(token, setLoading, setFooter));
   }, [token]);
-  console.log(foo, "foofoo");
+
 
   const handleEmailSend = async (e) => {
     e.preventDefault();

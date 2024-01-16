@@ -37,7 +37,7 @@ const BookOnAappointment = () => {
     const router = useRouter();
 
     const HandleServiceProvider = (e) => {
-        console.log("clickecd")
+
 
         router.push({
             pathname: "/serviceprovider",

@@ -1,43 +1,37 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { ServiceContentById } from "../../network/Network";
+import { AllServiceContent } from "../../network/Network";
 
-export const getAllAServices = createAsyncThunk(
-  "allService/getAllService",
-  async (slug) => {
-    try {
-      console.log(slug);
-      const response = await ServiceContentById(slug);
-      console.log("pro", response.data?.response?.data);
-
-      return response.data?.response?.data;
-    } catch (error) {
-      throw error;
-    }
+export const getAllServices = createAsyncThunk("all/services", async () => {
+  try {
+    const response = await AllServiceContent();
+    console.log(response, "responseresponseresponse");
+    return response.data?.response?.data;
+  } catch (error) {
+    console.error("Error fetching all services:", error);
+    throw error;
   }
-);
+});
 
 const AllServiceSlice = createSlice({
   name: "allService",
   initialState: {
     loading: false,
-    allServices: [],
+    allService: [],
     error: null,
   },
-  reducers: {
-
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllAServices.pending, (state) => {
+      .addCase(getAllServices.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getAllAServices.fulfilled, (state, action) => {
+      .addCase(getAllServices.fulfilled, (state, action) => {
         state.loading = false;
-        state.featuredProducts = action.payload;
+        state.allService = [...action.payload];
         state.error = null;
       })
-      .addCase(getAllAServices.rejected, (state, action) => {
+      .addCase(getAllServices.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });

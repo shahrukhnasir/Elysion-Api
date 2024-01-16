@@ -31,7 +31,6 @@ const ContactUs = () => {
     if (
       chatFields.name.length === 0 ||
       chatFields.lName.length === 0 ||
-      chatFields.email.length === 0 ||
       chatFields.message.length === 0
     ) {
       setError(true);

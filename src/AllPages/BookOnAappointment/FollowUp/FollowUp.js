@@ -34,7 +34,7 @@ const FollowUp = () => {
     dispatch(SelectServiceProvider(token, setLoading, setService));
     dispatch(LastVisit(token, setLoading, setLastVisit));
   }, [token]);
-  console.log(lastVisit, "lastVisit");
+
   const handleNext = (e) => {
     e.preventDefault();
     if (selectedOption !== "") {
@@ -42,7 +42,7 @@ const FollowUp = () => {
         // pathname: "/followup",
         query: { service: selectedOption },
       });
-      console.log();
+
       setIsValid(false);
 
       let data = new FormData();
@@ -61,7 +61,7 @@ const FollowUp = () => {
 
   const handle = () => {
     dispatch(removeDate());
-    console.log("Removing");
+
   };
   const handleSelectChange = (e) => {
     const id = e.target.value;

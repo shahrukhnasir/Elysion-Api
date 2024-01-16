@@ -22,7 +22,7 @@ const CheckOutDetails = () => {
 
   const onToken = (token) => {
     setStriptoken(token?.id);
-    console.log(token, striptoken, "stripetoken");
+
   };
 
   const [checkOutField, setCheckOutFields] = useState({
@@ -108,6 +108,7 @@ const CheckOutDetails = () => {
         setError(true);
         return;
       }
+
     } catch (error) {
       console.error("Error submitting form:", error);
       setError(true);
@@ -607,7 +608,7 @@ const CheckOutDetails = () => {
                     currency="USD"
                   >
                     <CommanButton
-                      label="add to card"
+                      label="Pay Now"
                       onClick={HandleSubmit}
                       className={styles.cartButton}
                     />
@@ -618,7 +619,7 @@ const CheckOutDetails = () => {
               <div className={styles.checkOutLast}>
                 {striptoken ? (
                   <>
-                    <CommanButton onClick={HandleSubmit} label="Checkout" />
+                    <CommanButton className={styles.cartButton} onClick={HandleSubmit} label="Checkout" />
                   </>
                 ) : (
                   ""

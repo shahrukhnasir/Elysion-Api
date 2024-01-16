@@ -243,15 +243,27 @@ export const CheckOutHandler =
       }
     } catch (error) {
       // setLoading(false);
-      // console.error(error?.response?.data?.message,"///////", );
+      console.error(error?.response?.data?.errors, "errr");
 
       await Swal.fire({
         position: "center",
         icon: "error",
-        title: error?.response?.data?.message,
+        title:
+          error?.response?.data?.errors?.billing_address ||
+          error?.response?.data?.errors?.billing_email ||
+          error?.response?.data?.errors?.billing_first_name ||
+          error?.response?.data?.errors?.billing_last_name ||
+          error?.response?.data?.errors?.billing_phone ||
+          error?.response?.data?.errors?.shipper_address ||
+          error?.response?.data?.errors?.shipper_email ||
+          error?.response?.data?.errors?.shipper_first_name ||
+          error?.response?.data?.errors?.shipper_phone ||
+          error?.response?.data?.errors?.shipper_last_name,
         text: error?.response?.data?.message,
-        showConfirmButton: false,
-        timer: 1500,
+        showConfirmButton: true,
+        customClass: {
+          confirmButton: "theme-button-bg",
+        },
       });
       // setLoading(false);
     }
@@ -272,8 +284,7 @@ export const WishListAddToListProduct = (token, data, setHeartClick) => () => {
           timer: 1500,
         });
       }
-      if(res?.message)
-      setHeartClick(true);
+      if (res?.message) setHeartClick(true);
     })
     .catch((res) => {
       Swal.fire({
@@ -292,13 +303,16 @@ export const WishListAddToListProduct = (token, data, setHeartClick) => () => {
 // Product
 
 export const productData =
-  (slug, search,  setProduct, setLoading) => async () => {
+  (slug, search, setProduct, setLoading) => async () => {
     setLoading(true);
 
     try {
       const response = await getProducts(slug, search);
-      const responseData = response?.data?.response?.data?.data !== undefined ? response?.data?.response?.data?.data : response?.data?.response?.data;
-       console.log(responseData,"dskhjasdhads")
+      const responseData =
+        response?.data?.response?.data?.data !== undefined
+          ? response?.data?.response?.data?.data
+          : response?.data?.response?.data;
+      console.log(responseData, "dskhjasdhads");
       // setCatByProdutId(slug);
       setProduct(responseData);
       setLoading(false);

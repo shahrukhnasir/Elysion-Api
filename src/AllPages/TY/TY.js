@@ -32,7 +32,7 @@ const TY = () => {
     const filterCollection = thankYou.filter(
       (ID) => ID?.id == routeId
     );
-    console.log(filterCollection, "filterCollection")
+
     setFilterData(...filterCollection);
   };
 

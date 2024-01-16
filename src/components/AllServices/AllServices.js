@@ -14,15 +14,16 @@ const AllServices = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { query } = useRouter();
+  const [service,setServiceDetails]= useState([])
   const slug = query?.pid;
-  const service = useSelector(
-    (state) => state?.AllServiceSlice?.featuredProducts
-  );
+  // const service = useSelector(
+  //   (state) => state?.AllServiceSlice?.featuredProducts
+  // );
   // useEffect(() => {
   //   dispatch(ServicesById( setServicesData,slug,setServiceDetails,setLoading));
   // }, [slug]);
   useEffect(() => {
-    dispatch(getAllAServices(slug));
+    dispatch(ServicesById(slug,setServiceDetails));
   }, [slug]);
   console.log(service, 'aaa')
   return <>

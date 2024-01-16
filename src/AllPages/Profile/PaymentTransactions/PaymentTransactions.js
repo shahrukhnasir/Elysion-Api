@@ -65,7 +65,7 @@ const PaymentTransactions = () => {
   useEffect(() => {
     dispatch(PaymentTransaction(token, setLoading, setTransactions));
   }, []);
-  console.log(transsaction, "transsaction");
+
   return (
     <>
       <ProfileLayout
