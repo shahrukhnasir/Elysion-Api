@@ -12,6 +12,10 @@ import {
   FIND_LOCATION,
   FORGOT_PASSWORD,
   FREE_CONSULTATION,
+  GUEST_CART_ALL_REMOVE,
+  GUEST_CART_CREATE,
+  GUEST_CART_LIST,
+  GUEST_CART_REMOVE,
   HERO_SECTION,
   LAST_VISIT,
   LOGIN,
@@ -256,4 +260,23 @@ export const PaymentTransactionRecords = (token, data) => {
 
 export const Footer = (token, data) => {
   return getMethod(`${SITE_SETTINGS}`, token, data);
+};
+
+export const GuestCartCreate = (data) => {
+  return postMethod(`${GUEST_CART_CREATE}`, data);
+};
+
+export const GuestCartList = (session_id, data) => {
+  return getMethod(`${GUEST_CART_LIST}?session_id=${session_id}`, data);
+};
+
+export const GuestCartListRemoved = (slug, session_id, data) => {
+  return deleteMethod(
+    `${GUEST_CART_REMOVE}/${slug}?session_id=${session_id}`,
+    data
+  );
+};
+
+export const GuestAllCartListRemoved = (session_id,data) => {
+  return deleteMethod(`${GUEST_CART_ALL_REMOVE}?session_id=${session_id}`,data);
 };

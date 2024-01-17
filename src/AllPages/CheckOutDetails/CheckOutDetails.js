@@ -9,6 +9,7 @@ import {
   AddToCartListHandler,
   CheckOutHandler,
 } from "../../Service/CartService";
+import { GuestCartLists } from "../../Service/GuestService";
 import StripeCheckout from "react-stripe-checkout";
 const CheckOutDetails = () => {
   const dispatch = useDispatch();
@@ -17,12 +18,12 @@ const CheckOutDetails = () => {
   const [loading, setLoading] = useState(false);
   const [cartList, setAddCartList] = useState([]);
   const token = useSelector((state) => state?.authSlice?.authToken);
-
-  const [striptoken, setStriptoken] = useState();
+  const { query } = useRouter();
+    const [striptoken, setStriptoken] = useState();
+  const session_id = useSelector((state)=> state?.sessionSlice?.session);
 
   const onToken = (token) => {
     setStriptoken(token?.id);
-
   };
 
   const [checkOutField, setCheckOutFields] = useState({
@@ -108,7 +109,6 @@ const CheckOutDetails = () => {
         setError(true);
         return;
       }
-
     } catch (error) {
       console.error("Error submitting form:", error);
       setError(true);
@@ -116,10 +116,17 @@ const CheckOutDetails = () => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
-    dispatch(AddToCartListHandler(token, setAddCartList, setLoading));
-  }, []);
+    if (token) {
+      dispatch(
+        AddToCartListHandler(token, setAddCartList, setLoading, dispatch)
+      );
+    } else if (!token) {
+      dispatch(
+        GuestCartLists(session_id, setAddCartList, setLoading, dispatch)
+      );
+    }
+  }, [token]);
   const totalQty = cartList.reduce((total, cart) => {
     const qtyTotal = cart?.qty?.length || 0;
     return total + qtyTotal;
@@ -616,16 +623,20 @@ const CheckOutDetails = () => {
                 )}
               </div>
               <div className="col-lg-12">
-              <div className={styles.checkOutLast}>
-                {striptoken ? (
-                  <>
-                    <CommanButton className={styles.cartButton} onClick={HandleSubmit} label="Checkout" />
-                  </>
-                ) : (
-                  ""
-                )}
+                <div className={styles.checkOutLast}>
+                  {striptoken ? (
+                    <>
+                      <CommanButton
+                        className={styles.cartButton}
+                        onClick={HandleSubmit}
+                        label="Checkout"
+                      />
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </div>
               </div>
-            </div>
             </div>
 
             <div className="col-lg-6">
@@ -634,7 +645,6 @@ const CheckOutDetails = () => {
                 {cartList?.map((item, i) => (
                   <div className="row g-0" key={i}>
                     <div className="col-lg-2">
-              
                       <img
                         src={item?.product?.thumbnail_url}
                         className="img-fluid rounded-start"
@@ -648,14 +658,10 @@ const CheckOutDetails = () => {
                     </div>
 
                     <div className="col-lg-2">
-                      <span className={styles.pName}>
-                        {item?.qty}
-                      </span>
+                      <span className={styles.pName}>{item?.qty}</span>
                     </div>
                     <div className="col-lg-2">
-                      <span className={styles.pName}>
-                        ${item?.price}
-                      </span>
+                      <span className={styles.pName}>${item?.price}</span>
                     </div>
                   </div>
                 ))}
@@ -718,7 +724,6 @@ const CheckOutDetails = () => {
                 </Link>
               </span>
             </div>
-            
           </div>
         </div>
       </div>

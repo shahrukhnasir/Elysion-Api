@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import styles from "../ProductDetail/ProductDetails.module.css";
+import styles from "../ProductDetailsComponent/ProductDetailsComponent.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { FaRegHeart } from "react-icons/fa";
 import { BsSuitHeartFill } from "react-icons/bs";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import CommanButton from "../../components/CommanButton/CommanButton";
+import CommanButton from "../CommanButton/CommanButton";
 import Link from "next/link";
 import { ImStarFull } from "react-icons/im";
 
@@ -16,17 +16,18 @@ import Slider from "react-slick";
 import {
   NextArrow,
   PreviousArrow,
-} from "../../components/CustomSlider/SliderArrow";
-import SliderProductCard from "../../components/SliderProductCard/SliderProductCard";
+} from "../CustomSlider/SliderArrow";
+import SliderProductCard from "../SliderProductCard/SliderProductCard";
 import {
   AddToCartHandler,
   WishListAddToListProduct,
   getProductDetailById,
 } from "../../Service/CartService";
+import { AddToCartGuest } from "../../Service/GuestService";
 import { Skeleton } from "antd";
+import { setSessionId } from "../../Redux/Auth/sessionSlice";
 
-
-const ProductDetail = () => {
+const ProductDetailsComponent = () => {
   const [productDetail, setProductDetails] = useState([]);
   const [loading, setLoading] = useState(false);
   const [steps, setSteps] = useState(1);
@@ -37,24 +38,30 @@ const ProductDetail = () => {
   const [heartClick, setHeartClick] = useState(false);
 
   const token = useSelector((state) => state?.authSlice?.authToken);
+  const { query } = useRouter();
+  const slug = query?.productId;
 
+  console.log(slug,'productId');
   const heartClickHandler = (e) => {
     e.preventDefault();
     const data = new FormData();
     data.append("product_id", slug);
-    dispatch(WishListAddToListProduct(token, data,setHeartClick));
+    dispatch(WishListAddToListProduct(token, data, setHeartClick));
     setHeartClick(true);
   };
   const updateSteps = (amount) => {
     setSteps((prevState) => {
       const updatedSteps = prevState + amount;
-
       return updatedSteps;
     });
   };
 
+  const session_id = Math.floor(Math.random() * 100);
+
+  console.log(session_id, "session_id");
   const AddToCartHandle = async (e) => {
-    // if (token) {
+    dispatch(setSessionId(session_id))
+    if (token) {
       e.preventDefault();
       setLoading(true);
       let data = new FormData();
@@ -63,9 +70,15 @@ const ProductDetail = () => {
       data.append("product_miligram_id", milliGram);
       data.append("qty", steps);
       dispatch(AddToCartHandler(token, data, setLoading, router));
-    // } else {
-    //   alert("first signin");
-    // }
+    } else if (!token) {
+      let data = new FormData();
+      data.append("product_id", slug);
+      data.append("product_variant_id", variantId);
+      data.append("product_miligram_id", milliGram);
+      data.append("qty", steps);
+      data.append("session_id", session_id);
+      dispatch(AddToCartGuest(data, setLoading, router));
+    }
   };
   const router = useRouter();
   const dispatch = useDispatch();
@@ -110,8 +123,7 @@ const ProductDetail = () => {
       },
     ],
   };
-  const { query } = useRouter();
-  const slug = query?.pid;
+
 
   useEffect(() => {
     dispatch(
@@ -199,7 +211,7 @@ const ProductDetail = () => {
                       />
                     ) : (
                       <FaRegHeart
-                        onClick={(e) => heartClickHandler(e)} 
+                        onClick={(e) => heartClickHandler(e)}
                         className={styles.heartIcon}
                       />
                     )}
@@ -527,4 +539,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+export default ProductDetailsComponent;

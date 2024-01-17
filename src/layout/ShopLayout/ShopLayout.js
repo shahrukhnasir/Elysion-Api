@@ -30,7 +30,10 @@ const ShopLayout = () => {
   };
 
   const handleProductDetail = (productId) => {
-    router.push(`/shop/product/${productId}`);
+    router.push({
+      pathname: '/product-detail',
+      query: { productId: productId },
+    });
   };
 
   // Search Api intrgrated

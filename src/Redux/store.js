@@ -18,6 +18,7 @@ import serviceSlice from "./Appoinment/selectService";
 // import AllServiceSlice from "./AllServices/AllServiceSlice"
 import ServiceSlice from "./AllService/serviceById";
 import AllServiceSlice from "./AllService/allServices"
+import sessionSlice from "./Auth/sessionSlice";
 
 
 const persistConfig = {
@@ -43,6 +44,7 @@ const persistedReducer = persistReducer(
     selectService: serviceSlice,
     ServiceSlice:ServiceSlice,
     AllServiceSlice:AllServiceSlice,
+    sessionSlice:sessionSlice
   })
 );
 

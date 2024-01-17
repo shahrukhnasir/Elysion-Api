@@ -46,3 +46,10 @@ export const WISHLIST_DELETE_BY_ID = `wishlist/delete/`;
 export const ALL_WISHLIST_DELETE = `wishlist/delete-all`;
 export const PAYMENT_TRANSACTIONS_RECORD = `transaction`;
 export const SITE_SETTINGS = `site-setting`
+
+
+// Guest 
+export const GUEST_CART_CREATE = `guest-cart/create`
+export const GUEST_CART_LIST = `guest-cart`
+export const GUEST_CART_REMOVE = `guest-cart/delete`
+export const GUEST_CART_ALL_REMOVE = `guest-cart/delete-all`

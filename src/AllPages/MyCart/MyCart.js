@@ -11,61 +11,46 @@ import {
 } from "../../Service/CartService";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
+import {
+  GuestCartListAllClear,
+  GuestCartLists,
+  GuestRemovedToCartItem,
+} from "../../Service/GuestService";
 const MyCart = () => {
   const router = useRouter();
-  // const Data = [
-  //   {
-  //     id: 1,
-  //     sNo: "01",
-  //     productName: "Lorem ipsum Dolor",
-  //     productImage: "./images/modalproduct.png",
-  //     unitPrice: "$158.07 ",
-  //     qty: "In Stock",
-  //     subTotal: "$158.07",
-  //   },
 
-  //   {
-  //     id: 2,
-  //     sNo: "02",
-  //     productName: "Lorem ipsum Dolor",
-  //     productImage: "./images/modalproduct.png",
-  //     unitPrice: "$158.07 ",
-  //     qty: "In Stock",
-  //     subTotal: "$158.07",
-  //   },
-
-  //   {
-  //     id: 3,
-  //     sNo: "03",
-  //     productName: "Lorem ipsum Dolor",
-  //     productImage: "./images/modalproduct.png",
-  //     unitPrice: "$158.07 ",
-  //     qty: "In Stock",
-  //     subTotal: "$158.07",
-  //   },
-  //   {
-  //     id: 4,
-  //     sNo: "04",
-  //     productName: "Lorem ipsum Dolor",
-  //     productImage: "./images/modalproduct.png",
-  //     unitPrice: "$158.07 ",
-  //     qty: "In Stock",
-  //     subTotal: "$158.07",
-  //   },
-  // ];
   const token = useSelector((state) => state?.authSlice?.authToken);
   const dispatch = useDispatch();
   const [cartList, setAddCartList] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const session_id = useSelector((state) => state?.sessionSlice?.session);
   useEffect(() => {
-    dispatch(AddToCartListHandler(token, setAddCartList, setLoading, dispatch));
-  }, []);
-
+    if (token) {
+      dispatch(
+        AddToCartListHandler(token, setAddCartList, setLoading, dispatch)
+      );
+    } else if (!token) {
+      dispatch(
+        GuestCartLists(session_id, setAddCartList, setLoading, dispatch)
+      );
+    }
+  }, [session_id]);
   const handleRemovedById = (slug) => {
-    if (slug) {
+    if (token) {
       dispatch(
         RemovedToCartHandler(slug, token, setLoading, setAddCartList, router)
+      );
+      const updatedCartList = cartList.filter((item) => item.id !== slug);
+      setAddCartList(updatedCartList);
+    } else if (!token) {
+      dispatch(
+        GuestRemovedToCartItem(
+          slug,
+          session_id,
+          setLoading,
+          setAddCartList,
+          router
+        )
       );
       const updatedCartList = cartList.filter((item) => item.id !== slug);
       setAddCartList(updatedCartList);
@@ -73,13 +58,18 @@ const MyCart = () => {
   };
 
   const handleClearAll = () => {
-    dispatch(RemovedAllHandler(token, setLoading));
-    setAddCartList("");
+    if (token) {
+      dispatch(RemovedAllHandler(token, setLoading));
+      setAddCartList("");
+    } else if (!token) {
+      dispatch(GuestCartListAllClear(session_id));
+      setAddCartList("");
+    }
   };
 
   const total = () => {
     const totalSum = cartList.reduce((acc, item) => acc + item.sub_total, 0);
-    return totalSum ;
+    return totalSum;
   };
 
   return (
@@ -117,31 +107,30 @@ const MyCart = () => {
               {!loading && cartList && cartList.length > 0 && (
                 <tbody>
                   {cartList.map((item, i) => (
-    
-                  <>
-                    <tr key={i}>
-                      <td className={styles.tData}>{item?.product?.title}</td>
-                      <td className={styles.tDataImage}>
-                        <img
-                          className="w-25"
-                          src={item?.product?.thumbnail_url}
-                          alt="image"
+                    <>
+                      <tr key={i}>
+                        <td className={styles.tData}>{item?.product?.title}</td>
+                        <td className={styles.tDataImage}>
+                          <img
+                            className="w-25"
+                            src={item?.product?.thumbnail_url}
+                            alt="image"
                           />
-                        {item?.title}
-                      </td>
-                      <td className={styles.tData}>{item?.price}</td>
-                      <td className={styles.tData}>{item?.qty}</td>
-                      <td className={styles.tData}>{item?.sub_total}</td>
-                      <td
-                        className={styles.dataCross}
-                        onClick={() => handleRemovedById(item?.id)}
+                          {item?.title}
+                        </td>
+                        <td className={styles.tData}>{item?.price}</td>
+                        <td className={styles.tData}>{item?.qty}</td>
+                        <td className={styles.tData}>{item?.sub_total}</td>
+                        <td
+                          className={styles.dataCross}
+                          onClick={() => handleRemovedById(item?.id)}
                         >
-                        <Link href="">
-                          <MdOutlineClose className={styles.crossIcon} />
-                        </Link>
-                      </td>
-                    </tr>
-                        </>
+                          <Link href="">
+                            <MdOutlineClose className={styles.crossIcon} />
+                          </Link>
+                        </td>
+                      </tr>
+                    </>
                   ))}
                 </tbody>
               )}
