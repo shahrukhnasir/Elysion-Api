@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { GuestAllCartListRemoved, GuestCartCreate, GuestCartList, GuestCartListRemoved } from "../network/Network";
+import { GuestAllCartListRemoved, GuestCartCreate, GuestCartList, GuestCartListRemoved, GuestCheckOut } from "../network/Network";
 
 ////👇// Add TO Cart Guest
 export const AddToCartGuest = (data, setLoading, router) => () => {
@@ -115,11 +115,11 @@ export const GuestCartListAllClear =
 };
 
 ////👇Check Out
-export const CheckOutHandler =
-(token, data, setLoading, route) => async (dispatch) => {
+export const GuestCheckOutHandler =
+(data, setLoading, route) => async () => {
   setLoading(true);
   try {
-    const res = await CheckOut(token, data);
+    const res = await GuestCheckOut(data);
     console.log(res);
     if (res?.data?.message === "success") {
       setLoading(false);
@@ -130,7 +130,7 @@ export const CheckOutHandler =
         showConfirmButton: false,
         timer: 1500,
       });
-      route.push("myorders");
+      route.push("thank-you");
     }
   } catch (error) {
     // setLoading(false);

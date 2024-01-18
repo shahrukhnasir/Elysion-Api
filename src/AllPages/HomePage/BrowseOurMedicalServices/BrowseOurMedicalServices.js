@@ -89,7 +89,12 @@ const BrowseOurMedicalServices = () => {
   const router = useRouter();
 
   const serviceDetails = (slug) => {
-    router.push(`services/view/${slug}`);
+    router.push({
+      pathname: '/service',
+      query: {
+        serviceId: slug,
+      },
+    });
   };
 
   useEffect(() => {
@@ -141,7 +146,7 @@ const BrowseOurMedicalServices = () => {
                 data-aos="fade-up"
                 data-aos-duration="2000"
               >
-                <Link href="/service">
+                <Link href="/all-service">
                   <CommanButton label="View All Services" />
                 </Link>
               </div>

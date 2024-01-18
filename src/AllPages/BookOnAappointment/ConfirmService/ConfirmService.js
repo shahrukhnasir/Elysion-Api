@@ -4,22 +4,23 @@ import styles from "../ConfirmService/ConfirmService.module.css";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import CommanButton from "../../../components/CommanButton/CommanButton";
-import { getAllAServices } from "../../../Redux/AllService/allServices";
+// import { getAllAServices } from "../../../Redux/AllService/allServices";
 import { Skeleton } from "antd";
 import { Subscriptions } from "../../../Service/Subscription";
+import { getServicesById } from "../../../Redux/AllService/serviceById";
 const ConfirmService = () => {
   const dispacth = useDispatch();
   const [sub, setSubscription] = useState([]);
   const [loading, setLoading] = useState(false);
   const service = useSelector(
-    (state) => state?.AllServiceSlice?.featuredProducts
+    (state) => state?.ServiceSlice?.featuredProducts
   );
   const token = useSelector((state) => state?.authSlice?.authToken);
 
   const slug = useSelector((state) => state?.selectService?.selectService);
-
+console.log(service,"serviceservice");
   useEffect(() => {
-    dispacth(getAllAServices(slug));
+    dispacth(getServicesById(slug));
   }, []);
 
   useEffect(() => {

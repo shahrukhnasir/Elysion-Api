@@ -81,7 +81,6 @@ export const AllServices = (setLoading, setServicesData) => (dispatch) => {
   setLoading(true);
   AllServiceContent()
     .then((res) => {
-    
       setServicesData(res?.data?.response?.data);
       setLoading(false);
     })
@@ -92,26 +91,21 @@ export const AllServices = (setLoading, setServicesData) => (dispatch) => {
 };
 
 ////👇ALL Services By id
-export const ServicesById =
-  (setServicesData, slug, setServiceDetails, setLoading) => (dispatch) => {
-    // setLoading(true);
-    if (slug !== undefined) {
-      try {
-        ServiceContentById(slug)
-          .then((res) => {
-            setServicesData(slug);
-            setServiceDetails(res?.data?.response?.data);
-            // setLoading(false);
-          })
-          .catch((err) => {
-            console.log(err);
-            // setLoading(false);
-          });
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  };
+export const ServicesById = (slug, setServiceDetails, setLoading) => (dispatch) => {
+  setLoading(true);
+  ServiceContentById(slug)
+    .then((res) => {
+      console.log("res this",res?.data?.response?.data)
+      setServiceDetails(res?.data?.response?.data);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+      setServiceDetails()
+    });
+};
+
 
 ////👇// Find Location
 export const FindLocationContent =
@@ -226,4 +220,3 @@ export const FooterContent = (token, setLoading, setFooter) => async () => {
     setLoading(false);
   }
 };
-

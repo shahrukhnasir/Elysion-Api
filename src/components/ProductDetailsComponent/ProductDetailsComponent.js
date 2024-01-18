@@ -13,10 +13,7 @@ import { ImStarFull } from "react-icons/im";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import {
-  NextArrow,
-  PreviousArrow,
-} from "../CustomSlider/SliderArrow";
+import { NextArrow, PreviousArrow } from "../CustomSlider/SliderArrow";
 import SliderProductCard from "../SliderProductCard/SliderProductCard";
 import {
   AddToCartHandler,
@@ -41,7 +38,7 @@ const ProductDetailsComponent = () => {
   const { query } = useRouter();
   const slug = query?.productId;
 
-  console.log(slug,'productId');
+  console.log(slug, "productId");
   const heartClickHandler = (e) => {
     e.preventDefault();
     const data = new FormData();
@@ -57,10 +54,12 @@ const ProductDetailsComponent = () => {
   };
 
   const session_id = Math.floor(Math.random() * 100);
+  const session = useSelector((state) => state?.sessionSlice?.session);
 
-  console.log(session_id, "session_id");
   const AddToCartHandle = async (e) => {
-    dispatch(setSessionId(session_id))
+    if (session == null || session == "") {
+      dispatch(setSessionId(session_id));
+    }
     if (token) {
       e.preventDefault();
       setLoading(true);
@@ -76,7 +75,7 @@ const ProductDetailsComponent = () => {
       data.append("product_variant_id", variantId);
       data.append("product_miligram_id", milliGram);
       data.append("qty", steps);
-      data.append("session_id", session_id);
+      data.append("session_id", session ? session : session_id);
       dispatch(AddToCartGuest(data, setLoading, router));
     }
   };
@@ -123,7 +122,6 @@ const ProductDetailsComponent = () => {
       },
     ],
   };
-
 
   useEffect(() => {
     dispatch(
@@ -202,20 +200,23 @@ const ProductDetailsComponent = () => {
                       )}
                     </h5>
                   </div>
-
-                  <div className="col-lg-6" id={styles.heart_icon_sec}>
-                    {heartClick ? (
-                      <BsSuitHeartFill
-                        onClick={(e) => heartClickHandler(e)}
-                        className={styles.heartIcon}
-                      />
-                    ) : (
-                      <FaRegHeart
-                        onClick={(e) => heartClickHandler(e)}
-                        className={styles.heartIcon}
-                      />
-                    )}
-                  </div>
+                  {token ? (
+                    <div className="col-lg-6" id={styles.heart_icon_sec}>
+                      {heartClick ? (
+                        <BsSuitHeartFill
+                          onClick={(e) => heartClickHandler(e)}
+                          className={styles.heartIcon}
+                        />
+                      ) : (
+                        <FaRegHeart
+                          onClick={(e) => heartClickHandler(e)}
+                          className={styles.heartIcon}
+                        />
+                      )}
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
                 <p className={styles.desc}>
                   {loading ? (

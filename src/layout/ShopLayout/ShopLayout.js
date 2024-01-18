@@ -13,7 +13,7 @@ const ShopLayout = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const [productss, setProduct] = useState([]);
+  const [products, setProduct] = useState([]);
 
   useEffect(() => {
     dispatch(CategoryList(setLoading, setCategory, dispatch));
@@ -23,6 +23,8 @@ const ShopLayout = () => {
     e.preventDefault();
     setSlug(id);
   };
+
+
   const AllCatHandler = (e) => {
     e.preventDefault();
     router.push("/shop");
@@ -46,7 +48,7 @@ const ShopLayout = () => {
   useEffect(() => {
     dispatch(productData(slug, search, setProduct, setLoading));
   }, [slug, search]);
-
+console.log(products,"productss")
 
   return (
     <>
@@ -180,8 +182,8 @@ const ShopLayout = () => {
                 <div className="row">
                   {!loading ? (
                     <>
-                      {productss && productss.length > 0 ? (
-                        productss.map((item, i) => (
+                      {products && products.length > 0 ? (
+                        products.map((item, i) => (
                           <div className="col-lg-4" key={i}>
                             <ProductCard
                               image={item?.thumbnail_url}

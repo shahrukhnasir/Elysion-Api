@@ -1,11 +1,12 @@
 import React from 'react'
-import AllService from '../AllPages/AllServices/AllServices'
+import AllService from './../components/AllServices/AllServices'
 
 const service = () => {
   return (
-   
-   <AllService/>
-    )
+    <>
+    <AllService/>
+    </>
+  )
 }
 
 export default service

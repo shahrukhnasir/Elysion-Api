@@ -9,7 +9,10 @@ import {
   AddToCartListHandler,
   CheckOutHandler,
 } from "../../Service/CartService";
-import { GuestCartLists } from "../../Service/GuestService";
+import {
+  GuestCartLists,
+  GuestCheckOutHandler,
+} from "../../Service/GuestService";
 import StripeCheckout from "react-stripe-checkout";
 const CheckOutDetails = () => {
   const dispatch = useDispatch();
@@ -18,9 +21,8 @@ const CheckOutDetails = () => {
   const [loading, setLoading] = useState(false);
   const [cartList, setAddCartList] = useState([]);
   const token = useSelector((state) => state?.authSlice?.authToken);
-  const { query } = useRouter();
-    const [striptoken, setStriptoken] = useState();
-  const session_id = useSelector((state)=> state?.sessionSlice?.session);
+  const [striptoken, setStriptoken] = useState();
+  const session_id = useSelector((state) => state?.sessionSlice?.session);
 
   const onToken = (token) => {
     setStriptoken(token?.id);
@@ -79,11 +81,41 @@ const CheckOutDetails = () => {
         data.append("total_discount", "10%");
         data.append("total_amount", finalTotal);
         data.append("stripe_Token", striptoken);
+
         cartList?.map((i, cart) => {
           data.append(`cart[${cart?.id}]`, i.id);
         });
-
-        dispatch(CheckOutHandler(token, data, setLoading, router));
+        if (token) {
+          dispatch(CheckOutHandler(token, data, setLoading, router));
+        } else if (!token) {
+          let data = new FormData();
+          data.append("shipper_first_name", checkOutField?.fName);
+          data.append("shipper_last_name", checkOutField?.lName);
+          data.append("shipper_email", checkOutField?.email);
+          data.append("shipper_phone", checkOutField?.phone);
+          data.append("shipper_address", checkOutField?.address);
+          data.append("shipper_country", checkOutField?.country);
+          data.append("shipper_city", checkOutField?.address);
+          data.append("shipper_state", checkOutField?.address);
+          data.append("shipper_zip", checkOutField?.zip);
+          data.append("billing_first_name", checkOutField?.bName);
+          data.append("billing_last_name", checkOutField?.bLName);
+          data.append("billing_email", checkOutField?.bEmail);
+          data.append("billing_phone", checkOutField?.bPhone);
+          data.append("billing_address", checkOutField?.bAddress);
+          data.append("billing_country", checkOutField?.country);
+          data.append("billing_city", checkOutField?.city);
+          data.append("billing_state", checkOutField?.state);
+          data.append("billing_zip", checkOutField?.zip);
+          data.append("total_discount", "10%");
+          data.append("total_amount", finalTotal);
+          data.append("stripe_Token", striptoken);
+          data.append("session_id", session_id);
+          cartList?.map((i, cart) => {
+            data.append(`cart[${cart?.id}]`, i.id);
+          });
+          dispatch(GuestCheckOutHandler(data, setLoading, router));
+        }
       }
 
       // Validate form fields

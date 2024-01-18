@@ -16,6 +16,7 @@ import {
   GUEST_CART_CREATE,
   GUEST_CART_LIST,
   GUEST_CART_REMOVE,
+  GUEST_CHECK_OUT,
   HERO_SECTION,
   LAST_VISIT,
   LOGIN,
@@ -84,8 +85,8 @@ export const AllServiceContent = (data) => {
   return getMethod(`${SERVICES}`, data);
 };
 
-export const ServiceContentById = (slug, data) => {
-  return getMethod(`${SERVICES_ID}/${slug}`, data);
+export const ServiceContentById = (slug ) => {
+  return getMethod(`${SERVICES_ID}/${slug}`,);
 };
 
 export const FindLocation = (data) => {
@@ -279,4 +280,7 @@ export const GuestCartListRemoved = (slug, session_id, data) => {
 
 export const GuestAllCartListRemoved = (session_id,data) => {
   return deleteMethod(`${GUEST_CART_ALL_REMOVE}?session_id=${session_id}`,data);
+};
+export const GuestCheckOut = (data) => {
+  return postMethod(`${GUEST_CHECK_OUT}`, data);
 };

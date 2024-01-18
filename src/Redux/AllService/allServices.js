@@ -4,7 +4,6 @@ import { AllServiceContent } from "../../network/Network";
 export const getAllServices = createAsyncThunk("all/services", async () => {
   try {
     const response = await AllServiceContent();
-    console.log(response, "responseresponseresponse");
     return response.data?.response?.data;
   } catch (error) {
     console.error("Error fetching all services:", error);

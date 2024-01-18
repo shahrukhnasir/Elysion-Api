@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { getAllAServices } from "../../../Redux/AllService/allServices";
 import { Subscriptions } from "../../../Service/Subscription";
+import { getServicesById } from "../../../Redux/AllService/serviceById";
 const CheckOut = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -21,7 +22,7 @@ const CheckOut = () => {
   const serviceId = useSelector((state) => state?.selectService?.selectService);
   const slug = useSelector((state) => state?.selectService?.selectService);
   const service = useSelector(
-    (state) => state?.AllServiceSlice?.featuredProducts
+    (state) => state?.ServiceSlice?.featuredProducts
   );
   const [striptoken, setStriptoken] = useState();
   const [sub, setSubscription] = useState([]);
@@ -93,7 +94,7 @@ const CheckOut = () => {
 
 
   useEffect(() => {
-    dispatch(getAllAServices(slug));
+    dispatch(getServicesById(slug));
   }, []);
   useEffect(() => {
     dispatch(Subscriptions(token, setLoading, setSubscription));
