@@ -11,74 +11,7 @@ import { useDispatch } from "react-redux";
 import { Skeleton } from "antd";
 import CommanCard from "../../components/CommanCard/CommanCard";
 const AllService = () => {
-  const service = [
-    {
-      id: 1,
-      Title: "Internal and Integrative Medicine",
-      Desc: "Whole-Person Wellness: Uniting Internal and Integrative Medicine for Optimal Health",
-      url: "/Internal-Integrative-medicine",
-    },
 
-    {
-      id: 2,
-      Title: "Functional Medicine",
-      Desc: "Revolutionize Your Health: Unleashing the Power of Food for Optimal Health. Embracing the Transformative Approach of Functional Medicine",
-      url: "/functional-medicine",
-    },
-    {
-      id: 3,
-      Title: "Women’s Wellness",
-      Desc: "Empowering Women's Wellness for a Vibrant Life",
-      url: "/women-wellness",
-    },
-
-    {
-      id: 4,
-      Title: "Hormone balance and Bioidentical Treatment",
-      Desc: "Unlocking Hormonal Harmony: Discovering the Benefits of Bioidentical Hormone Treatment",
-      url: "/hormone-bioidentical-treatment",
-    },
-
-    {
-      id: 5,
-      Title: "Menopause and Perimenopausal Treatment",
-      Desc: "Navigating Menopause with Grace: Effective Treatment Options for Perimenopause and Menopause",
-      url: "/menopause-treatment",
-    },
-
-    {
-      id: 6,
-      Title: "Addiction Medicine",
-      Desc: "Breaking Free: Empowering Recovery through Addiction Medicine",
-      url: "/addiction-medicine",
-    },
-
-    {
-      id: 7,
-      Title: "Weight Loss Management",
-      Desc: "Shedding Pounds, Gaining Health: Effective Strategies for Weight Loss Management",
-      url: "/weight-loss-management",
-    },
-
-    {
-      id: 8,
-      Title: "GLP-1 Weight Management",
-      Desc: "Optimizing Weight Management: Harnessing the Power of GLP-1 Agonists",
-      url: "/weight-management",
-    },
-
-    {
-      id: 9,
-      Title: "IV Hydration & Vitamin Therapy",
-      Desc: "Enhance, Restore, and Rejuvenate: Discovering the Transformative Power of Botox, Jeuveau, Dysport, and Fillers",
-      url: "/iv-hydration-therapy",
-    },
-    // {
-    //   id:10,
-    //   Title:"Botox, Dysport, Jeuveau & Fillers",
-    //   Desc:"Enhance, Restore, and Rejuvenate: Discovering the Transformative Power of Botox, Jeuveau, Dysport, and Fillers"
-    // }
-  ];
   const [mainHeading, setMainHeading] = useState([]);
   const [para, setPara] = useState([]);
   const [servicesData, setServicesData] = useState([]);
@@ -87,7 +20,12 @@ const AllService = () => {
   const router = useRouter();
 
   const serviceDetails = (slug) => {
-    router.push(`services/view/${slug}`);
+    router.push({
+      pathname: "/service",
+      query: {
+        serviceId: slug,
+      },
+    });
   };
   useEffect(() => {
     dispatch(

@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { MedicalServiceSections, ServicesById } from "../../Service/HomePageService";
+import { ServicesById } from "../../Service/HomePageService";
 import { useDispatch } from "react-redux";
 import ServiceCardComman from "../ServiceCardComman/ServiceCardComman";
 import CommanButton from "../CommanButton/CommanButton";
@@ -14,69 +14,61 @@ const AllServices = () => {
   const [loading, setLoading] = useState(false);
   const { query } = useRouter();
   const [service, setServiceDetails] = useState();
-  const [service2, setServiceDetails2] = useState();
-  const [para, setPara] = useState();
   const slug = query?.serviceId;
-
-  console.log("slg", query?.serviceId)
-
-  // useEffect(() => {
-  //   dispatch(ServicesById()
-  //   );
-  // }, []);
-
   useEffect(() => {
-     dispatch(ServicesById(query?.serviceId, setServiceDetails, setLoading))
-  }, [query?.serviceId])
-  
-
-  console.log(service2, "service2");
+    dispatch(ServicesById(slug, setServiceDetails, setLoading));
+  }, [slug]);
   return (
     <>
       <div className="container-fluid p-0">
-        {
-          loading ? (
-            <Skeleton loading={loading} active paragraph={{ rows: 8 }} />
-          ) : (
-            <>
- {!loading ? (
-          <TopLayout
-            Heading={service?.name}
-            descriptions={service?.sub_heading}
-            image={service?.image_url}
-            // image="../images/addiction-Medicine.webp"
-          />
+        {loading ? (
+          <>
+            <div className="container pt-5">
+              <Skeleton loading={loading} active paragraph={{ rows: 8 }} />
+            </div>
+          </>
         ) : (
           <>
-            <Skeleton loading={loading} active paragraph={{ rows: 8 }} />
+            {!loading ? (
+              <TopLayout
+                Heading={service?.name}
+                descriptions={service?.sub_heading}
+                image={service?.image_url}
+                // image="../images/addiction-Medicine.webp"
+              />
+            ) : (
+              <>
+                <Skeleton loading={loading} active paragraph={{ rows: 8 }} />
+              </>
+            )}
+
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-6 py-3">
+                  {!loading ? (
+                    <p className={styles.paragraph}>{service?.description}</p>
+                  ) : (
+                    <>
+                      <Skeleton
+                        loading={loading}
+                        active
+                        paragraph={{ rows: 3 }}
+                      />
+                    </>
+                  )}
+
+                  <div className="pt-2">
+                    <Link href="https://elysionhealth.md-hq.com/embedded/schedule.php">
+                      <CommanButton label="Book Now" />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              <hr />
+            </div>
           </>
         )}
-
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-6 py-3">
-              {!loading ? (
-                <p className={styles.paragraph}>{service?.description}</p>
-              ) : (
-                <>
-                  <Skeleton loading={loading} active paragraph={{ rows: 3 }} />
-                </>
-              )}
-
-              <div className="pt-2">
-                <Link href="https://elysionhealth.md-hq.com/embedded/schedule.php">
-                  <CommanButton label="Book Now" />
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <hr />
-        </div>
-            </>
-          )
-        }
-       
 
         {/* People also Search for */}
         <div className="container py-5">

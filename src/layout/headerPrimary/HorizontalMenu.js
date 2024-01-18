@@ -28,7 +28,6 @@ const HorizontalMenu = () => {
   };
   const menuHandler = () => {
     setMenu(!menu);
-
   };
   const navigateHandler = (e, urlPath) => {
     e.preventDefault();
@@ -84,7 +83,14 @@ const HorizontalMenu = () => {
   //     `/services/${routeId}`
   //   );
   // };
-
+  const getServiceId = (slug) => {
+    router.push({
+      pathname: "/service",
+      query: {
+        serviceId: slug,
+      },
+    });
+  };
   return (
     <>
       <div id={styles?.topMenuBarContainer}>
@@ -127,85 +133,7 @@ const HorizontalMenu = () => {
                   >
                     Services
                     <div className={styles?.dropdownContent}>
-                    <div className="row">
-                        <div className="col-lg-6">
-                          <ul className={styles.dropLinkContainer}>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/Internal-Integrative-medicine" >Internal and Integrative Medicine</Link>
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              {/* <Link href={`/services/2`}>
-                                Functional Medicine
-                              </Link> */}
-                              <Link href="/functional-medicine"  > Functional Medicine</Link>
-
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/women-wellness"  >
-                                Women’s Wellness
-                              </Link>
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/hormone-bioidentical-treatment"  >
-                                Hormone balance and Bioidentical Treatment
-                              </Link>
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/menopause-treatment" >
-                                Menopause and Perimenopausal Treatment
-                              </Link>
-                            </li>
-                            
-                          </ul>
-                        </div>
-                        <div className="col-lg-6">
-                          <ul className={styles.dropLinkContainer}>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/addiction-medicine" >
-                                Addiction Medicine
-                              </Link>
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/weight-loss-management"  >
-                                Weight Loss Management
-                              </Link>
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/weight-management"  >
-                                GLP-1 Weight Management
-                              </Link>
-                            </li>
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/iv-hydration-therapy" >
-                                IV Hydration & Vitamin Therapy
-                              </Link>
-                            </li>
-
-                            <li className={styles?.dropLink}>
-                              {" "}
-                              <Link href="/botox-filler">
-                                Botox, Dysport, Jeuveau & Fillers
-                              </Link>
-                            </li>
-                            <u>
-                              <li className={styles?.dropLink}>
-                                {" "}
-                                <Link href="/service">View All</Link>
-                              </li>
-                            </u>
-                          </ul>
-                        </div>
-                      </div>
-                      {/* <div className="row">
+                      <div className="row">
                         <div className="col-lg-6">
                           <ul className={styles.dropLinkContainer}>
                             {!loading ? (
@@ -215,7 +143,9 @@ const HorizontalMenu = () => {
                                     <>
                                       <li className={styles?.dropLink} key={i}>
                                         {" "}
-                                        <a href={`/services/view/${list.id}`}>
+                                        <a
+                                          onClick={() => getServiceId(list.id)}
+                                        >
                                           {list?.name}
                                         </a>
                                       </li>
@@ -239,7 +169,9 @@ const HorizontalMenu = () => {
                                     <>
                                       <li className={styles?.dropLink} key={i}>
                                         {" "}
-                                        <a href={`/services/view/${list.id}`}>
+                                        <a
+                                          onClick={() => getServiceId(list.id)}
+                                        >
                                           {list?.name}
                                         </a>
                                       </li>
@@ -256,12 +188,12 @@ const HorizontalMenu = () => {
                             <u>
                               <li className={styles?.dropLink}>
                                 {" "}
-                                <Link href="/service">View All</Link>
+                                <Link href="/all-service">View All</Link>
                               </li>
                             </u>
                           </ul>
                         </div>
-                      </div> */}
+                      </div>
                     </div>
                   </div>
                 </li>
@@ -329,7 +261,7 @@ const HorizontalMenu = () => {
                 >
                   <Link
                     className={`${styles?.dropbtn} nav-link`}
-                    href={'/shop'}
+                    href={"/shop"}
                     // href="https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons"
                   >
                     Shop
