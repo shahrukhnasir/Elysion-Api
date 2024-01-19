@@ -6,8 +6,12 @@ import Link from "next/link";
 import { IoMdCall } from "react-icons/io";
 import { baseUrl } from "../../network/baseUrl";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { ContactContent } from "../../Service/HomePageService";
+import { Skeleton } from "antd";
 
 const ContactUsScreen = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -46,32 +50,39 @@ const ContactUsScreen = () => {
         return;
       }
       // Phone validation
-       // Phone validation
-       if (!chatFields.number || chatFields.number.length < 10 || chatFields.number.length > 20) {
+      // Phone validation
+      if (
+        !chatFields.number ||
+        chatFields.number.length < 10 ||
+        chatFields.number.length > 20
+      ) {
         Swal.fire({
           position: "center",
           icon: "error",
-          title: (chatFields.number.length < 10 && "Phone number must be between 10 to 20 digits") || (chatFields.number.length > 20 && "Phone number is too long"),
+          title:
+            (chatFields.number.length < 10 &&
+              "Phone number must be between 10 to 20 digits") ||
+            (chatFields.number.length > 20 && "Phone number is too long"),
           showConfirmButton: false,
           timer: 1500,
         });
         setError(true);
         return;
       }
-     // Email validation
+      // Email validation
       const emailValidationPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
+
+      if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
         Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Please provide a valid email address",
-            showConfirmButton: false,
-            timer: 1500,
+          position: "center",
+          icon: "error",
+          title: "Please provide a valid email address",
+          showConfirmButton: false,
+          timer: 1500,
         });
         setError(true);
         return;
-    }
+      }
       setError(false);
       setLoading(true);
       const response = await fetch(`${baseUrl}contact-us`, {
@@ -117,6 +128,14 @@ const ContactUsScreen = () => {
   //     query: { id: id },
   //   })
   // }
+  const [contactHeading, setContactHeading] = useState([]);
+  const [address, setAddress] = useState([]);
+  const [contact, setContact] = useState([]);
+  useEffect(() => {
+    dispatch(
+      ContactContent(setLoading, setContactHeading, setAddress, setContact)
+    );
+  }, []);
   return (
     <>
       <div className="container-fluid p-0">
@@ -125,7 +144,13 @@ const ContactUsScreen = () => {
             <div className="row">
               <div className="col-lg-6">
                 <div className="">
-                  <h1 className={styles.mainHeading}>Contact us</h1>
+                  <h1 className={styles.mainHeading}>
+                    {!loading ? (
+                      contactHeading?.name
+                    ) : (
+                      <Skeleton loading={loading} />
+                    )}
+                  </h1>
 
                   <p className={styles.AboutDesc}> We want to hear from you</p>
                 </div>
@@ -256,13 +281,7 @@ const ContactUsScreen = () => {
           <div className="row">
             <div className="col-lg-6 py-5">
               <p className={styles.Desc}>
-                If you have any inquiries unrelated to health matters, please
-                reach out to Elysion using the form provided below. Please note
-                that this communication method should not be used for urgent or
-                confidential medical concerns. For inquiries regarding your
-                healthcare or to request your medical records{" "}
-                <Link href="">click here</Link>, we recommend visiting the
-                patient portal or contacting your physician's office{" "}
+                {!loading ? contactHeading?.value : <Skeleton />}
               </p>
 
               <div className="row">
@@ -277,9 +296,7 @@ const ContactUsScreen = () => {
                   </span>
                   <span className={styles.textBlue}>
                     {" "}
-                    Kindly utilize the provided address to send correspondence
-                    to the provider or practice of Elysion Health & Wellness:
-                    Location 3698 Largent Way, Suite 102, Marietta GA 30064.
+                    {!loading ? address?.value : <Skeleton />}
                   </span>
                 </div>
 
@@ -290,7 +307,9 @@ const ContactUsScreen = () => {
                   </span>
                   <span className={styles.textBlue}>
                     Please call us at the following number
-                    <a href="tel:470-300-2259">470-300-2259</a>
+                    <a href="tel:470-300-2259">
+                      {!loading ? contact?.value : <Skeleton />}
+                    </a>
                   </span>
                 </div>
               </div>

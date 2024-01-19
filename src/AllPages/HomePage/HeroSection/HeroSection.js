@@ -3,8 +3,9 @@ import styles from "../HeroSection/HeroSection.module.css";
 import Link from "next/link";
 import CommanButton from "../../../components/CommanButton/CommanButton";
 import { HeroSections } from "../../../Service/HomePageService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Skeleton } from "antd";
+import Swal from "sweetalert2";
 const HeroSection = () => {
   const [mainHeading, setMainHeading] = useState([]);
   const [internal, setInternal] = useState([]);
@@ -12,6 +13,21 @@ const HeroSection = () => {
   const [tessaGibson, setTessaGibson] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const token = useSelector((state) => state?.authSlice?.authToken);
+  const loginHanlder = (e) =>{
+    e.preventDefault();
+
+    Swal.fire({
+      position: "center",
+      icon: "info",
+      title: "Login please?",
+      showConfirmButton: true,
+      timer: 1500,
+      customClass: {
+        confirmButton: "theme-button-bg",
+      },
+    });
+  }
   useEffect(() => {
     dispatch(
       HeroSections(
@@ -76,7 +92,6 @@ const HeroSection = () => {
                 <hr className={styles.hr} />
                 <div className={styles.details}>
                   <p>
-                   
                     {!loading ? (
                       tessaGibson
                     ) : (
@@ -89,15 +104,28 @@ const HeroSection = () => {
 
                 <div className={styles.freeCon}>
                   {/* <Link href="/book-on-appointment"> */}
-                  <Link
-                    target="_blank"
-                    href="https://elysionhealth.md-hq.com/schedule_visit"
-                  >
-                    <CommanButton
-                      className={styles.heroButton}
-                      label="Book an Appointment"
-                    />
-                  </Link>
+                  
+
+                  {token ? (
+                    <div className="pt-2">
+                      <Link href="/book-on-appointment">
+                        <CommanButton
+                          label="Book an Appointment"
+                          className={styles.heroButton}
+                        />
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="pt-2">
+                      <Link href="">
+                        <CommanButton
+                          label="Book an Appointment"
+                          className={styles.heroButton}
+                          onClick={(e) => loginHanlder(e)}
+                        />
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

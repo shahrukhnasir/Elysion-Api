@@ -8,6 +8,7 @@ import {
   CAT_BY_PRODUCT,
   CHECK_OUT,
   CONTACT_US,
+  CONTACT_US_CONTENT,
   FAQ,
   FIND_LOCATION,
   FORGOT_PASSWORD,
@@ -85,12 +86,16 @@ export const AllServiceContent = (data) => {
   return getMethod(`${SERVICES}`, data);
 };
 
-export const ServiceContentById = (slug ) => {
-  return getMethod(`${SERVICES_ID}/${slug}`,);
+export const ServiceContentById = (slug) => {
+  return getMethod(`${SERVICES_ID}/${slug}`);
 };
 
 export const FindLocation = (data) => {
   return getMethod(`${FIND_LOCATION}`, data);
+};
+
+export const ContactInfo = (data) => {
+  return getMethod(`${CONTACT_US_CONTENT}`, data);
 };
 export const Faqs = (data) => {
   return getMethod(`${FAQ}`, data);
@@ -189,6 +194,10 @@ export const Blogs = (data) => {
   return getMethod(`${BLOGS}`, data);
 };
 
+export const BlogDetails = (slug, data) => {
+  return getMethod(`${BLOGS}/${slug}`, data);
+};
+
 export const BlogContent = (data) => {
   return getMethod(`${BLOG_CONTENT}`, data);
 };
@@ -278,8 +287,11 @@ export const GuestCartListRemoved = (slug, session_id, data) => {
   );
 };
 
-export const GuestAllCartListRemoved = (session_id,data) => {
-  return deleteMethod(`${GUEST_CART_ALL_REMOVE}?session_id=${session_id}`,data);
+export const GuestAllCartListRemoved = (session_id, data) => {
+  return deleteMethod(
+    `${GUEST_CART_ALL_REMOVE}?session_id=${session_id}`,
+    data
+  );
 };
 export const GuestCheckOut = (data) => {
   return postMethod(`${GUEST_CHECK_OUT}`, data);

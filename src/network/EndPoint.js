@@ -32,6 +32,8 @@ export const USER_SUBSCRIPTION_CREATE = `user-subscription/create`;
 export const USER_SUBSCRIPTION_BY_ID = `memberships/view/`;
 export const USER_SUBSCRIPTION_BY_TOKEN = `user-subscription`;
 export const WISHLIST_ADD = `wishlist/create`;
+export const CONTACT_US_CONTENT= `content-pages/view/contact-us`;
+
 // Profile/
 export const MY_PROFILE = `me`;
 export const MY_PROFILE_IMAGE = `me/update-profile-picture`;

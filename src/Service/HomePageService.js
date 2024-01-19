@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import {
   AllServiceContent,
   BlogContent,
+  ContactInfo,
   Faqs,
   FindLocation,
   Footer,
@@ -91,21 +92,21 @@ export const AllServices = (setLoading, setServicesData) => (dispatch) => {
 };
 
 ////👇ALL Services By id
-export const ServicesById = (slug, setServiceDetails, setLoading) => (dispatch) => {
-  setLoading(true);
-  ServiceContentById(slug)
-    .then((res) => {
-      console.log("res this",res?.data?.response?.data)
-      setServiceDetails(res?.data?.response?.data);
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.log(err);
-      setLoading(false);
-      setServiceDetails()
-    });
-};
-
+export const ServicesById =
+  (slug, setServiceDetails, setLoading) => (dispatch) => {
+    setLoading(true);
+    ServiceContentById(slug)
+      .then((res) => {
+        console.log("res this", res?.data?.response?.data);
+        setServiceDetails(res?.data?.response?.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        setServiceDetails();
+      });
+  };
 
 ////👇// Find Location
 export const FindLocationContent =
@@ -220,3 +221,20 @@ export const FooterContent = (token, setLoading, setFooter) => async () => {
     setLoading(false);
   }
 };
+
+////👇// Find Location
+export const ContactContent =
+  (setLoading, setContactHeading, setAddress, setContact) => () => {
+    setLoading(true);
+    ContactInfo()
+      .then((res) => {
+        setContactHeading(res?.data?.response?.data?.[0]);
+        setAddress(res?.data?.response?.data?.[1]);
+        setContact(res?.data?.response?.data?.[2]);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };

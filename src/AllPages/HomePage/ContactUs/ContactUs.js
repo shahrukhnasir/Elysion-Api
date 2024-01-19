@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ContactUs.module.css";
 import CommanButton from "../../../components/CommanButton/CommanButton";
 import { useRouter } from "next/router";
@@ -6,12 +6,17 @@ import { IoMdCall } from "react-icons/io";
 import { PostContactHandler } from "../../../Service/contactService";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
+import { ContactContent } from "../../../Service/HomePageService";
+import Skeleton from "react-loading-skeleton";
 
 const ContactUs = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [contactHeading, setContactHeading] = useState([]);
+  const [address, setAddress] = useState([]);
+  const [contact, setContact] = useState([]);
   const [chatFields, setChatFields] = useState({
     name: "",
     lName: "",
@@ -36,32 +41,39 @@ const ContactUs = () => {
       setError(true);
       return;
     }
-      // Phone validation
-  if (!chatFields.number || chatFields.number.length < 10 || chatFields.number.length > 20) {
-    Swal.fire({
-      position: "center",
-      icon: "error",
-      title: (chatFields.number.length < 10 && "Phone number must be between 10 to 20 digits") || (chatFields.number.length > 20 && "Phone number is too long"),
-      showConfirmButton: false,
-      timer: 1500,
-    });
-    setError(true);
-    return;
-  }
- // Email validation
-  const emailValidationPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // Phone validation
+    if (
+      !chatFields.number ||
+      chatFields.number.length < 10 ||
+      chatFields.number.length > 20
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title:
+          (chatFields.number.length < 10 &&
+            "Phone number must be between 10 to 20 digits") ||
+          (chatFields.number.length > 20 && "Phone number is too long"),
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
+      return;
+    }
+    // Email validation
+    const emailValidationPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
-    Swal.fire({
+    if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
+      Swal.fire({
         position: "center",
         icon: "error",
         title: "Please provide a valid email address",
         showConfirmButton: false,
         timer: 1500,
-    });
-    setError(true);
-    return;
-}
+      });
+      setError(true);
+      return;
+    }
     setError(false);
     setLoading(true);
     let data = new FormData();
@@ -74,6 +86,12 @@ if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
     router.push("/thank-you");
   };
 
+
+  useEffect(() => {
+    dispatch(
+      ContactContent(setLoading, setContactHeading, setAddress, setContact)
+    );
+  }, []);
   return (
     <>
       <div className="container-fluid" id={styles.ContactContainer}>
@@ -84,7 +102,13 @@ if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
               data-aos="fade-up"
               data-aos-duration="2000"
             >
-              <h1 className={styles.mainHeading}>Contact Us</h1>
+              <h1 className={styles.mainHeading}>
+                {!loading ? (
+                  contactHeading?.name
+                ) : (
+                  <Skeleton loading={loading} />
+                )}
+              </h1>
             </div>
 
             <div
@@ -93,20 +117,14 @@ if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
               data-aos-duration="2000"
             >
               <div className={styles.rightSection}>
-                <h1 className={styles.subHeading}>Leave a Message</h1>
+                <h1 className={styles.subHeading}>{contactHeading?.type}</h1>
 
                 <p
                   className={styles.desc}
                   data-aos="fade-up"
                   data-aos-duration="2000"
                 >
-                  If you have any inquiries unrelated to health matters, please
-                  reach out to Elysion using the form provided below. Please
-                  note that this communication method should not be used for
-                  urgent or confidential medical concerns. For inquiries
-                  regarding your healthcare or to request your medical records,
-                  we recommend visiting the patient portal or contacting your
-                  physician's office.
+                  {contactHeading?.value}
                 </p>
               </div>
 
@@ -127,9 +145,7 @@ if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
                       data-aos="fade-up"
                       data-aos-duration="2000"
                     >
-                      Kindly utilize the provided address to send correspondence
-                      to the provider or practice of Elysion Health & Wellness:
-                      Location 3698 Largent Way, Suite 102, Marietta GA 30064.
+                      {!loading ? address?.value : <Skeleton />}
                     </span>
                   </div>
                 </div>
@@ -145,7 +161,10 @@ if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
                   data-aos-duration="2000"
                 >
                   Please call us at the following number:{" "}
-                  <a href="tel:4703002259">4703002259</a>
+                  <a href="tel:4703002259">
+                    {" "}
+                    {!loading ? contact?.value : <Skeleton />}
+                  </a>
                 </span>
               </div>
             </div>
