@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { ServicesById } from "../../Service/HomePageService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ServiceCardComman from "../ServiceCardComman/ServiceCardComman";
 import CommanButton from "../CommanButton/CommanButton";
 import TopLayout from "../TopLayout/TopLayout";
@@ -9,6 +9,7 @@ import styles from "../../ServicesPages/commanStyle.module.css";
 import Link from "next/link";
 import services from "../../ServicesPages/constant/serviceData";
 import { Skeleton } from "antd";
+import Swal from "sweetalert2";
 const AllServices = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -18,6 +19,24 @@ const AllServices = () => {
   useEffect(() => {
     dispatch(ServicesById(slug, setServiceDetails, setLoading));
   }, [slug]);
+  const token = useSelector((state) => state?.authSlice?.authToken);
+
+  const loginHanlder = (e) =>{
+    e.preventDefault();
+
+    Swal.fire({
+      position: "center",
+      icon: "info",
+      title: "Login, please. Can you book this service?",
+      showConfirmButton: true,
+      timer: 1500,
+      customClass: {
+        confirmButton: "theme-button-bg",
+      },
+    });
+  }
+
+  
   return (
     <>
       <div className="container-fluid p-0">
@@ -56,12 +75,22 @@ const AllServices = () => {
                       />
                     </>
                   )}
-
-                  <div className="pt-2">
-                    <Link href="https://elysionhealth.md-hq.com/embedded/schedule.php">
-                      <CommanButton label="Book Now" />
-                    </Link>
-                  </div>
+                  {token ? (
+                    <div className="pt-2">
+                      <Link href="/book-on-appointment">
+                        <CommanButton label="Book Now" />
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="pt-2">
+                      <Link href="">
+                        <CommanButton
+                          label="Book Now"
+                          onClick={(e) => loginHanlder(e)}
+                        />
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </div>
 

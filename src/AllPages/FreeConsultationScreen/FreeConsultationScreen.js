@@ -5,6 +5,7 @@ import TopLayout from "../../components/TopLayout/TopLayout";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { FreeConsultation } from "../../Service/FreeConsultService";
+import Swal from "sweetalert2";
 const AboutusScreen = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -32,15 +33,47 @@ const AboutusScreen = () => {
       setLoading(false);
       return;
     }
+    // Phone validation
+    if (
+      !chatFields.phone ||
+      chatFields.phone.length < 10 ||
+      chatFields.phone.length > 20
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title:
+          (chatFields.phone.length < 10 &&
+            "Phone number must be between 10 to 20 digits") ||
+          (chatFields.phone.length > 20 && "Phone number is too long"),
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
+      return;
+    }
+    // Email validation
+    const emailValidationPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Please provide a valid email address",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
+      return;
+    }
     setError(false);
-    setLoading(true);
     let data = new FormData();
     data.append("first_name", chatFields?.fname);
     data.append("last_name", chatFields?.lname);
     data.append("email", chatFields?.email);
     data.append("phone", chatFields?.phone);
     data.append("dob", chatFields?.dob);
-    dispatch(FreeConsultation(data, setLoading, setChatFields, router));
+    dispatch(FreeConsultation(data, setLoading, router));
   };
   const handleChange = (e) => {
     e.preventDefault();
@@ -106,7 +139,7 @@ quasi"
 
               <div className="row py-lg-3">
                 <div className="col-lg-6">
-                <input
+                  <input
                     type="email"
                     name="email"
                     value={chatFields.email}
@@ -122,7 +155,7 @@ quasi"
                 </div>
 
                 <div className="col-lg-6">
-                <input
+                  <input
                     type="number"
                     name="phone"
                     value={chatFields.phone}
@@ -138,7 +171,7 @@ quasi"
                 </div>
 
                 <div className="col-lg-12 pt-lg-3">
-                <input
+                  <input
                     type="date"
                     name="dob"
                     value={chatFields.dob}
@@ -189,19 +222,13 @@ quasi"
               </div>
               <div className="py-3">
                 {/* <Link href="/thank-you"  > */}
-                {!loading ? (
+                
                   <CommanButton
                     onClick={HandleSubmit}
                     className={styles.FromBtn}
                     label="Submit"
                   />
-                ) : (
-                  <CommanButton
-                    onClick={HandleSubmit}
-                    className={styles.FromBtn}
-                    label="Submiting..."
-                  />
-                )}
+               
                 {/* </Link> */}
               </div>
             </div>
