@@ -11,18 +11,18 @@ const BlogDetails = () => {
   const [blogDetail, setBlog] = useState([]);
   const [loading, setLoading] = useState(false);
   const { query } = useRouter();
-  const { slug } = query;
+  const  slug  = query?.slug;
   useEffect(() => {
     dispatch(BlogDetailById(slug, setBlog, setLoading));
   }, []);
-  console.log(blogDetail, "asasadd");
+  console.log(query?.slug, "asasadd");
 
   return (
     <>
       <section>
         {!loading ? (
           <TopLayout2
-            Heading={blogDetail?.heading}
+            Heading={!loading ?  blogDetail?.heading : <Skeleton/>}
             descriptions={blogDetail?.description}
             image={blogDetail?.image_url}
           />
