@@ -100,31 +100,26 @@ const Footer = () => {
                   <ul className={`${styles.LinkSec} p-0`}>
                     <li>
                       <Link href="/" className={styles.footerLink}>
-                        
                         Home
                       </Link>
                     </li>
                     <li>
                       <Link href="/about-us" className={styles.footerLink}>
-                        
                         About Us
                       </Link>
                     </li>
                     <li>
                       <Link href="/service" className={styles.footerLink}>
-                        
                         Service
                       </Link>
                     </li>
                     <li>
                       <Link href="/membership" className={styles.footerLink}>
-                        
                         Membership
                       </Link>
                     </li>
                     <li>
                       <Link href="/faq" className={styles.footerLink}>
-                        
                         FAQ's
                       </Link>
                     </li>
@@ -137,32 +132,27 @@ const Footer = () => {
                 <ul className={`${styles.LinkSec} p-0`}>
                   <li>
                     <Link href="/blogs" className={styles.footerLink}>
-                      
                       Blogs
                     </Link>
                   </li>
                   <li>
                     <Link href="/termservice" className={styles.footerLink}>
-                      
                       Terms of Service
                     </Link>
                   </li>
                   <li>
                     <Link href="/privacy-policy" className={styles.footerLink}>
-                      
                       Privacy Policy
                     </Link>
                   </li>
                   <li>
                     <Link href="/contact-us" className={styles.footerLink}>
-                      
                       Contact Us
                     </Link>
                   </li>
 
                   <li>
                     <Link href="/disclaimer" className={styles.footerLink}>
-                      
                       Disclaimer
                     </Link>
                   </li>
@@ -189,27 +179,12 @@ const Footer = () => {
                   ""
                 )}
                 <div>
-                  {!loading ? (
-                    <button
-                      onClick={handleEmailSend}
-                      className={styles.GeneralButton}
-                    >
-                      Submit
-                    </button>
-                  ) : (
-                    <button
-                      className={styles.GeneralButton}
-                      type="button"
-                      disabled
-                    >
-                      <span
-                        class="spinner-border spinner-border-sm"
-                        role="status"
-                        aria-hidden="true"
-                      ></span>
-                      Sending...
-                    </button>
-                  )}
+                  <button
+                    onClick={handleEmailSend}
+                    className={styles.GeneralButton}
+                  >
+                    Submit
+                  </button>
                 </div>
               </div>
             </div>
