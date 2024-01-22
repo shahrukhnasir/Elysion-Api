@@ -208,16 +208,14 @@ export const BlogsContent =
   };
 
 // 👇Footer Api//
-export const FooterContent = (token, setLoading, setFooter) => async () => {
+export const FooterContent = (token, setFooter, setLoading) => async () => {
   setLoading(true);
-
   try {
     const res = await Footer(token);
+    setLoading(false);
     setFooter(res?.data?.response?.data);
-    // console.log(res?.data?.response?.data, "foooooooooo");
   } catch (err) {
     console.log(err);
-  } finally {
     setLoading(false);
   }
 };

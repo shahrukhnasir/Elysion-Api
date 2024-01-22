@@ -107,7 +107,7 @@ const AllServices = () => {
               return (
                 <div className="col-lg-4">
                   <ServiceCardComman
-                    link={item?.link}
+                    
                     Title={item?.Title}
                     Descriptions={item?.Desc}
                     className={styles.serviceCardCol}

@@ -3,7 +3,7 @@ import styles from '../ServiceCardComman/ServiceCardComman.module.css'
 import Link from 'next/link'
 
 
-const ServiceCardComman = ({ Title, Descriptions,link }) => {
+const ServiceCardComman = ({ Title, Descriptions }) => {
   return (
     <>
       <div className={`${styles.card}  card`}>
@@ -14,9 +14,9 @@ const ServiceCardComman = ({ Title, Descriptions,link }) => {
           </h6>
           <p className={`${styles.cardDesc}`}>
             {Descriptions}</p>
-          <Link href={link} className={`${styles.linkBtn}`}>
+          <span  className={`${styles.linkBtn}`}>
             <span className={styles.learnMore}>Learn more
-            </span> </Link>
+            </span> </span>
         </div>
       </div>
     </>

@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { AllServices } from "../../Service/HomePageService";
 import { Skeleton } from "antd";
+import Swal from "sweetalert2";
 
 const HorizontalMenu = () => {
   const [servicesData, setServicesData] = useState([]);
@@ -90,6 +91,21 @@ const HorizontalMenu = () => {
         serviceId: slug,
       },
     });
+  };
+
+  const handlePatientPortal = (e) => {
+    e.preventDefault();
+    if (Istoken) {
+      router.push("profile");
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Please Login !",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
   return (
     <>
@@ -235,7 +251,7 @@ const HorizontalMenu = () => {
                             </li>
                             <li className={styles?.dropLink}>
                               {" "}
-                              <Link href="https://elysionhealth.md-hq.com/">
+                              <Link href="" onClick={(e) => handlePatientPortal(e)}>
                                 Patient Portal
                               </Link>
                             </li>

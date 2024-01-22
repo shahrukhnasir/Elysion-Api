@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import styles from "../Back2/Back2.module.css";
 import MemberButton from "../../MemberButton/MemberButton";
 import { MemberShipCard } from "../../../Service/MemberShipService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 const Back2 = () => {
 
   const [member, setMember] = useState([]);
@@ -17,12 +18,23 @@ const Back2 = () => {
   const words = memberCard?.description?.split(".");
   const list = words;
   const router = useRouter();
-  const getId = (slug) => {
+  const Istoken = useSelector((state) => state?.authSlice?.authToken);
 
-    router.push({
-      pathname: "checkout-member",
-      query: { id: slug },
-    });
+  const getId = (slug) => {
+    if (Istoken) {
+      router.push({
+        pathname: "checkout-member",
+        query: { id: slug },
+      });
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Please Login !",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
   return (
     <>

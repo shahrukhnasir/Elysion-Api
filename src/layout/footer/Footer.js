@@ -11,6 +11,7 @@ import {
   FooterNewsLatterEmail,
 } from "../../Service/HomePageService";
 import Skeleton from "react-loading-skeleton";
+import Swal from "sweetalert2";
 const Footer = () => {
   const token = useSelector((state) => state?.authSlice?.authToken);
   const dispatch = useDispatch();
@@ -23,9 +24,8 @@ const Footer = () => {
   });
 
   useEffect(() => {
-    dispatch(FooterContent(token, setLoading, setFooter));
+    dispatch(FooterContent(token, setFooter, setLoading));
   }, [token]);
-
 
   const handleEmailSend = async (e) => {
     e.preventDefault();
@@ -33,6 +33,20 @@ const Footer = () => {
     if (chatFields.email.length === 0) {
       setError(true);
       setLoading(false);
+      return;
+    }
+    // Email validation
+    const emailValidationPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Please provide a valid email address",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
       return;
     }
     setError(false);
@@ -86,32 +100,32 @@ const Footer = () => {
                   <ul className={`${styles.LinkSec} p-0`}>
                     <li>
                       <Link href="/" className={styles.footerLink}>
-                        {" "}
-                        Home{" "}
+                        
+                        Home
                       </Link>
                     </li>
                     <li>
                       <Link href="/about-us" className={styles.footerLink}>
-                        {" "}
-                        About Us{" "}
+                        
+                        About Us
                       </Link>
                     </li>
                     <li>
                       <Link href="/service" className={styles.footerLink}>
-                        {" "}
-                        Service{" "}
+                        
+                        Service
                       </Link>
                     </li>
                     <li>
                       <Link href="/membership" className={styles.footerLink}>
-                        {" "}
-                        Membership{" "}
+                        
+                        Membership
                       </Link>
                     </li>
                     <li>
                       <Link href="/faq" className={styles.footerLink}>
-                        {" "}
-                        FAQ's{" "}
+                        
+                        FAQ's
                       </Link>
                     </li>
                   </ul>
@@ -123,32 +137,32 @@ const Footer = () => {
                 <ul className={`${styles.LinkSec} p-0`}>
                   <li>
                     <Link href="/blogs" className={styles.footerLink}>
-                      {" "}
-                      Blogs{" "}
+                      
+                      Blogs
                     </Link>
                   </li>
                   <li>
                     <Link href="/termservice" className={styles.footerLink}>
-                      {" "}
-                      Terms of Service{" "}
+                      
+                      Terms of Service
                     </Link>
                   </li>
                   <li>
                     <Link href="/privacy-policy" className={styles.footerLink}>
-                      {" "}
+                      
                       Privacy Policy
                     </Link>
                   </li>
                   <li>
                     <Link href="/contact-us" className={styles.footerLink}>
-                      {" "}
+                      
                       Contact Us
                     </Link>
                   </li>
 
                   <li>
                     <Link href="/disclaimer" className={styles.footerLink}>
-                      {" "}
+                      
                       Disclaimer
                     </Link>
                   </li>

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import styles from "../Back3/Back3.module.css";
 import MemberButton from "../../MemberButton/MemberButton";
 import { MemberShipCard } from "../../../Service/MemberShipService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 const Back3 = () => {
   const [member, setMember] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -18,12 +19,24 @@ const Back3 = () => {
   
 
   const router = useRouter();
+  const Istoken = useSelector((state) => state?.authSlice?.authToken);
+
   const getId = (slug) => {
-    router.push({
-      pathname: "checkout-member",
-      query: { id: slug },
-    });
-  }
+    if (Istoken) {
+      router.push({
+        pathname: "checkout-member",
+        query: { id: slug },
+      });
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Please Login !",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  };
   return (
     <>
       <div className={styles.flipcardfront}>

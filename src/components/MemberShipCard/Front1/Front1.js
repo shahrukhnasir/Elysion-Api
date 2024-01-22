@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import styles from "../Front1/Front1.module.css";
 import MemberButton from "../../MemberButton/MemberButton";
 import { MemberShipCard } from "../../../Service/MemberShipService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 const Front1 = ({ className }) => {
   const [member, setMember] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,14 +16,24 @@ const Front1 = ({ className }) => {
   const memberCard = member?.[0];
   const words = memberCard?.description?.split(".");
   const list = words;
+  const Istoken = useSelector((state) => state?.authSlice?.authToken);
 
   const getId = (slug) => {
-    router.push({
-      pathname: "checkout-member",
-      query: { id: slug },
-    });
+    if (Istoken) {
+      router.push({
+        pathname: "checkout-member",
+        query: { id: slug },
+      });
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Please Login !",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
-
 
   useEffect(() => {
     dispatch(MemberShipCard(setLoading, setMember, dispatch));
@@ -59,18 +70,6 @@ const Front1 = ({ className }) => {
                   <Skeleton />
                 </>
               )}
-
-              {/* <li>Annual executive physical</li>
-              <li>Tailored weight management</li>
-              <li>
-                Nutritional optimization for disease prevention and treatment
-              </li>
-              <li>Bioelectrical Impedance Analysis by InBody</li>
-              <li>
-                Scheduled office visits per individualized needs and health
-                goals Telemedicine visits
-              </li>
-              <li>Access to direct text messaging with physician</li> */}
             </ul>
 
             <div>
