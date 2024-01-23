@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../AboutUsScreen/AboutusScreen.module.css";
-import CommanButton from "../../components/CommanButton/CommanButton";
-import Shadow from "../../components/Shadow/Shadow";
 import TopLayout from "../../components/TopLayout/TopLayout";
 import TeamCard from "../../components/TeamCard/TeamCard";
+import { useDispatch } from "react-redux";
+import { AboutUsContent } from "../../Service/HomePageService";
 function AboutusScreen() {
  
   const Team = [
@@ -19,6 +19,13 @@ function AboutusScreen() {
     },
    
   ];
+  const dispatch = useDispatch();
+  const [data, setData] = useState('');
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    dispatch(AboutUsContent(setLoading, setData));
+  }, []);
+  console.log(data,"nnhjh");
   return (
     <>
       <div className="container-fluid p-0">

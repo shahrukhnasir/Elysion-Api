@@ -1,8 +1,10 @@
 import Swal from "sweetalert2";
 import {
+  AboutUs,
   AllServiceContent,
   BlogContent,
   ContactInfo,
+  Disclaimer,
   Faqs,
   FindLocation,
   Footer,
@@ -10,8 +12,19 @@ import {
   MedicalServiceContent,
   MeetDoctorContent,
   NewsLatter,
+  OfficePolicy,
+  PatientBilling,
+  PatientEducation,
+  PatientInsurance,
+  PatientResource,
+  PtientForm,
   ServiceContentById,
+  TermService,
+  TermServiceContent,
+  privacyPolicy,
+  privacyPolicyContent,
 } from "../network/Network";
+import PatientResources from "../AllPages/HomePage/PatientResources/PatientResources";
 
 export const HeroSections =
   (setLoading, setMainHeading, setInternal, setBetterHealth, setTessaGibson) =>
@@ -236,3 +249,198 @@ export const ContactContent =
         setLoading(false);
       });
   };
+
+// 👇Patient Form//
+export const PatientFormContent = (setLoading, setData) => () => {
+  setLoading(true);
+  PtientForm()
+    .then((res) => {
+      setData(res?.data?.response?.data?.[0]);
+      // setFaqAns(res?.data?.response?.data?.[0]?.name);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+};
+// 👇Patient Resource//
+export const PatientResourceContent = (setLoading, setData) => () => {
+  setLoading(true);
+  PatientResource()
+    .then((res) => {
+      setData(res?.data?.response?.data?.[0]);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+};
+
+// 👇Patient Education//
+export const PatientEducationContent =
+  (setLoading, setPatientEducation) => () => {
+    setLoading(true);
+    PatientEducation()
+      .then((res) => {
+        setPatientEducation(res?.data?.response?.data);
+        // setFaqAns(res?.data?.response?.data?.[0]?.name);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
+// 👇Patient Insurance//
+export const InsuranceContent = (setLoading, setData) => () => {
+  setLoading(true);
+  PatientInsurance()
+    .then((res) => {
+      setData(res?.data?.response?.data?.[0]);
+      // setFaqAns(res?.data?.response?.data?.[0]?.name);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+};
+
+// 👇Patient BIling//
+export const BillingContent = (setLoading, setData) => () => {
+  setLoading(true);
+  PatientBilling()
+    .then((res) => {
+      setData(res?.data?.response?.data);
+      // setFaqAns(res?.data?.response?.data?.[0]?.name);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+};
+
+// 👇Office Policy
+export const OfficePolicyContent = (setLoading, setData) => () => {
+  setLoading(true);
+  OfficePolicy()
+    .then((res) => {
+      setData(res?.data?.response?.data);
+      // setFaqAns(res?.data?.response?.data?.[0]?.name);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+};
+
+// 👇Disclaimer//
+export const DisclaimerContent = (setLoading, setData) => () => {
+  setLoading(true);
+  Disclaimer()
+    .then((res) => {
+      setData(res?.data?.response?.data?.[0]);
+      // setFaqAns(res?.data?.response?.data?.[0]?.name);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+};
+
+// 👇Privacy Policy Content//
+export const PrivacyPolicyContent = (setLoading, setData) => () => {
+  setLoading(true);
+  privacyPolicyContent()
+    .then((res) => {
+      setData(res?.data?.response?.data);
+      // setFaqAns(res?.data?.response?.data?.[0]?.name);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+};
+
+// 👇Privacy Policy//
+export const PrivacyPolicyCont = (setLoading, setData) => () => {
+  setLoading(true);
+  privacyPolicyContent()
+    .then((res) => {
+      setData(res?.data?.response?.data);
+      // setFaqAns(res?.data?.response?.data?.[0]?.name);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+};
+
+// 👇Privacy Policy//
+export const PrivacyPolcy = (setLoading, setPrivacy) => () => {
+  setLoading(true);
+  privacyPolicy()
+    .then((res) => {
+      setPrivacy(res?.data?.response?.data);
+      // setFaqAns(res?.data?.response?.data?.[0]?.name);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+};
+
+// 👇Term//
+export const TermCondition = (setLoading, setData) => () => {
+  setLoading(true);
+  TermService()
+    .then((res) => {
+      setData(res?.data?.response?.data);
+      // setFaqAns(res?.data?.response?.data?.[0]?.name);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+};
+
+// 👇Term Content//
+export const TermConditionContent = (setLoading, setTermContent) => () => {
+  setLoading(true);
+  TermServiceContent()
+    .then((res) => {
+      setTermContent(res?.data?.response?.data);
+      // setFaqAns(res?.data?.response?.data?.[0]?.name);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+};
+
+// AboutUs
+
+// 👇About Us//
+export const AboutUsContent = (setLoading, setData) => () => {
+  setLoading(true);
+  AboutUs()
+    .then((res) => {
+      setData(res?.data?.response?.data);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+};

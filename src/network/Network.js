@@ -1,7 +1,9 @@
 import {
+  ABOUT_US,
   ADD_TO_CART,
   ADD_TO_CART_LIST,
   ALL_WISHLIST_DELETE,
+  BILLING,
   BLOGS,
   BLOG_CONTENT,
   CATEGORIES,
@@ -9,6 +11,7 @@ import {
   CHECK_OUT,
   CONTACT_US,
   CONTACT_US_CONTENT,
+  DISCLAIMER,
   FAQ,
   FIND_LOCATION,
   FORGOT_PASSWORD,
@@ -19,6 +22,7 @@ import {
   GUEST_CART_REMOVE,
   GUEST_CHECK_OUT,
   HERO_SECTION,
+  INSURANCE,
   LAST_VISIT,
   LOGIN,
   MEDICAL_SERVICES,
@@ -27,9 +31,15 @@ import {
   MY_PROFILE,
   MY_PROFILE_IMAGE,
   NEWS__LATTER,
+  OFFICE_POLICY,
   ORDERS,
   OTP_NEW_PASSWORD,
+  PATIENT_EDUCATION,
+  PATIENT_FORM,
+  PATIENT_RESOURCES,
   PAYMENT_TRANSACTIONS_RECORD,
+  PRIVACY_POLICY,
+  PRIVACY_POLICY_CONTENT,
   PRODUCT,
   REMOVED_TO_ALL,
   REMOVED_TO_CART,
@@ -44,6 +54,8 @@ import {
   SLOTS_AVAILABLE,
   SLOTS_CREATE_CHECK_OUT,
   SLOTS_MY_APPOINTMENTS,
+  TERM_CONDITION,
+  TERM_CONDITION_CONTENT,
   UPDATE_PASSWORD,
   UPDATE_PROFILE,
   USER_SUBSCRIPTION,
@@ -296,3 +308,45 @@ export const GuestAllCartListRemoved = (session_id, data) => {
 export const GuestCheckOut = (data) => {
   return postMethod(`${GUEST_CHECK_OUT}`, data);
 };
+export const PtientForm = (data) => {
+  return getMethod(`${PATIENT_FORM}`, data);
+};
+
+export const PatientResource = (data) => {
+  return getMethod(`${PATIENT_RESOURCES}`, data);
+};
+
+export const PatientEducation = (data) => {
+  return getMethod(`${PATIENT_EDUCATION}`, data);
+};
+
+export const PatientInsurance = (data) => {
+  return getMethod(`${INSURANCE}`, data);
+};
+export const PatientBilling = (data) => {
+  return getMethod(`${BILLING}`, data);
+};
+
+export const OfficePolicy = (data) => {
+  return getMethod(`${OFFICE_POLICY}`, data);
+};
+
+export const Disclaimer = (data) => {
+  return getMethod(`${DISCLAIMER}`, data);
+}
+export const privacyPolicyContent = (data) => {
+  return getMethod(`${PRIVACY_POLICY_CONTENT}`, data);
+}
+export const privacyPolicy = (data) => {
+  return getMethod(`${PRIVACY_POLICY}`, data);
+}
+
+export const TermServiceContent = (data) => {
+  return getMethod(`${TERM_CONDITION_CONTENT}`, data);
+}
+export const TermService = (data) => {
+  return getMethod(`${TERM_CONDITION}`, data);
+}
+export const AboutUs = (data) => {
+  return getMethod(`${ABOUT_US}`, data);
+}

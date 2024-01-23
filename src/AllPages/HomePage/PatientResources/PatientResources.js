@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../PatientResources/PatientResources.module.css";
 import PatientCard from "../../../components/PatientCard/PatientCard";
+import { useDispatch } from "react-redux";
+import {
+  PatientEducationContent,
+  PatientResourceContent,
+} from "../../../Service/HomePageService";
+import Skeleton from "react-loading-skeleton";
 const PatientResources = () => {
   const cards = [
     {
@@ -37,6 +43,15 @@ const PatientResources = () => {
       Links: "/billing",
     },
   ];
+  const dispatch = useDispatch();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [patientEducation, setPatientEducation] = useState([]);
+  useEffect(() => {
+    dispatch(PatientResourceContent(setLoading, setData));
+    dispatch(PatientEducationContent(setLoading, setPatientEducation));
+  }, []);
+  console.log(patientEducation,"patientEducation");
   return (
     <>
       <div className="container-fluid py-lg-5" id="patient">
@@ -46,7 +61,7 @@ const PatientResources = () => {
             data-aos="fade-up"
             data-aos-duration="2000"
           >
-            Patient Resources
+            {!loading ? data?.name : <Skeleton />}{" "}
           </h1>
           <div className="row">
             <div className="col-lg-6">
@@ -55,18 +70,13 @@ const PatientResources = () => {
                 data-aos="fade-down"
                 data-aos-duration="2000"
               >
-                At Elysion, we prioritize excellence in both clinical outcomes
-                and patient experiences. Our Patient Resources serve as valuable
-                tools to enhance your overall experience. Whether it's before,
-                during, or after your visit, we are here to provide
-                comprehensive support and assistance at every step of your
-                journey with us.
+                {!loading ? data?.value : <Skeleton />}
               </p>
             </div>
           </div>
 
           <div className="row">
-            {cards.map((card,key) => {
+            {cards.map((card, key) => {
               return (
                 <div
                   className="col-lg-4"
