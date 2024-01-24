@@ -74,7 +74,7 @@ const Front1 = ({ className }) => {
 
             <div>
               <MemberButton
-                label="Join Now"
+                label="BUY NOW" 
                 onClick={() => getId(memberCard?.id)}
                 className={className}
               />

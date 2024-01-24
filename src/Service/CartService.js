@@ -303,27 +303,48 @@ export const WishListAddToListProduct = (token, data, setHeartClick) => () => {
 // Product
 
 export const productData =
-  (slug, search, setProduct, setLoading,setPerPage,setTotalPage,setCurrentPage) => async () => {
+  (
+    slug,
+    search,
+    setProduct,
+    setLoading,
+    setPerPage,
+    setTotalPage,
+    setCurrentPage
+  ) =>
+  async () => {
     setLoading(true);
-
-    try {
-      const response = await getProducts(slug, search);
-      const responseData =
-        response?.data?.response?.data?.data !== undefined
-          ? response?.data?.response?.data?.data
-          : response?.data?.response?.data;
-
-      setPerPage(response?.data?.response?.data?.per_page);
-      setTotalPage(response?.data?.response?.data?.total);
-      setCurrentPage(response?.data?.response?.data?.current_page);
-      // console.log (response?.data?.response?.data?.current_page, "dskhjasdhads");
-      // setCatByProdutId(slug);
-      setProduct(responseData);
-      setPage(response?.data?.response?.data)
+    getProducts(slug, search)
+    .then((res) => {
+      setProduct(res?.data?.response?.data?.data);
+      setPerPage(res?.data?.response?.data?.per_page);
+      setTotalPage(res?.data?.response?.data?.total);
+      setCurrentPage(res?.data?.response?.data?.current_page);
+      setPage(res?.data?.response?.data);
       setLoading(false);
-    } catch (err) {
-      console.error(err, "error loading");
-      setProduct([]);
-      setLoading(false);
-    }
+    })
+    .catch((err) => {
+     console.log(err)
+    });
+
+    // try {
+    //   const response = await getProducts(slug, search);
+    //   const responseData =
+    //     response?.data?.response?.data?.data !== undefined
+    //       ? response?.data?.response?.data?.data
+    //       : response?.data?.response?.data;
+    //   console.log(response?.data?.response?.data?.data, "responseData");
+    //   setProduct(response?.data?.response?.data?.data);
+    //   setPerPage(response?.data?.response?.data?.per_page);
+    //   setTotalPage(response?.data?.response?.data?.total);
+    //   setCurrentPage(response?.data?.response?.data?.current_page);
+    //   // console.log (response?.data?.response?.data?.current_page, "dskhjasdhads");
+    //   // setCatByProdutId(slug);
+    //   setPage(response?.data?.response?.data);
+    //   setLoading(false);
+    // } catch (err) {
+    //   console.error(err, "error loading");
+    //   setProduct([]);
+    //   setLoading(false);
+    // }
   };

@@ -17,16 +17,16 @@ const HeroSection = () => {
   const loginHanlder = (e) =>{
     e.preventDefault();
 
-    Swal.fire({
-      position: "center",
-      icon: "info",
-      title: "Login please?",
-      showConfirmButton: true,
-      timer: 1500,
-      customClass: {
-        confirmButton: "theme-button-bg",
-      },
-    });
+          Swal.fire({
+            position: "center",
+            icon: "info",
+            title: "Please Login First",
+            showConfirmButton: true,
+            timer: 1500,
+            customClass: {
+              confirmButton: "theme-button-bg",
+            },
+          });
   }
   useEffect(() => {
     dispatch(

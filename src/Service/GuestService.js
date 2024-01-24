@@ -106,7 +106,7 @@ export const GuestCartListAllClear =
       position: "center",
       icon: "error",
       title: error?.message,
-      text: "please login",
+      text: "please login First",
       showConfirmButton: false,
       timer: 1000,
     });

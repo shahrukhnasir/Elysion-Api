@@ -5,22 +5,21 @@ import { useDispatch } from "react-redux";
 import { CategoryList, productData } from "../../Service/CartService";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
-import ReactPaginate from "react-paginate";
 import PaginatedItems from "../../components/Pagination/Pagination";
 
 const ShopLayout = () => {
+  const [products, setProducts] = useState([]);
   const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [slug, setSlug] = useState("");
   const dispatch = useDispatch();
   const router = useRouter();
+  const [search, setSearchQuery] = useState("");
+  const [totals, setTotalPage] = useState("");
+  const [itemsPerPage, setPerPage] = useState("");
+  const [current, setCurrentPage] = useState(1);
 
-  const [products, setProduct] = useState([]);
-
-  useEffect(() => {
-    dispatch(CategoryList(setLoading, setCategory, dispatch));
-  }, []);
-
+  // console.log(40 / itemsPerPage,"posias")
   const filterCatHandler = (e, id) => {
     e.preventDefault();
     setSlug(id);
@@ -29,7 +28,6 @@ const ShopLayout = () => {
   const AllCatHandler = (e) => {
     e.preventDefault();
     router.push("/shop");
-    router.reload();
   };
 
   const handleProductDetail = (productId) => {
@@ -39,36 +37,31 @@ const ShopLayout = () => {
     });
   };
 
-  // Search Api intrgrated
-  const [search, setSearchQuery] = useState("");
-  const [totals, setTotalPage] = useState("");
-  const [itemsPerPage, setPerPage] = useState("");
-  const [curret, setCurrentPage] = useState("");
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
   };
-
   useEffect(() => {
+    dispatch(CategoryList(setLoading, setCategory, dispatch));
     dispatch(
       productData(
         slug,
         search,
-        setProduct,
+        setProducts,
         setLoading,
         setPerPage,
         setTotalPage,
         setCurrentPage
       )
     );
-  }, [slug, search]);
-  console.log(products, "productss");
-  const pagess = Math.ceil(40 / itemsPerPage);
+  }, [slug, search,]);
+
+    const pagess = itemsPerPage ? Math.ceil(totals / itemsPerPage) : 0;
 
   const handlePageClick = async (data) => {
     console.log(data ,"gduwgduy");
   };
-  console.log(pagess, "pagess");
+  // console.log(pagess, "pagess");
   return (
     <>
       <div className="container-fluid p-0">
@@ -137,67 +130,6 @@ const ShopLayout = () => {
 
             <div className="col-lg-9">
               <div className="container">
-                {/* <div className="row">
-                  {!loading ? (
-                    <>
-                      {searchProduct && searchProduct.length > 0 ? (
-                        searchProduct.map((item, i) => (
-                          <div className="col-lg-4" key={i}>
-                            <ProductCard
-                              image={item?.thumbnail_url}
-                              Title={item?.title}
-                              Descriptions={item?.description}
-                              Price={item?.price}
-                              id={item?.id}
-                              onClick={() => handleProductDetail(item?.id)}
-                            />
-                          </div>
-                        ))
-                      ) : (
-                        <>
-                          {!loading ? (
-                            catByProductList &&
-                            catByProductList.map((item, i) => (
-                              <div className="col-lg-4" key={i}>
-                                <ProductCard
-                                  image={item?.thumbnail_url}
-                                  Title={item?.title}
-                                  Descriptions={item?.description}
-                                  Price={item?.price}
-                                  id={item?.id}
-                                  onClick={() => handleProductDetail(item?.id)}
-                                />
-                              </div>
-                            ))
-                          ) : showAllProduct ? (
-                            <>
-                              {products?.map((item, i) => (
-                                <div className="col-lg-4" key={i}>
-                                  <ProductCard
-                                    image={item?.thumbnail_url}
-                                    Title={item?.title}
-                                    Descriptions={item?.description}
-                                    Price={item?.price}
-                                    id={item?.id}
-                                    onClick={() =>
-                                      handleProductDetail(item?.id)
-                                    }
-                                  />
-                                </div>
-                              ))}
-                            </>
-                          ) : (
-                            "No products"
-                          )}
-                        </>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      <Skeleton />
-                    </>
-                  )}
-                </div> */}
                 <div className="row">
                   {!loading ? (
                     <>
@@ -226,21 +158,11 @@ const ShopLayout = () => {
                     <Skeleton />
                   )}
                 </div>
-                {/*  */}
+
                 <PaginatedItems
-                  handlePageClick={handlePageClick}
-                  pageCount={pagess}
-                />
-                {/*  */}
-               
-
-                {/* search */}
-
-                {/* <ul>
-                  {searchResults.map((item) => (
-                    <li key={item.id}>{item.name}</li>
-                  ))}
-                </ul> */}
+                    handlePageClick={handlePageClick}
+                    pageCount={pagess}
+                  />
               </div>
             </div>
           </div>

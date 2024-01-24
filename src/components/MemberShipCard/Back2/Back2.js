@@ -80,7 +80,7 @@ Basic annual labs
 
             
  
-              <MemberButton label="Join Now" 
+              <MemberButton label="BUY NOW" 
               className={styles.lightBtn}
               onClick={() => getId(memberCard?.id)}
               />

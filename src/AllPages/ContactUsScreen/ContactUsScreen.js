@@ -73,6 +73,21 @@ const ContactUsScreen = () => {
       setError(true);
       return;
     }
+   // Name validation
+   const nameReg = /^[a-zA-Z]+\s*[a-zA-Z]*$/;
+
+if (!chatFields.name || !nameReg.test(chatFields.name)) {
+  Swal.fire({
+    position: "center",
+    icon: "error",
+    title: "First name characters should be alphabetic",
+    showConfirmButton: false,
+    timer: 1500,
+  });
+  setError(true);
+  return;
+}
+
     setError(false);
     setLoading(true);
     let data = new FormData();

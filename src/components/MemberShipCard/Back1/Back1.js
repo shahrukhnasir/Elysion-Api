@@ -82,7 +82,7 @@ const Back1 = () => {
               </li>
             </ul>
 
-            <MemberButton label="Join Now" onClick={() => getId(memberCard?.id)} className={styles.lightBtn} />
+            <MemberButton label="BUY NOW" onClick={() => getId(memberCard?.id)} className={styles.lightBtn} />
           </div>
         </div>
       </div>

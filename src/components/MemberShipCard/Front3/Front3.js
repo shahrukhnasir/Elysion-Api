@@ -83,7 +83,7 @@ const Front3 = () => {
             </ul>
 
        
-              <MemberButton label="Join Now" onClick={() => getId(memberCard?.id)} />
+              <MemberButton label="BUY NOW" onClick={() => getId(memberCard?.id)} />
        
           </div>
         </div>
