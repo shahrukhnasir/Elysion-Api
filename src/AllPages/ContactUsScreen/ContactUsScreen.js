@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { ContactContent } from "../../Service/HomePageService";
 import { Skeleton } from "antd";
+import { PostContactHandler } from "../../Service/contactService";
 
 const ContactUsScreen = () => {
   const dispatch = useDispatch();
@@ -29,78 +30,61 @@ const ContactUsScreen = () => {
       [e.target.name]: e.target.value,
     }));
   };
-
   const handleEmailSend = async (e) => {
     e.preventDefault();
+    if (
+      chatFields.name.length === 0 ||
+      chatFields.lName.length === 0 ||
+      chatFields.message.length === 0
+    ) {
+      setError(true);
+      return;
+    }
+    // Phone validation
+    if (
+      !chatFields.number ||
+      chatFields.number.length < 10 ||
+      chatFields.number.length > 20
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title:
+          (chatFields.number.length < 10 &&
+            "Phone number must be between 10 to 20 digits") ||
+          (chatFields.number.length > 20 && "Phone number is too long"),
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
+      return;
+    }
+    // Email validation
+    const emailValidationPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Please provide a valid email address",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
+      return;
+    }
+    setError(false);
+    setLoading(true);
     let data = new FormData();
     data.append("first_name", chatFields?.name);
     data.append("last_name", chatFields?.lName);
     data.append("phone", chatFields?.number);
     data.append("message", chatFields?.message);
     data.append("email", chatFields?.email);
+    dispatch(PostContactHandler(data, setLoading, setChatFields,router));
 
-    try {
-      if (
-        chatFields.name.length === 0 ||
-        chatFields.lName.length === 0 ||
-        chatFields.email.length === 0 ||
-        chatFields.message.length === 0
-      ) {
-        setError(true);
-        return;
-      }
-      // Phone validation
-      // Phone validation
-      if (
-        !chatFields.number ||
-        chatFields.number.length < 10 ||
-        chatFields.number.length > 20
-      ) {
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          title:
-            (chatFields.number.length < 10 &&
-              "Phone number must be between 10 to 20 digits") ||
-            (chatFields.number.length > 20 && "Phone number is too long"),
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setError(true);
-        return;
-      }
-      // Email validation
-      const emailValidationPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          title: "Please provide a valid email address",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setError(true);
-        return;
-      }
-      setError(false);
-      setLoading(true);
-      const response = await fetch(`${baseUrl}contact-us`, {
-        method: "POST",
-        body: data,
-      });
-
-      if (response.status === 200) {
-        router.push("/thank-you");
-      } else {
-        console.log("Unexpected response status:", response.status);
-      }
-    } catch (error) {
-      console.error("An error occurred:", error);
-    } finally {
-      setLoading(false);
-    }
   };
+
 
   const Team = [
     {

@@ -155,7 +155,7 @@ export const FaqContent = (setLoading, setFaq) => (dispatch) => {
 // 👇Footer NewsLatter//////////
 export const FooterNewsLatterEmail =
   (data, setLoading, setChatFields, router) => () => {
-    try {
+    
       NewsLatter(data)
         .then((res) => {
           setLoading(false);
@@ -174,8 +174,9 @@ export const FooterNewsLatterEmail =
           });
           router.push("/thank-you");
         })
-        .catch((error) => {
-          console.error("Error in SignUp:", error);
+        .catch((err) => {
+          // console.log("Error in SignUp:", error);
+          console.log(err,'errerr');
           setLoading(false);
           Swal.fire({
             position: "center",
@@ -188,19 +189,6 @@ export const FooterNewsLatterEmail =
             },
           });
         });
-    } catch (error) {
-      console.error("Unexpected error in Email send:", error);
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Unexpected Error",
-        text: "An unexpected error occurred. Please try again later.",
-        showConfirmButton: true,
-        customClass: {
-          confirmButton: "theme-button-bg",
-        },
-      });
-    }
   };
 
 // 👇Blog Content//

@@ -189,11 +189,11 @@ quasi"
 
               <div className="col-12 pt-2">
                 <div className="form-check">
-                  <input
+                  {/* <input
                     className="form-check-input"
                     type="checkbox"
                     id="gridCheck"
-                  />
+                  /> */}
                   <label
                     className={`${styles.labelCheckBox} form-check-label`}
                     for="gridCheck"
@@ -207,11 +207,11 @@ quasi"
 
               <div className="col-12">
                 <div className="form-check">
-                  <input
+                  {/* <input
                     className="form-check-input"
                     type="checkbox"
                     id="gridCheck"
-                  />
+                  /> */}
                   <label
                     className={`${styles.labelCheckBox} form-check-label`}
                     for="gridCheck"

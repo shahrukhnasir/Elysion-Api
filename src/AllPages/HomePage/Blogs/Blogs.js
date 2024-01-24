@@ -6,6 +6,8 @@ import BlogCardComman from "../../../components/BlogCardComman/BlogCardComman";
 import { BlogsCard } from "../../../Service/BlogsService";
 import { BlogsContent } from "../../../Service/HomePageService";
 import { useDispatch } from "react-redux";
+import BlogCard from "../../../components/BlogCard/BlogCard";
+import Skeleton from "react-loading-skeleton";
 
 const Blogs = () => {
   const Blog = [
@@ -41,7 +43,14 @@ const Blogs = () => {
       BlogsContent(setLoading, setBlogHeading, setBlogDes, setBlogImage)
     );
   }, []);
-
+  const handleGetId = (e, slug) => {
+    e.preventDefault();
+    console.log(slug, "slug");
+    router.push({
+      pathname: `blog-detail`,
+      query: { slug: slug },
+    });
+  };
   return (
     <div className="container-fluid" id={styles.blogContainer}>
       <div className={`${styles.innerContainer} container`}>
@@ -78,7 +87,7 @@ const Blogs = () => {
         </div>
 
         <div className="container pb-lg-5">
-          <div className="row">
+          {/* <div className="row">
             {Blog.map((item, key) => {
               return (
                 <div
@@ -95,6 +104,32 @@ const Blogs = () => {
                 </div>
               );
             })}
+          </div> */}
+
+
+<div className="row">
+            {!loading ? (
+              <>
+                {blogs?.slice(0,3).map((item, key) => {
+                  return (
+                    <div className="col-lg-4" key={key}>
+                      <BlogCard 
+                        Img={item?.image_url}
+                        Title={item?.heading}
+                        backDesc={item?.description}
+                        id={item?.id}
+                        btn="Read more"
+                        onClick={(e) => handleGetId(e, item?.id)}
+                      />
+                    </div>
+                  );
+                })}
+              </>
+            ) : (
+              <div className="container p-5">
+                <Skeleton active avatar loading={loading} />
+              </div>
+            )}
           </div>
         </div>
       </div>

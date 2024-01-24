@@ -1,58 +1,57 @@
 import React, { useState } from 'react';
 
-const FilterComponent = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('');
-  const [searchQuery, setSearchQuery] = useState('');
+const itemsPerPage = 2; // Number of items to display per page
 
-  const options = ['Option 1', 'Option 2', 'Option 3']; // Your filter options
+const DummyData = [
+  { id: 1, name: 'Item 1' },
+  { id: 2, name: 'Item 2' },
+  { id: 3, name: 'Item 3' },
+  { id: 4, name: 'Item 4' },
+  { id: 5, name: 'Item 5' },
+  { id: 6, name: 'Item 6' },
+  // ... more dummy data ...
+];
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-    // Implement your search logic here if needed
-  };
+const LocalPagination = () => {
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    // Implement any logic you need when an option is selected
-    setIsOpen(false); // Close the filter after selecting an option
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = DummyData.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(DummyData.length / itemsPerPage);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   return (
     <div>
-      <div onClick={() => setIsOpen(!isOpen)}>
-        {/* Your search icon goes here */}
-        Search
+      {/* Display your data */}
+      <ul>
+        {currentItems.map((item) => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+
+      {/* Display pagination controls */}
+      <div>
+        <button
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+        >
+          Previous
+        </button>
+        <span>{`Page ${currentPage} of ${totalPages}`}</span>
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          Next
+        </button>
       </div>
-      {isOpen && (
-        <div>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={searchQuery}
-            onChange={handleSearch}
-          />
-          <ul>
-            {options
-              .filter((option) =>
-                option.toLowerCase().includes(searchQuery.toLowerCase())
-              )
-              .map((option) => (
-                <li key={option} onClick={() => handleOptionSelect(option)}>
-                  {option}
-                </li>
-              ))}
-          </ul>
-        </div>
-      )}
-      {selectedOption && (
-        <div>
-          {/* Render content based on the selected option */}
-          Selected Option: {selectedOption}
-        </div>
-      )}
     </div>
   );
 };
 
-export default FilterComponent;
+export default LocalPagination;

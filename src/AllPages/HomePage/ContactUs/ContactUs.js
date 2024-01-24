@@ -82,8 +82,8 @@ const ContactUs = () => {
     data.append("phone", chatFields?.number);
     data.append("message", chatFields?.message);
     data.append("email", chatFields?.email);
-    dispatch(PostContactHandler(data, setLoading, setChatFields));
-    router.push("/thank-you");
+    dispatch(PostContactHandler(data, setLoading, setChatFields,router));
+
   };
 
 
@@ -195,6 +195,7 @@ const ContactUs = () => {
                     ""
                   )}
                 </div>
+                {/* <input type="tel" id="phone" name="phone" pattern="[+]{1}[0-9]{11,14}" required></input> */}
 
                 <div className="col-lg-6">
                   <input
@@ -225,6 +226,7 @@ const ContactUs = () => {
                     type="number"
                     value={chatFields.number}
                     name="number"
+                    pattern="[+]{1}[0-9]{11,14}"
                     onChange={handleChange}
                   />
                   {error && chatFields.number.length <= 0 ? (

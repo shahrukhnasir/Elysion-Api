@@ -4,41 +4,50 @@ import TopLayout from "../../components/TopLayout/TopLayout";
 import TeamCard from "../../components/TeamCard/TeamCard";
 import { useDispatch } from "react-redux";
 import { AboutUsContent } from "../../Service/HomePageService";
+import Skeleton from "react-loading-skeleton";
 function AboutusScreen() {
- 
   const Team = [
     {
       imgPath: "./images/Team/card7.jpg",
       name: "Dr.Tessa Gibson",
-      description: "M.D., C.F.N.C."
+      description: "M.D., C.F.N.C.",
     },
     {
       imgPath: "./images/Team/card6.png",
       name: "Michelle Byers ",
-      description: "Office manager/Medical assistant"
+      description: "Office manager/Medical assistant",
     },
-   
   ];
   const dispatch = useDispatch();
-  const [data, setData] = useState('');
+  const [data, setData] = useState("");
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     dispatch(AboutUsContent(setLoading, setData));
   }, []);
-  console.log(data,"nnhjh");
+  console.log(data, "nnhjh");
+
+  const aboutImage = data?.[1]
+  const about = data?.[0]
+  console.log("data :", data);
+
   return (
     <>
       <div className="container-fluid p-0">
         <TopLayout
-          Heading="About Us"
-          descriptions="Elysion Health & Wellness in Marietta, Georgia offers a personalized and concierge-style Internal & Integrative Medicine service. Led by Dr. Tessa Gibson, the dedicated team provides comprehensive and individualized healthcare, blending conventional medicine with evidence-based integrative therapies."
-          image={`/images/about-us.png`}
+          Heading={!loading ? about?.name : <Skeleton/>}
+          descriptions={!loading ? about?.value : <Skeleton/>}
+          image={aboutImage?.image_url}
           leanMore={
             <p className={styles.Desc}>
-              The practice focuses on addressing the root causes of diseases, empowering patients to take an active role in their health, and creating a healing environment that supports the body's innate ability to restore balance. With expertise in internal medicine, integrative medicine, non-surgical aesthetics, and intimate health treatments, Elysion aims to help patients look and feel their best.
+              The practice focuses on addressing the root causes of diseases,
+              empowering patients to take an active role in their health, and
+              creating a healing environment that supports the body's innate
+              ability to restore balance. With expertise in internal medicine,
+              integrative medicine, non-surgical aesthetics, and intimate health
+              treatments, Elysion aims to help patients look and feel their
+              best.
             </p>
           }
-
         />
         <div className="container py-5">
           <div className="row d-flex justify-content-center">
@@ -50,14 +59,12 @@ function AboutusScreen() {
               return (
                 <div className="col-lg-4" data-aos="flip-left">
                   <div className="">
-
-              
-                  <TeamCard
-                    Pic={item.imgPath}
-                    name={item.name}
-                    description={item?.description}
-                  />
-                      </div>
+                    <TeamCard
+                      Pic={item.imgPath}
+                      name={item.name}
+                      description={item?.description}
+                    />
+                  </div>
                 </div>
               );
             })}
@@ -70,7 +77,20 @@ function AboutusScreen() {
                 <h1 className={styles.BlueHeading}>Our Mission</h1>
 
                 <p className={styles.BlueText}>
-                  Our Internal & Integrative Medicine practice is dedicated to providing comprehensive and personalized healthcare that combines conventional medicine with evidence-based integrative therapies. We aim to address the underlying causes of disease, empower patients to take an active role in their health, and create a healing environment that supports the body's innate ability to heal and restore balance. By staying at the forefront of medical advancements and integrating holistic approaches, we offer individualized treatment plans. We value open communication, respect, and compassion, building strong relationships with our patients. Our mission is to inspire and educate, bridging the gap between conventional and complementary therapies, and supporting patients in achieving optimal health and well-being
+                  Our Internal & Integrative Medicine practice is dedicated to
+                  providing comprehensive and personalized healthcare that
+                  combines conventional medicine with evidence-based integrative
+                  therapies. We aim to address the underlying causes of disease,
+                  empower patients to take an active role in their health, and
+                  create a healing environment that supports the body's innate
+                  ability to heal and restore balance. By staying at the
+                  forefront of medical advancements and integrating holistic
+                  approaches, we offer individualized treatment plans. We value
+                  open communication, respect, and compassion, building strong
+                  relationships with our patients. Our mission is to inspire and
+                  educate, bridging the gap between conventional and
+                  complementary therapies, and supporting patients in achieving
+                  optimal health and well-being
                 </p>
               </div>
             </div>
@@ -80,16 +100,25 @@ function AboutusScreen() {
                 <h1 className={styles.GrayHeading}>Our Vision</h1>
 
                 <p className={styles.GaryText}>
-                  Our Internal & Integrative Medicine practice has a vision to be a leader in transforming healthcare by promoting a holistic approach to wellness and healing. We aim to integrate conventional medicine with evidence-based integrative therapies, providing personalized and effective treatment plans. Our vision includes creating a healing sanctuary where patients are active participants in their healthcare, fostering trust, empathy, and open communication. We aspire to advocate for the advancement of integrative medicine, bridging the gap between conventional and complementary therapies. Ultimately, our vision is to contribute to a healthier society where individuals are empowered to live balanced lives and achieve optimal health and well-being
+                  Our Internal & Integrative Medicine practice has a vision to
+                  be a leader in transforming healthcare by promoting a holistic
+                  approach to wellness and healing. We aim to integrate
+                  conventional medicine with evidence-based integrative
+                  therapies, providing personalized and effective treatment
+                  plans. Our vision includes creating a healing sanctuary where
+                  patients are active participants in their healthcare,
+                  fostering trust, empathy, and open communication. We aspire to
+                  advocate for the advancement of integrative medicine, bridging
+                  the gap between conventional and complementary therapies.
+                  Ultimately, our vision is to contribute to a healthier society
+                  where individuals are empowered to live balanced lives and
+                  achieve optimal health and well-being
                 </p>
               </div>
             </div>
           </div>
         </div>
-
-
       </div>
-
     </>
   );
 }

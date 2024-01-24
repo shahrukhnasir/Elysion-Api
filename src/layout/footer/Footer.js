@@ -36,7 +36,8 @@ const Footer = () => {
       return;
     }
     // Email validation
-    const emailValidationPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailValidationPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+
 
     if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
       Swal.fire({

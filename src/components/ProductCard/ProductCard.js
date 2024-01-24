@@ -3,16 +3,17 @@ import styles from "../ProductCard/ProductCard.module.css";
 import Link from "next/link";
 import { BsArrowRight } from "react-icons/bs";
 
-const ProductCard = ({ Title, Descriptions, Price, image, id ,onClick}) => {
+const ProductCard = ({ Title, Descriptions, Price, image, id, onClick }) => {
   return (
     <>
       <div className={`${styles.card}  card`} onClick={onClick}>
         <img src={image} class="card-img-top" alt="image" />
-        <div className={`${styles.cardBody}  card-body`}>
+        <div className={`${styles.cardBody}`} id={styles.cardInner}>
           <div className="row">
-            <div className="col-lg-6">
-              {" "}
-              <h6 className={`${styles.carTitle}`}>{Title}</h6>
+            <div className="col-lg-12">
+              <div className={`${styles.cardTitleSec}`}>
+                <h6 className={`${styles.carTitle}`}>{Title}</h6>
+              </div>
             </div>
 
             <div className="col-lg-6">

@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { CategoryList, productData } from "../../Service/CartService";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
+import ReactPaginate from "react-paginate";
+import PaginatedItems from "../../components/Pagination/Pagination";
 
 const ShopLayout = () => {
   const [category, setCategory] = useState([]);
@@ -24,7 +26,6 @@ const ShopLayout = () => {
     setSlug(id);
   };
 
-
   const AllCatHandler = (e) => {
     e.preventDefault();
     router.push("/shop");
@@ -33,23 +34,41 @@ const ShopLayout = () => {
 
   const handleProductDetail = (productId) => {
     router.push({
-      pathname: '/product-detail',
+      pathname: "/product-detail",
       query: { productId: productId },
     });
   };
 
   // Search Api intrgrated
   const [search, setSearchQuery] = useState("");
+  const [totals, setTotalPage] = useState("");
+  const [itemsPerPage, setPerPage] = useState("");
+  const [curret, setCurrentPage] = useState("");
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
   };
 
   useEffect(() => {
-    dispatch(productData(slug, search, setProduct, setLoading));
+    dispatch(
+      productData(
+        slug,
+        search,
+        setProduct,
+        setLoading,
+        setPerPage,
+        setTotalPage,
+        setCurrentPage
+      )
+    );
   }, [slug, search]);
-console.log(products,"productss")
+  console.log(products, "productss");
+  const pagess = Math.ceil(40 / itemsPerPage);
 
+  const handlePageClick = async (data) => {
+    console.log(data ,"gduwgduy");
+  };
+  console.log(pagess, "pagess");
   return (
     <>
       <div className="container-fluid p-0">
@@ -197,9 +216,9 @@ console.log(products,"productss")
                         ))
                       ) : (
                         <div className="col-lg-2">
-                        <p className={styles.Title}>
-                          <h2>Product not found</h2>
-                        </p>
+                          <p className={styles.Title}>
+                            <h2>Product not found</h2>
+                          </p>
                         </div>
                       )}
                     </>
@@ -207,57 +226,13 @@ console.log(products,"productss")
                     <Skeleton />
                   )}
                 </div>
-
-                <div className="">
-                  <div className={styles.paginationSec}>
-                    <nav aria-label="Page navigation example ">
-                      <ul className={`pagination`}>
-                        <li className="page-item">
-                          <a
-                            className={`${styles.pageLink} page-link`}
-                            href="#"
-                            aria-label="Previous"
-                          >
-                            <span aria-hidden="true">&laquo;</span>
-                          </a>
-                        </li>
-                        <li className="page-item">
-                          <a
-                            className={`${styles.pageLink} page-link`}
-                            href="#"
-                          >
-                            1
-                          </a>
-                        </li>
-                        <li className="page-item">
-                          <a
-                            className={`${styles.pageLink} page-link`}
-                            href="#"
-                          >
-                            2
-                          </a>
-                        </li>
-                        <li className="page-item">
-                          <a
-                            className={`${styles.pageLink} page-link`}
-                            href="#"
-                          >
-                            3
-                          </a>
-                        </li>
-                        <li className="page-item">
-                          <a
-                            className={`${styles.pageLink} page-link`}
-                            href="#"
-                            aria-label="Next"
-                          >
-                            <span aria-hidden="true">&raquo;</span>
-                          </a>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
-                </div>
+                {/*  */}
+                <PaginatedItems
+                  handlePageClick={handlePageClick}
+                  pageCount={pagess}
+                />
+                {/*  */}
+               
 
                 {/* search */}
 

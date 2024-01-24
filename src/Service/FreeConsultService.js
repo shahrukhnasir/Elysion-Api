@@ -14,13 +14,16 @@ export const FreeConsultation =
         icon: "success",
         title: "Email Sent Successfully",
         showConfirmButton: false,
-        timer: 1500,
+        timer: 500,
         customClass: {
           confirmButton: "theme-button-bg",
         },
       });
+      setTimeout(() => {
+        
+        router.push("/thank-you");
+      }, 500);
 
-      router.push("/thank-you");
     } catch (error) {
       console.error("Error in Free Consultation:", error);
 

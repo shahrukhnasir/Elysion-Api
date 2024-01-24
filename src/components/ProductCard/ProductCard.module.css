@@ -10,18 +10,23 @@
 .card img {
     height: 205px !important;
 }
-
+.cardTitleSec{
+    height: 40px !important;
+}
 .cardBody {
     background-color: #FFFFFF;
     border-radius: 12px;
     padding: 15px 25px;
 }
+#cardInner{
+    height: 200px !important;
 
+}
 .carTitle {
     font-family: var(--main-font-regular);
     font-size: 17px !important;
     color: #123B51;
-    width: 113px !important;
+    /* width: 113p !important; */
     word-wrap: break-word;
 
 }
@@ -39,7 +44,25 @@
     color: #000000;
     margin-bottom: 5px;
     margin-top: 5px;
+    height: 40px;
+    overflow-y: scroll;
 }
+.cardDesc::-webkit-scrollbar {
+    width: 5px !important;
+  }
+  
+  .cardDesc::-webkit-scrollbar-track {
+    background: #ffff !important;
+    border-radius: 50px !important;
+  }
+  
+  .cardDesc::-webkit-scrollbar-thumb {
+    background-color: #575755;
+    border-radius: 50px !important;
+    height: 150px !important;
+    width: 100% !important;
+    border: 1px solid #d1d1d1;
+  }
 
 .learnMore {
     text-decoration: none !important;
@@ -52,6 +75,7 @@
 
 .linkBtn {
     text-decoration: none;
+    height: 30px !important ;
 }
 
 .viewBtn {
