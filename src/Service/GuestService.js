@@ -1,11 +1,12 @@
 import Swal from "sweetalert2";
 import { GuestAllCartListRemoved, GuestCartCreate, GuestCartList, GuestCartListRemoved, GuestCheckOut } from "../network/Network";
+import { getCartList } from "../Redux/CartList/CartList";
 
 ////👇// Add TO Cart Guest
 export const AddToCartGuest = (data, setLoading, router) => () => {
     GuestCartCreate(data)
       .then((res) => {
-     console.log(res,"res");
+        
           setLoading(false);
           Swal.fire({
             position: "center",

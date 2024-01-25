@@ -13,10 +13,13 @@ const Back1 = () => {
   useEffect(() => {
     dispatch(MemberShipCard(setLoading, setMember, dispatch));
   }, []);
-  const memberCard = member?.[0];
-  const words = memberCard?.description?.split(".");
+  const memberCard = member?.filter(
+    (foo) => foo.type === "yearly" && foo.name === "Focused"
+  );
+  const mem = memberCard?.[0];
+  const words = mem?.description?.split(".");
   const list = words;
-  
+  // console.log(memberCard, "memberCardmemberCard");
   const router = useRouter();
   const Istoken = useSelector((state) => state?.authSlice?.authToken);
 
@@ -45,21 +48,21 @@ const Back1 = () => {
       <div className={styles.flipcardfront}>
         <div>
           <div className={`${styles.cardBody} card-body`}>
-            <h6 className={`${styles.carTitle}`}>{memberCard?.name}</h6>
+            <h6 className={`${styles.carTitle}`}>{mem?.name}</h6>
             <hr />
             <h6 className={`${styles.SubTitle}`}>
               <sup className={styles.card3SmText}>$</sup>{" "}
               <span className={styles.BigText}>
                 {" "}
-                {memberCard?.price && memberCard.price * 12}
+                {mem?.price && mem.price}
               </span>{" "}
-              /Yr
+              /{mem?.type}
             </h6>
 
             <ul className={styles.pricingListOverFlow}>
               {!loading ? (
                 <>
-                  {list?.slice(6, 20)?.map((memList, i) => (
+                  {list?.map((memList, i) => (
                     <li key={i}>
                       {memList.split(",").map((word, i) => (
                         <span key={i}>{word.trim()}</span>
@@ -82,7 +85,11 @@ const Back1 = () => {
               </li>
             </ul>
 
-            <MemberButton label="BUY NOW" onClick={() => getId(memberCard?.id)} className={styles.lightBtn} />
+            <MemberButton
+              label="BUY NOW"
+              onClick={() => getId(mem?.id)}
+              className={styles.lightBtn}
+            />
           </div>
         </div>
       </div>

@@ -118,20 +118,24 @@ export const AddToCartHandler = (token, data, setLoading, router) => () => {
           showConfirmButton: false,
           timer: 1500,
         });
-
+        // console.log(res, "uyyy");
         router.push("/my-cart");
       } else {
         console.log("Something");
       }
     })
-    .catch((res) => {
-      console.log(res);
+    .catch((err) => {
+      console.log(err?.response?.data?.errors?.product_miligram_id?.[0], "err");
       // console.log("data", res?.response?.data?.message);
       // setLoading(true);
       Swal.fire({
         position: "center",
-        icon: "error",
-        title: res?.response?.data?.message || res?.response?.data?.errors,
+        icon: "info",
+        title:
+          (err?.response?.data?.errors?.product_miligram_id &&
+            "Please select Variant") ||
+          err?.response?.data?.errors?.qty ||
+          err?.response?.data?.message,
         showConfirmButton: false,
         timer: 1500,
       });
@@ -144,6 +148,7 @@ export const AddToCartListHandler =
     setLoading(true);
     AddToCartList(token)
       .then((res) => {
+        
         setAddCartList(res?.data?.response?.data);
         setLoading(false);
         // console.log(res?.data?.response?.data, "res");
@@ -315,17 +320,17 @@ export const productData =
   async () => {
     setLoading(true);
     getProducts(slug, search)
-    .then((res) => {
-      setProduct(res?.data?.response?.data?.data);
-      setPerPage(res?.data?.response?.data?.per_page);
-      setTotalPage(res?.data?.response?.data?.total);
-      setCurrentPage(res?.data?.response?.data?.current_page);
-      setPage(res?.data?.response?.data);
-      setLoading(false);
-    })
-    .catch((err) => {
-     console.log(err)
-    });
+      .then((res) => {
+        setProduct(res?.data?.response?.data?.data);
+        setPerPage(res?.data?.response?.data?.per_page);
+        setTotalPage(res?.data?.response?.data?.total);
+        setCurrentPage(res?.data?.response?.data?.current_page);
+        setPage(res?.data?.response?.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     // try {
     //   const response = await getProducts(slug, search);

@@ -13,8 +13,13 @@ const Front3 = () => {
   useEffect(() => {
     dispatch(MemberShipCard(setLoading, setMember, dispatch));
   }, []);
-  const memberCard = member?.[2];
-  const words = memberCard?.description?.split(".");
+
+  const memberCard = member?.filter(
+    (foo) => foo.type === "monthly" && foo.name === "Premium Plus"
+  );
+  const mem = memberCard?.[0];
+  const words = mem?.description?.split(".");
+  console.log(memberCard, "mem");
   const list = words;
   const router = useRouter();
   const Istoken = useSelector((state) => state?.authSlice?.authToken);
@@ -29,7 +34,7 @@ const Front3 = () => {
       Swal.fire({
         position: "center",
         icon: "info",
-        title: "Please Login !",
+        title: "Please login first!",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -40,17 +45,18 @@ const Front3 = () => {
       <div className={styles.flipcardfront}>
         <div>
           <div className={`${styles.cardBody} card-body`}>
-            <h6 className={`${styles.carTitle}`}>{memberCard?.name}</h6>
+            <h6 className={`${styles.carTitle}`}>{mem?.name}</h6>
             <hr />
             <h6 className={`${styles.SubTitle}`}>
               <sup className={styles.card3SmText}>$</sup>{" "}
-              <span className={styles.BigText}>        {memberCard?.price && memberCard.price.substring(0, 3)}</span> /Mo
+              <span className={styles.BigText}> {mem?.price && mem.price}</span>{" "}
+              /{mem?.type}
             </h6>
 
             <ul className={styles.pricingListOverFlow}>
-            {!loading ? (
+              {!loading ? (
                 <>
-                  {list?.slice(0, 12)?.map((memList, i) => (
+                  {list?.map((memList, i) => (
                     <li key={i}>
                       {memList.split(",").map((word, i) => (
                         <span key={i}>{word.trim()}</span>
@@ -79,12 +85,9 @@ const Front3 = () => {
               <li>
               Any additional labs requested will incur a discounted charge or can be billed to 
               </li> */}
-          
             </ul>
 
-       
-              <MemberButton label="BUY NOW" onClick={() => getId(memberCard?.id)} />
-       
+            <MemberButton label="BUY NOW" onClick={() => getId(mem?.id)} />
           </div>
         </div>
       </div>

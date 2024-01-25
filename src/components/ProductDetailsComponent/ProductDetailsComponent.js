@@ -8,7 +8,7 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import CommanButton from "../CommanButton/CommanButton";
 import Link from "next/link";
 import { ImStarFull } from "react-icons/im";
-
+import Swal from "sweetalert2";
 // Import css files
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -17,27 +17,30 @@ import { NextArrow, PreviousArrow } from "../CustomSlider/SliderArrow";
 import SliderProductCard from "../SliderProductCard/SliderProductCard";
 import {
   AddToCartHandler,
+  AddToCartListHandler,
   WishListAddToListProduct,
   getProductDetailById,
 } from "../../Service/CartService";
-import { AddToCartGuest } from "../../Service/GuestService";
+import { AddToCartGuest, GuestCartLists } from "../../Service/GuestService";
 import { Skeleton } from "antd";
 import { setSessionId } from "../../Redux/Auth/sessionSlice";
+import { getCartList } from "../../Redux/CartList/CartList";
 
 const ProductDetailsComponent = () => {
   const [productDetail, setProductDetails] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [steps, setSteps] = useState(1);
+  const [steps, setSteps] = useState(0);
   const [variant, setProductVariants] = useState();
   const [milliGram, setMiliId] = useState([]);
   const [variantId, setVariantId] = useState();
   const [tab, setTab] = useState(0);
   const [heartClick, setHeartClick] = useState(false);
+  // const [cartList, setAddCartList] = useState([]);
 
   const token = useSelector((state) => state?.authSlice?.authToken);
   const { query } = useRouter();
   const slug = query?.productId;
-
+  console.log(productDetail, "productDetailproductDetail");
   console.log(slug, "productId");
   const heartClickHandler = (e) => {
     e.preventDefault();
@@ -49,7 +52,7 @@ const ProductDetailsComponent = () => {
   const updateSteps = (amount) => {
     setSteps((prevState) => {
       const updatedSteps = prevState + amount;
-      return updatedSteps;
+      return updatedSteps >= 0 ? updatedSteps : 0; // Ensure steps is not below zero
     });
   };
 
@@ -57,8 +60,22 @@ const ProductDetailsComponent = () => {
   const session = useSelector((state) => state?.sessionSlice?.session);
 
   const AddToCartHandle = async (e) => {
+    e.preventDefault();
+   
+    // dispatch(getCartList(token, session_id));
     if (session == null || session == "") {
       dispatch(setSessionId(session_id));
+    }
+    if (steps === 0) {
+      e.preventDefault();
+      Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Select Quantity please",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return;
     }
     if (token) {
       e.preventDefault();
@@ -69,6 +86,7 @@ const ProductDetailsComponent = () => {
       data.append("product_miligram_id", milliGram);
       data.append("qty", steps);
       dispatch(AddToCartHandler(token, data, setLoading, router));
+     
     } else if (!token) {
       let data = new FormData();
       data.append("product_id", slug);
@@ -77,8 +95,23 @@ const ProductDetailsComponent = () => {
       data.append("qty", steps);
       data.append("session_id", session ? session : session_id);
       dispatch(AddToCartGuest(data, setLoading, router));
+      // dispatch(getCartList(cartList));
+      
     }
+    
   };
+
+  // useEffect(() => {
+  //   if (token) {
+  //     dispatch(
+  //       AddToCartListHandler(token, setAddCartList, setLoading, dispatch)
+  //     );
+  //   } else if (!token) {
+  //     dispatch(
+  //       GuestCartLists(session_id, setAddCartList, setLoading, dispatch)
+  //     );
+  //   }
+  // }, []);
   const router = useRouter();
   const dispatch = useDispatch();
 

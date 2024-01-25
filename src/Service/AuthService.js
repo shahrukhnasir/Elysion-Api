@@ -64,7 +64,7 @@ export const LoginHandler = (data, setLoading, setChatFields, router, dispatch) 
 //👇Register Services//////////
 export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
   
-  try {
+
     SignUp(data)
     .then((res) => {
 
@@ -90,13 +90,20 @@ export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
         });
         router.push("/signin");
       })
-      .catch((error) => {
-        console.error("Error in SignUp:", error);
+      .catch((err) => {
+        console.log(err?.response?.data,"Error in SignUp:");
         setLoading(false);
         Swal.fire({
           position: "center",
           icon: "error",
-          title: "Registration Failed",
+          title: err?.response?.data?.errors?.mobile?.[0]||
+          err?.response?.data?.errors?.password?.[0] ||
+          err?.response?.data?.errors?.password?.[1] ||
+          err?.response?.data?.errors?.confirm_password?.[0] ||
+          err?.response?.data?.errors?.first_name?.[0] ||
+          err?.response?.data?.errors?.last_name?.[0] ||
+          err?.response?.data?.errors?.email?.[0] ||
+          err?.response?.data?.message,
           text: "Please check your fields",
           showConfirmButton: true,
           customClass: {
@@ -106,20 +113,8 @@ export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
         });
         router.push("/register");
       });
-  } catch (error) {
-    console.error("Unexpected error in SignUpHandler:", error);
-    Swal.fire({
-      position: "center",
-      icon: "error",
-      title: "Unexpected Error",
-      text: "An unexpected error occurred. Please try again later.",
-      showConfirmButton: true,
-      customClass: {
-        confirmButton: "theme-button-bg",
-      },
-    });
+
   }
-};
 
 //👇Forgot Password Service////////////
 

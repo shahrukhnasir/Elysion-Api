@@ -87,7 +87,17 @@ if (!chatFields.name || !nameReg.test(chatFields.name)) {
   setError(true);
   return;
 }
-
+if (!chatFields.lName || !nameReg.test(chatFields.lName)) {
+  Swal.fire({
+    position: "center",
+    icon: "error",
+    title: "Last name characters should be alphabetic",
+    showConfirmButton: false,
+    timer: 1500,
+  });
+  setError(true);
+  return;
+}
     setError(false);
     setLoading(true);
     let data = new FormData();

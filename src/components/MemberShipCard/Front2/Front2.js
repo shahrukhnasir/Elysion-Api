@@ -13,8 +13,12 @@ const Front2 = () => {
   useEffect(() => {
     dispatch(MemberShipCard(setLoading, setMember, dispatch));
   }, []);
-  const memberCard = member?.[1];
-  const words = memberCard?.description?.split(".");
+  const memberCard = member?.filter(
+    (foo) => foo.type === "monthly" && foo.name === "Premium"
+  );
+
+  const mem = memberCard?.[0];
+  const words = mem?.description?.split(".");
   const list = words;
 
   const router = useRouter();
@@ -30,7 +34,7 @@ const Front2 = () => {
       Swal.fire({
         position: "center",
         icon: "info",
-        title: "Please Login !",
+        title: "Please login first!",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -42,17 +46,17 @@ const Front2 = () => {
         <div>
           <div className={`${styles.cardBody} card-body`}>
           <div className={styles.labelBlue}>Most Popular</div>
-            <h6 className={`${styles.carTitle}`}>{memberCard?.name}</h6>
+            <h6 className={`${styles.carTitle}`}>{mem?.name}</h6>
             <hr className="m-0"/>
             <h6 className={`${styles.SubTitle}`}>
               <sup className={styles.card3SmText}>$</sup>{" "}
-              <span className={styles.BigText}> {memberCard?.price && memberCard.price.substring(0, 3)}</span> /Mo
+              <span className={styles.BigText}> {mem?.price && mem.price}</span> /{mem?.type}
             </h6>
 
             <ul className={styles.pricingListOverFlow}>
             {!loading ? (
               <>
-              {list?.slice(0, 6)?.map((memList, i) => (
+              {list?.map((memList, i) => (
                 <li key={i}>
                   {memList.split(",").map((word, i) => (
                     <span key={i}>{word.trim()}</span>
@@ -81,7 +85,7 @@ const Front2 = () => {
            
               <MemberButton label="BUY NOW" 
               className={styles.lightBtn}
-              onClick={() => getId(memberCard?.id)}
+              onClick={() => getId(mem?.id)}
               />
            
           </div>

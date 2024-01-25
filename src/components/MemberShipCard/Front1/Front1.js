@@ -13,11 +13,13 @@ const Front1 = ({ className }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const memberCard = member?.[0];
-  const words = memberCard?.description?.split(".");
+  const memberCard = member?.filter(
+    (foo) => foo.type === "monthly" && foo.name === "Focused"
+  );
+  const mem = memberCard?.[0];
+  const words = mem?.description?.split(".");
   const list = words;
   const Istoken = useSelector((state) => state?.authSlice?.authToken);
-
   const getId = (slug) => {
     if (Istoken) {
       router.push({
@@ -28,7 +30,7 @@ const Front1 = ({ className }) => {
       Swal.fire({
         position: "center",
         icon: "info",
-        title: "Please Login !",
+        title: "Please Login first!",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -44,20 +46,20 @@ const Front1 = ({ className }) => {
       <div className={styles.flipcardfront}>
         <div>
           <div className={`${styles.cardBody} card-body`}>
-            <h6 className={`${styles.carTitle}`}>{memberCard?.name}</h6>
+            <h6 className={`${styles.carTitle}`}>{mem?.name}</h6>
             <hr />
             <h6 className={`${styles.SubTitle}`}>
               <sup className={styles.card3SmText}>$</sup>
               <span className={styles.BigText}>
-                {memberCard?.price && memberCard.price}
+                {mem?.price && mem.price}
               </span>
-              /Mo
+              /{mem?.type}
             </h6>
 
             <ul className={styles.pricingListOverFlow}>
               {!loading ? (
                 <>
-                  {list?.slice(0, 6)?.map((memList, i) => (
+                  {list?.map((memList, i) => (
                     <li key={i}>
                       {memList.split(",").map((word, i) => (
                         <span key={i}>{word.trim()}</span>
@@ -75,7 +77,7 @@ const Front1 = ({ className }) => {
             <div>
               <MemberButton
                 label="BUY NOW" 
-                onClick={() => getId(memberCard?.id)}
+                onClick={() => getId(mem?.id)}
                 className={className}
               />
             </div>

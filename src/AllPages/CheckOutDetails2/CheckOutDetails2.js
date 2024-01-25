@@ -10,6 +10,7 @@ import {
   UserSubscription,
   UserSubscriptionCreate,
 } from "../../Service/Subscription";
+import { getProfile } from "../../Redux/Profile/Profile";
 const CheckOutDetails2 = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -17,6 +18,7 @@ const CheckOutDetails2 = () => {
   const [selectedMem, setSelectedOption] = useState("");
   const [isValid, setIsValid] = useState(false);
   const token = useSelector((state) => state?.authSlice?.authToken);
+  const userEmail = useSelector((state) => state?.ProfileSlice?.profile?.user?.email);
   const [striptoken, setStriptoken] = useState();
   // const [type, setType] = useState("Select");
   const [subDetails, setSubscriptionDetails] = useState([]);
@@ -24,25 +26,15 @@ const CheckOutDetails2 = () => {
     setStriptoken(isToken?.id);
   };
   const slug = router?.query?.id;
-  const handleChange = (e) => {
-    e.preventDefault();
-    // setType(e.target.value);
-
-    const selectedValue = e.target.value;
-    setSelectedOption(selectedValue);
-    setIsValid(selectedValue !== "");
-    setIsValid(false);
-  };
-
-
   const HandleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(getProfile(token));
     setIsValid(false);
     setLoading(true);
     try {
-      if (striptoken){
+      if (striptoken) {
         let data = new FormData();
-        data.append("type", selectedMem);
+        data.append("type", subDetails?.type);
         data.append("subscription_id", slug);
         data.append("stripeToken", striptoken);
         dispatch(UserSubscriptionCreate(token, data, setLoading, router));
@@ -53,10 +45,10 @@ const CheckOutDetails2 = () => {
       setLoading(false);
     }
   };
-  
+
   const calculatePrice = () => {
     if (selectedMem === "annually") {
-      return subDetails?.price * 12 + 150;
+      return subDetails?.price + 150;
     } else {
       return subDetails?.price * 1 + 150;
     }
@@ -64,6 +56,8 @@ const CheckOutDetails2 = () => {
   useEffect(() => {
     dispatch(UserSubscription(slug, token, setLoading, setSubscriptionDetails));
   }, [slug, token]);
+
+
   return (
     <>
       <div className="container-fluid p-0">
@@ -73,59 +67,19 @@ const CheckOutDetails2 = () => {
           </div>
         </div>
 
-        <div className="container py-5">
+        <div className="container py-5 justify-content-center ">
           <div className={`${styles.rowReverse} row`}>
-            <div className="col-lg-5 offset-lg-1">
+            <div className="col-lg-12">
               {/* Heading */}
               <div className="py-3">
-                <h1 className={styles.cartHeading}>Select Membership Plan</h1>
-              </div>
-              <div className={styles.plan}>
-                <label
-                  className={`${styles.month} form-check-label`}
-                  htmlFor="subscriptionToggle"
-                ></label>
-                <select
-                  className={`${styles.formSelect} form-select`}
-                  value={selectedMem}
-                  onChange={(e) => handleChange(e)}
-                  id={styles.subscriptionToggle}
-                >
-                  <option value="Select">Select</option>
-                  <option value="monthly" name="monthly">
-                    Monthly
-                  </option>
-                  <option value="annually" name="annually">
-                    Annually
-                  </option>
-                  {isValid ? <p style={{ color: "red" }}>Please select</p> : ""}
-                </select>
-                
-              </div>
-
-              <div className="py-3">
-                <>
-                  {striptoken ? (
-                    ""
-                  ) : (
-                    <StripeCheckout
-                      token={onToken}
-                      stripeKey="pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3"
-                      currency="USD"
-                      amount={calculatePrice(selectedMem)}
-                    >
-                      <CommanButton
-                        label="add to card"
-                        onClick={HandleSubmit}
-                        className={styles.cartButton}
-                      />
-                    </StripeCheckout>
-                  )}
-                </>
+                <h1 className={styles.cartHeading}>
+                  You Select {subDetails?.type} Membership Plan{" "}
+                  {subDetails?.name}
+                </h1>
               </div>
             </div>
 
-            <div className="col-lg-6">
+            <div className="">
               <div className={styles.card}>
                 <h1 className={styles.cardTopHeading}>{subDetails?.name}</h1>
 
@@ -138,15 +92,7 @@ const CheckOutDetails2 = () => {
 
                   <div className="col-lg-6 p-0">
                     <article className={styles.cardDetail}>
-                      {selectedMem === "annually" ? (
-                        <>
-                          <span>${subDetails?.price * 12}</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>${subDetails?.price}</span>
-                        </>
-                      )}
+                      <span>${subDetails?.price}</span>
                     </article>
                   </div>
                 </div>
@@ -161,7 +107,7 @@ const CheckOutDetails2 = () => {
                   <div className="col-lg-6 p-0">
                     <article className={styles.cardDetail}>
                       {" "}
-                      {selectedMem}
+                      {subDetails?.type}
                     </article>
                   </div>
                 </div>
@@ -202,6 +148,28 @@ const CheckOutDetails2 = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="col-lg-4 py-3 m-auto">
+          <>
+            {striptoken ? (
+              ""
+            ) : (
+              <StripeCheckout
+                token={onToken}
+                stripeKey="pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3"
+                currency="USD"
+                amount={calculatePrice(selectedMem)}
+                email={userEmail}
+              >
+                <CommanButton
+                  label="PAY NOW"
+                  onClick={HandleSubmit}
+                  className={styles.cartButton}
+                />
+              </StripeCheckout>
+            )}
+          </>
         </div>
 
         <div className="container py-5">

@@ -23,7 +23,9 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
+.inner{
+    display: none  !important;
+}
 /* / Firefox / */
 /* input[type=number] {
   -moz-appearance: textfield;

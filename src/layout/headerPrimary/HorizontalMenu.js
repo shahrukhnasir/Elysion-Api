@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AllServices } from "../../Service/HomePageService";
 import { Skeleton } from "antd";
 import Swal from "sweetalert2";
+import { FaShoppingCart } from "react-icons/fa";
+import { getCartList } from "../../Redux/CartList/CartList";
 
 const HorizontalMenu = () => {
   const [servicesData, setServicesData] = useState([]);
@@ -18,6 +20,7 @@ const HorizontalMenu = () => {
   useEffect(() => {
     dispatch(AllServices(setLoading, setServicesData, dispatch));
   }, []);
+  const session_id = useSelector((state) => state?.sessionSlice?.session);
 
   const router = useRouter();
   const [search, setsearch] = useState(false);
@@ -53,7 +56,13 @@ const HorizontalMenu = () => {
   //       "https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons",
   //   });
   // };
+  const [data, setdata] = useState([]);
   const Istoken = useSelector((state) => state?.authSlice?.authToken);
+  const cart = useSelector((state) => state?.CartSlice?.cart);
+  var size = cart?.length;
+
+  // setdata(cart)
+  console.log(data,"sizsizee");
   // const btn2 = (
   //   <>
   //     <div className={styles?.btnText}>Free </div>
@@ -107,6 +116,25 @@ const HorizontalMenu = () => {
       });
     }
   };
+  // const [cart, setAddCartList] = useState([]);
+  // useEffect(() => {
+  //   if (Istoken) {
+  //     dispatch(
+  //       AddToCartListHandler(Istoken, setAddCartList, setLoading, dispatch)
+  //     );
+  //   } else if (!Istoken) {
+  //     dispatch(
+  //       GuestCartLists(session_id, setAddCartList, setLoading, dispatch)
+  //     );
+  //   }
+  // }, [session_id,cart]);
+
+  // useEffect(() => {
+  // dispatch(getCartList(Istoken, session_id));
+
+  // }, [Istoken, session_id])
+  
+  // console.log(cart?.length,"cartcart");
   return (
     <>
       <div id={styles?.topMenuBarContainer}>
@@ -251,7 +279,10 @@ const HorizontalMenu = () => {
                             </li>
                             <li className={styles?.dropLink}>
                               {" "}
-                              <Link href="" onClick={(e) => handlePatientPortal(e)}>
+                              <Link
+                                href=""
+                                onClick={(e) => handlePatientPortal(e)}
+                              >
                                 Patient Portal
                               </Link>
                             </li>
@@ -360,13 +391,15 @@ const HorizontalMenu = () => {
 										</Link>
 									</li> */}
                   <li>
-                    <Link href="">
-                      <FaSearch
+                    <Link href="/my-cart">
+                      <FaShoppingCart className={styles?.searchIcon} />
+                      <div className={styles.cart}>{size}</div>
+                      {/* <FaSearch
                         className={styles?.searchIcon}
                         onClick={searchHandler}
                         data-bs-toggle="modal"
                         data-bs-target="#exampleModal1"
-                      />
+                      /> */}
                     </Link>
                   </li>
 

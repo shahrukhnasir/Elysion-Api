@@ -86,9 +86,13 @@
 }
 
 .cartHeading {
-    font-size: 22px;
+    font-size: 26px;
     font-family: var(--main-font-regular);
     color: #1C3247;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    text-transform: capitalize;
 }
 
 .checkLabel {
@@ -162,10 +166,10 @@
 
 /* Card */
 .cardTopHeading {
-    font-size: 24px;
-    font-family: var(--main-font-regular);
+    font-size: 22px;
+    font-family: var(--main-font-bold);
     color: #1c3247;
-    text-align: start;
+    text-align: center;
     padding: 10px 0px;
 }
 
@@ -175,7 +179,7 @@
     border: 2px solid #1c3247;
     border-radius: 20px;
     padding: 10px 30px;
-    margin: 70px 0px 8px 135px;
+    margin: auto    ;
 
 
 }

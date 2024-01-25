@@ -22,6 +22,7 @@ const MyCart = () => {
   const token = useSelector((state) => state?.authSlice?.authToken);
   const dispatch = useDispatch();
   const [cartList, setAddCartList] = useState([]);
+  console.log(cartList,"lasdkaskj")
   const [loading, setLoading] = useState(false);
   const session_id = useSelector((state) => state?.sessionSlice?.session);
   useEffect(() => {
@@ -35,6 +36,7 @@ const MyCart = () => {
       );
     }
   }, [session_id]);
+  console.log(cartList?.length,"cartList");
   const handleRemovedById = (slug) => {
     if (token) {
       dispatch(
