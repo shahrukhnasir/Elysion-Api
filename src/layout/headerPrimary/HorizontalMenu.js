@@ -12,6 +12,8 @@ import { Skeleton } from "antd";
 import Swal from "sweetalert2";
 import { FaShoppingCart } from "react-icons/fa";
 import { getCartList } from "../../Redux/CartList/CartList";
+import { getCartCount } from "../../Service/CartService";
+import { getGuestCartCount } from "../../Service/GuestService";
 
 const HorizontalMenu = () => {
   const [servicesData, setServicesData] = useState([]);
@@ -56,13 +58,15 @@ const HorizontalMenu = () => {
   //       "https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons",
   //   });
   // };
-  const [data, setdata] = useState([]);
+  
   const Istoken = useSelector((state) => state?.authSlice?.authToken);
-  const cart = useSelector((state) => state?.CartSlice?.cart);
-  var size = cart?.length;
+  // const cart = useSelector((state) => state?.CartSlice?.cart);
+  // var size = cart?.length;
 
+
+
+  
   // setdata(cart)
-  console.log(data,"sizsizee");
   // const btn2 = (
   //   <>
   //     <div className={styles?.btnText}>Free </div>
@@ -116,6 +120,22 @@ const HorizontalMenu = () => {
       });
     }
   };
+const [cartCount, setCartCount] = useState([]);
+const [guestCartCount, setGuestCartCount] = useState([]);
+ useEffect(() => {
+    if (Istoken) {
+      dispatch(
+        getCartCount(Istoken, setCartCount)
+      );
+    } else if (!Istoken) {
+      dispatch(
+        getGuestCartCount(session_id, setGuestCartCount)
+      );
+    }
+  }, [session_id]);
+
+  console.log(cartCount,guestCartCount,"cartCount");
+
   // const [cart, setAddCartList] = useState([]);
   // useEffect(() => {
   //   if (Istoken) {
@@ -393,7 +413,7 @@ const HorizontalMenu = () => {
                   <li>
                     <Link href="/my-cart">
                       <FaShoppingCart className={styles?.searchIcon} />
-                      <div className={styles.cart}>{size}</div>
+                      <div className={styles.cart}>{cartCount || guestCartCount}</div>
                       {/* <FaSearch
                         className={styles?.searchIcon}
                         onClick={searchHandler}

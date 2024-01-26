@@ -6,6 +6,7 @@ import Shadow from "../../components/Shadow/Shadow";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { ForgotPasswordHandler } from "../../Service/AuthService";
+import Swal from "sweetalert2";
 const ForgotScreen = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -20,6 +21,20 @@ const ForgotScreen = () => {
     ) {
       setError(true);
       setLoading(false);
+      return;
+    }
+    // Email validation
+    const emailValidationPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Please provide a valid email address",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
       return;
     }
     setError(false);

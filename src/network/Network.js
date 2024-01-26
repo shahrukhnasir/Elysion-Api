@@ -6,6 +6,7 @@ import {
   BILLING,
   BLOGS,
   BLOG_CONTENT,
+  CART_COUNT,
   CATEGORIES,
   CAT_BY_PRODUCT,
   CHECK_OUT,
@@ -17,6 +18,7 @@ import {
   FORGOT_PASSWORD,
   FREE_CONSULTATION,
   GUEST_CART_ALL_REMOVE,
+  GUEST_CART_COUNT,
   GUEST_CART_CREATE,
   GUEST_CART_LIST,
   GUEST_CART_REMOVE,
@@ -349,4 +351,11 @@ export const TermService = (data) => {
 }
 export const AboutUs = (data) => {
   return getMethod(`${ABOUT_US}`, data);
+}
+
+export const CartCount = (Istoken,data) => {
+  return getMethod(`${CART_COUNT}`,Istoken, data);
+}
+export const GuestCartCount = (session_id,data) => {
+  return getMethod(`${GUEST_CART_COUNT}`,session_id, data);
 }

@@ -1,9 +1,9 @@
 import Swal from "sweetalert2";
-import { GuestAllCartListRemoved, GuestCartCreate, GuestCartList, GuestCartListRemoved, GuestCheckOut } from "../network/Network";
-import { getCartList } from "../Redux/CartList/CartList";
+import { GuestAllCartListRemoved, GuestCartCount, GuestCartCreate, GuestCartList, GuestCartListRemoved, GuestCheckOut } from "../network/Network";
+import { getCartList, setCartList } from "../Redux/CartList/CartList";
 
 ////👇// Add TO Cart Guest
-export const AddToCartGuest = (data, setLoading, router) => () => {
+export const AddToCartGuest = (data, setLoading, router,dispacth) => () => {
     GuestCartCreate(data)
       .then((res) => {
         
@@ -32,12 +32,13 @@ export const AddToCartGuest = (data, setLoading, router) => () => {
 
   
 // 👇 Add TO Cart List
-export const GuestCartLists = (session_id,setAddCartList, setLoading) => (dispatch) => {
+export const GuestCartLists = (session_id,setLoading,setAddCartList,dispacth) => (dispatch) => {
     setLoading(true);
   
     GuestCartList(session_id)
       .then((res) => {
-        console.log(res, "addd");
+        // dispacth(setCartList(res?.data?.response?.data))
+        // console.log(res, "addd");
         dispatch(setAddCartList(res?.data?.response?.data));
         setLoading(false);
       })
@@ -159,4 +160,15 @@ export const GuestCheckOutHandler =
     });
     // setLoading(false);
   }
+};
+
+// 👇Cart item counting
+export const getGuestCartCount = (session_id, setGuestCartCount) => async () => {
+  GuestCartCount(session_id)
+    .then((res) => {
+      setGuestCartCount(res?.data?.response?.data?.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };

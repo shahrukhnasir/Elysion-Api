@@ -32,22 +32,22 @@ export const USER_SUBSCRIPTION_CREATE = `user-subscription/create`;
 export const USER_SUBSCRIPTION_BY_ID = `memberships/view/`;
 export const USER_SUBSCRIPTION_BY_TOKEN = `user-subscription`;
 export const WISHLIST_ADD = `wishlist/create`;
-export const CONTACT_US_CONTENT= `content-pages/view/contact-us`;
-export const OFFICE_POLICY = `content-pages/view/office-policy`
-export const DISCLAIMER = `content-pages/view/disclaimer`
-export const PRIVACY_POLICY = `pages/view/privacy-and-policy`
-export const PRIVACY_POLICY_CONTENT = `content-pages/view/privacy-policy`
-export const TERM_CONDITION = `pages/view/terms-and-condition`
-export const TERM_CONDITION_CONTENT = `content-pages/view/termservice`
+export const CONTACT_US_CONTENT = `content-pages/view/contact-us`;
+export const OFFICE_POLICY = `content-pages/view/office-policy`;
+export const DISCLAIMER = `content-pages/view/disclaimer`;
+export const PRIVACY_POLICY = `pages/view/privacy-and-policy`;
+export const PRIVACY_POLICY_CONTENT = `content-pages/view/privacy-policy`;
+export const TERM_CONDITION = `pages/view/terms-and-condition`;
+export const TERM_CONDITION_CONTENT = `content-pages/view/termservice`;
+export const CART_COUNT = `cart/count`;
 
 // PATIENT RESOURCES
-export const PATIENT_FORM = `content-pages/view/patient-form`
-export const PATIENT_RESOURCES = `content-pages/view/patient-resources`
-export const PATIENT_EDUCATION = `content-pages/view/patient-education`
-export const INSURANCE = `content-pages/view/insurance	`
-export const BILLING = `content-pages/view/billing	`
+export const PATIENT_FORM = `content-pages/view/patient-form`;
+export const PATIENT_RESOURCES = `content-pages/view/patient-resources`;
+export const PATIENT_EDUCATION = `content-pages/view/patient-education`;
+export const INSURANCE = `content-pages/view/insurance	`;
+export const BILLING = `content-pages/view/billing	`;
 export const FAQ = `faqs`;
-
 
 // Profile/
 export const MY_PROFILE = `me`;
@@ -70,3 +70,4 @@ export const GUEST_CART_LIST = `guest-cart`;
 export const GUEST_CART_REMOVE = `guest-cart/delete`;
 export const GUEST_CART_ALL_REMOVE = `guest-cart/delete-all`;
 export const GUEST_CHECK_OUT = `guest-checkout`;
+export const GUEST_CART_COUNT =`guest-cart/count`

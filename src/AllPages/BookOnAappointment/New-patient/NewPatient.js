@@ -79,6 +79,7 @@ const NewPatient = () => {
   };
 
   const handleSelectChange = (e) => {
+    e.preventDefault();
     const id = e.target.value;
     router.push({
       pathname: "/new-patient",

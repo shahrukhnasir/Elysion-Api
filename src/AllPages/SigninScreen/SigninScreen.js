@@ -8,15 +8,18 @@ import { useRouter } from "next/router";
 import Shadow from "../../components/Shadow/Shadow";
 import { LoginHandler } from "../../Service/AuthService";
 import { useDispatch } from "react-redux";
+import { removedAllCart } from "../../Redux/CartList/CartList";
+// import { removedAllCart } from ".";
 const SigninScreen = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [passwordType, setPasswordType] = useState("password");
+  const [passwordType, setPasswordType] = useState("number");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [chatFields, setChatFields] = useState({ email: "",password: "",device_id:"random$"});
   const HandleSubmit = (e) => {
     e.preventDefault();
+    dispatch(removedAllCart())
     setLoading(true);
     if (
       chatFields.email.length === 0 ||

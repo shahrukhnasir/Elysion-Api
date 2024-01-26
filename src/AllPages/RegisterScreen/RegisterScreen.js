@@ -3,11 +3,12 @@ import styles from "../RegisterScreen/RegisterScreen.module.css";
 import CommanButton from "../../components/CommanButton/CommanButton";
 import Link from "next/link";
 import Shadow from "../../components/Shadow/Shadow";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import TopLayout from "../../components/TopLayout/TopLayout";
 import { SignUpHandler } from "../../Service/AuthService";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 const RegisterScreen = () => {
   const router = useRouter();
   const [passwordType, setPasswordType] = useState("password");
@@ -39,8 +40,94 @@ const RegisterScreen = () => {
       setLoading(false);
       return;
     }
+
+    // Name validation
+    const nameReg = /^[a-zA-Z]+\s*[a-zA-Z]*$/;
+
+    if (!chatFields.fname || !nameReg.test(chatFields.fname)) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "First name characters should be alphabetic",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
+      return;
+    }
+    if (!chatFields.lname || !nameReg.test(chatFields.lname)) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Last name characters should be alphabetic",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
+      return;
+    }
+    //  / Phone validation
+    if (
+      !chatFields.phone ||
+      chatFields.phone.length < 10 ||
+      chatFields.phone.length > 20
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title:
+          (chatFields.phone.length < 10 &&
+            "Phone number must be between 10 to 20 digits") ||
+          (chatFields.phone.length > 20 && "Phone number is too long"),
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
+      return;
+    }
+
+    // password validation
+    const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+    if (!chatFields.password || !specialCharRegex.test(chatFields.password)) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "password field must have at least one speial character",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
+      return;
+    }
+       // Confirm password validation
+       const specialRegex = /[!@#$%^&*(),.?":{}|<>]/;
+       if (!chatFields.confirmPassword || !specialRegex.test(chatFields.confirmPassword)) {
+         Swal.fire({
+           position: "center",
+           icon: "error",
+           title: "confirm password field must have at least one speial character",
+           showConfirmButton: false,
+           timer: 1500,
+         });
+         setError(true);
+         return;
+       }
+    // Email validation
+    const emailValidationPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!chatFields.email || !emailValidationPattern.test(chatFields.email)) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Please provide a valid email address",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
+      return;
+    }
     setError(false);
-    setLoading(true );
+    setLoading(true);
     let data = new FormData();
     data.append("first_name", chatFields?.fname);
     data.append("last_name", chatFields?.lname);
@@ -48,7 +135,7 @@ const RegisterScreen = () => {
     data.append("mobile", chatFields?.phone);
     data.append("password", chatFields?.password);
     data.append("confirm_password", chatFields?.confirmPassword);
-    dispatch(SignUpHandler(data, setLoading, setChatFields,router));
+    dispatch(SignUpHandler(data, setLoading, setChatFields, router));
   };
   const handleChange = (e) => {
     e.preventDefault();
@@ -222,7 +309,7 @@ const RegisterScreen = () => {
               </div>
 
               <div class="col-12 pb-5">
-                <div class="form-check">
+                {/* <div class="form-check">
                   <input
                     class="form-check-input"
                     type="checkbox"
@@ -238,21 +325,12 @@ const RegisterScreen = () => {
                     </Link>
                   </span>
                 </div>
-                {!loading ? (
-                  <CommanButton
-                    onClick={HandleSubmit}
-                    className={styles.FromBtn}
-                    label="Sign Up"
-                  />
-                ) : (
-                  <CommanButton
-                    onClick={HandleSubmit}
-                    className={styles.FromBtn}
-                    label="Submiting..."
-                  />
-                )}
-
-                {/* </Link> */}
+              */}
+                <CommanButton
+                  onClick={HandleSubmit}
+                  className={styles.FromBtn}
+                  label="Sign Up"
+                />
               </div>
             </div>
           </div>

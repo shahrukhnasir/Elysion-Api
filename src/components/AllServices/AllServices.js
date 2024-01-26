@@ -27,12 +27,10 @@ const AllServices = () => {
     Swal.fire({
       position: "center",
       icon: "info",
-      title: "Login please. Can you book this service?",
-      showConfirmButton: true,
+      title: "please login first",
+      showConfirmButton: false,
       timer: 1500,
-      customClass: {
-        confirmButton: "theme-button-bg",
-      },
+      
     });
   }
 

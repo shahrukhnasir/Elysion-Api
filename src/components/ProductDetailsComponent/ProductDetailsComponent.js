@@ -19,9 +19,10 @@ import {
   AddToCartHandler,
   AddToCartListHandler,
   WishListAddToListProduct,
+  getCartCount,
   getProductDetailById,
 } from "../../Service/CartService";
-import { AddToCartGuest, GuestCartLists } from "../../Service/GuestService";
+import { AddToCartGuest, GuestCartLists, getGuestCartCount } from "../../Service/GuestService";
 import { Skeleton } from "antd";
 import { setSessionId } from "../../Redux/Auth/sessionSlice";
 import { getCartList } from "../../Redux/CartList/CartList";
@@ -58,10 +59,21 @@ const ProductDetailsComponent = () => {
 
   const session_id = Math.floor(Math.random() * 100);
   const session = useSelector((state) => state?.sessionSlice?.session);
+  const [cartCount, setCartCount] = useState('');
+  const [guestCartCount, setGuestCartCount] = useState('');
 
+  console.log(cartCount,guestCartCount, "gnyundy");
   const AddToCartHandle = async (e) => {
     e.preventDefault();
-   
+    if (token) {
+      dispatch(
+        getCartCount(token, setCartCount)
+      );
+    } else if (!token) {
+      dispatch(
+        getGuestCartCount(session_id, setGuestCartCount)
+      );
+    }
     // dispatch(getCartList(token, session_id));
     if (session == null || session == "") {
       dispatch(setSessionId(session_id));

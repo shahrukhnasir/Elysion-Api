@@ -151,11 +151,11 @@ const CheckOutDetails = () => {
   useEffect(() => {
     if (token) {
       dispatch(
-        AddToCartListHandler(token, setAddCartList, setLoading, dispatch)
+        AddToCartListHandler(token,  setLoading,setAddCartList, dispatch)
       );
     } else if (!token) {
       dispatch(
-        GuestCartLists(session_id, setAddCartList, setLoading, dispatch)
+        GuestCartLists(session_id,  setLoading,setAddCartList, dispatch)
       );
     }
   }, [token]);

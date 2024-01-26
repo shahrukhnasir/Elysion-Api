@@ -5,11 +5,15 @@
     border: 1px solid #bebebe !important;
     margin: 18px 0px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .card img {
     height: 205px !important;
 }
+.card img:hover {
+    transform: scale(1.05);
+  }
 .cardTitleSec{
     height: 40px !important;
 }

@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import {
   AddToCart,
   AddToCartList,
+  CartCount,
   CatByProducts,
   Categories,
   CheckOut,
@@ -14,6 +15,7 @@ import {
   getProducts,
 } from "../network/Network";
 import "sweetalert2/dist/sweetalert2.min.css";
+import { setCartList } from "../Redux/CartList/CartList";
 
 // 👇Categories Service//
 export const CategoryList = (setLoading, setCategory) => (dispatch) => {
@@ -144,11 +146,11 @@ export const AddToCartHandler = (token, data, setLoading, router) => () => {
 
 ////👇Add TO Cart List
 export const AddToCartListHandler =
-  (token, setAddCartList, setLoading) => (dispatch) => {
+  (token, setLoading, setAddCartList, dispacth) => (dispatch) => {
     setLoading(true);
     AddToCartList(token)
       .then((res) => {
-        
+        // dispacth(setCartList(res?.data?.response?.data))
         setAddCartList(res?.data?.response?.data);
         setLoading(false);
         // console.log(res?.data?.response?.data, "res");
@@ -353,3 +355,14 @@ export const productData =
     //   setLoading(false);
     // }
   };
+
+// 👇Cart item counting
+export const getCartCount = (Istoken, setCartCount) => async () => {
+  CartCount(Istoken)
+    .then((res) => {
+      setCartCount(res?.data?.response?.data?.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

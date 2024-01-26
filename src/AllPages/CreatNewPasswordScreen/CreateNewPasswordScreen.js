@@ -7,6 +7,7 @@ import TopLayout from "../../components/TopLayout/TopLayout";
 import { useDispatch } from "react-redux";
 import { OtpNewPasswordHandler } from "../../Service/AuthService";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 const CreateNewPasswordScreen = () => {
   const dispatch = useDispatch();
   const [passwordType, setPasswordType] = useState("password");
@@ -32,6 +33,51 @@ const CreateNewPasswordScreen = () => {
     ) {
       setError(true);
       setLoading(false);
+      return;
+    }
+      // password validation
+      const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+      if (!chatFields.password || !specialCharRegex.test(chatFields.password)) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "password field must have at least one speial character",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setError(true);
+        return;
+      }
+         // Confirm password validation
+         const specialRegex = /[!@#$%^&*(),.?":{}|<>]/;
+         if (!chatFields.confirmPassword || !specialRegex.test(chatFields.confirmPassword)) {
+           Swal.fire({
+             position: "center",
+             icon: "error",
+             title: "confirm password field must have at least one speial character",
+             showConfirmButton: false,
+             timer: 1500,
+           });
+           setError(true);
+           return;
+         }
+    // /  / Phone validation
+    if (
+      !chatFields.otp ||
+      chatFields.otp.length < 4 ||
+      chatFields.otp.length > 6
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title:
+          (chatFields.otp.length < 4 &&
+            "OTP must be between 4 digits") ||
+          (chatFields.otp.length > 6 && "OTP is too long"),
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
       return;
     }
     setError(false);
@@ -76,7 +122,7 @@ const CreateNewPasswordScreen = () => {
         <TopLayout
           Heading="Create New Password"
           descriptions="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut felis eros, blandit sed mattis sit amet, porta sit amet orci. Maecenas sed tempor tellus. Donec tincidunt convallis accumsan. Curabitur congue luctus odio, et elementum ante accumsan eget. Phasellus mollis, mi sollicitudin tincidunt eleifend."
-          image="./images/register-now.png"
+          image="/images/about-us.png"
         />
         <div className="container py-5">
           <div className={styles.setShaowRight}>
@@ -86,7 +132,7 @@ const CreateNewPasswordScreen = () => {
             <div className="col-lg-6 my-auto">
               <div className="">
                 <img
-                  src="./images/doc-tp.png"
+                  src="/images/doc-tp.png"
                   className={styles.FormSectionImage}
                   alt="img"
                 />
@@ -199,19 +245,13 @@ const CreateNewPasswordScreen = () => {
                   </div>
                 </div>
               </div>
-              {!loading ? (
+             
                 <CommanButton
                   onClick={HandleSubmit}
                   className={styles.FromBtn}
                   label="Submit"
                 />
-              ) : (
-                <CommanButton
-                  onClick={HandleSubmit}
-                  className={styles.FromBtn}
-                  label="Submiting..."
-                />
-              )}
+              
             </div>
           </div>
         </div>

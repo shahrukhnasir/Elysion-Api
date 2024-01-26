@@ -1,16 +1,19 @@
 import Swal from "sweetalert2";
-import { ForgotPassword, Login, OtpChangePassword, SignUp } from "../network/Network";
+import {
+  ForgotPassword,
+  Login,
+  OtpChangePassword,
+  SignUp,
+} from "../network/Network";
 import { setAuthToken } from "../Redux/Auth/authSlice";
-
 
 //👇Login Service//////////////✔🤞
 
-export const LoginHandler = (data, setLoading, setChatFields, router, dispatch) => () => {
+export const LoginHandler =
+  (data, setLoading, setChatFields, router, dispatch) => () => {
     try {
       Login(data)
         .then((res) => {
-
-  
           const token = res?.data?.response?.data?.token;
           dispatch(setAuthToken(token));
           setLoading(false);
@@ -19,7 +22,6 @@ export const LoginHandler = (data, setLoading, setChatFields, router, dispatch) 
             password: "",
             device_id: "random$",
           });
-  
 
           Swal.fire({
             position: "center",
@@ -27,30 +29,32 @@ export const LoginHandler = (data, setLoading, setChatFields, router, dispatch) 
             title: "Login Successfully",
             showConfirmButton: false,
             timer: 1500,
-            
           });
-  
-          
+
           router.push("/profile");
         })
-        .catch((error) => {
-          console.error("Error in Login:", error);
-            Swal.fire({
+        .catch((err) => {
+          console.log(err, "Error");
+          const errorMessage =
+            err?.response?.data?.errors?.email?.[0] ||
+            err?.response?.data?.errors?.password?.[0] ||
+            err?.response?.data?.message;
+          Swal.fire({
             position: "center",
             icon: "error",
-            title: "Login Failed",
+            title: errorMessage,
             text: "Please check your fields",
             showConfirmButton: true,
             customClass: {
               confirmButton: "theme-button-bg",
             },
           });
-  
+
           setLoading(false);
         });
     } catch (error) {
       console.error("Unexpected error in LoginHandler:", error);
-  
+
       Swal.fire({
         position: "center",
         icon: "error",
@@ -62,12 +66,10 @@ export const LoginHandler = (data, setLoading, setChatFields, router, dispatch) 
   };
 
 //👇Register Services//////////
-export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
-  
-
+export const SignUpHandler =
+  (data, setLoading, setChatFields, router) => () => {
     SignUp(data)
-    .then((res) => {
-
+      .then((res) => {
         setLoading(false);
         setChatFields({
           fname: "",
@@ -86,43 +88,41 @@ export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
           customClass: {
             confirmButton: "theme-button-bg",
           },
-          
         });
         router.push("/signin");
       })
       .catch((err) => {
-        console.log(err?.response?.data,"Error in SignUp:");
+        console.log(err?.response?.data, "Error in SignUp:");
         setLoading(false);
         Swal.fire({
           position: "center",
           icon: "error",
-          title: err?.response?.data?.errors?.mobile?.[0]||
-          err?.response?.data?.errors?.password?.[0] ||
-          err?.response?.data?.errors?.password?.[1] ||
-          err?.response?.data?.errors?.confirm_password?.[0] ||
-          err?.response?.data?.errors?.first_name?.[0] ||
-          err?.response?.data?.errors?.last_name?.[0] ||
-          err?.response?.data?.errors?.email?.[0] ||
-          err?.response?.data?.message,
+          title:
+            err?.response?.data?.errors?.mobile?.[0] ||
+            err?.response?.data?.errors?.password?.[0] ||
+            err?.response?.data?.errors?.password?.[1] ||
+            err?.response?.data?.errors?.confirm_password?.[0] ||
+            err?.response?.data?.errors?.first_name?.[0] ||
+            err?.response?.data?.errors?.last_name?.[0] ||
+            err?.response?.data?.errors?.email?.[0] ||
+            err?.response?.data?.message,
           text: "Please check your fields",
           showConfirmButton: true,
           customClass: {
             confirmButton: "theme-button-bg",
           },
-        
         });
         router.push("/register");
       });
-
-  }
+  };
 
 //👇Forgot Password Service////////////
 
-  export const ForgotPasswordHandler = (data, setLoading, setChatFields, router) => () => {
+export const ForgotPasswordHandler =
+  (data, setLoading, setChatFields, router) => () => {
     try {
       ForgotPassword(data)
         .then((res) => {
-        
           setLoading(false);
           setChatFields({
             email: "",
@@ -137,19 +137,18 @@ export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
           });
           router.push("/createnewpassword");
         })
-        .catch((error) => {
-          console.error("Error in Forgot:", error);
+        .catch((err) => {
+          console.log(err, "errerr");
           Swal.fire({
             position: "center",
             icon: "error",
             title: "Forgot Failed",
             text: "Please check your fields",
             showConfirmButton: true,
-            
-          
-        customClass: {
-          confirmButton: "theme-button-bg",
-        },
+
+            customClass: {
+              confirmButton: "theme-button-bg",
+            },
           });
 
           setLoading(false);
@@ -170,11 +169,11 @@ export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
   };
 
 //👇OTP New Password Change Service/////////
-  export const OtpNewPasswordHandler = (data, setLoading, setChatFields, router) => async () => {
+export const OtpNewPasswordHandler =
+  (data, setLoading, setChatFields, router) => async () => {
     try {
       const res = await OtpChangePassword(data);
 
-  
       setLoading(false);
       setChatFields({
         email: "",
@@ -182,7 +181,7 @@ export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
         password: "",
         confirmPassword: "",
       });
-  
+
       await Swal.fire({
         position: "center",
         icon: "success",
@@ -193,7 +192,7 @@ export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
           confirmButton: "theme-button-bg",
         },
       });
-  
+
       // Add a confirmation dialog
       const confirmResult = await Swal.fire({
         title: "Password Updated Successfully",
@@ -206,25 +205,30 @@ export const SignUpHandler = (data, setLoading, setChatFields,router) => () => {
           confirmButton: "theme-button-bg",
         },
       });
-  
+
       if (confirmResult.isConfirmed) {
         router.push("/signin");
       }
-    } catch (error) {
-      console.error("Error in Password Update:", error);
-  
+    } catch (err) {
+      // console.error("Error in Password Update:", err);
+
       await Swal.fire({
         position: "center",
         icon: "error",
-        title: "Password Update Failed",
+        title:
+          err?.response?.data?.errors?.email?.[0] ||
+          err?.response?.data?.errors?.confirm_password?.[0] ||
+          err?.response?.data?.errors?.password?.[0] ||
+          err?.response?.data?.errors?.password?.[1] ||
+          err?.response?.data?.errors?.otp ||
+          err?.response?.data?.message,
         text: "Please check your fields",
         showConfirmButton: true,
         customClass: {
           confirmButton: "theme-button-bg",
         },
       });
-  
+
       setLoading(false);
     }
   };
-  

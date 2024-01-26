@@ -24,15 +24,17 @@ const MyCart = () => {
   const [cartList, setAddCartList] = useState([]);
   console.log(cartList,"lasdkaskj")
   const [loading, setLoading] = useState(false);
+  const cart = useSelector((state) => state?.CartSlice?.cart);
+  console.log(cart,'cartcartcart');
   const session_id = useSelector((state) => state?.sessionSlice?.session);
   useEffect(() => {
     if (token) {
       dispatch(
-        AddToCartListHandler(token, setAddCartList, setLoading, dispatch)
+        AddToCartListHandler(token, setLoading,setAddCartList, dispatch)
       );
     } else if (!token) {
       dispatch(
-        GuestCartLists(session_id, setAddCartList, setLoading, dispatch)
+        GuestCartLists(session_id,setLoading,setAddCartList, dispatch)
       );
     }
   }, [session_id]);

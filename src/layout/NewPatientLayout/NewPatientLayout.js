@@ -54,6 +54,16 @@ const NewPatientLayout = ({ children, heading }) => {
     [slug, token],
     slots
   );
+  const tileContent = ({ date, view }) => {
+    if (view === 'month' && date.getDate() === currentDate.getDate()) {
+      return <span className="current-date-marker"></span>;
+    }
+    return null;
+  };
+
+  const currentDate = new Date(); 
+  const activeStartDate = new Date(2024, 0);
+  console.log(slots,"slots");
   return (
     <>
       <section>
@@ -80,6 +90,12 @@ const NewPatientLayout = ({ children, heading }) => {
                   onChange={dateSelectHandler}
                   value={date}
                   selectRange={false}
+                  minDate={currentDate}
+                  tileContent={tileContent}
+                  activeStartDate={activeStartDate}
+
+
+                  
                 />
               </div>
 
