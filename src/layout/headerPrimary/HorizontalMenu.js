@@ -132,7 +132,7 @@ const [guestCartCount, setGuestCartCount] = useState([]);
         getGuestCartCount(session_id, setGuestCartCount)
       );
     }
-  }, [session_id]);
+  }, [cartCount]);
 
   console.log(cartCount,guestCartCount,"cartCount");
 
@@ -413,7 +413,7 @@ const [guestCartCount, setGuestCartCount] = useState([]);
                   <li>
                     <Link href="/my-cart">
                       <FaShoppingCart className={styles?.searchIcon} />
-                      <div className={styles.cart}>{cartCount || guestCartCount}</div>
+                      <div className={styles.cart}>{cartCount}</div>
                       {/* <FaSearch
                         className={styles?.searchIcon}
                         onClick={searchHandler}

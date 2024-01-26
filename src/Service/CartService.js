@@ -360,7 +360,8 @@ export const productData =
 export const getCartCount = (Istoken, setCartCount) => async () => {
   CartCount(Istoken)
     .then((res) => {
-      setCartCount(res?.data?.response?.data?.data);
+      console.log(res?.data?.response?.data,"CartCount");
+      setCartCount(res?.data?.response?.data);
     })
     .catch((err) => {
       console.log(err);
