@@ -23,7 +23,8 @@ const HorizontalMenu = () => {
     dispatch(AllServices(setLoading, setServicesData, dispatch));
   }, []);
   const session_id = useSelector((state) => state?.sessionSlice?.session);
-
+  const cart = useSelector((state) => state?.CartSlice?.cart?.length);
+console.log(cart,"jffc");
   const router = useRouter();
   const [search, setsearch] = useState(false);
   const [menu, setMenu] = useState(false);
@@ -44,59 +45,7 @@ const HorizontalMenu = () => {
     setDropDown(!dropDown);
   };
 
-  // const dropServiceHandler = () => {
-  //   setDropDown(!dropDown);
-  //   router.push({
-  //     pathname: "/service",
-  //   });
-  // };
-  // const dropShopHandler = () => {
-  //   setDropDown(!dropDown);
-  //   router.push({
-  //     // pathname: "/shop",
-  //     pathname:
-  //       "https://us.fullscript.com/welcome/elysionhealth/signup?utm_medium=webreferral&utm_source=other&utm_campaign=abmwebbuttons_dark_200x200.svg&signup_source=website_buttons",
-  //   });
-  // };
-  
   const Istoken = useSelector((state) => state?.authSlice?.authToken);
-  // const cart = useSelector((state) => state?.CartSlice?.cart);
-  // var size = cart?.length;
-
-
-
-  
-  // setdata(cart)
-  // const btn2 = (
-  //   <>
-  //     <div className={styles?.btnText}>Free </div>
-  //     <div className={styles?.extraText}>Consultation</div>
-  //   </>
-  // );
-  // const serviceMenu = [
-  //   {
-  //     id: 1,
-  //     route: "/services",
-  //     label: "Patient Portal",
-  //   },
-  //   {
-  //     id: 1,
-  //     route: "/services",
-  //     label: "Patient Portal",
-  //   },
-  // ];
-
-  // const router = useRouter()
-  // const navigateTo = (routeId) => {
-  //   // router.push(`/services/${routeId}`)
-  //   router.push(
-  //     {
-  //       pathname: `/services/${routeId}`,
-  //       query: routeId,
-  //     },
-  //     `/services/${routeId}`
-  //   );
-  // };
   const getServiceId = (slug) => {
     router.push({
       pathname: "/service",
@@ -109,7 +58,7 @@ const HorizontalMenu = () => {
   const handlePatientPortal = (e) => {
     e.preventDefault();
     if (Istoken) {
-      router.push("profile");
+      router.push("/profile");
     } else {
       Swal.fire({
         position: "center",
@@ -120,41 +69,7 @@ const HorizontalMenu = () => {
       });
     }
   };
-const [cartCount, setCartCount] = useState([]);
-const [guestCartCount, setGuestCartCount] = useState([]);
- useEffect(() => {
-    if (Istoken) {
-      dispatch(
-        getCartCount(Istoken, setCartCount)
-      );
-    } else if (!Istoken) {
-      dispatch(
-        getGuestCartCount(session_id, setGuestCartCount)
-      );
-    }
-  }, [cartCount]);
-
-  console.log(cartCount,guestCartCount,"cartCount");
-
-  // const [cart, setAddCartList] = useState([]);
-  // useEffect(() => {
-  //   if (Istoken) {
-  //     dispatch(
-  //       AddToCartListHandler(Istoken, setAddCartList, setLoading, dispatch)
-  //     );
-  //   } else if (!Istoken) {
-  //     dispatch(
-  //       GuestCartLists(session_id, setAddCartList, setLoading, dispatch)
-  //     );
-  //   }
-  // }, [session_id,cart]);
-
-  // useEffect(() => {
-  // dispatch(getCartList(Istoken, session_id));
-
-  // }, [Istoken, session_id])
-  
-  // console.log(cart?.length,"cartcart");
+ 
   return (
     <>
       <div id={styles?.topMenuBarContainer}>
@@ -413,7 +328,15 @@ const [guestCartCount, setGuestCartCount] = useState([]);
                   <li>
                     <Link href="/my-cart">
                       <FaShoppingCart className={styles?.searchIcon} />
-                      <div className={styles.cart}>{cartCount}</div>
+                      <div className={styles.cart}>
+                      
+                          <span>
+                        
+                            {cart ? cart : 0 }
+                          </span>
+                      
+                      </div>
+
                       {/* <FaSearch
                         className={styles?.searchIcon}
                         onClick={searchHandler}

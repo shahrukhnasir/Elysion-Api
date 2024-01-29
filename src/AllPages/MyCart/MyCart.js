@@ -16,23 +16,30 @@ import {
   GuestCartLists,
   GuestRemovedToCartItem,
 } from "../../Service/GuestService";
+import { setCartList } from "../../Redux/CartList/CartList";
 const MyCart = () => {
   const router = useRouter();
 
   const token = useSelector((state) => state?.authSlice?.authToken);
   const dispatch = useDispatch();
   const [cartList, setAddCartList] = useState([]);
-  console.log(cartList,"lasdkaskj")
+  // console.log(cartList,"lasdkaskj")
   const [loading, setLoading] = useState(false);
   const cart = useSelector((state) => state?.CartSlice?.cart);
   console.log(cart,'cartcartcart');
   const session_id = useSelector((state) => state?.sessionSlice?.session);
+
+  useEffect(()=>{
+    dispatch(setCartList(cartList))
+  },[cartList]);
+  
   useEffect(() => {
     if (token) {
       dispatch(
         AddToCartListHandler(token, setLoading,setAddCartList, dispatch)
       );
     } else if (!token) {
+      dispatch(setCartList(cartList))
       dispatch(
         GuestCartLists(session_id,setLoading,setAddCartList, dispatch)
       );

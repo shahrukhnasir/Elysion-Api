@@ -222,9 +222,9 @@ export const ServiceProvider = (token, data) => {
 export const ServiceProviderById = (slug, token, data) => {
   return getMethod(`${SERVICE_PROVIDER_ID}${slug}`, token, data);
 };
-
-export const SlotById = (slug, token, data) => {
-  return getMethod(`${SLOTS}${slug}`, token, data);
+//{{base_url}}/slots/get-slots?doc_id=3&date=2024-1-3
+export const SlotById = (slug, date, token, data) => {
+  return getMethod(`${SLOTS}?doc_id=${slug}&date=${date}`, token, data);
 };
 export const SlotsAvailable = (token, data) => {
   return postMethod(`${SLOTS_AVAILABLE}`, data, token);
@@ -335,27 +335,27 @@ export const OfficePolicy = (data) => {
 
 export const Disclaimer = (data) => {
   return getMethod(`${DISCLAIMER}`, data);
-}
+};
 export const privacyPolicyContent = (data) => {
   return getMethod(`${PRIVACY_POLICY_CONTENT}`, data);
-}
+};
 export const privacyPolicy = (data) => {
   return getMethod(`${PRIVACY_POLICY}`, data);
-}
+};
 
 export const TermServiceContent = (data) => {
   return getMethod(`${TERM_CONDITION_CONTENT}`, data);
-}
+};
 export const TermService = (data) => {
   return getMethod(`${TERM_CONDITION}`, data);
-}
+};
 export const AboutUs = (data) => {
   return getMethod(`${ABOUT_US}`, data);
-}
+};
 
-export const CartCount = (Istoken,data) => {
-  return getMethod(`${CART_COUNT}`,Istoken, data);
-}
-export const GuestCartCount = (session_id,data) => {
-  return getMethod(`${GUEST_CART_COUNT}`,session_id, data);
-}
+export const CartCount = (Istoken, data) => {
+  return getMethod(`${CART_COUNT}`, Istoken, data);
+};
+export const GuestCartCount = (session_id, data) => {
+  return getMethod(`${GUEST_CART_COUNT}?session_id=${session_id}`, data);
+};

@@ -29,7 +29,7 @@ export const DoctorDetails = (slug, token, setLoading, setDocDetails) => () => {
   ServiceProviderById(slug, token)
     .then((res) => {
       setDocDetails(res?.data?.response?.data);
-      console.log(res?.data?.response?.data, ":RESULT");
+      // console.log(res?.data?.response?.data, ":RESULT");
       setLoading(false);
     })
     .catch((err) => {
@@ -38,16 +38,21 @@ export const DoctorDetails = (slug, token, setLoading, setDocDetails) => () => {
     });
 };
 
-export const Slots = (slug, token, setLoading, setSlots) => () => {
+export const Slots = (slug, date, token, setLoading, setSlots) => () => {
   setLoading(true);
-  SlotById(slug, token)
+  SlotById(slug, date, token)
     .then((res) => {
-      setSlots(res?.data?.response?.data);
-      console.log(res?.data?.response?.data, ":RESULT");
+      if (res.status === 200) {
+        setSlots(res?.data?.response?.data);
+      } else if (res.status === 404) {
+        setSlots([]);
+      }
+      console.log(res?.data?.response?.data, "yyyy");
       setLoading(false);
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err?.response?.data?.message, "errrr");
+      setSlots([])
       setLoading(false);
     });
 };
@@ -60,11 +65,6 @@ export const CheckSlotsHandler =
 
       console.log(res);
       setLoading(false);
-      // setAvailableSlots({
-      //   doc_id: "",
-      //   time: "",
-      //   date: "",
-      // });
 
       Swal.fire({
         position: "center",
@@ -136,7 +136,7 @@ export const SlotCheckOutHandler =
     setLoading(true);
     try {
       const res = await SlotCreateCheckOut(token, data);
-     
+
       // if (res?.data?.message === "success") {
       setLoading(false);
       await Swal.fire({

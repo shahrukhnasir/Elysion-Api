@@ -13,7 +13,7 @@ import { removedAllCart } from "../../Redux/CartList/CartList";
 const SigninScreen = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [passwordType, setPasswordType] = useState("number");
+  const [passwordType, setPasswordType] = useState("password");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [chatFields, setChatFields] = useState({ email: "",password: "",device_id:"random$"});

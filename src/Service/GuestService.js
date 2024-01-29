@@ -166,7 +166,8 @@ export const GuestCheckOutHandler =
 export const getGuestCartCount = (session_id, setGuestCartCount) => async () => {
   GuestCartCount(session_id)
     .then((res) => {
-      setGuestCartCount(res?.data?.response?.data?.data);
+      console.log(res?.data?.response?.data,"GUESTSKJK");
+      setGuestCartCount(res?.data?.response?.data);
     })
     .catch((err) => {
       console.log(err);

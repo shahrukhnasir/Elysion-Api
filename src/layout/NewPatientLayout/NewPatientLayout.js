@@ -29,7 +29,6 @@ const NewPatientLayout = ({ children, heading }) => {
   };
   //🤞Slots Clicked Function
   const variationClick = (value) => {
-
     if (getVariations.includes(value)) {
       const removal = getVariations.filter((varr) => varr !== value);
 
@@ -38,32 +37,38 @@ const NewPatientLayout = ({ children, heading }) => {
     } else {
       setVariations([...getVariations, value]);
     }
-
   };
+  const Dates = useSelector((state) => state?.currentDate?.currentDate);
   //🤞Date Select set Redux
-  const dateSelectHandler = (selectedDate) => {
-    setDate(selectedDate);
+  const dateSelectHandler = (date) => {
+    // console.log(selectedDate, "selectedDate");
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    const formattedDate = date.toLocaleDateString('en-US', options);
 
-    dispatch(setAppointmentDate(formatDate(selectedDate)));
+    dispatch(Slots(slug, formattedDate, token, setLoading, setSlots));
+    setDate(date);
+    dispatch(setAppointmentDate(formatDate(date)));
   };
+  console.log(slots,"selectedDate  ");
   //Slots Api
-  useEffect(
-    () => {
-      dispatch(Slots(slug, token, setLoading, setSlots));
-    },
-    [slug, token],
-    slots
-  );
+  // useEffect(
+  //   () => {
+  //     dispatch(Slots(slug, Dates, token, setLoading, setSlots));
+  //   },
+  //   [slug, token],
+  //   slots
+  // );
+  // console.log(selectedDate, "selectedDate");
   const tileContent = ({ date, view }) => {
-    if (view === 'month' && date.getDate() === currentDate.getDate()) {
+    if (view === "month" && date.getDate() === currentDate.getDate()) {
       return <span className="current-date-marker"></span>;
     }
     return null;
   };
 
-  const currentDate = new Date(); 
+  const currentDate = new Date();
   const activeStartDate = new Date(2024, 0);
-  console.log(slots,"slots");
+  console.log(slots, "slots");
   return (
     <>
       <section>
@@ -92,10 +97,7 @@ const NewPatientLayout = ({ children, heading }) => {
                   selectRange={false}
                   minDate={currentDate}
                   tileContent={tileContent}
-                  activeStartDate={activeStartDate}
-
-
-                  
+                  // activeStartDate={activeStartDate}
                 />
               </div>
 
@@ -105,7 +107,7 @@ const NewPatientLayout = ({ children, heading }) => {
                     {!loading ? (
                       <>
                         <span className="aTime">Available Time</span>
-                        {slots.map((item) => {
+                        { slots.map((item) => {
                           const selected = getVariations?.includes(item);
                           return (
                             <div className="col-lg-6" key={item?.id}>
@@ -145,9 +147,10 @@ const NewPatientLayout = ({ children, heading }) => {
                     ) : (
                       <div className="text-center">
                         <TimeButton
-                         
-                          from="Waiting"
-                          to="..."
+                          from=""
+                          to="Waiting"
+                          day=''
+
                           className={styles.btn}
                         />
                       </div>
@@ -157,8 +160,8 @@ const NewPatientLayout = ({ children, heading }) => {
                   <div className="text-center">
                     <TimeButton
                       from="No Slots"
-                      to="Available"
-                      day={''}
+                      to="not available"
+                      day={""}
                       className={styles.btn}
                     />
                   </div>

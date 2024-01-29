@@ -65,15 +65,15 @@ const ProductDetailsComponent = () => {
   console.log(cartCount,guestCartCount, "gnyundy");
   const AddToCartHandle = async (e) => {
     e.preventDefault();
-    if (token) {
-      dispatch(
-        getCartCount(token, setCartCount)
-      );
-    } else if (!token) {
-      dispatch(
-        getGuestCartCount(session_id, setGuestCartCount)
-      );
-    }
+    // if (token) {
+    //   dispatch(
+    //     getCartCount(token, setCartCount)
+    //   );
+    // } else if (!token) {
+    //   dispatch(
+    //     getGuestCartCount(session_id, setGuestCartCount)
+    //   );
+    // }
     // dispatch(getCartList(token, session_id));
     if (session == null || session == "") {
       dispatch(setSessionId(session_id));

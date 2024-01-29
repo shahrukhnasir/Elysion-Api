@@ -1,9 +1,12 @@
 /* Select Flied */
 
 .Label{
-    font-size: 12px;
+    font-size: 16px;
     font-family: var(--main-font-regular);
     color: #000000;
+    text-align: center;
+    display: flex;
+    justify-content: center;
     }
     .selectField {
         border-radius: 51px;
