@@ -4,36 +4,7 @@ import styles from "../BookOnAappointment/BookOnAppointment.module.css";
 import { useRouter } from "next/router";
 import TopLayout from "../../../components/TopLayout/TopLayout";
 
-const service = [
-    {
-        Title: "Internal and integrative medicine",
 
-    },
-
-    {
-        Title: "Family Medicine",
-
-    },
-    {
-        Title: "Functional Nutrition ",
-
-    },
-
-    {
-        Title: "Lifestyle Management",
-
-    },
-
-    {
-        Title: "Weight Loss Management",
-
-    },
-
-    {
-        Title: "IV Hydration and Vitamin Therapy",
-
-    },
-];
 const BookOnAappointment = () => {
     const router = useRouter();
 
@@ -48,7 +19,10 @@ const BookOnAappointment = () => {
 
     const HandleFollowUp = (event) => {
         const selectedRoute = event.target.value;
-        router.push(`/${selectedRoute}`);
+        router.push({
+            pathname: `/${selectedRoute}`,
+            query: { page: selectedRoute }, 
+        });
     };
     return (
         // <NewPatientLayout heading="Request Appoinment">

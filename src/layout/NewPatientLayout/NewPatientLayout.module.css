@@ -46,12 +46,16 @@
     z-index: 2;
 
 }
+.notAvailable span{
+    padding: 10px 0px;
+}
 
 .selectDate {
-    font-size: 16px;
-    font-family: var(--main-font-regular);
+    font-size: 18px;
+    font-family: var(--main-font-bold);
     color: #000000;
     margin: 0px 0px 20px 0px !important;
+    text-align: center;
 }
 
 .aTime {

@@ -31,14 +31,14 @@ const NewPatient = () => {
   const [isServiceValid, setIsServiceValid] = useState(false);
   const slug = router.query?.docId;
 
-
   //👇 Service Providers Api implement and All Services implement
   useEffect(() => {
     dispatch(SelectServiceProvider(token, setLoading, setService));
     dispatch(AllServices(setLoading, setServicesData));
   }, [token]);
+  // const  pageName =router.query.page?.split('/')?.[1]
 
-  //👇Doctor Details Api implementation
+//👇Doctor Details Api implementation
   useEffect(() => {
     if (slug) {
       dispatch(DoctorDetails(slug, token, setLoading, setDocDetails));
@@ -53,13 +53,12 @@ const NewPatient = () => {
   //👇Hanlde Next page Function With 👇 Slots Available Api implementation
   const handleNext = (e) => {
     e.preventDefault();
-    // const token = useSelector((state) => state?.authSlice?.authToken);
     if (selectedOption !== "" && selectedService !== "") {
       router.push({
         // pathname: "/followup",
         query: { docId: selectedOption },
       });
-
+      e.preventDefault();
       setIsValid(false);
       setIsServiceValid(false);
 
@@ -82,7 +81,7 @@ const NewPatient = () => {
     e.preventDefault();
     const id = e.target.value;
     router.push({
-      pathname: "/new-patient",
+      // pathname: "/new-patient",
       query: { docId: id },
     });
     const selectedValue = e.target.value;
@@ -97,7 +96,6 @@ const NewPatient = () => {
     setIsServiceValid(selectedValue !== "");
     setIsServiceValid(false);
     dispatch(setSelectService(selectedValue));
-
   };
 
   return (
@@ -143,7 +141,7 @@ const NewPatient = () => {
             )}
           </div>
 
-          <div className="col-lg-6">
+          {/* <div className="col-lg-6">
             <label for="inputState" className={`${styles.Label} form-label`}>
               Reason For Visit
             </label>
@@ -153,12 +151,12 @@ const NewPatient = () => {
               onChange={HandleFollowUp}
             >
               <option selected className={styles.optionField}>
-                Reason For Visit
+              Patient type  : {pageName}
               </option>
-              <option className={styles.optionField}>New-Patient</option>
-              <option className={styles.optionField}>Follow-Up</option>
+             
+              
             </select>
-          </div>
+          </div> */}
 
           <div className="col-lg-6">
             <label for="inputState" className={`${styles.Label} form-label`}>
@@ -212,13 +210,18 @@ const NewPatient = () => {
             </p>
           </div>
         </div>
-
-        <h6 className={styles.cardTopHeading}>Service Provider</h6>
+        {docDetails && Object.keys(docDetails).length > 0 ? (
+          <h6 className={styles.cardTopHeading}>Service Provider</h6>
+        ) : (
+          <>
+            <Skeleton avatar paragraph={{ rows: 4 }} loading={loading} />
+          </>
+        )}
 
         <div className={`${styles.card} card mb-3`}>
           <div className="row g-0">
             <div className="col-md-8">
-              {!loading ? (
+              {docDetails && Object.keys(docDetails).length > 0 ? (
                 <>
                   <div className={`${styles.card} card mb-3`}>
                     <div className="row g-0">
@@ -248,13 +251,18 @@ const NewPatient = () => {
                           <p className={styles.textMuted}>
                             {docDetails?.zip_code}
                           </p>
-                          <div className={styles.outlineButton}>
-                            <button> Next Available Slots </button>
-                          </div>
+                         
                         </div>
                       </div>
                     </div>
                   </div>
+                  <Link
+                    href=""
+                    onClick={(e) => handleNext(e)}
+                    className={styles.nextBtn}
+                  >
+                    <CommanButton label="Next" />
+                  </Link>
                 </>
               ) : (
                 <>
@@ -264,10 +272,6 @@ const NewPatient = () => {
             </div>
           </div>
         </div>
-
-        <Link href="" onClick={(e) => handleNext(e)} className={styles.nextBtn}>
-          <CommanButton label="Next" />
-        </Link>
       </div>
     </NewPatientLayout>
   );

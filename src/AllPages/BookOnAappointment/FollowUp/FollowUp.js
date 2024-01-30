@@ -75,7 +75,7 @@ const FollowUp = () => {
     setIsValid(selectedValue !== "");
     setIsValid(false);
   };
-
+  // const  pageName =router.query.page?.split('/')?.[1]
   return (
     <NewPatientLayout heading="Request Appoinment">
       {/* <button onChange={handle}>aaa</button> */}
@@ -119,7 +119,7 @@ const FollowUp = () => {
               </>
             )}
           </div>
-          <div className="col-lg-6">
+          {/* <div className="col-lg-6">
             <label for="inputState" className={`${styles.Label} form-label`}>
               Reason For Visit
             </label>
@@ -129,16 +129,11 @@ const FollowUp = () => {
               onChange={HandleFollowUp}
             >
               <option selected className={styles.optionField}>
-                Reason For Visit
+              Patient type  : {pageName}
               </option>
-              <option value={"/new-patient"} className={styles.optionField}>
-                New-Patient
-              </option>
-              <option value={"/followup"} className={styles.optionField}>
-                Follow-Up
-              </option>
+              
             </select>
-          </div>
+          </div> */}
         </div>
       </div>
 

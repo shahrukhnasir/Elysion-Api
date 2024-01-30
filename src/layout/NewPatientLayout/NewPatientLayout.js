@@ -87,7 +87,8 @@ const NewPatientLayout = ({ children, heading }) => {
             <div className="col-lg-8">{children}</div>
             <div className="col-lg-4">
               <span className={styles.selectDate}>
-                Select Date As per Available Time
+                
+                Select Date and Get Available Slots
               </span>
 
               <div className="calendar-container">
@@ -145,13 +146,13 @@ const NewPatientLayout = ({ children, heading }) => {
                         })}
                       </>
                     ) : (
-                      <div className="text-center">
+                      <div className="text-center py-5">
                         <TimeButton
                           from=""
                           to="Waiting"
                           day=''
 
-                          className={styles.btn}
+                          className={styles.notAvailable}
                         />
                       </div>
                     )}
@@ -162,7 +163,7 @@ const NewPatientLayout = ({ children, heading }) => {
                       from="No Slots"
                       to="not available"
                       day={""}
-                      className={styles.btn}
+                      className={styles.notAvailable}
                     />
                   </div>
                 )}

@@ -84,8 +84,8 @@ export const CheckSlotsHandler =
         position: "center",
         icon: "error",
         title:
-          error.response?.data?.message && "Select the correct Time & Date",
-        text: error.response?.data?.message || "An error occurred",
+          error.response?.data?.message ,
+        text:"Select another Date",
         showConfirmButton: true,
         customClass: {
           confirmButton: "theme-button-bg",
