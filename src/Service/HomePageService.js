@@ -60,6 +60,7 @@ export const MeetDoctorSections =
     setLoading(true);
     MeetDoctorContent()
       .then((res) => {
+        console.log();
         setMainHeading(res?.data?.response?.data?.[4]?.value);
         setParaOne(res?.data?.response?.data?.[2]?.value);
         setParaTwo(res?.data?.response?.data?.[3]?.value);

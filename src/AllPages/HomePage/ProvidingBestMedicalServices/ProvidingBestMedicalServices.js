@@ -30,7 +30,7 @@ const ProvidingBestMedicalServices = () => {
       )
     );
   }, []);
-console.log(docImage,"docImage");
+  console.log(docImage, "docImage");
   return (
     <>
       <div className="container-fluid" id={styles.mainHeroContainer}>
@@ -82,32 +82,51 @@ console.log(docImage,"docImage");
             >
               <div className={styles.rightSec}>
                 <h1 className={styles.mainHeading}>
-                  {!loading ? (
+                Meet Your Doctor
+
+                  {/* {!loading ? (
                     mainHeading
                   ) : (
                     <>
                       <Skeleton />
                     </>
-                  )}
+                  )} */}
                 </h1>
 
                 <p className={styles.mainDescription}>
-                  {!loading ? (
+                  Dr. Tessa Gibson, the founder of Elysion Health & Wellness and
+                  a board-certified internal medicine physician, possesses over
+                  twenty years of experience in her field. Her medical degree
+                  was obtained from the University of the West Indies in
+                  Jamaica, and she completed her residency in internal medicine
+                  at the New York Medical College. Throughout her career, Dr.
+                  Gibson has earned a reputation for her compassionate and
+                  comprehensive approach to patient care. Patients deeply value
+                  her unyielding dedication, exceptional clinical skills, and
+                  unwavering commitment to providing the highest standard of
+                  care. Notably, Dr. Gibson has dedicated several years of her
+                  professional journey to training internal medicine residents,
+                  helping them develop into outstanding healthcare providers.
+                  She is a fervent advocate for health, wellness, and
+                  integrative medicine, firmly believing in the significance of
+                  patient education and empowerment to foster healthy lifestyles
+                  and effectively manage chronic diseases.
+                  {/* {!loading ? (
                     paraOne
                   ) : (
                     <>
                       <Skeleton />
                     </>
-                  )}
+                  )} */}
                 </p>
                 <p className={styles.mainDescription}>
-                  {!loading ? (
+                  {/* {!loading ? (
                     paraTwo
                   ) : (
                     <>
                       <Skeleton />
                     </>
-                  )}
+                  )} */}
                 </p>
                 {/* 
                 <div className="row mt-3">
@@ -161,19 +180,24 @@ console.log(docImage,"docImage");
                 </div> */}
                 <div className={styles.affiliations}>
                   <h6>
-                    {!loading ? (
+                    Memberships And Affiliations
+                    {/* {!loading ? (
                       subHeading
                     ) : (
                       <>
                         <Skeleton />
                       </>
-                    )}
+                    )} */}
                   </h6>
 
                   <ul>
-                    {!loading ? (
+                    <li>American Board of Internal Medicine</li>
+                    <li>Institute of Functional Medicine</li>
+                    <li>Obesity Medicine Association</li>
+                    {/* {!loading ? (
                       <>
                         <li>
+                          
                           {points && points.length >= 0
                             ? points.substring(0, 37)
                             : null}
@@ -193,7 +217,7 @@ console.log(docImage,"docImage");
                       <>
                         <Skeleton />
                       </>
-                    )}
+                    )} */}
                   </ul>
                 </div>
 
@@ -214,14 +238,14 @@ console.log(docImage,"docImage");
                 {!loading ? (
                   <div className={styles.meetDocImage}>
                     <Image
-                      src={docImage}
+                      src={meetDoc}
                       width={100}
                       height={50}
                       alt="Picture of the Doctor"
                     />
                   </div>
                 ) : (
-                  <Skeleton active avatar row={12}/>
+                  <Skeleton active avatar row={12} />
                 )}
               </div>
             </div>
