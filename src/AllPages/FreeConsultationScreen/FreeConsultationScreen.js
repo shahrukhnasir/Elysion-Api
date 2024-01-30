@@ -172,7 +172,7 @@ quasi"
 
                 <div className="col-lg-12 pt-lg-3">
                   <input
-                    type="date"
+                    type="number"
                     name="dob"
                     value={chatFields.dob}
                     onChange={handleChange}

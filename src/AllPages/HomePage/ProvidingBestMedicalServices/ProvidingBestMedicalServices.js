@@ -30,7 +30,7 @@ const ProvidingBestMedicalServices = () => {
       )
     );
   }, []);
-
+console.log(docImage,"docImage");
   return (
     <>
       <div className="container-fluid" id={styles.mainHeroContainer}>

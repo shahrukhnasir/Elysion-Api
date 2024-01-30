@@ -107,7 +107,7 @@ const NewPatientLayout = ({ children, heading }) => {
                   <>
                     {!loading ? (
                       <>
-                        <span className="aTime">Available Time</span>
+                        <span className="aTime">Available slots please select</span>
                         { slots.map((item) => {
                           const selected = getVariations?.includes(item);
                           return (
