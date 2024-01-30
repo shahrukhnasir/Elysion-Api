@@ -50,8 +50,8 @@ export const MeetDoctorSections = (setLoading, setData) => (dispatch) => {
   setLoading(true);
   MeetDoctorContent()
     .then((res) => {
-      setData(res?.data?.response?.data?.data);
-      console.log(res?.data?.response, "dyd");
+      setData(res?.data?.response?.data);
+      // console.log(res?.data?.response?.data, "sdsdd");
       // setMainHeading(res?.data?.response?.data?.[4]?.value);
       // setParaOne(res?.data?.response?.data?.[2]?.value);
       // setParaTwo(res?.data?.response?.data?.[3]?.value);
@@ -172,8 +172,8 @@ export const FooterNewsLatterEmail =
         Swal.fire({
           position: "center",
           icon: "error",
-          title: "Email  Failed",
-          text: "Please check your fields",
+          title: err?.response?.data?.message,
+          text: "Something went wrong",
           showConfirmButton: true,
           customClass: {
             confirmButton: "theme-button-bg",

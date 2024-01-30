@@ -8,14 +8,14 @@ import { useDispatch } from "react-redux";
 import { MeetDoctorSections } from "../../../Service/HomePageService";
 import { Skeleton } from "antd";
 const ProvidingBestMedicalServices = () => {
-  const [mainHeading, setMainHeading] = useState([]);
-  const [paraOne, setParaOne] = useState([]);
-  const [paraTwo, setParaTwo] = useState([]);
-  const [docImage, setDocImage] = useState([]);
-  const [subHeading, setSubHeading] = useState([]);
-  const [points, setPoints] = useState("");
+  // const [mainHeading, setMainHeading] = useState([]);
+  // const [paraOne, setParaOne] = useState([]);
+  // const [paraTwo, setParaTwo] = useState([]);
+  // const [docImage, setDocImage] = useState([]);
+  // const [subHead, setSubHeading] = useState('');
+  // const [points, setPoints] = useState("");
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState(false);
+  const [data, setData] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
@@ -32,8 +32,18 @@ const ProvidingBestMedicalServices = () => {
       )
     );
   }, []);
-  console.log(data,"data");
-  console.log(docImage, "docImage");
+  console.log(data, "data");
+  const memberAff = data?.filter(
+    (sub) => sub?.type === "Memberships And Affiliations"
+  );
+
+  const mainHeading = data?.filter(
+    (sub) => sub?.type === "Memberships And Affiliations"
+  );
+
+  // setSubHeading(subHeading?.[0]);
+
+  console.log(memberAff, "memberAff");
   return (
     <>
       <div className="container-fluid" id={styles.mainHeroContainer}>
@@ -85,8 +95,7 @@ const ProvidingBestMedicalServices = () => {
             >
               <div className={styles.rightSec}>
                 <h1 className={styles.mainHeading}>
-                Meet Your Doctor
-
+                  Meet Your Doctor
                   {/* {!loading ? (
                     mainHeading
                   ) : (
@@ -183,36 +192,39 @@ const ProvidingBestMedicalServices = () => {
                 </div> */}
                 <div className={styles.affiliations}>
                   <h6>
-                    Memberships And Affiliations
-                    {/* {!loading ? (
-                      subHeading
+                    {/* {subHeading?.length > 0
+                      ? subHeading?.[0]?.type
+                      : "Data not found"} */}
+                    {/* Memberships And Affiliations */}
+                    {!loading ? (
+                      <>
+                        {memberAff && memberAff?.length > 0
+                          ? memberAff?.[0]?.type
+                          : "Data not found"}
+                      </>
                     ) : (
                       <>
                         <Skeleton />
                       </>
-                    )} */}
+                    )}
                   </h6>
 
                   <ul>
-                    <li>American Board of Internal Medicine</li>
-                    <li>Institute of Functional Medicine</li>
-                    <li>Obesity Medicine Association</li>
-                    {/* {!loading ? (
+                    {!loading ? (
                       <>
                         <li>
-                          
-                          {points && points.length >= 0
-                            ? points.substring(0, 37)
+                          {memberAff && memberAff.length >= 0
+                            ? memberAff?.[0]?.value.substring(0, 37)
                             : null}
                         </li>
                         <li>
-                          {points && points.length >= 0
-                            ? points.substring(37, 69)
+                          {memberAff && memberAff.length >= 0
+                            ? memberAff?.[0]?.value.substring(37, 69)
                             : null}
                         </li>
                         <li>
-                          {points && points.length >= 0
-                            ? points.substring(69, 100)
+                          {memberAff && memberAff.length >= 0
+                            ? memberAff?.[0]?.value.substring(69, 100)
                             : null}
                         </li>
                       </>
@@ -220,7 +232,7 @@ const ProvidingBestMedicalServices = () => {
                       <>
                         <Skeleton />
                       </>
-                    )} */}
+                    )}
                   </ul>
                 </div>
 
