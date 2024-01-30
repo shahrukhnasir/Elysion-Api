@@ -37,13 +37,13 @@ const ProvidingBestMedicalServices = () => {
     (sub) => sub?.type === "Memberships And Affiliations"
   );
 
-  const mainHeading = data?.filter(
-    (sub) => sub?.type === "Memberships And Affiliations"
-  );
+  const meetDoctor = data?.filter((sub) => sub?.type === "Meet Your Doctor");
+  const meetDocImage = data?.filter((sub) => sub?.type === "meetdocimage");
+  const docImg = meetDocImage?.[0]?.image_url;
+  const content1 = data?.filter((sub) => sub?.type === "paraone");
+  const content2 = data?.filter((sub) => sub?.type === "paratwo");
 
-  // setSubHeading(subHeading?.[0]);
-
-  console.log(memberAff, "memberAff");
+  console.log(data, "memberAff");
   return (
     <>
       <div className="container-fluid" id={styles.mainHeroContainer}>
@@ -95,7 +95,17 @@ const ProvidingBestMedicalServices = () => {
             >
               <div className={styles.rightSec}>
                 <h1 className={styles.mainHeading}>
-                  Meet Your Doctor
+                  {!loading ? (
+                    <>
+                      {meetDoctor && meetDoctor?.length > 0
+                        ? meetDoctor?.[0]?.value
+                        : ""}
+                    </>
+                  ) : (
+                    <>
+                      <Skeleton />
+                    </>
+                  )}
                   {/* {!loading ? (
                     mainHeading
                   ) : (
@@ -106,39 +116,34 @@ const ProvidingBestMedicalServices = () => {
                 </h1>
 
                 <p className={styles.mainDescription}>
-                  Dr. Tessa Gibson, the founder of Elysion Health & Wellness and
-                  a board-certified internal medicine physician, possesses over
-                  twenty years of experience in her field. Her medical degree
-                  was obtained from the University of the West Indies in
-                  Jamaica, and she completed her residency in internal medicine
-                  at the New York Medical College. Throughout her career, Dr.
-                  Gibson has earned a reputation for her compassionate and
-                  comprehensive approach to patient care. Patients deeply value
-                  her unyielding dedication, exceptional clinical skills, and
-                  unwavering commitment to providing the highest standard of
-                  care. Notably, Dr. Gibson has dedicated several years of her
-                  professional journey to training internal medicine residents,
-                  helping them develop into outstanding healthcare providers.
-                  She is a fervent advocate for health, wellness, and
-                  integrative medicine, firmly believing in the significance of
-                  patient education and empowerment to foster healthy lifestyles
-                  and effectively manage chronic diseases.
-                  {/* {!loading ? (
-                    paraOne
-                  ) : (
+                  {content1?.length > 0 ? (
                     <>
-                      <Skeleton />
+                      {!loading ? (
+                        content1?.[0]?.value
+                      ) : (
+                        <>
+                          <Skeleton />
+                        </>
+                      )}
                     </>
-                  )} */}
+                  ) : (
+                    "Content not found"
+                  )}
                 </p>
                 <p className={styles.mainDescription}>
-                  {/* {!loading ? (
-                    paraTwo
-                  ) : (
+                  {content2?.length > 0 ? (
                     <>
-                      <Skeleton />
+                      {!loading ? (
+                        content2?.[0]?.value
+                      ) : (
+                        <>
+                          <Skeleton />
+                        </>
+                      )}
                     </>
-                  )} */}
+                  ) : (
+                    "Content not found"
+                  )}
                 </p>
                 {/* 
                 <div className="row mt-3">
@@ -210,28 +215,34 @@ const ProvidingBestMedicalServices = () => {
                   </h6>
 
                   <ul>
-                    {!loading ? (
+                    {memberAff?.length > 0 ? (
                       <>
-                        <li>
-                          {memberAff && memberAff.length >= 0
-                            ? memberAff?.[0]?.value.substring(0, 37)
-                            : null}
-                        </li>
-                        <li>
-                          {memberAff && memberAff.length >= 0
-                            ? memberAff?.[0]?.value.substring(37, 69)
-                            : null}
-                        </li>
-                        <li>
-                          {memberAff && memberAff.length >= 0
-                            ? memberAff?.[0]?.value.substring(69, 100)
-                            : null}
-                        </li>
+                        {!loading ? (
+                          <>
+                            <li>
+                              {memberAff && memberAff.length >= 0
+                                ? memberAff?.[0]?.value.substring(0, 37)
+                                : null}
+                            </li>
+                            <li>
+                              {memberAff && memberAff.length >= 0
+                                ? memberAff?.[0]?.value.substring(37, 69)
+                                : null}
+                            </li>
+                            <li>
+                              {memberAff && memberAff.length >= 0
+                                ? memberAff?.[0]?.value.substring(69, 100)
+                                : null}
+                            </li>
+                          </>
+                        ) : (
+                          <>
+                            <Skeleton />
+                          </>
+                        )}
                       </>
                     ) : (
-                      <>
-                        <Skeleton />
-                      </>
+                      "data not found"
                     )}
                   </ul>
                 </div>
@@ -250,10 +261,10 @@ const ProvidingBestMedicalServices = () => {
               data-aos-duration="2000"
             >
               <div className={styles.DocSection}>
-                {!loading ? (
+                {/* {!loading ? (
                   <div className={styles.meetDocImage}>
                     <Image
-                      src={meetDoc}
+                      src={meetDocImage?.[0]?.image_url}
                       width={100}
                       height={50}
                       alt="Picture of the Doctor"
@@ -261,6 +272,31 @@ const ProvidingBestMedicalServices = () => {
                   </div>
                 ) : (
                   <Skeleton active avatar row={12} />
+                )} */}
+
+                {!loading && (
+                  <>
+                    {meetDocImage?.length > 0 ? (
+                      <>
+                        <div className={styles.meetDocImage}>
+                          <Image
+                            src={docImg}
+                            width={100}
+                            height={50}
+                            alt="Picture of the Doctor"
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      "image not found"
+                    )}
+                  </>
+                )}
+
+                {loading && (
+                  <>
+                    <Skeleton />
+                  </>
                 )}
               </div>
             </div>

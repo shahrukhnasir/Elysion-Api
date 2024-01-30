@@ -24,7 +24,7 @@ const HorizontalMenu = () => {
   }, []);
   const session_id = useSelector((state) => state?.sessionSlice?.session);
   const cart = useSelector((state) => state?.CartSlice?.cart?.length);
-console.log(cart,"jffc");
+
   const router = useRouter();
   const [search, setsearch] = useState(false);
   const [menu, setMenu] = useState(false);

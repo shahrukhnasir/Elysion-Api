@@ -8,6 +8,7 @@ import { BlogsContent } from "../../../Service/HomePageService";
 import { useDispatch } from "react-redux";
 import BlogCard from "../../../components/BlogCard/BlogCard";
 import Skeleton from "react-loading-skeleton";
+import { useRouter } from "next/router";
 
 const Blogs = () => {
   const Blog = [
@@ -36,7 +37,7 @@ const Blogs = () => {
   const [blogHeading, setBlogHeading] = useState([]);
   const [blogDes, setBlogDes] = useState([]);
   const [blogImage, setBlogImage] = useState([]);
-
+const router = useRouter();
   useEffect(() => {
     dispatch(BlogsCard(setLoading, setBlog));
     dispatch(

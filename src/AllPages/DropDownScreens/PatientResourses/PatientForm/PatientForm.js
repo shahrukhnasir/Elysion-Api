@@ -11,6 +11,8 @@ const PatientForm = () => {
   useEffect(() => {
     dispatch(PatientFormContent(setLoading, setData));
   }, []);
+
+  console.log(data,'datadata');
   return (
     <>
       <TopLayout2
@@ -23,6 +25,7 @@ const PatientForm = () => {
       <div className="container py-lg-5">
         <div className="py-3">
           <h2 className={styles.subHeading}>
+
             {!loading ? data?.type : <Skeleton />}
           </h2>
         </div>

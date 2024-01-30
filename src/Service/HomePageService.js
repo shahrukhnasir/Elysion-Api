@@ -27,15 +27,16 @@ import {
 import PatientResources from "../AllPages/HomePage/PatientResources/PatientResources";
 
 export const HeroSections =
-  (setLoading, setMainHeading, setInternal, setBetterHealth, setTessaGibson) =>
+  (setLoading,setData) =>
   (dispatch) => {
     setLoading(true);
     HeroSectionContent()
       .then((res) => {
-        setMainHeading(res?.data?.response?.data?.[0]?.type);
-        setInternal(res?.data?.response?.data?.[0]?.value);
-        setBetterHealth(res?.data?.response?.data?.[1]?.type);
-        setTessaGibson(res?.data?.response?.data?.[1]?.value);
+        setData(res?.data?.response?.data)
+        // setMainHeading(res?.data?.response?.data?.[0]?.type);
+        // setInternal(res?.data?.response?.data?.[0]?.value);
+        // setBetterHealth(res?.data?.response?.data?.[1]?.type);
+        // setTessaGibson(res?.data?.response?.data?.[1]?.value);
         setLoading(false);
       })
       .catch((err) => {

@@ -7,40 +7,43 @@ import { useDispatch, useSelector } from "react-redux";
 import { Skeleton } from "antd";
 import Swal from "sweetalert2";
 const HeroSection = () => {
-  const [mainHeading, setMainHeading] = useState([]);
-  const [internal, setInternal] = useState([]);
-  const [betterHealth, setBetterHealth] = useState([]);
-  const [tessaGibson, setTessaGibson] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
   const dispatch = useDispatch();
   const token = useSelector((state) => state?.authSlice?.authToken);
-  const loginHanlder = (e) =>{
+  const loginHanlder = (e) => {
     e.preventDefault();
 
-          Swal.fire({
-            position: "center",
-            icon: "info",
-            title: "Please Login First",
-            showConfirmButton: true,
-            timer: 1500,
-            customClass: {
-              confirmButton: "theme-button-bg",
-            },
-          });
-  }
+    Swal.fire({
+      position: "center",
+      icon: "info",
+      title: "Please Login First",
+      showConfirmButton: true,
+      timer: 1500,
+      customClass: {
+        confirmButton: "theme-button-bg",
+      },
+    });
+  };
   useEffect(() => {
     dispatch(
       HeroSections(
         setLoading,
-        setMainHeading,
-        setInternal,
-        setBetterHealth,
-        setTessaGibson,
+        setData,
+        // setMainHeading,
+        // setInternal,
+        // setBetterHealth,
+        // setTessaGibson,
         dispatch
       )
     );
   }, []);
+  const mainHeading = data?.filter((data) => data?.type === "ELYSION");
+  const docInfo = data?.filter(
+    (data) => data?.type === "Better Health Begins Here"
+  );
 
+  console.log(docInfo, "elysionelysion");
   const btn2 = (
     <>
       <div className={styles?.btnText}>Book an Appointment</div>
@@ -60,6 +63,20 @@ const HeroSection = () => {
               <div className={styles.heroHeading}>
                 <h1 className={styles.mainHeading}>
                   <div className={styles.mainHeadingInner}>
+                    {mainHeading?.length > 0 ? (
+                      <>
+                        {!loading ? (
+                          mainHeading?.[0]?.type
+                        ) : (
+                          <>
+                            <Skeleton />
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      <div className={styles.HeadingSm}>Not found!</div>
+                      
+                    )}
                     {/* {!loading ? (
                       mainHeading
                     ) : (
@@ -67,50 +84,61 @@ const HeroSection = () => {
                         <Skeleton />
                       </>
                     )} */}
-                    ELYSION
                   </div>
 
                   <div className={styles.HeadingSm}>
-                    {/* {!loading ? (
-                      internal
-                    ) : (
+                    {mainHeading?.length > 0 ? (
                       <>
-                        <Skeleton />
+                        {!loading ? (
+                          mainHeading?.[0]?.value
+                        ) : (
+                          <>
+                            <Skeleton />
+                          </>
+                        )}
                       </>
-                    )} */}
-                    Internal & Integrative Medicine
-
+                    ) : (
+                      ""
+                    )}
                   </div>
 
                   <div className={styles.HeadingBig}>
-                    {/* {!loading ? (
-                      betterHealth
-                    ) : (
+                    {docInfo?.length > 0 ? (
                       <>
-                        <Skeleton />
+                        {!loading ? (
+                          docInfo?.[0]?.type
+                        ) : (
+                          <>
+                            <Skeleton />
+                          </>
+                        )}
                       </>
-                    )} */}
-                    Better Health Begins Here
-
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </h1>
                 <hr className={styles.hr} />
                 <div className={styles.details}>
                   <p>
-                    {/* {!loading ? (
-                      tessaGibson
-                    ) : (
+                    {docInfo?.length > 0 ? (
                       <>
-                        <Skeleton />
+                        {!loading ? (
+                          docInfo?.[0]?.value
+                        ) : (
+                          <>
+                            <Skeleton />
+                          </>
+                        )}
                       </>
-                    )} */}
-                    Tessa Gibson M.D., C.F.N.C.
+                    ) : (
+                      "Content not found"
+                    )}
                   </p>
                 </div>
 
                 <div className={styles.freeCon}>
                   {/* <Link href="/book-on-appointment"> */}
-                  
 
                   {token ? (
                     <div className="pt-2">
