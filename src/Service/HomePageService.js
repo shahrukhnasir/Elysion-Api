@@ -46,34 +46,25 @@ export const HeroSections =
 
 ///👇MeetDoctor Service
 
-export const MeetDoctorSections =
-  (
-    setLoading,
-    setMainHeading,
-    setParaOne,
-    setParaTwo,
-    setDocImage,
-    setSubHeading,
-    setPoints
-  ) =>
-  (dispatch) => {
-    setLoading(true);
-    MeetDoctorContent()
-      .then((res) => {
-        console.log();
-        setMainHeading(res?.data?.response?.data?.[4]?.value);
-        setParaOne(res?.data?.response?.data?.[2]?.value);
-        setParaTwo(res?.data?.response?.data?.[3]?.value);
-        setDocImage(res?.data?.response?.data?.[1]?.image_url);
-        setSubHeading(res?.data?.response?.data?.[0]?.type);
-        setPoints(res?.data?.response?.data?.[0]?.value);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  };
+export const MeetDoctorSections = (setLoading, setData) => (dispatch) => {
+  setLoading(true);
+  MeetDoctorContent()
+    .then((res) => {
+      setData(res?.data?.response?.data?.data);
+      console.log(res?.data?.response, "dyd");
+      // setMainHeading(res?.data?.response?.data?.[4]?.value);
+      // setParaOne(res?.data?.response?.data?.[2]?.value);
+      // setParaTwo(res?.data?.response?.data?.[3]?.value);
+      // setDocImage(res?.data?.response?.data?.[1]?.image_url);
+      // setSubHeading(res?.data?.response?.data?.[0]?.type);
+      // setPoints(res?.data?.response?.data?.[0]?.value);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err);
+      setLoading(false);
+    });
+};
 
 //👇Browse Our Medical Services & Specialties.
 export const MedicalServiceSections =
@@ -156,40 +147,39 @@ export const FaqContent = (setLoading, setFaq) => (dispatch) => {
 // 👇Footer NewsLatter//////////
 export const FooterNewsLatterEmail =
   (data, setLoading, setChatFields, router) => () => {
-    
-      NewsLatter(data)
-        .then((res) => {
-          setLoading(false);
-          setChatFields({
-            email: "",
-          });
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Email Send Successfully",
-            showConfirmButton: false,
-            timer: 1500,
-            customClass: {
-              confirmButton: "theme-button-bg",
-            },
-          });
-          router.push("/thank-you");
-        })
-        .catch((err) => {
-          // console.log("Error in SignUp:", error);
-          console.log(err,'errerr');
-          setLoading(false);
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Email  Failed",
-            text: "Please check your fields",
-            showConfirmButton: true,
-            customClass: {
-              confirmButton: "theme-button-bg",
-            },
-          });
+    NewsLatter(data)
+      .then((res) => {
+        setLoading(false);
+        setChatFields({
+          email: "",
         });
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Email Send Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+          customClass: {
+            confirmButton: "theme-button-bg",
+          },
+        });
+        router.push("/thank-you");
+      })
+      .catch((err) => {
+        // console.log("Error in SignUp:", error);
+        console.log(err, "errerr");
+        setLoading(false);
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Email  Failed",
+          text: "Please check your fields",
+          showConfirmButton: true,
+          customClass: {
+            confirmButton: "theme-button-bg",
+          },
+        });
+      });
   };
 
 // 👇Blog Content//

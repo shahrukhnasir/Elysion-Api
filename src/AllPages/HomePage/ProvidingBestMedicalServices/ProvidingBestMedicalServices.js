@@ -15,21 +15,24 @@ const ProvidingBestMedicalServices = () => {
   const [subHeading, setSubHeading] = useState([]);
   const [points, setPoints] = useState("");
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(
       MeetDoctorSections(
         setLoading,
-        setMainHeading,
-        setParaOne,
-        setParaTwo,
-        setDocImage,
-        setSubHeading,
-        setPoints,
+        setData,
+        // setMainHeading,
+        // setParaOne,
+        // setParaTwo,
+        // setDocImage,
+        // setSubHeading,
+        // setPoints,
         dispatch
       )
     );
   }, []);
+  console.log(data,"data");
   console.log(docImage, "docImage");
   return (
     <>

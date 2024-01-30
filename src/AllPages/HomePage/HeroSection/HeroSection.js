@@ -60,45 +60,51 @@ const HeroSection = () => {
               <div className={styles.heroHeading}>
                 <h1 className={styles.mainHeading}>
                   <div className={styles.mainHeadingInner}>
-                    {!loading ? (
+                    {/* {!loading ? (
                       mainHeading
                     ) : (
                       <>
                         <Skeleton />
                       </>
-                    )}
+                    )} */}
+                    ELYSION
                   </div>
 
                   <div className={styles.HeadingSm}>
-                    {!loading ? (
+                    {/* {!loading ? (
                       internal
                     ) : (
                       <>
                         <Skeleton />
                       </>
-                    )}
+                    )} */}
+                    Internal & Integrative Medicine
+
                   </div>
 
                   <div className={styles.HeadingBig}>
-                    {!loading ? (
+                    {/* {!loading ? (
                       betterHealth
                     ) : (
                       <>
                         <Skeleton />
                       </>
-                    )}
+                    )} */}
+                    Better Health Begins Here
+
                   </div>
                 </h1>
                 <hr className={styles.hr} />
                 <div className={styles.details}>
                   <p>
-                    {!loading ? (
+                    {/* {!loading ? (
                       tessaGibson
                     ) : (
                       <>
                         <Skeleton />
                       </>
-                    )}
+                    )} */}
+                    Tessa Gibson M.D., C.F.N.C.
                   </p>
                 </div>
 
