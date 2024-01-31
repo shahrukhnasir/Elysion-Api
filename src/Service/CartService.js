@@ -6,6 +6,7 @@ import {
   CatByProducts,
   Categories,
   CheckOut,
+  GetAllProducts,
   ProductDetails,
   Products,
   RemovedToAll,
@@ -16,6 +17,7 @@ import {
 } from "../network/Network";
 import "sweetalert2/dist/sweetalert2.min.css";
 import { setCartList } from "../Redux/CartList/CartList";
+import { toast } from "react-toastify";
 
 // 👇Categories Service//
 export const CategoryList = (setLoading, setCategory) => (dispatch) => {
@@ -283,27 +285,13 @@ export const WishListAddToListProduct = (token, data, setHeartClick) => () => {
     .then((res) => {
       if (res) {
         setHeartClick(true);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Add WishList successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        toast.success('Add WishList successfully');
       }
       if (res?.message) setHeartClick(true);
     })
     .catch((res) => {
-      Swal.fire({
-        position: "center",
-        icon: "info",
-        title: "if you want to remove this go to wishlist",
-        text: res?.response?.data?.message,
-        showConfirmButton: true,
-        customClass: {
-          confirmButton: "theme-button-bg",
-        },
-      });
+      toast.error(res?.response?.data?.message);
+      
     });
 };
 
@@ -360,8 +348,21 @@ export const productData =
 export const getCartCount = (Istoken, setCartCount) => async () => {
   CartCount(Istoken)
     .then((res) => {
-      console.log(res?.data?.response?.data,"CartCount");
+      console.log(res?.data?.response?.data, "CartCount");
       setCartCount(res?.data?.response?.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// 👇Cart item counting
+export const GetAllProduct = (setAllProducts) => async () => {
+  GetAllProducts()
+    .then((res) => {
+      console.log(res?.data?.response?.data?.data, "Khskdhjdg");
+    
+      setAllProducts(res?.data?.response?.data?.data);
     })
     .catch((err) => {
       console.log(err);

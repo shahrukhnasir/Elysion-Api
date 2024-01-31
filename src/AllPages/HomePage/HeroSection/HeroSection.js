@@ -74,7 +74,7 @@ const HeroSection = () => {
                         )}
                       </>
                     ) : (
-                      <div className={styles.HeadingSm}>Not found!</div>
+                      <Skeleton />
                       
                     )}
                     {/* {!loading ? (

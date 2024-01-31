@@ -157,7 +157,9 @@ export const getProducts = (slug, search, data) => {
 export const Products = (slug, data) => {
   return getMethod(`${PRODUCT}${slug}`, data);
 };
-
+export const GetAllProducts = (data) => {
+  return getMethod(`${PRODUCT}`, data);
+};
 // export const CatByProducts = (slug, data) => {
 //   return getMethod(`${PRODUCT}?filter_by=category&value=${slug}`, data);
 // };
@@ -172,6 +174,7 @@ export const Products = (slug, data) => {
 export const ProductDetails = (slug, data) => {
   return getMethod(`${PRODUCT}/${slug}`, data);
 };
+
 export const NewsLatter = (data) => {
   return postMethod(`${NEWS__LATTER}`, data);
 };

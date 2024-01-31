@@ -7,6 +7,8 @@ import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { Profile, UpdateMyPassword } from "../../../Service/PatientPortal";
 import { useDispatch, useSelector } from "react-redux";
 import { Skeleton } from "antd";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 const EditChangePasswordScreen = () => {
   const token = useSelector((state) => state?.authSlice?.authToken);
   const dispatch = useDispatch();
@@ -60,7 +62,7 @@ const EditChangePasswordScreen = () => {
     }
     setNewPasswordType("newpassword");
   };
-
+ 
   const toggleConfirmPassword = () => {
     if (confirmPasswordType === "confirmpassword") {
       setConfirmPasswordType("text");
@@ -76,7 +78,24 @@ const EditChangePasswordScreen = () => {
 
       return;
     }
-    let data = new FormData();
+      // password validation
+   const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+   if (!passwordInput || !specialCharRegex.test(passwordInput)) {
+    toast.error("password field must have at least one speial character !@&#")
+     setError(true);
+     return;
+   }
+   if (!newPasswordInput || !specialCharRegex.test(newPasswordInput)) {
+    toast.error("new password field must have at least one speial character !@&#")
+     setError(true);
+     return;
+   }
+   if (!confirmPasswordInput || !specialCharRegex.test(confirmPasswordInput)) {
+    toast.error("confirm password field must have at least one speial character !@&#")
+     setError(true);
+     return;
+   }
+   let data = new FormData();
     data.append("old_password", passwordInput);
     data.append("new_password", newPasswordInput);
     data.append("confirm_password", confirmPasswordInput);
@@ -96,7 +115,7 @@ const EditChangePasswordScreen = () => {
               <div className="col-lg-6">
                 <label htmlFor="" className={styles.Label}>
                   {" "}
-                  Change Password
+                  Old Password
                 </label>
                 <div className={styles.eyeIconContainer}>
                   <input

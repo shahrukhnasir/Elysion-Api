@@ -18,25 +18,32 @@ import SliderProductCard from "../SliderProductCard/SliderProductCard";
 import {
   AddToCartHandler,
   AddToCartListHandler,
+  GetAllProduct,
   WishListAddToListProduct,
   getCartCount,
   getProductDetailById,
 } from "../../Service/CartService";
-import { AddToCartGuest, GuestCartLists, getGuestCartCount } from "../../Service/GuestService";
+import {
+  AddToCartGuest,
+  GuestCartLists,
+  getGuestCartCount,
+} from "../../Service/GuestService";
 import { Skeleton } from "antd";
 import { setSessionId } from "../../Redux/Auth/sessionSlice";
 import { getCartList } from "../../Redux/CartList/CartList";
-
+import { productData } from "../../Service/CartService";
+import ProductCard from "../ProductCard/ProductCard";
+import ServiceCardComman from "../ServiceCardComman/ServiceCardComman";
 const ProductDetailsComponent = () => {
   const [productDetail, setProductDetails] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [steps, setSteps] = useState(0);
+  const [steps, setSteps] = useState(1);
   const [variant, setProductVariants] = useState();
   const [milliGram, setMiliId] = useState([]);
   const [variantId, setVariantId] = useState();
   const [tab, setTab] = useState(0);
   const [heartClick, setHeartClick] = useState(false);
-  // const [cartList, setAddCartList] = useState([]);
+  const [products, setAllProducts] = useState([]);
 
   const token = useSelector((state) => state?.authSlice?.authToken);
   const { query } = useRouter();
@@ -59,22 +66,12 @@ const ProductDetailsComponent = () => {
 
   const session_id = Math.floor(Math.random() * 100);
   const session = useSelector((state) => state?.sessionSlice?.session);
-  const [cartCount, setCartCount] = useState('');
-  const [guestCartCount, setGuestCartCount] = useState('');
+  const [cartCount, setCartCount] = useState("");
+  const [guestCartCount, setGuestCartCount] = useState("");
 
-  console.log(cartCount,guestCartCount, "gnyundy");
+  console.log(cartCount, guestCartCount, "gnyundy");
   const AddToCartHandle = async (e) => {
     e.preventDefault();
-    // if (token) {
-    //   dispatch(
-    //     getCartCount(token, setCartCount)
-    //   );
-    // } else if (!token) {
-    //   dispatch(
-    //     getGuestCartCount(session_id, setGuestCartCount)
-    //   );
-    // }
-    // dispatch(getCartList(token, session_id));
     if (session == null || session == "") {
       dispatch(setSessionId(session_id));
     }
@@ -98,7 +95,6 @@ const ProductDetailsComponent = () => {
       data.append("product_miligram_id", milliGram);
       data.append("qty", steps);
       dispatch(AddToCartHandler(token, data, setLoading, router));
-     
     } else if (!token) {
       let data = new FormData();
       data.append("product_id", slug);
@@ -108,22 +104,8 @@ const ProductDetailsComponent = () => {
       data.append("session_id", session ? session : session_id);
       dispatch(AddToCartGuest(data, setLoading, router));
       // dispatch(getCartList(cartList));
-      
     }
-    
   };
-
-  // useEffect(() => {
-  //   if (token) {
-  //     dispatch(
-  //       AddToCartListHandler(token, setAddCartList, setLoading, dispatch)
-  //     );
-  //   } else if (!token) {
-  //     dispatch(
-  //       GuestCartLists(session_id, setAddCartList, setLoading, dispatch)
-  //     );
-  //   }
-  // }, []);
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -178,37 +160,27 @@ const ProductDetailsComponent = () => {
       )
     );
   }, [slug, setProductVariants]);
-
-  // setVarriant(productDetail?.variants);
-  // console.log(milliGram?.map((mili,i)=> mili?.miligram_id), "milliGram");
-  // console.log(milliGram, "milliGram");
-  // console.log(variant, "variant");
-  // console.log(productDetail,"productDetail");
-  // console.log(
-  //   variant?.map((vari, i) => vari?.variant),
-  //   "variant"
-  // );
   const variantChangeHandler = (selectedVariant) => {
     let filteredMili = productDetail?.mg?.filter(
       (variant) => variant?.miligram === selectedVariant
     );
     setMiliId(filteredMili?.[0]?.id);
   };
-
-  // const [cartFields, setCartFields] = useState({
-  //   product_id: slug,
-  //   product_variant_id: variantId,
-  //   product_miligram_id: milliGram,
-  //   qty: productDetail?.unit_price,
-  // });
-
-  // console.log(productDetail,"milliGram");
+  useEffect(() => {
+    dispatch(GetAllProduct(setAllProducts));
+  }, []);
+  console.log(slug, "slugslugslugslug");
+  const productCat = productDetail?.categories?.filter(
+    (foo) => foo.product_id == slug
+  );
+  console.log(productDetail?.categories?.filter(
+    (foo) => foo.product_id == slug));
   return (
     <>
       <div className="container-fluid p-0">
         <div className={styles.ProfileTopSection}>
-          <div className={styles.Title}>
-            <h2>Product Details</h2>
+          <div className={`${styles.Title} `}>
+            <h2 className={styles.lineclamp1}>Product Details</h2>
           </div>
         </div>
       </div>
@@ -235,7 +207,7 @@ const ProductDetailsComponent = () => {
               <div className="card-body">
                 <div className="row">
                   <div className="col-lg-6">
-                    <h5 className={styles.title}>
+                    <h5 className={`${styles.title} ${styles.lineclamp1}`}>
                       {loading ? (
                         <>{productDetail && productDetail?.title}</>
                       ) : (
@@ -263,7 +235,7 @@ const ProductDetailsComponent = () => {
                     ""
                   )}
                 </div>
-                <p className={styles.desc}>
+                <p className={`${styles.desc}  ${styles.lineclamp1}`}>
                   {loading ? (
                     <>{productDetail && productDetail?.description}</>
                   ) : (
@@ -274,7 +246,13 @@ const ProductDetailsComponent = () => {
                 </p>
 
                 <hr />
+                <p>
+                  <span className={styles.cardText}>Product Category </span>
+                  <span className={styles.cardBlueText}>
+                  {productCat?.length >= 0 ? productCat?.[0]?.slug : "not found"}
 
+                  </span>
+                </p>
                 <p>
                   <span className={styles.cardText}>Price</span>
                   <span className={styles.cardBlueText}>
@@ -527,54 +505,20 @@ const ProductDetailsComponent = () => {
             <div className="col-lg-12">
               <div className="pb-5">
                 <Slider {...settings}>
-                  <div>
-                    <SliderProductCard
-                      Title="Sed ut perspiciatis"
-                      image="/images/product/product1.png"
-                      Descriptions="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan"
-                      Price="$20.0"
-                    />
-                  </div>
-                  <div>
-                    <SliderProductCard
-                      Title="Sed ut perspiciatis"
-                      image="/images/product/product2.png"
-                      Descriptions="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan"
-                      Price="$20.0"
-                    />
-                  </div>
-                  <div>
-                    <SliderProductCard
-                      Title="Sed ut perspiciatis"
-                      image="/images/product/product3.png"
-                      Descriptions="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan"
-                      Price="$20.0"
-                    />
-                  </div>
-                  <div>
-                    <SliderProductCard
-                      Title="Sed ut perspiciatis"
-                      image="/images/product/product4.png"
-                      Descriptions="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan"
-                      Price="$20.0"
-                    />
-                  </div>
-                  <div>
-                    <SliderProductCard
-                      Title="Sed ut perspiciatis"
-                      image="/images/product/product5.png"
-                      Descriptions="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan"
-                      Price="$20.0"
-                    />
-                  </div>
-                  <div>
-                    <SliderProductCard
-                      Title="Sed ut perspiciatis"
-                      image="/images/product/product6.png"
-                      Descriptions="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusan"
-                      Price="$20.0"
-                    />
-                  </div>
+                  {products
+                    ?.slice(0)
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, 6)
+                    .map((item, i) => (
+                      <div key={item?.id}>
+                        <ServiceCardComman
+                          image={item?.thumbnail_url}
+                          Title={item?.title}
+                          Descriptions={item?.description}
+                          Price={item?.price}
+                        />
+                      </div>
+                    ))}
                 </Slider>
               </div>
             </div>

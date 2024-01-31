@@ -56,6 +56,26 @@
 
 
 }
+/* @keyframes blink {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  } */
+  
+  .info {
+    font-size: 10px;
+    font-family: var(--main-font-regular);
+    color: #000 !important;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+    /* animation: bl    ink 1s infinite; You can adjust the duration as needed */
+  }
 
 .cardTitle {
     font-size: 14px;

@@ -26,6 +26,13 @@ input::-webkit-inner-spin-button {
 .inner{
     display: none  !important;
 }
+
+.lineclamp1 {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+    -webkit-line-clamp: 1;
+}
 /* / Firefox / */
 /* input[type=number] {
   -moz-appearance: textfield;

@@ -10,6 +10,13 @@
 
 }
 
+.lineclamp1 {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+    -webkit-line-clamp: 1;
+}
+
 .Title{
     position: absolute;
     top: 60%;
@@ -62,6 +69,7 @@ font-size: 30px;
     font-size: 16px;
     margin-bottom: 10px;  
     padding: 0px 30px;
+    text-transform: capitalize;
 }
 #heart_icon_sec{
  display: flex;

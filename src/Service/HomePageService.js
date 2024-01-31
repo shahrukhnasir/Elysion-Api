@@ -84,7 +84,7 @@ export const MedicalServiceSections =
   };
 
 ////👇ALL Services Cards
-export const AllServices = (setLoading, setServicesData) => (dispatch) => {
+export const AllServiceCards = (setLoading, setServicesData) => (dispatch) => {
   setLoading(true);
   AllServiceContent()
     .then((res) => {

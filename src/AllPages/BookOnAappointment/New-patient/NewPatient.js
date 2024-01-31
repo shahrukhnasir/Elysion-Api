@@ -5,7 +5,7 @@ import CommanButton from "../../../components/CommanButton/CommanButton";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { AllServices } from "../../../Service/HomePageService";
+import { AllServiceCards } from "../../../Service/HomePageService";
 import {
   CheckSlotsHandler,
   DoctorDetails,
@@ -34,7 +34,7 @@ const NewPatient = () => {
   //👇 Service Providers Api implement and All Services implement
   useEffect(() => {
     dispatch(SelectServiceProvider(token, setLoading, setService));
-    dispatch(AllServices(setLoading, setServicesData));
+    dispatch(AllServiceCards(setLoading, setServicesData));
   }, [token]);
   // const  pageName =router.query.page?.split('/')?.[1]
 

@@ -27,7 +27,7 @@ const ShopLayout = () => {
 
   const AllCatHandler = (e) => {
     e.preventDefault();
-    router.push("/shop");
+    router.reload("/shop");
   };
 
   const handleProductDetail = (productId) => {

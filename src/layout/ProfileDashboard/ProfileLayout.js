@@ -110,10 +110,11 @@ const ProfileLayout = ({ children, Heading, pageName }) => {
                 <span className={styles.pageName}>/{pageName}</span>
               </div>
               <div className={styles.SideBarMenu}>
-                {Menu.map((menu) => {
+                {Menu.map((menu,i) => {
                   return (
                     <div
                       id={styles.LinkBar}
+                      key={i}
                       className={location == menu.route ? styles.active : ""}
                     >
                       <Link href={menu.route}>

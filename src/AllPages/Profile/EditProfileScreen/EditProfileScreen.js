@@ -9,7 +9,7 @@ import {
   Profile,
   MyUpdateProfile,
 } from "../../../Service/PatientPortal";
-import { Skeleton } from "antd";
+import Swal from "sweetalert2";
 const EditProfileScreen = () => {
   const router = useRouter();
   const token = useSelector((state) => state?.authSlice?.authToken);
@@ -40,7 +40,50 @@ const EditProfileScreen = () => {
       setError(true);
       return;
     }
+      // Name validation
+   const nameReg = /^[a-zA-Z]+\s*[a-zA-Z]*$/;
 
+   if (!fname || !nameReg.test(fname)) {
+     Swal.fire({
+       position: "center",
+       icon: "error",
+       title: "First name characters should be alphabetic",
+       showConfirmButton: false,
+       timer: 1500,
+     });
+     setError(true);
+     return;
+   }
+   if (!lname || !nameReg.test(lname)) {
+     Swal.fire({
+       position: "center",
+       icon: "error",
+       title: "Last name characters should be alphabetic",
+       showConfirmButton: false,
+       timer: 1500,
+     });
+     setError(true);
+     return;
+   }
+ // Phone validation
+ if (
+  !phone ||
+  phone.length < 10 ||
+  phone.length > 20
+) {
+  Swal.fire({
+    position: "center",
+    icon: "error",
+    title:
+      (phone.length < 10 &&
+        "Phone number must be between 10 to 20 digits") ||
+      (phone.length > 20 && "Phone number is too long"),
+    showConfirmButton: false,
+    timer: 1500,
+  });
+  setError(true);
+  return;
+}
     let data = new FormData();
     data.append("first_name", fname);
     data.append("last_name", lname);
@@ -65,7 +108,6 @@ const EditProfileScreen = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder={myProfile?.first_name}
                   value={fname}
                   onChange={(e) => {
                     setFname(e.target.value);
@@ -93,7 +135,6 @@ const EditProfileScreen = () => {
                     setLname(e.target.value);
                   }}
                   className={`${styles.inputField} form-control`}
-                  placeholder={myProfile?.last_name}
                 />
                 {error && lname.length <= 0 ? (
                   <div className={styles.warning}>
@@ -115,7 +156,6 @@ const EditProfileScreen = () => {
                     setPhone(e.target.value);
                   }}
                   className={`${styles.inputField} form-control`}
-                  placeholder={myProfile?.mobile}
                 />
                 {error && phone.length <= 0 ? (
                   <div className={styles.warning}>Phone can't be Empty!</div>

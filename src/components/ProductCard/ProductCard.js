@@ -12,7 +12,7 @@ const ProductCard = ({ Title, Descriptions, Price, image, id, onClick }) => {
           <div className="row">
             <div className="col-lg-12">
               <div className={`${styles.cardTitleSec}`}>
-                <h6 className={`${styles.carTitle}`}>{Title}</h6>
+                <h6 className={`${styles.carTitle} ${styles.lineclamp1}`}>{Title}</h6>
               </div>
             </div>
 
@@ -21,7 +21,7 @@ const ProductCard = ({ Title, Descriptions, Price, image, id, onClick }) => {
               <h6 className={`${styles.cardPrice}`}>{Price}</h6>
             </div>
           </div>
-          <p className={`${styles.cardDesc}`}>{Descriptions}</p>
+          <p className={`${styles.cardDesc}  ${styles.lineclamp2}`}>{Descriptions}</p>
           <Link href={""} className={`${styles.linkBtn}`}>
             <span className={styles.learnMore}>View Details</span>{" "}
             <span>

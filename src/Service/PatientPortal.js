@@ -105,11 +105,13 @@ export const UpdateMyPassword =
         router.push("/profile");
       }
     } catch (error) {
-      console.log(error, "error");
+      console.log(error?.response?.data?.errors , "ghfbyddrd");
       await Swal.fire({
         position: "center",
         icon: "error",
-        title: error?.response?.data?.message,
+        title: error?.response?.data?.message || error?.response?.data?.errors?.new_password?.[0] ||
+        error?.response?.data?.errors?.old_password?.[0] ||
+        error?.response?.data?.errors?.confirm_password?.[0],
         text: error?.response?.data?.message,
         showConfirmButton: false,
         timer: 1500,

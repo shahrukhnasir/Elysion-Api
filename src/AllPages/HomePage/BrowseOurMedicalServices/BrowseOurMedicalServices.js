@@ -5,7 +5,7 @@ import CommanCard from "../../../components/CommanCard/CommanCard";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import {
-  AllServices,
+  AllServiceCards,
   MedicalServiceSections,
 } from "../../../Service/HomePageService";
 import { Skeleton } from "antd";
@@ -101,7 +101,7 @@ const BrowseOurMedicalServices = () => {
     dispatch(
       MedicalServiceSections(setLoading, setMainHeading, setPara, dispatch)
     );
-    dispatch(AllServices(setLoading, setServicesData, dispatch));
+    dispatch(AllServiceCards(setLoading, setServicesData, dispatch));
   }, []);
 
   // console.log(servicesData, "servicesDataservicesData");

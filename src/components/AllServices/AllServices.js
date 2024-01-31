@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import { ServicesById } from "../../Service/HomePageService";
+import { AllServiceCards, ServicesById } from "../../Service/HomePageService";
 import { useDispatch, useSelector } from "react-redux";
 import ServiceCardComman from "../ServiceCardComman/ServiceCardComman";
 import CommanButton from "../CommanButton/CommanButton";
@@ -15,13 +15,16 @@ const AllServices = () => {
   const [loading, setLoading] = useState(false);
   const { query } = useRouter();
   const [service, setServiceDetails] = useState();
+  const [services, setServicesData] = useState([]);
   const slug = query?.serviceId;
   useEffect(() => {
     dispatch(ServicesById(slug, setServiceDetails, setLoading));
+    dispatch(AllServiceCards(setLoading, setServicesData, dispatch));
   }, [slug]);
   const token = useSelector((state) => state?.authSlice?.authToken);
 
-  const loginHanlder = (e) =>{
+  console.log(services, "servicesservices");
+  const loginHanlder = (e) => {
     e.preventDefault();
 
     Swal.fire({
@@ -30,11 +33,9 @@ const AllServices = () => {
       title: "please login first",
       showConfirmButton: false,
       timer: 1500,
-      
     });
-  }
+  };
 
-  
   return (
     <>
       <div className="container-fluid p-0">
@@ -101,18 +102,21 @@ const AllServices = () => {
         <div className="container py-5">
           <h1 className={styles.details}>People also Search for</h1>
           <div className="row">
-            {services?.map((item) => {
-              return (
-                <div className="col-lg-4">
-                  <ServiceCardComman
-                    
-                    Title={item?.Title}
-                    Descriptions={item?.Desc}
-                    className={styles.serviceCardCol}
-                  />
-                </div>
-              );
-            })}
+            {services
+              ?.slice(0) // Create a shallow copy of the array
+              .sort(() => Math.random() - 0.5) // Randomize the order of elements
+              .slice(0, 3) 
+              .map((item, i) => {
+                return (
+                  <div className="col-lg-4" key={i}>
+                    <ServiceCardComman
+                      Title={item?.name}
+                      Descriptions={item?.description}
+                      className={styles.serviceCardCol}
+                    />
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>

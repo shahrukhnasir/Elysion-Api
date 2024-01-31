@@ -11,6 +11,7 @@ import {
   UserSubscriptionCreate,
 } from "../../Service/Subscription";
 import { getProfile } from "../../Redux/Profile/Profile";
+import { toast } from "react-toastify";
 const CheckOutDetails2 = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -25,9 +26,14 @@ const CheckOutDetails2 = () => {
   const onToken = (isToken) => {
     setStriptoken(isToken?.id);
   };
+  
   const slug = router?.query?.id;
   const HandleSubmit = async (e) => {
     e.preventDefault();
+    if (!isChecked) {
+      toast.info('Checkbox is not checked');
+      return;
+    }
     dispatch(getProfile(token));
     setIsValid(false);
     setLoading(true);
@@ -56,6 +62,15 @@ const CheckOutDetails2 = () => {
   useEffect(() => {
     dispatch(UserSubscription(slug, token, setLoading, setSubscriptionDetails));
   }, [slug, token]);
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+  
+
+ 
+   
 
 
   return (
@@ -152,7 +167,7 @@ const CheckOutDetails2 = () => {
 
         <div className="col-lg-4 py-3 m-auto">
           <>
-            {striptoken ? (
+            {striptoken   ? (
               ""
             ) : (
               <StripeCheckout
@@ -163,7 +178,7 @@ const CheckOutDetails2 = () => {
                 email={userEmail}
               >
                 <CommanButton
-                  label="PAY NOW"
+                  label="BUY NOW"
                   onClick={HandleSubmit}
                   className={styles.cartButton}
                 />
@@ -178,13 +193,14 @@ const CheckOutDetails2 = () => {
           <div className="row">
             <div className="col-lg-5 offset-lg-1">
               <span>
-                {" "}
-                <input
-                  class="form-check-input me-2"
-                  type="checkbox"
-                  value=""
-                  id="flexCheckDefault"
-                />
+               
+              <input
+          className="form-check-input me-2"
+          type="checkbox"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+          id="flexCheckDefault"
+        />
               </span>
               <span className={styles.tCheckBoxText}>
                 I hereby agree to the

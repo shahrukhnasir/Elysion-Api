@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { FreeConsultation } from "../../Service/FreeConsultService";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+
 const AboutusScreen = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -17,10 +19,29 @@ const AboutusScreen = () => {
     email: "",
     dob: "",
   });
+  const [isChecked1, setIsChecked1] = useState(false);
+  const [isChecked2, setIsChecked2] = useState(false);
+
+  const handleCheckboxChange1 = () => {
+    setIsChecked1(!isChecked1);
+  };
+
+  const handleCheckboxChange2 = () => {
+    setIsChecked2(!isChecked2);
+  };
+
   const dispatch = useDispatch();
 
   const HandleSubmit = (e) => {
     e.preventDefault();
+    if (!isChecked1) {
+      toast.error("Checkbox is not checked");
+      return;
+    }
+    if (!isChecked2) {
+      toast.error("Checkbox is not checked");
+      return;
+    }
     setLoading(true);
     if (
       chatFields.fname.length === 0 ||
@@ -46,6 +67,31 @@ const AboutusScreen = () => {
           (chatFields.phone.length < 10 &&
             "Phone number must be between 10 to 20 digits") ||
           (chatFields.phone.length > 20 && "Phone number is too long"),
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
+      return;
+    }
+    // Name validation
+    const nameReg = /^[a-zA-Z]+\s*[a-zA-Z]*$/;
+
+    if (!chatFields.fname || !nameReg.test(chatFields.fname)) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "First name characters should be alphabetic",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setError(true);
+      return;
+    }
+    if (!chatFields.lname || !nameReg.test(chatFields.lname)) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Last name characters should be alphabetic",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -179,7 +225,7 @@ quasi"
                     className={`${styles.inputField} form-control`}
                     placeholder="Date Of Birth"
                   />
-                  {error && chatFields.phone.length <= 0 ? (
+                  {error && chatFields.dob.length <= 0 ? (
                     <div className={styles.warning}>DOB can't be Empty!</div>
                   ) : (
                     ""
@@ -189,14 +235,16 @@ quasi"
 
               <div className="col-12 pt-2">
                 <div className="form-check">
-                  {/* <input
-                    className="form-check-input"
+                  <input
+                    className="form-check-input me-2"
                     type="checkbox"
-                    id="gridCheck"
-                  /> */}
+                    checked={isChecked1}
+                    onChange={handleCheckboxChange1}
+                    id="gridCheck1"
+                  />
                   <label
                     className={`${styles.labelCheckBox} form-check-label`}
-                    for="gridCheck"
+                    htmlFor="gridCheck1"
                   >
                     I have read and agreed to the Privacy Policy and Terms of
                     Use that I am at least 13 and have the authority to make
@@ -207,14 +255,16 @@ quasi"
 
               <div className="col-12">
                 <div className="form-check">
-                  {/* <input
-                    className="form-check-input"
+                  <input
+                    className="form-check-input me-2"
                     type="checkbox"
+                    checked={isChecked2}
+                    onChange={handleCheckboxChange2}
                     id="gridCheck"
-                  /> */}
+                  />
                   <label
                     className={`${styles.labelCheckBox} form-check-label`}
-                    for="gridCheck"
+                    htmlFor="gridCheck"
                   >
                     I agree to receiving text messages for feedback requests
                   </label>
@@ -222,13 +272,13 @@ quasi"
               </div>
               <div className="py-3">
                 {/* <Link href="/thank-you"  > */}
-                
-                  <CommanButton
-                    onClick={HandleSubmit}
-                    className={styles.FromBtn}
-                    label="Submit"
-                  />
-               
+
+                <CommanButton
+                  onClick={HandleSubmit}
+                  className={styles.FromBtn}
+                  label="Submit"
+                />
+
                 {/* </Link> */}
               </div>
             </div>

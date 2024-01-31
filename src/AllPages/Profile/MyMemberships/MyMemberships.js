@@ -22,14 +22,14 @@ const MyMemberships = () => {
   useEffect(() => {
     dispatch(Subscriptions(token, setLoading, setSubscription, setSatus));
   }, [token]);
-
+console.log(sub,"sdsvdj");
   return (
     <>
       <ProfileLayout Heading="My Appointments" pageName="My Appointments">
         <div className={`${styles.TopCatSection} container`}></div>
 
         <div className={`${styles.AppointmentContainer} container`}>
-          {sub?.length > 0 ? (
+          {sub && sub  ? (
             <table
               className="table table-responsive"
               id={styles.tableOuterBody}
@@ -47,6 +47,9 @@ const MyMemberships = () => {
                   <th scope="col" className={styles.tHead}>
                     Status
                   </th>
+                  <th scope="col" className={styles.tHead}>
+                  Amount
+                  </th>
                   {/* <th scope="col" className={styles.tHead}>
                   ACTION
                 </th> */}
@@ -58,11 +61,10 @@ const MyMemberships = () => {
                   <td className={styles.tData}>{sub?.name}</td>
                   <td className={styles.tData}>
                     {/* {status.type == "annually" ? }{sub.price}:"" */}
-                    {status.type === "annually"
-                      ? sub.price * 12
-                      : sub.price * 1}
+                    {status.type}
                   </td>
                   <td className={styles.tData}>{status.type}</td>
+                  <td className={styles.tData}>{sub?.price}$</td>
 
                   <td className={styles.tDataBtn}>
                     {/* <Link
@@ -78,7 +80,7 @@ const MyMemberships = () => {
             </table>
           ) : (
             <div className={`${styles.tData} text-center`}>
-            WishList is Empty
+            MemberShip List is Empty
             </div>
           )}
 

@@ -3,7 +3,7 @@ import styles from "../AllServices/AllService.module.css";
 import ServiceCard from "../../components/ServiceCard/ServiceCard";
 import TopLayout from "../../components/TopLayout/TopLayout";
 import {
-  AllServices,
+  AllServiceCards,
   MedicalServiceSections,
 } from "../../Service/HomePageService";
 import { useRouter } from "next/router";
@@ -31,7 +31,7 @@ const AllService = () => {
     dispatch(
       MedicalServiceSections(setLoading, setMainHeading, setPara, dispatch)
     );
-    dispatch(AllServices(setLoading, setServicesData, dispatch));
+    dispatch(AllServiceCards(setLoading, setServicesData, dispatch));
   }, []);
   return (
     <>

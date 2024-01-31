@@ -41,14 +41,18 @@ const NewPatientLayout = ({ children, heading }) => {
   const Dates = useSelector((state) => state?.currentDate?.currentDate);
   //🤞Date Select set Redux
   const dateSelectHandler = (date) => {
-    // console.log(selectedDate, "selectedDate");
-    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-    const formattedDate = date.toLocaleDateString('en-US', options);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based, so we add 1
+    const day = date.getDate().toString().padStart(2, '0');
+
+    const formattedDate = `${year}-${month}-${day}`;
+    console.log(formattedDate, "formattedDate");
 
     dispatch(Slots(slug, formattedDate, token, setLoading, setSlots));
     setDate(date);
     dispatch(setAppointmentDate(formatDate(date)));
-  };
+};
+
   console.log(slots,"selectedDate  ");
   //Slots Api
   // useEffect(

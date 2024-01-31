@@ -6,13 +6,14 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from '../Redux/store';
 
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function MyApp({ Component, pageProps }) {
   return (<><div className="html">
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <MainLayout><Component {...pageProps} /></MainLayout>
-
+        <ToastContainer />
       </PersistGate>
     </Provider>
 

@@ -36,7 +36,7 @@ const MyAppointments = () => {
 
   useEffect(() => {
     dispatch(MyAppointment(token, setLoading, setMyApp));
-  }, [token, setMyApp]);
+  }, [token]);
   //   MyAppointment cancled
   const hanldeCancel = (slug) => {
     dispatch(AppointmentCancel(slug, token, setLoading));

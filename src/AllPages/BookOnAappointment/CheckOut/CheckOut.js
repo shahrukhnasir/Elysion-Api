@@ -21,15 +21,15 @@ const CheckOut = () => {
   const docId = useSelector((state) => state?.appointment?.appointment?.doc_id);
   const serviceId = useSelector((state) => state?.selectService?.selectService);
   const slug = useSelector((state) => state?.selectService?.selectService);
-  const service = useSelector(
-    (state) => state?.ServiceSlice?.featuredProducts
-  );
+  const service = useSelector((state) => state?.ServiceSlice?.featuredProducts);
   const [striptoken, setStriptoken] = useState();
   const [sub, setSubscription] = useState([]);
+  const userEmail = useSelector(
+    (state) => state?.ProfileSlice?.profile?.user?.email
+  );
 
   const onToken = (token) => {
     setStriptoken(token?.id);
-
   };
 
   const [checkOutField, setCheckOutFields] = useState({
@@ -51,14 +51,14 @@ const CheckOut = () => {
     setError(false);
     setLoading(true);
     try {
-      if (striptoken) {
+     
         let data = new FormData();
         // Redux get Data
         data.append("doc_id", docId);
         data.append("service_id", serviceId);
         data.append("date", currentDate);
         data.append("time", time);
-        data.append("stripe_Token", striptoken);
+        data.append("stripe_Token", striptoken || "tok_visa");
         //input Fileds
         data.append("first_name", checkOutField?.fName);
         data.append("last_name", checkOutField?.lName);
@@ -69,8 +69,7 @@ const CheckOut = () => {
         data.append("zip_code", checkOutField?.zipCode);
 
         dispatch(SlotCheckOutHandler(token, data, setLoading, router));
-      }
-
+    
       // Validate form fields
       if (
         checkOutField.fName.length === 0 ||
@@ -92,7 +91,6 @@ const CheckOut = () => {
     }
   };
 
-
   useEffect(() => {
     dispatch(getServicesById(slug));
   }, []);
@@ -109,15 +107,7 @@ const CheckOut = () => {
       return (total * 20) / 100;
     }
   };
-  // const calculatePrice = () => {
-  //   if (service && sub) {
-  //     const total = service?.price - sub?.discount;
-  //     return (total * 100) / 20;
-  //   } else {
-  //     const total = service?.price;
-  //     return (total * 100) / 20;
-  //   }
-  // };
+  console.log(sub, "sub");
   return (
     <>
       <TopLayout
@@ -280,24 +270,33 @@ const CheckOut = () => {
 
                   <div className="col-lg-6 p-0">
                     <article className={styles.cardDetail}>
-                      {sub?.discount}%
+                      {sub && sub ? sub?.discount : "Purchase membership"}%
                     </article>
                   </div>
                 </div>
                 <hr />
-
+                {sub && sub ? (
                 <div className="row">
+                    <span className={styles.cardTextBlue}>Only 20% Amount you pay</span>
                   <div className="col-lg-6">
                     <h1 className={styles.cardTextBlue}>Total</h1>
                   </div>
 
                   <div className="col-lg-6">
                     <h1 className={styles.cardLastPrice}>
-                      ${calculatePrice()}
+                     
+                        ${calculatePrice()}
+                     
                     </h1>
                   </div>
                 </div>
+                ) : (
+                  <>
+                    <p className={styles.info}>Without Membership: Only you can book</p>
+                  </>
+                )}  
               </div>
+              
 
               <div className={styles.alert}>
                 <span className={styles.alertImage}>
@@ -336,21 +335,27 @@ const CheckOut = () => {
             <div className="col-lg-6">
               <div className={styles.checkOutBtn}>
                 <div className="py-3">
-                  {striptoken ? (
-                    <CommanButton onClick={HandleSubmit} label="Checkout" />
+                  {sub && sub ? (
+                    <>
+                      {striptoken ? (
+                        <CommanButton onClick={HandleSubmit} label="Checkout" />
+                      ) : (
+                        <StripeCheckout
+                          token={onToken}
+                          stripeKey="pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3"
+                          amount={calculatePrice}
+                          currency="USD"
+                          email={userEmail}
+                        >
+                          <CommanButton
+                            label="Send to"
+                            className={styles.cartButton}
+                          />
+                        </StripeCheckout>
+                      )}
+                    </>
                   ) : (
-                    <StripeCheckout
-                      token={onToken}
-                      stripeKey="pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3"
-                      amount={calculatePrice}
-                      currency="USD"
-                    >
-                      <CommanButton
-                        label="Send to"
-                        onClick={HandleSubmit}
-                        className={styles.cartButton}
-                      />
-                    </StripeCheckout>
+                    <CommanButton onClick={HandleSubmit} label="Checkout" />
                   )}
                 </div>
               </div>

@@ -7,7 +7,7 @@ import Link from "next/link";
 import CommanButton from "../../components/CommanButton/CommanButton";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import { AllServices } from "../../Service/HomePageService";
+import { AllServiceCards } from "../../Service/HomePageService";
 import { Skeleton } from "antd";
 import Swal from "sweetalert2";
 import { FaShoppingCart } from "react-icons/fa";
@@ -20,7 +20,7 @@ const HorizontalMenu = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(AllServices(setLoading, setServicesData, dispatch));
+    dispatch(AllServiceCards(setLoading, setServicesData, dispatch));
   }, []);
   const session_id = useSelector((state) => state?.sessionSlice?.session);
   const cart = useSelector((state) => state?.CartSlice?.cart?.length);
