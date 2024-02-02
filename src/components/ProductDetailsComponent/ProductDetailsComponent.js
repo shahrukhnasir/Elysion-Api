@@ -54,6 +54,8 @@ const ProductDetailsComponent = () => {
     dispatch(WishListAddToListProduct(token, data, setHeartClick));
     setHeartClick(true);
   };
+
+  console.log(variant,"variantasdasdasd");
   const handleProductDetail = (productId) => {
     router.push({
       pathname: "/product-detail",
@@ -163,12 +165,21 @@ const ProductDetailsComponent = () => {
       )
     );
   }, [slug, setProductVariants]);
+    const [varPrice ,setVariantPrice] =useState(productDetail?.unit_price)
+
   const variantChangeHandler = (selectedVariant) => {
+
+    console.log(varPrice,"selectedVariant");
+    setVariantPrice(JSON.parse(selectedVariant));
     let filteredMili = productDetail?.mg?.filter(
       (variant) => variant?.miligram === selectedVariant
     );
     setMiliId(filteredMili?.[0]?.id);
   };
+
+  useEffect(()=>{
+    setVariantPrice(productDetail?.unit_price)
+  },[productDetail])
   useEffect(() => {
     dispatch(GetAllProduct(setAllProducts));
   }, []);
@@ -301,25 +312,29 @@ const ProductDetailsComponent = () => {
                       className={styles.selectField}
                       name="variant"
                       onChange={(e) => {
-                        const selectedVariant = e.target.value;
-                        setVariantId(
-                          variant.find(
-                            (vari) => vari.variant === selectedVariant
-                          )?.id
-                        );
-                        variantChangeHandler(selectedVariant);
+                        console.log(e.target,"dpoie93737")
+                        // setVariantId(
+                        //   variant.find(
+                        //     (vari) => vari.variant)?.id
+                        // );
+                        variantChangeHandler(e.target.value);
                       }}
                     >
                       <option value="">Select</option>
-                      {variant.map((vari, i) => (
-                        <option
-                          key={i}
-                          value={vari.variant}
-                          className={styles.optionField}
-                        >
-                          {vari.variant}
-                        </option>
-                      ))}
+                        {variant?.map((vari, i) => {
+                          console.log( vari,"asdkjasdj")
+return(
+
+  <option
+  key={i}
+  value={JSON.stringify(vari)}
+  className={styles.optionField}
+  >
+                            {vari?.variant}
+                          </option>
+                            )
+                      }
+                        )}
                     </select>
                   )}
                   {/* {Array.isArray(variant) &&
