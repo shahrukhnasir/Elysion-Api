@@ -30,10 +30,7 @@ import {
 } from "../../Service/GuestService";
 import { Skeleton } from "antd";
 import { setSessionId } from "../../Redux/Auth/sessionSlice";
-import { getCartList } from "../../Redux/CartList/CartList";
-import { productData } from "../../Service/CartService";
 import ProductCard from "../ProductCard/ProductCard";
-import ServiceCardComman from "../ServiceCardComman/ServiceCardComman";
 const ProductDetailsComponent = () => {
   const [productDetail, setProductDetails] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -57,10 +54,16 @@ const ProductDetailsComponent = () => {
     dispatch(WishListAddToListProduct(token, data, setHeartClick));
     setHeartClick(true);
   };
+  const handleProductDetail = (productId) => {
+    router.push({
+      pathname: "/product-detail",
+      query: { productId: productId },
+    });
+  };
   const updateSteps = (amount) => {
     setSteps((prevState) => {
       const updatedSteps = prevState + amount;
-      return updatedSteps >= 0 ? updatedSteps : 0; // Ensure steps is not below zero
+      return updatedSteps >= 1 ? updatedSteps : 1; // Ensure steps is not below zero
     });
   };
 
@@ -173,8 +176,9 @@ const ProductDetailsComponent = () => {
   const productCat = productDetail?.categories?.filter(
     (foo) => foo.product_id == slug
   );
-  console.log(productDetail?.categories?.filter(
-    (foo) => foo.product_id == slug));
+  console.log(
+    productDetail?.categories?.filter((foo) => foo.product_id == slug)
+  );
   return (
     <>
       <div className="container-fluid p-0">
@@ -249,8 +253,9 @@ const ProductDetailsComponent = () => {
                 <p>
                   <span className={styles.cardText}>Product Category </span>
                   <span className={styles.cardBlueText}>
-                  {productCat?.length >= 0 ? productCat?.[0]?.slug : "not found"}
-
+                    {productCat?.length >= 0
+                      ? productCat?.[0]?.slug
+                      : "not found"}
                   </span>
                 </p>
                 <p>
@@ -511,11 +516,13 @@ const ProductDetailsComponent = () => {
                     .slice(0, 6)
                     .map((item, i) => (
                       <div key={item?.id}>
-                        <ServiceCardComman
+                        <ProductCard
                           image={item?.thumbnail_url}
                           Title={item?.title}
                           Descriptions={item?.description}
                           Price={item?.price}
+                          id={item?.id}
+                          onClick={() => handleProductDetail(item?.id)}
                         />
                       </div>
                     ))}

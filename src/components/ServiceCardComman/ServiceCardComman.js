@@ -23,7 +23,12 @@ const ServiceCardComman = ({ Title, Descriptions, Price, image, id, onClick }) =
             </div>
           </div>
           <p className={`${styles.cardDesc} ${styles.lineclamp1}`}>{Descriptions}</p>
-          
+          <Link href={""} className={`${styles.linkBtn}`}>
+            <span className={styles.learnMore}>View Details</span>{" "}
+            <span>
+              <BsArrowRight className={styles.arrowIcon} />
+            </span>{" "}
+          </Link>
         </div>
       </div>
     </>

@@ -31,7 +31,7 @@ const CheckOutDetails2 = () => {
   const HandleSubmit = async (e) => {
     e.preventDefault();
     if (!isChecked) {
-      toast.info('Checkbox is not checked');
+      toast.info('please ✔ agree term and condition');
       return;
     }
     dispatch(getProfile(token));
@@ -201,7 +201,7 @@ const CheckOutDetails2 = () => {
           onChange={handleCheckboxChange}
           id="flexCheckDefault"
         />
-              </span>
+                </span>
               <span className={styles.tCheckBoxText}>
                 I hereby agree to the
                 <Link href="/termservice">

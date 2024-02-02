@@ -81,7 +81,7 @@
     margin-bottom: 5px;
     margin-top: 5px;
     height: 31px;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 }
 .cardDesc::-webkit-scrollbar {
     width: 5px !important;

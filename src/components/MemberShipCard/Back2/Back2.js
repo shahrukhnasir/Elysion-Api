@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 const Back2 = () => {
 
   const [member, setMember] = useState([]);
@@ -31,13 +32,7 @@ const Back2 = () => {
         query: { id: slug },
       });
     } else {
-      Swal.fire({
-        position: "center",
-        icon: "info",
-        title: "Please Login !",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      toast.error("Please Login to buy membership!");
     }
   };
   return (

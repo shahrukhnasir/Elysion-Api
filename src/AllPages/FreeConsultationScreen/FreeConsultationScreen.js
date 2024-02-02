@@ -35,11 +35,11 @@ const AboutusScreen = () => {
   const HandleSubmit = (e) => {
     e.preventDefault();
     if (!isChecked1) {
-      toast.error("Checkbox is not checked");
+      toast.error("please ✔ agree Privacy Policy and Terms ");
       return;
     }
     if (!isChecked2) {
-      toast.error("Checkbox is not checked");
+      toast.error("please ✔ agree to receiving text messages");
       return;
     }
     setLoading(true);

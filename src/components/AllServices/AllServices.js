@@ -10,11 +10,13 @@ import Link from "next/link";
 import services from "../../ServicesPages/constant/serviceData";
 import { Skeleton } from "antd";
 import Swal from "sweetalert2";
+import CommanCard from "../CommanCard/CommanCard";
 const AllServices = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { query } = useRouter();
-  const [service, setServiceDetails] = useState();
+  const router = useRouter();
+  const [service, setServiceDetails] = useState([]);
   const [services, setServicesData] = useState([]);
   const slug = query?.serviceId;
   useEffect(() => {
@@ -22,8 +24,6 @@ const AllServices = () => {
     dispatch(AllServiceCards(setLoading, setServicesData, dispatch));
   }, [slug]);
   const token = useSelector((state) => state?.authSlice?.authToken);
-
-  console.log(services, "servicesservices");
   const loginHanlder = (e) => {
     e.preventDefault();
 
@@ -33,6 +33,14 @@ const AllServices = () => {
       title: "please login first",
       showConfirmButton: false,
       timer: 1500,
+    });
+  };
+  const serviceDetails = (slug) => {
+    router.push({
+      pathname: '/service',
+      query: {
+        serviceId: slug,
+      },
     });
   };
 
@@ -49,9 +57,9 @@ const AllServices = () => {
           <>
             {!loading ? (
               <TopLayout
-                Heading={service?.name}
-                descriptions={service?.sub_heading}
-                image={service?.image_url}
+                Heading={!loading ? service?.name : <Skeleton/> }
+                descriptions={ !loading ? service?.sub_heading : <Skeleton/>}
+                image={!loading ? service?.image_url : <Skeleton/>}
                 // image="../images/addiction-Medicine.webp"
               />
             ) : (
@@ -109,11 +117,16 @@ const AllServices = () => {
               .map((item, i) => {
                 return (
                   <div className="col-lg-4" key={i}>
-                    <ServiceCardComman
-                      Title={item?.name}
-                      Descriptions={item?.description}
-                      className={styles.serviceCardCol}
-                    />
+                     <CommanCard
+                        key={item.id}
+                        classNameProp={`${
+                          item?.id % 2 == 0 ? "cardBodyEven" : "cardBodyOdd"
+                        }`}
+                        Title={item?.name}
+                        Descriptions={item?.sub_heading}
+                        id={item?.id}
+                        onClick={() => serviceDetails(item.id)}
+                      />
                   </div>
                 );
               })}

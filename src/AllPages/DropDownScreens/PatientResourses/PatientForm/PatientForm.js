@@ -5,7 +5,7 @@ import { PatientFormContent } from "../../../../Service/HomePageService";
 import { useDispatch } from "react-redux";
 import Skeleton from "react-loading-skeleton";
 const PatientForm = () => {
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {

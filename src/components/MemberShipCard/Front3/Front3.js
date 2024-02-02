@@ -6,6 +6,7 @@ import { MemberShipCard } from "../../../Service/MemberShipService";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 const Front3 = () => {
   const [member, setMember] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -31,13 +32,7 @@ const Front3 = () => {
         query: { id: slug },
       });
     } else {
-      Swal.fire({
-        position: "center",
-        icon: "info",
-        title: "Please login first!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      toast.error("Please Login to buy membership!");
     }
   };
   return (

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 const Front1 = ({ className }) => {
   const [member, setMember] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,13 +28,7 @@ const Front1 = ({ className }) => {
         query: { id: slug },
       });
     } else {
-      Swal.fire({
-        position: "center",
-        icon: "info",
-        title: "Please Login first!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      toast.info("Please Login to buy membership!");
     }
   };
 
