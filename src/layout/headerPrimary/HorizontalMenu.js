@@ -23,7 +23,7 @@ const HorizontalMenu = () => {
     dispatch(AllServiceCards(setLoading, setServicesData, dispatch));
   }, []);
   const session_id = useSelector((state) => state?.sessionSlice?.session);
-  const cart = useSelector((state) => state?.CartSlice?.cart?.length);
+  const cart = useSelector((state) => state?.CartListSlice?.cart?.length);
 
   const router = useRouter();
   const [search, setsearch] = useState(false);

@@ -31,7 +31,7 @@ const CheckOutDetails2 = () => {
   const HandleSubmit = async (e) => {
     e.preventDefault();
     if (!isChecked) {
-      toast.info('please ✔ agree term and condition');
+      toast.info('please accepte term and condition.');
       return;
     }
     dispatch(getProfile(token));

@@ -1,0 +1,25 @@
+
+
+
+/* CustomRadioButton Styles */
+.GeneralButton span{
+        color: #1c3247;
+        width: 80px !important;
+        height: 30px;
+        border-radius: 25px;
+        border: 1px solid #1c3247;
+        font-family: var(--main-font-regular);
+        font-size: 14px;
+        transform: translateY(0rem);
+        transition: all 0.3s ease-in-out;
+        margin: 10px 10px;
+        display: block;
+        cursor: pointer;
+        text-align: center;
+    
+}
+.GeneralButton input:checked ~ .current_radio {
+    background-color: #1c3247 !important;
+    color: white !important;
+    cursor: pointer;
+}

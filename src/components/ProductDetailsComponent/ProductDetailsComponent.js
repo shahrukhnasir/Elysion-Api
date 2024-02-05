@@ -31,6 +31,9 @@ import {
 import { Skeleton } from "antd";
 import { setSessionId } from "../../Redux/Auth/sessionSlice";
 import ProductCard from "../ProductCard/ProductCard";
+import { Login } from "../../network/Network";
+import TimeButton from "../TimeButton/TimeButton";
+import VariantButton from "../VariantButton/VariantButton";
 const ProductDetailsComponent = () => {
   const [productDetail, setProductDetails] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -41,6 +44,7 @@ const ProductDetailsComponent = () => {
   const [tab, setTab] = useState(0);
   const [heartClick, setHeartClick] = useState(false);
   const [products, setAllProducts] = useState([]);
+  const [variantPrice, setVariantPrice] = useState([])
 
   const token = useSelector((state) => state?.authSlice?.authToken);
   const { query } = useRouter();
@@ -55,7 +59,7 @@ const ProductDetailsComponent = () => {
     setHeartClick(true);
   };
 
-  console.log(variant,"variantasdasdasd");
+  console.log(variant, "variantasdasdasd");
   const handleProductDetail = (productId) => {
     router.push({
       pathname: "/product-detail",
@@ -114,10 +118,7 @@ const ProductDetailsComponent = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // tabs
-  const handleTab = (tab) => {
-    setTab(tab);
-  };
+
   // slider
   var settings = {
     speed: 500,
@@ -165,21 +166,25 @@ const ProductDetailsComponent = () => {
       )
     );
   }, [slug, setProductVariants]);
-    const [varPrice ,setVariantPrice] =useState(productDetail?.unit_price)
 
-  const variantChangeHandler = (selectedVariant) => {
-
-    console.log(varPrice,"selectedVariant");
-    setVariantPrice(JSON.parse(selectedVariant));
+  const [varPrice, setVariantSelectPrice] = useState(productDetail?.unit_price);
+  const [variantMili, setVariantMiligram] = useState([]);
+  const handleVariantClick = (selectedVariant) => {
+    console.log(selectedVariant, 'selectedVariant');
     let filteredMili = productDetail?.mg?.filter(
-      (variant) => variant?.miligram === selectedVariant
+      (variant) => variant?.miligram === selectedVariant?.sku
     );
+    setVariantSelectPrice(selectedVariant?.price);
+    setVariantMiligram(selectedVariant?.sku);
+    setVariantId(selectedVariant?.id);
+    console.log(filteredMili, "filteredMili");
     setMiliId(filteredMili?.[0]?.id);
   };
 
-  useEffect(()=>{
-    setVariantPrice(productDetail?.unit_price)
-  },[productDetail])
+  useEffect(() => {
+    setVariantSelectPrice(productDetail?.unit_price);
+    console.log(variant, "variantPricevariantPrice");
+  }, [productDetail]);
   useEffect(() => {
     dispatch(GetAllProduct(setAllProducts));
   }, []);
@@ -190,6 +195,7 @@ const ProductDetailsComponent = () => {
   console.log(
     productDetail?.categories?.filter((foo) => foo.product_id == slug)
   );
+
   return (
     <>
       <div className="container-fluid p-0">
@@ -272,7 +278,7 @@ const ProductDetailsComponent = () => {
                 <p>
                   <span className={styles.cardText}>Price</span>
                   <span className={styles.cardBlueText}>
-                    {productDetail && productDetail?.unit_price}
+                    {varPrice *steps}
                   </span>
                 </p>
 
@@ -305,38 +311,57 @@ const ProductDetailsComponent = () => {
                 </p>
 
                 <p>
-                  <span className={styles.cardText}>Variants</span>
+                  <span className={styles.cardText}>Select Variants</span>
                   {Array.isArray(variant) && (
+                    <div>
+                      <div className={styles.buttonContainer}>
+                        {variant.map((vari, i) => (
+                           <VariantButton
+                           key={i}
+                            onClick={() => handleVariantClick(vari)}
+                           variant={vari.variant}
+ 
+                         />
+                          
+                            
+                      
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* {Array.isArray(variant) && (
                     <select
                       id="variant_select"
                       className={styles.selectField}
                       name="variant"
                       onChange={(e) => {
-                        console.log(e.target,"dpoie93737")
-                        // setVariantId(
-                        //   variant.find(
-                        //     (vari) => vari.variant)?.id
-                        // );
-                        variantChangeHandler(e.target.value);
+                        const selectedVariant = e.target.value;
+                        setVariantId(
+                          variant.find(
+                            (vari) => vari.variant === selectedVariant
+                          )?.id
+                        );
+                        setVariantPrice(
+                          variant.find(
+                            (vari) => vari.price
+                          )?.price
+                        );
+                        variantChangeHandler(selectedVariant);
                       }}
                     >
                       <option value="">Select</option>
-                        {variant?.map((vari, i) => {
-                          console.log( vari,"asdkjasdj")
-return(
-
-  <option
-  key={i}
-  value={JSON.stringify(vari)}
-  className={styles.optionField}
-  >
-                            {vari?.variant}
-                          </option>
-                            )
-                      }
-                        )}
+                      {variant.map((vari, i) => (
+                        <option
+                          key={i}
+                          value={vari.variant}
+                          className={styles.optionField}
+                        >
+                          {vari.variant}
+                        </option>
+                      ))}
                     </select>
-                  )}
+                  )} */}
                   {/* {Array.isArray(variant) &&
                     variant.map((vari, i) => (
                       <span key={i} className="mx-2">
@@ -386,134 +411,29 @@ return(
 
         <div className={styles.outerReviewSec}>
           <span
-            onClick={() => handleTab(0)}
             className={tab === 0 ? styles.active : styles.noneActive}
           >
             Details
           </span>
-          <span className={styles.middleLine}>|</span>
+          <span className={styles.middleLine}></span>
 
-          <span
-            onClick={() => handleTab(1)}
-            className={tab === 1 ? styles.active : styles.noneActive}
-          >
-            Reviews
-          </span>
+
         </div>
         <div>
-          {tab === 0 && (
-            <div>
-              <p className={styles.detailsReview}>
-                {loading ? (
-                  <>{productDetail && productDetail?.description}</>
-                ) : (
-                  <>
-                    <Skeleton />
-                  </>
-                )}
-              </p>
-            </div>
-          )}
-          {tab === 1 && (
-            <>
-              <div class="card border-0 mb-3">
-                {/* Review Card 1 */}
-                <div class="row g-0">
-                  <div class="col-md-1">
-                    <img
-                      src="/images/reviews1.png"
-                      class="img-fluid rounded-start"
-                      alt="..."
-                    />
-                  </div>
-                  <div class="col-md-11">
-                    <div class="card-body px-0">
-                      <div className="row">
-                        <div className="col">
-                          <span className={styles.clntName}>John Doe | </span>
-                          <span>
-                            {" "}
-                            <ImStarFull className={styles.starIcon} />
-                          </span>
-                          <span>
-                            {" "}
-                            <ImStarFull className={styles.starIcon} />
-                          </span>
-                          <span>
-                            {" "}
-                            <ImStarFull className={styles.starIcon} />
-                          </span>
-                          <span>
-                            {" "}
-                            <ImStarFull className={styles.starIcon} />
-                          </span>
-                          <span>
-                            {" "}
-                            <ImStarFull className={styles.starLightIcon} />
-                          </span>
-                          <span className={styles.lightText}>4.0</span>
-                        </div>
-                      </div>
-                      <p className={styles.reviewParagraph}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                {/* Review Card 2 */}
-                <div class="row g-0">
-                  <div class="col-md-1">
-                    <img
-                      src="/images/reviews2.png"
-                      class="img-fluid rounded-start"
-                      alt="..."
-                    />
-                  </div>
-                  <div class="col-md-11">
-                    <div class="card-body px-0">
-                      <div className="row">
-                        <div className="col">
-                          <span className={styles.clntName}>John Doe | </span>
-                          <span>
-                            {" "}
-                            <ImStarFull className={styles.starIcon} />
-                          </span>
-                          <span>
-                            {" "}
-                            <ImStarFull className={styles.starIcon} />
-                          </span>
-                          <span>
-                            {" "}
-                            <ImStarFull className={styles.starIcon} />
-                          </span>
-                          <span>
-                            {" "}
-                            <ImStarFull className={styles.starIcon} />
-                          </span>
-                          <span>
-                            {" "}
-                            <ImStarFull className={styles.starLightIcon} />
-                          </span>
-                          <span className={styles.lightText}>4.0</span>
-                        </div>
-                      </div>
-                      <p className={styles.reviewParagraph}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
+
+          <div>
+            <p className={styles.detailsReview}>
+              {loading ? (
+                <>{productDetail && productDetail?.description}</>
+              ) : (
+                <>
+                  <Skeleton />
+                </>
+              )}
+            </p>
+          </div>
+
+
         </div>
 
         <hr />

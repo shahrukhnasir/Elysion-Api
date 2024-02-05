@@ -3,14 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 
-const CartSlice = createSlice({
+const CartListSlice = createSlice({
   name: 'cart',
   initialState: {
     cart:  [],
   },
   reducers: {
     setCartList: (state, action) => {
-      // console.log("asdsd",action.payload)
       state.cart = action.payload;
       localStorage.setItem('cart', JSON.stringify(action.payload));
     },
@@ -21,8 +20,8 @@ const CartSlice = createSlice({
   },
 });
 
-export const { setCartList ,removedAllCart} = CartSlice.actions;
+export const { setCartList ,removedAllCart} = CartListSlice.actions;
 
 export const selectCartList = (state) => state.cart?.cart;
 
-export default CartSlice.reducer;
+export default CartListSlice.reducer;

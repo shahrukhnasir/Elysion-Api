@@ -25,7 +25,7 @@ const MyCart = () => {
   const [cartList, setAddCartList] = useState([]);
   // console.log(cartList,"lasdkaskj")
   const [loading, setLoading] = useState(false);
-  const cart = useSelector((state) => state?.CartSlice?.cart);
+  const cart = useSelector((state) => state?.CartListSlice?.cart);
   console.log(cart,'cartcartcart');
   const session_id = useSelector((state) => state?.sessionSlice?.session);
 

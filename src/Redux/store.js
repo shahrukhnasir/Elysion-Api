@@ -20,7 +20,8 @@ import ServiceSlice from "./AllService/serviceById";
 import AllServiceSlice from "./AllService/allServices"
 import sessionSlice from "./Auth/sessionSlice";
 import ProfileSlice from "../Redux/Profile/Profile";
-import CartSlice from "../Redux/CartList/CartList"
+import CartListSlice from "../Redux/CartList/CartList";
+import cartSlice from '../Redux/Cart/Cart'
 
 const persistConfig = {
   key: "root",
@@ -47,7 +48,8 @@ const persistedReducer = persistReducer(
     AllServiceSlice:AllServiceSlice,
     sessionSlice:sessionSlice,
     ProfileSlice:ProfileSlice,
-    CartSlice:CartSlice
+    CartListSlice:CartListSlice,
+    cartSlice:cartSlice
   })
 );
 
