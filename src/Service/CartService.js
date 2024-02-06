@@ -12,6 +12,7 @@ import {
   RemovedToAll,
   RemovedToCart,
   SearchProduct,
+  UpdateCart,
   WishList,
   getProducts,
 } from "../network/Network";
@@ -51,47 +52,47 @@ export const ProductList = (setLoading, setProducts) => (dispatch) => {
 ////👇Cat & Products By id
 export const CatProductById =
   (setCatByProdutId, slug, setCatByProductList, setLoading) =>
-  async (dispatch) => {
-    setLoading(true);
+    async (dispatch) => {
+      setLoading(true);
 
-    if (slug !== undefined) {
-      try {
-        const response = await CatByProducts(slug);
-        const responseData = response?.data?.response?.data?.data;
+      if (slug !== undefined) {
+        try {
+          const response = await CatByProducts(slug);
+          const responseData = response?.data?.response?.data?.data;
 
-        setCatByProdutId(slug);
-        setCatByProductList(responseData);
-        setLoading(false);
-      } catch (err) {
-        console.error(err, "dsdmsd");
-        setCatByProductList([]);
-        setLoading(false);
+          setCatByProdutId(slug);
+          setCatByProductList(responseData);
+          setLoading(false);
+        } catch (err) {
+          console.error(err, "dsdmsd");
+          setCatByProductList([]);
+          setLoading(false);
+        }
       }
-    }
-  };
+    };
 
 ////👇Product Details By id
 export const getProductDetailById =
   (slug, setProductDetails, setProductDetailById, setProductVariants) =>
-  async (dispatch) => {
-    try {
-      // setLoading(true);
+    async (dispatch) => {
+      try {
+        // setLoading(true);
 
-      if (slug !== undefined) {
-        const res = await ProductDetails(slug);
-        const productData = res?.data?.response?.data;
-        const productVarriant = res?.data?.response?.data?.variants;
-        // const productMilliGram = res?.data?.response?.data?.mg;
-        // console.log(res?.data?.response?.data?.mg, "M_G");
-        setProductDetails(productData);
-        setProductVariants(productVarriant);
-        // setProductMilliGram(productMilliGram);
-        dispatch(setProductDetailById(slug));
+        if (slug !== undefined) {
+          const res = await ProductDetails(slug);
+          const productData = res?.data?.response?.data;
+          const productVarriant = res?.data?.response?.data?.variants;
+          // const productMilliGram = res?.data?.response?.data?.mg;
+          // console.log(res?.data?.response?.data?.mg, "M_G");
+          setProductDetails(productData);
+          setProductVariants(productVarriant);
+          // setProductMilliGram(productMilliGram);
+          dispatch(setProductDetailById(slug));
+        }
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    };
 
 ////👇Search Products
 export const SearchProducts =
@@ -109,19 +110,14 @@ export const SearchProducts =
     }
   };
 
+
 ////👇// Add TO Cart
 export const AddToCartHandler = (token, data, setLoading, router) => () => {
   AddToCart(token, data)
     .then((res) => {
       if (res) {
         setLoading(false);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Add to Cart successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        toast.success("Add to Cart successfully")
         // console.log(res, "uyyy");
         router.push("/my-cart");
       } else {
@@ -130,28 +126,20 @@ export const AddToCartHandler = (token, data, setLoading, router) => () => {
     })
     .catch((err) => {
       console.log(err?.response?.data?.errors?.product_miligram_id?.[0], "err");
-      // console.log("data", res?.response?.data?.message);
-      // setLoading(true);
-      Swal.fire({
-        position: "center",
-        icon: "info",
-        title:
-          (err?.response?.data?.errors?.product_miligram_id &&
-            "Please select Variant") ||
-          err?.response?.data?.errors?.qty ||
-          err?.response?.data?.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      toast.info(err?.response?.data?.errors?.product_miligram_id &&
+        "Please select Variant any" ||
+        err?.response?.data?.errors?.qty ||
+        err?.response?.data?.message)
     });
 };
 
 ////👇Add TO Cart List
 export const AddToCartListHandler =
-  (token, setLoading, setAddCartList, dispacth) => (dispatch) => {
+  (token, setLoading, setAddCartList) => () => {
     setLoading(true);
     AddToCartList(token)
       .then((res) => {
+        console.log(res, "shdui");
         // dispacth(setCartList(res?.data?.response?.data))
         setAddCartList(res?.data?.response?.data);
         setLoading(false);
@@ -172,29 +160,14 @@ export const RemovedToCartHandler =
       console.log(res?.data?.message === "success");
       if (res?.data?.message === "success") {
         setLoading(false);
-        await Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Removed to Cart successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        // router.reload();
-
-        // dispatch(AddToCartHandler(token))
+        await
+          toast.success("Removed to Cart successfully")
       }
     } catch (error) {
       // setLoading(false);
       console.error("Error in Password Update:", error);
-
-      await Swal.fire({
-        position: "center",
-        icon: "error",
-        title: "Cart Not Removed ",
-        text: "Cart Not Removed ",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      await
+        toast.error("Cart Not Removed")
       setLoading(false);
     }
   };
@@ -208,26 +181,15 @@ export const RemovedAllHandler =
       console.log(res?.data, "RRRRRRRRRRRRR");
       if (res?.data?.message === "success") {
         // setLoading(false);
-        await Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Clear All Cart List successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        await
+          toast.success("Clear All Cart List successfully")
       }
     } catch (error) {
       // setLoading(false);
       console.error("Error in Password Update:", error?.message);
+      await
+        toast.error("please login first");
 
-      await Swal.fire({
-        position: "center",
-        icon: "error",
-        title: error?.message,
-        text: "please login",
-        showConfirmButton: false,
-        timer: 1000,
-      });
       // setLoading(false);
     }
   };
@@ -241,13 +203,9 @@ export const CheckOutHandler =
       console.log(res);
       if (res?.data?.message === "success") {
         setLoading(false);
-        await Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Order successfully completed",
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        await
+          toast.success("Order successfully completed")
+
         route.push("myorders");
       }
     } catch (error) {
@@ -291,7 +249,8 @@ export const WishListAddToListProduct = (token, data, setHeartClick) => () => {
     })
     .catch((res) => {
       toast.error(res?.response?.data?.message);
-      
+
+
     });
 };
 
@@ -307,42 +266,42 @@ export const productData =
     setTotalPage,
     setCurrentPage
   ) =>
-  async () => {
-    setLoading(true);
-    getProducts(slug, search)
-      .then((res) => {
-        setProduct(res?.data?.response?.data?.data);
-        setPerPage(res?.data?.response?.data?.per_page);
-        setTotalPage(res?.data?.response?.data?.total);
-        setCurrentPage(res?.data?.response?.data?.current_page);
-        setPage(res?.data?.response?.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    async () => {
+      setLoading(true);
+      getProducts(slug, search)
+        .then((res) => {
+          setProduct(res?.data?.response?.data?.data);
+          setPerPage(res?.data?.response?.data?.per_page);
+          setTotalPage(res?.data?.response?.data?.total);
+          setCurrentPage(res?.data?.response?.data?.current_page);
+          setPage(res?.data?.response?.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-    // try {
-    //   const response = await getProducts(slug, search);
-    //   const responseData =
-    //     response?.data?.response?.data?.data !== undefined
-    //       ? response?.data?.response?.data?.data
-    //       : response?.data?.response?.data;
-    //   console.log(response?.data?.response?.data?.data, "responseData");
-    //   setProduct(response?.data?.response?.data?.data);
-    //   setPerPage(response?.data?.response?.data?.per_page);
-    //   setTotalPage(response?.data?.response?.data?.total);
-    //   setCurrentPage(response?.data?.response?.data?.current_page);
-    //   // console.log (response?.data?.response?.data?.current_page, "dskhjasdhads");
-    //   // setCatByProdutId(slug);
-    //   setPage(response?.data?.response?.data);
-    //   setLoading(false);
-    // } catch (err) {
-    //   console.error(err, "error loading");
-    //   setProduct([]);
-    //   setLoading(false);
-    // }
-  };
+      // try {
+      //   const response = await getProducts(slug, search);
+      //   const responseData =
+      //     response?.data?.response?.data?.data !== undefined
+      //       ? response?.data?.response?.data?.data
+      //       : response?.data?.response?.data;
+      //   console.log(response?.data?.response?.data?.data, "responseData");
+      //   setProduct(response?.data?.response?.data?.data);
+      //   setPerPage(response?.data?.response?.data?.per_page);
+      //   setTotalPage(response?.data?.response?.data?.total);
+      //   setCurrentPage(response?.data?.response?.data?.current_page);
+      //   // console.log (response?.data?.response?.data?.current_page, "dskhjasdhads");
+      //   // setCatByProdutId(slug);
+      //   setPage(response?.data?.response?.data);
+      //   setLoading(false);
+      // } catch (err) {
+      //   console.error(err, "error loading");
+      //   setProduct([]);
+      //   setLoading(false);
+      // }
+    };
 
 // 👇Cart item counting
 export const getCartCount = (Istoken, setCartCount) => async () => {
@@ -361,10 +320,24 @@ export const GetAllProduct = (setAllProducts) => async () => {
   GetAllProducts()
     .then((res) => {
       console.log(res?.data?.response?.data?.data, "Khskdhjdg");
-    
+
       setAllProducts(res?.data?.response?.data?.data);
     })
     .catch((err) => {
       console.log(err);
     });
+};
+////👇Cart Price Update
+export const UpdateCartQty = (data, token, setLoading,setAddCart) => async () => {
+  setLoading(true);
+  try {
+    const res = await UpdateCart(data, token,);
+    setAddCart(res?.data?.response?.data)
+    console.log(res);
+    setLoading(false);
+  } catch (error) {
+    setLoading(false);
+    console.error(error?.response?.data?.errors, "errr");
+    toast.success(error?.response?.data?.message);
+  }
 };

@@ -29,7 +29,11 @@ const MyWishlist = () => {
   }, []);
 
   const AddToCartHandler = (productId) => {
-    router.push(`/shop/product/${productId}`);
+
+    router.push({
+      pathname: "/product-detail",
+      query: { productId: productId },
+    });
   };
 
   {

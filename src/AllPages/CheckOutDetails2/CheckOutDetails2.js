@@ -12,9 +12,14 @@ import {
 } from "../../Service/Subscription";
 import { getProfile } from "../../Redux/Profile/Profile";
 import { toast } from "react-toastify";
+import { Modal } from "antd";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import SubscriptionForm from "../../components/SubscriptionForm/SubscriptionForm";
 const CheckOutDetails2 = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedMem, setSelectedOption] = useState("");
   const [isValid, setIsValid] = useState(false);
@@ -23,10 +28,15 @@ const CheckOutDetails2 = () => {
   const [striptoken, setStriptoken] = useState();
   // const [type, setType] = useState("Select");
   const [subDetails, setSubscriptionDetails] = useState([]);
+
+  // Stripe Elems 
+  const stripePromise = loadStripe(`pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3`);
+
+
   const onToken = (isToken) => {
     setStriptoken(isToken?.id);
   };
-  
+
   const slug = router?.query?.id;
   const HandleSubmit = async (e) => {
     e.preventDefault();
@@ -37,19 +47,7 @@ const CheckOutDetails2 = () => {
     dispatch(getProfile(token));
     setIsValid(false);
     setLoading(true);
-    try {
-      if (striptoken) {
-        let data = new FormData();
-        data.append("type", subDetails?.type);
-        data.append("subscription_id", slug);
-        data.append("stripeToken", striptoken);
-        dispatch(UserSubscriptionCreate(token, data, setLoading, router));
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    } finally {
-      setLoading(false);
-    }
+   
   };
 
   const calculatePrice = () => {
@@ -67,11 +65,6 @@ const CheckOutDetails2 = () => {
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
-  
-
- 
-   
-
 
   return (
     <>
@@ -166,8 +159,8 @@ const CheckOutDetails2 = () => {
         </div>
 
         <div className="col-lg-4 py-3 m-auto">
-          <>
-            {striptoken   ? (
+          {/* <>
+            {striptoken ? (
               ""
             ) : (
               <StripeCheckout
@@ -184,7 +177,10 @@ const CheckOutDetails2 = () => {
                 />
               </StripeCheckout>
             )}
-          </>
+          </> */}
+          <button onClick={() => setOpen(true)}>
+            BUY NOW
+          </button>
         </div>
 
         <div className="container py-5">
@@ -193,15 +189,15 @@ const CheckOutDetails2 = () => {
           <div className="row">
             <div className="col-lg-5 offset-lg-1">
               <span>
-               
-              <input
-          className="form-check-input me-2"
-          type="checkbox"
-          checked={isChecked}
-          onChange={handleCheckboxChange}
-          id="flexCheckDefault"
-        />
-                </span>
+
+                <input
+                  className="form-check-input me-2"
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={handleCheckboxChange}
+                  id="flexCheckDefault"
+                />
+              </span>
               <span className={styles.tCheckBoxText}>
                 I hereby agree to the
                 <Link href="/termservice">
@@ -229,6 +225,20 @@ const CheckOutDetails2 = () => {
           </div>
         </div>
       </div>
+
+
+      <Elements stripe={stripePromise}>
+        <Modal
+          centered
+          open={open}
+          onOk={() => setOpen(false)}
+          onCancel={() => setOpen(false)}
+          width={555}
+          footer={false}
+        >
+          <SubscriptionForm slug={slug} type={subDetails?.type}/>
+        </Modal>
+      </Elements>
     </>
   );
 };

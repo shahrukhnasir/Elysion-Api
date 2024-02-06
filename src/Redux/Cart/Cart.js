@@ -12,12 +12,11 @@ const cartSlice = createSlice({
     setCart: (state, action) => {
       state.cart = action.payload;
       localStorage.setItem('cart', JSON.stringify(action.payload));
-      
     },
 
     // add to cart
     addToCart: (state, action) => {
-      const itemIndex = state.cart.findIndex((item) => item.id === action.payload.id);
+      const itemIndex = state.cart.find((item) => item.id === action.payload.id);
 
       if (itemIndex >= 0) {
         state.cart[itemIndex].qty += 1;

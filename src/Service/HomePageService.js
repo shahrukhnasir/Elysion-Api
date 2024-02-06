@@ -25,6 +25,7 @@ import {
   privacyPolicyContent,
 } from "../network/Network";
 import PatientResources from "../AllPages/HomePage/PatientResources/PatientResources";
+import { toast } from "react-toastify";
 
 export const HeroSections =
   (setLoading,setData) =>
@@ -154,16 +155,8 @@ export const FooterNewsLatterEmail =
         setChatFields({
           email: "",
         });
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Email Send Successfully",
-          showConfirmButton: false,
-          timer: 1500,
-          customClass: {
-            confirmButton: "theme-button-bg",
-          },
-        });
+        toast.success('email send successfully')
+       
         router.push("/thank-you");
       })
       .catch((err) => {

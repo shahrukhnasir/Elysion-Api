@@ -12,6 +12,7 @@ import {
   WishListDelete,
   WishListDeleteById,
 } from "../network/Network";
+import { toast } from "react-toastify";
 
 // My Profile
 export const Profile = (token, setLoading, setMyProfile) => () => {
@@ -175,14 +176,7 @@ export const OrderList = (token, setLoading, setOrderList) => () => {
     .catch((error) => {
       console.log(error);
       setLoading(false);
-      Swal.fire({
-        position: "center",
-        icon: "info",
-        title: "Order List Empty",
-        text: error.response?.data?.message || "",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      toast.info("Order List Empty");
     });
 };
 
@@ -198,14 +192,7 @@ export const MyWishList = (token, setLoading, setWishList) => () => {
     .catch((error) => {
       console.log(error);
       setLoading(false);
-      Swal.fire({
-        position: "center",
-        icon: "info",
-        title: "Wish List Empty",
-        text: error.response?.data?.message || "",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      toast.info("Wish List Empty");
     });
 };
 

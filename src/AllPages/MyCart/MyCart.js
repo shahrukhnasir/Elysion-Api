@@ -8,6 +8,7 @@ import {
   AddToCartListHandler,
   RemovedAllHandler,
   RemovedToCartHandler,
+  UpdateCartQty,
 } from "../../Service/CartService";
 import { Skeleton } from "antd";
 import { useRouter } from "next/router";
@@ -17,35 +18,38 @@ import {
   GuestRemovedToCartItem,
 } from "../../Service/GuestService";
 import { setCartList } from "../../Redux/CartList/CartList";
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 const MyCart = () => {
   const router = useRouter();
 
   const token = useSelector((state) => state?.authSlice?.authToken);
   const dispatch = useDispatch();
   const [cartList, setAddCartList] = useState([]);
+  const [cartListData, setAddCart] = useState([]);
   // console.log(cartList,"lasdkaskj")
   const [loading, setLoading] = useState(false);
   const cart = useSelector((state) => state?.CartListSlice?.cart);
-  console.log(cart,'cartcartcart');
+  const cartCheck = useSelector((state) => state?.cartSlice?.cart);
+  console.log(cart, 'cartcartcart');
   const session_id = useSelector((state) => state?.sessionSlice?.session);
-
-  useEffect(()=>{
+  console.log(cartList, "cartList");
+  useEffect(() => {
     dispatch(setCartList(cartList))
-  },[cartList]);
-  
+  }, [cartList, cartCheck]);
+
   useEffect(() => {
     if (token) {
       dispatch(
-        AddToCartListHandler(token, setLoading,setAddCartList, dispatch)
+        AddToCartListHandler(token, setLoading, setAddCartList, dispatch)
       );
     } else if (!token) {
       dispatch(setCartList(cartList))
       dispatch(
-        GuestCartLists(session_id,setLoading,setAddCartList, dispatch)
+        GuestCartLists(session_id, setLoading, setAddCartList, dispatch)
       );
     }
   }, [session_id]);
-  console.log(cartList?.length,"cartList");
+  console.log(cart, "cartList");
   const handleRemovedById = (slug) => {
     if (token) {
       dispatch(
@@ -77,11 +81,39 @@ const MyCart = () => {
       setAddCartList("");
     }
   };
+  const [qtyResult, setQty] = useState(1);
 
   const total = () => {
     const totalSum = cartList.reduce((acc, item) => acc + item.sub_total, 0);
     return totalSum;
   };
+  // const hanldeQtyUpdate  =(e)=>{
+  //   e.preventDefault();
+
+  // }
+
+  const updateQty = (amount) => {
+    setQty((prevState) => {
+      const updatedSteps = prevState + amount;
+      return updatedSteps >= 1 ? updatedSteps : 1;
+    });
+    console.log(qtyResult,"qtyResult");
+    if (token) {
+      let data = new FormData();
+      cartList?.map((item) => {
+        data.append(`cart_id`, item.id);
+        data.append(`qty`, qtyResult +1);
+      });
+      dispatch(UpdateCartQty(data, token, setLoading,setAddCart));
+    }
+  };
+
+  useEffect(()=>{
+    dispatch(
+      AddToCartListHandler(token, setLoading, setAddCartList, dispatch)
+    );
+  },[cartListData])
+
 
   return (
     <>
@@ -117,7 +149,7 @@ const MyCart = () => {
               </thead>
               {!loading && cartList && cartList.length > 0 && (
                 <tbody>
-                  {cartList.map((item, i) => (
+                  {cartList?.map((item, i) => (
                     <>
                       <tr key={i}>
                         <td className={styles.tData}>{item?.product?.title}</td>
@@ -130,7 +162,28 @@ const MyCart = () => {
                           {item?.title}
                         </td>
                         <td className={styles.tData}>{item?.price}</td>
-                        <td className={styles.tData}>{item?.qty}</td>
+                        <td className={styles.tData}>
+
+                          <span className={styles.priceText}>
+                            <button
+                              className={styles.qtyBtn}
+                              onClick={() => updateQty(-1)}
+                            >
+                              <AiOutlineMinus />
+                            </button>
+                            <span>
+                              <button className={styles.qtyResult}> {item?.qty}</button>
+                              {/* <button className={styles.qtyResult}> {qtyResult}</button> */}
+                            </span>
+                            <button
+                              className={styles.qtyBtn}
+                              onClick={() => updateQty(+1)}
+                            >
+                              <AiOutlinePlus />
+                            </button>
+                          </span>
+
+                        </td>
                         <td className={styles.tData}>{item?.sub_total}</td>
                         <td
                           className={styles.dataCross}

@@ -61,8 +61,7 @@ const TY = () => {
                 <h1 className={styles.topHeading}>Thank You</h1>
 
                 <p className={styles.topSubDecs}>
-                  Thank you for contacting us, you will receive a confirmation via email.
-                  If you need more immediate assistance, please call 470-300-2259
+                  The form was  Submitted successfully
                   
                 </p>
 

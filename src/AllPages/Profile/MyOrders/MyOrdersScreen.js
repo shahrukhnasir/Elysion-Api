@@ -131,7 +131,7 @@ const MyOrdersScreen = () => {
             </table>
           ) : (
             <div className={`${styles.tData} text-center`}>
-              WishList is Empty
+              OrderList is Empty
             </div>
           )}
         </div>

@@ -22,95 +22,99 @@ const MyMemberships = () => {
   useEffect(() => {
     dispatch(Subscriptions(token, setLoading, setSubscription, setSatus));
   }, [token]);
-console.log(sub,"sdsvdj");
+  console.log(sub, "sdsvdj");
   return (
     <>
       <ProfileLayout Heading="My Appointments" pageName="My Appointments">
         <div className={`${styles.TopCatSection} container`}></div>
 
         <div className={`${styles.AppointmentContainer} container`}>
-          {sub && sub  ? (
-            <table
-              className="table table-responsive"
-              id={styles.tableOuterBody}
-            >
-              <thead className={`${styles.TSection}`}>
-                <tr>
-                  <th scope="col" className={styles.tHead}>
-                    My membership
-                  </th>
+          {sub && sub ? (
+            <>
 
-                  <th scope="col" className={styles.tHead}>
-                    Amount Paid
-                  </th>
+              <table
+                className="table table-responsive"
+                id={styles.tableOuterBody}
+              >
+                <thead className={`${styles.TSection}`}>
+                  <tr>
+                    <th scope="col" className={styles.tHead}>
+                      My membership
+                    </th>
 
-                  <th scope="col" className={styles.tHead}>
-                    Status
-                  </th>
-                  <th scope="col" className={styles.tHead}>
-                  Amount
-                  </th>
-                  {/* <th scope="col" className={styles.tHead}>
+                    <th scope="col" className={styles.tHead}>
+                      Amount Paid
+                    </th>
+
+                    <th scope="col" className={styles.tHead}>
+                      Status
+                    </th>
+                    <th scope="col" className={styles.tHead}>
+                      Amount
+                    </th>
+                    {/* <th scope="col" className={styles.tHead}>
                   ACTION
                 </th> */}
-                </tr>
-              </thead>
+                  </tr>
+                </thead>
 
-              <tbody>
-                <tr>
-                  <td className={styles.tData}>{sub?.name}</td>
-                  <td className={styles.tData}>
-                    {/* {status.type == "annually" ? }{sub.price}:"" */}
-                    {status.type}
-                  </td>
-                  <td className={styles.tData}>{status.type}</td>
-                  <td className={styles.tData}>{sub?.price}$</td>
+                <tbody>
+                  <tr>
+                    <td className={styles.tData}>{sub?.name}</td>
+                    <td className={styles.tData}>
+                      {/* {status.type == "annually" ? }{sub.price}:"" */}
+                      {status.type}
+                    </td>
+                    <td className={styles.tData}>{status.type}</td>
+                    <td className={styles.tData}>{sub?.price}$</td>
 
-                  <td className={styles.tDataBtn}>
-                    {/* <Link
+                    <td className={styles.tDataBtn}>
+                      {/* <Link
                     href="membership"
                     type="button"
                     id={styles.dataActionBtn}
                   >
                     Renew Now
                   </Link> */}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          ) : (
-            <div className={`${styles.tData} text-center`}>
-            MemberShip List is Empty
-            </div>
-          )}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
 
-          <div>
-            <div className="row ms-3">
-              <div className="col-lg-6 mt-3">
-                <span className={styles.extraInfoText}>
-                  Need Help With Account?
-                </span>
-              </div>
-
-              <div className="col-lg-6">
-                <div className="row mt-3">
-                  <div className="col-lg-6">
+              <div>
+                <div className="row ms-3">
+                  <div className="col-lg-6 mt-3">
                     <span className={styles.extraInfoText}>
-                      Submit A Request Or Call Us{" "}
+                      Need Help With Account?
                     </span>
                   </div>
+
                   <div className="col-lg-6">
-                    <span>
-                      <IoIosCall className={styles.contactIcon} />
-                    </span>{" "}
-                    <a href="tel:+470-300-2259" className={styles.contactNum}>
-                      470-300-2259
-                    </a>
+                    <div className="row mt-3">
+                      <div className="col-lg-6">
+                        <span className={styles.extraInfoText}>
+                          Submit A Request Or Call Us{" "}
+                        </span>
+                      </div>
+                      <div className="col-lg-6">
+                        <span>
+                          <IoIosCall className={styles.contactIcon} />
+                        </span>{" "}
+                        <a href="tel:+470-300-2259" className={styles.contactNum}>
+                          470-300-2259
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+            </>) : (
+            <div className={`${styles.tData} text-center`}>
+              MemberShip List is Empty
             </div>
-          </div>
+          )}
+
+
         </div>
         {/* // <!-- Modal --> */}
         <div

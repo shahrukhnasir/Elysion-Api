@@ -58,6 +58,7 @@ import {
   SLOTS_MY_APPOINTMENTS,
   TERM_CONDITION,
   TERM_CONDITION_CONTENT,
+  UPDATE_CART,
   UPDATE_PASSWORD,
   UPDATE_PROFILE,
   USER_SUBSCRIPTION,
@@ -361,4 +362,8 @@ export const CartCount = (Istoken, data) => {
 };
 export const GuestCartCount = (session_id, data) => {
   return getMethod(`${GUEST_CART_COUNT}?session_id=${session_id}`, data);
+};
+
+export const UpdateCart = (data,token) => {
+  return postMethod(`${UPDATE_CART}`, data,token);
 };

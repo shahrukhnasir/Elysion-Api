@@ -11,6 +11,36 @@
 
 }
 
+.priceText{
+    display: flex;
+    justify-content: center;
+    
+}
+.qtyBtn{
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    color: #707070;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 5px;
+}
+
+.qtyResult{
+    border-radius: 5px;
+    border: 1px solid #1c3247;
+    background-color: white !important;
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    color: #000000;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 5px;
+}
+
 .Title{
     position: absolute;
     top: 60%;

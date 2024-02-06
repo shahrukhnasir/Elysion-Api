@@ -40,6 +40,7 @@ export const PRIVACY_POLICY_CONTENT = `content-pages/view/privacy-policy`;
 export const TERM_CONDITION = `pages/view/terms-and-condition`;
 export const TERM_CONDITION_CONTENT = `content-pages/view/termservice`;
 export const CART_COUNT = `cart/count`;
+export const UPDATE_CART = `cart/update`
 
 // PATIENT RESOURCES
 export const PATIENT_FORM = `content-pages/view/patient-form`;

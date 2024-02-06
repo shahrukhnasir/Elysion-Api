@@ -8,13 +8,11 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import CommanButton from "../CommanButton/CommanButton";
 import Link from "next/link";
 import { ImStarFull } from "react-icons/im";
-import Swal from "sweetalert2";
 // Import css files
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { NextArrow, PreviousArrow } from "../CustomSlider/SliderArrow";
-import SliderProductCard from "../SliderProductCard/SliderProductCard";
 import {
   AddToCartHandler,
   AddToCartListHandler,
@@ -34,6 +32,8 @@ import ProductCard from "../ProductCard/ProductCard";
 import { Login } from "../../network/Network";
 import TimeButton from "../TimeButton/TimeButton";
 import VariantButton from "../VariantButton/VariantButton";
+import { toast } from "react-toastify";
+import { addToCart, setCart } from "../../Redux/Cart/Cart";
 const ProductDetailsComponent = () => {
   const [productDetail, setProductDetails] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -45,22 +45,48 @@ const ProductDetailsComponent = () => {
   const [heartClick, setHeartClick] = useState(false);
   const [products, setAllProducts] = useState([]);
   const [variantPrice, setVariantPrice] = useState([])
-
+  const router = useRouter();
+  const dispatch = useDispatch();
   const token = useSelector((state) => state?.authSlice?.authToken);
   const { query } = useRouter();
   const slug = query?.productId;
   console.log(productDetail, "productDetailproductDetail");
   console.log(slug, "productId");
+
   const heartClickHandler = (e) => {
     e.preventDefault();
-    const data = new FormData();
-    data.append("product_id", slug);
-    dispatch(WishListAddToListProduct(token, data, setHeartClick));
+    console.log(heartClick, "heartClick");
+
+
+    if (heartClick === true) {
+      toast.info('Already added');
+    } else if (heartClick === false) {
+      const data = new FormData();
+      data.append("product_id", slug);
+      dispatch(WishListAddToListProduct(token, data, setHeartClick));
+    }
+
     setHeartClick(true);
-  };
+  }
+  // const heartClickHandler = (e) => {
+  //   e.preventDefault();
+  //   console.log(heartClick,"heartClick");
+  //   const data = new FormData();
+  //   data.append("product_id", slug);
+  //   if (heartClick === true){
+  //     setHeartClick(true)
+  //     toast.info('Already added');
+
+  //   }else{
+
+  //     dispatch(WishListAddToListProduct(token, data, setHeartClick));
+  //   }
+  //   setHeartClick(true);
+  // };
 
   console.log(variant, "variantasdasdasd");
   const handleProductDetail = (productId) => {
+    e.preventDefault();
     router.push({
       pathname: "/product-detail",
       query: { productId: productId },
@@ -86,13 +112,7 @@ const ProductDetailsComponent = () => {
     }
     if (steps === 0) {
       e.preventDefault();
-      Swal.fire({
-        position: "center",
-        icon: "info",
-        title: "Select Quantity please",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      toast.info("Select Quantity please")
       return;
     }
     if (token) {
@@ -104,6 +124,7 @@ const ProductDetailsComponent = () => {
       data.append("product_miligram_id", milliGram);
       data.append("qty", steps);
       dispatch(AddToCartHandler(token, data, setLoading, router));
+      // dispatch(addToCart(productDetails));
     } else if (!token) {
       let data = new FormData();
       data.append("product_id", slug);
@@ -112,11 +133,9 @@ const ProductDetailsComponent = () => {
       data.append("qty", steps);
       data.append("session_id", session ? session : session_id);
       dispatch(AddToCartGuest(data, setLoading, router));
-      // dispatch(getCartList(cartList));
     }
   };
-  const router = useRouter();
-  const dispatch = useDispatch();
+
 
 
   // slider
@@ -196,6 +215,24 @@ const ProductDetailsComponent = () => {
     productDetail?.categories?.filter((foo) => foo.product_id == slug)
   );
 
+  const [productDetails, setProductDetaisRedux] = useState([]); 
+
+  useEffect(() => {
+    setProductDetaisRedux(({
+      product: productDetail?.title,
+      productImg: productDetail?.thumbnail_url,
+      proDetail: productDetail?.description,
+      price: varPrice * steps,
+      qty: steps,
+      varMiligram: variantMili,
+    }));
+  }, [productDetail, varPrice, steps, variantMili]);
+
+ 
+  console.log(productDetails, "productDetailsisisi");
+  //Product Details 
+
+
   return (
     <>
       <div className="container-fluid p-0">
@@ -240,7 +277,7 @@ const ProductDetailsComponent = () => {
                   </div>
                   {token ? (
                     <div className="col-lg-6" id={styles.heart_icon_sec}>
-                      {heartClick ? (
+                      {heartClick === true ? (
                         <BsSuitHeartFill
                           onClick={(e) => heartClickHandler(e)}
                           className={styles.heartIcon}
@@ -278,7 +315,7 @@ const ProductDetailsComponent = () => {
                 <p>
                   <span className={styles.cardText}>Price</span>
                   <span className={styles.cardBlueText}>
-                    {varPrice *steps}
+                    {varPrice * steps}
                   </span>
                 </p>
 
@@ -316,15 +353,15 @@ const ProductDetailsComponent = () => {
                     <div>
                       <div className={styles.buttonContainer}>
                         {variant.map((vari, i) => (
-                           <VariantButton
-                           key={i}
+                          <VariantButton
+                            key={i}
                             onClick={() => handleVariantClick(vari)}
-                           variant={vari.variant}
- 
-                         />
-                          
-                            
-                      
+                            variant={vari.variant}
+
+                          />
+
+
+
                         ))}
                       </div>
                     </div>
@@ -450,7 +487,7 @@ const ProductDetailsComponent = () => {
                     .sort(() => Math.random() - 0.5)
                     .slice(0, 6)
                     .map((item, i) => (
-                      <div key={item?.id}>
+                      <div key={i}>
                         <ProductCard
                           image={item?.thumbnail_url}
                           Title={item?.title}
