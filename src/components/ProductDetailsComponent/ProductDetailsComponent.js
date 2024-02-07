@@ -315,7 +315,7 @@ const ProductDetailsComponent = () => {
                 <p>
                   <span className={styles.cardText}>Price</span>
                   <span className={styles.cardBlueText}>
-                    {varPrice * steps}
+                    {varPrice}
                   </span>
                 </p>
 

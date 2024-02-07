@@ -196,17 +196,16 @@ export const RemovedAllHandler =
 
 ////👇Check Out
 export const CheckOutHandler =
-  (token, data, setLoading, route) => async (dispatch) => {
+  (token, data, setLoading, router) => async () => {
     setLoading(true);
     try {
       const res = await CheckOut(token, data);
       console.log(res);
       if (res?.data?.message === "success") {
         setLoading(false);
-        await
-          toast.success("Order successfully completed")
+        await toast.success("Order successfully completed")
 
-        route.push("myorders");
+          router.push("/myorders");
       }
     } catch (error) {
       // setLoading(false);
@@ -232,7 +231,7 @@ export const CheckOutHandler =
           confirmButton: "theme-button-bg",
         },
       });
-      // setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -341,3 +340,5 @@ export const UpdateCartQty = (data, token, setLoading,setAddCart) => async () =>
     toast.success(error?.response?.data?.message);
   }
 };
+
+

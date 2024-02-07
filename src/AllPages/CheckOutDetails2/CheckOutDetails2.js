@@ -24,8 +24,7 @@ const CheckOutDetails2 = () => {
   const [selectedMem, setSelectedOption] = useState("");
   const [isValid, setIsValid] = useState(false);
   const token = useSelector((state) => state?.authSlice?.authToken);
-  const userEmail = useSelector((state) => state?.ProfileSlice?.profile?.user?.email);
-  const [striptoken, setStriptoken] = useState();
+
   // const [type, setType] = useState("Select");
   const [subDetails, setSubscriptionDetails] = useState([]);
 
@@ -33,13 +32,10 @@ const CheckOutDetails2 = () => {
   const stripePromise = loadStripe(`pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3`);
 
 
-  const onToken = (isToken) => {
-    setStriptoken(isToken?.id);
-  };
 
   const slug = router?.query?.id;
-  const HandleSubmit = async (e) => {
-    e.preventDefault();
+  const HandleSubmit = async () => {
+    // e.preventDefault();
     if (!isChecked) {
       toast.info('please accepte term and condition.');
       return;
@@ -158,29 +154,10 @@ const CheckOutDetails2 = () => {
           </div>
         </div>
 
-        <div className="col-lg-4 py-3 m-auto">
-          {/* <>
-            {striptoken ? (
-              ""
-            ) : (
-              <StripeCheckout
-                token={onToken}
-                stripeKey="pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3"
-                currency="USD"
-                amount={calculatePrice(selectedMem)}
-                email={userEmail}
-              >
-                <CommanButton
-                  label="BUY NOW"
-                  onClick={HandleSubmit}
-                  className={styles.cartButton}
-                />
-              </StripeCheckout>
-            )}
-          </> */}
-          <button onClick={() => setOpen(true)}>
-            BUY NOW
-          </button>
+        <div className="col-lg-4 py-3 m-auto text-center">
+          <CommanButton className={styles.payBtn} onClick={() => !isChecked ? HandleSubmit() : setOpen(true)} label="BUY NOW" />
+           
+      
         </div>
 
         <div className="container py-5">
@@ -204,23 +181,6 @@ const CheckOutDetails2 = () => {
                   <span className={styles.tCondition}>Terms & Conditions</span>
                 </Link>
               </span>
-            </div>
-            <div className="col-lg-6">
-              <div className={styles.checkOutLast}>
-                {!loading ? (
-                  <>
-                    {striptoken ? (
-                      <CommanButton onClick={HandleSubmit} label="Checkout" />
-                    ) : (
-                      ""
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <CommanButton label="Check..." />
-                  </>
-                )}
-              </div>
             </div>
           </div>
         </div>

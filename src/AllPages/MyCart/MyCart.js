@@ -16,6 +16,7 @@ import {
   GuestCartListAllClear,
   GuestCartLists,
   GuestRemovedToCartItem,
+  UpdateGuestCartQty,
 } from "../../Service/GuestService";
 import { setCartList } from "../../Redux/CartList/CartList";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
@@ -76,7 +77,7 @@ const MyCart = () => {
     if (token) {
       dispatch(RemovedAllHandler(token, setLoading));
       setAddCartList("");
-    } else if (!token) {
+    } else if (!token && session_id) {
       dispatch(GuestCartListAllClear(session_id));
       setAddCartList("");
     }
@@ -97,22 +98,33 @@ const MyCart = () => {
       const updatedSteps = prevState + amount;
       return updatedSteps >= 1 ? updatedSteps : 1;
     });
-    console.log(qtyResult,"qtyResult");
+
     if (token) {
       let data = new FormData();
       cartList?.map((item) => {
         data.append(`cart_id`, item.id);
-        data.append(`qty`, qtyResult +1);
+        data.append(`qty`, qtyResult);
       });
-      dispatch(UpdateCartQty(data, token, setLoading,setAddCart));
+      dispatch(UpdateCartQty(data, token, setLoading, setAddCart));
+    }
+    if (!token) {
+      let data = new FormData();
+      cartList?.map((item) => {
+        data.append(`cart_id`, item.id);
+        data.append(`qty`, qtyResult);
+      });
+      dispatch(UpdateGuestCartQty(session_id, data, setLoading, setAddCart));
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(
       AddToCartListHandler(token, setLoading, setAddCartList, dispatch)
     );
-  },[cartListData])
+    dispatch(
+      GuestCartLists(session_id, setLoading, setAddCartList, dispatch)
+    );
+  }, [cartListData,session_id])
 
 
   return (
@@ -152,7 +164,7 @@ const MyCart = () => {
                   {cartList?.map((item, i) => (
                     <>
                       <tr key={i}>
-                        <td className={styles.tData}>{item?.product?.title}</td>
+                        <td className={styles.tData} id={styles.cartTittle}>{item?.product?.title}</td>
                         <td className={styles.tDataImage}>
                           <img
                             className="w-25"

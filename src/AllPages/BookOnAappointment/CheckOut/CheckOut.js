@@ -4,33 +4,28 @@ import TopLayout from "../../../components/TopLayout/TopLayout";
 import { useRouter } from "next/router";
 import CommanButton from "../../../components/CommanButton/CommanButton";
 import Link from "next/link";
-import { SlotCheckOutHandler } from "../../../Service/ServiceProviders";
 import { useDispatch, useSelector } from "react-redux";
-import StripeCheckout from "react-stripe-checkout";
-import { getAllAServices } from "../../../Redux/AllService/allServices";
 import { Subscriptions } from "../../../Service/Subscription";
 import { getServicesById } from "../../../Redux/AllService/serviceById";
+import { Modal } from "antd";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import AppointmentForm from "../../../components/AppointmentForm/AppointmentForm";
+import Swal from "sweetalert2";
 const CheckOut = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
+  const [open, setOpen] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const token = useSelector((state) => state?.authSlice?.authToken);
-  const currentDate = useSelector((state) => state?.currentDate?.currentDate);
-  const time = useSelector((state) => state?.appointment?.appointment?.from);
-  const docId = useSelector((state) => state?.appointment?.appointment?.doc_id);
-  const serviceId = useSelector((state) => state?.selectService?.selectService);
   const slug = useSelector((state) => state?.selectService?.selectService);
   const service = useSelector((state) => state?.ServiceSlice?.featuredProducts);
-  const [striptoken, setStriptoken] = useState();
   const [sub, setSubscription] = useState([]);
-  const userEmail = useSelector(
-    (state) => state?.ProfileSlice?.profile?.user?.email
-  );
+  // Stripe Elems 
+  const stripePromise = loadStripe(`pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3`);
 
-  const onToken = (token) => {
-    setStriptoken(token?.id);
-  };
+
+
 
   const [checkOutField, setCheckOutFields] = useState({
     fName: "",
@@ -51,25 +46,25 @@ const CheckOut = () => {
     setError(false);
     setLoading(true);
     try {
-     
-        let data = new FormData();
-        // Redux get Data
-        data.append("doc_id", docId);
-        data.append("service_id", serviceId);
-        data.append("date", currentDate);
-        data.append("time", time);
-        data.append("stripe_Token", striptoken || "tok_visa");
-        //input Fileds
-        data.append("first_name", checkOutField?.fName);
-        data.append("last_name", checkOutField?.lName);
-        data.append("email", checkOutField?.email);
-        data.append("phone", checkOutField?.phone);
-        data.append("address", checkOutField?.address);
-        data.append("city", checkOutField?.city);
-        data.append("zip_code", checkOutField?.zipCode);
-
-        dispatch(SlotCheckOutHandler(token, data, setLoading, router));
-    
+      // Phone validation
+      if (
+        !checkOutField.phone ||
+        checkOutField.phone.length < 10 ||
+        checkOutField.phone.length > 20
+      ) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title:
+            (checkOutField.phone.length < 10 &&
+              "Phone number must be between 10 to 20 digits") ||
+            (checkOutField.phone.length > 20 && "Phone number is too long"),
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setError(true);
+        return;
+      }
       // Validate form fields
       if (
         checkOutField.fName.length === 0 ||
@@ -276,27 +271,27 @@ const CheckOut = () => {
                 </div>
                 <hr />
                 {sub && sub ? (
-                <div className="row">
+                  <div className="row">
                     <span className={styles.cardTextBlue}>Only 20% Amount you pay</span>
-                  <div className="col-lg-6">
-                    <h1 className={styles.cardTextBlue}>Total</h1>
-                  </div>
+                    <div className="col-lg-6">
+                      <h1 className={styles.cardTextBlue}>Total</h1>
+                    </div>
 
-                  <div className="col-lg-6">
-                    <h1 className={styles.cardLastPrice}>
-                     
+                    <div className="col-lg-6">
+                      <h1 className={styles.cardLastPrice}>
+
                         ${calculatePrice()}
-                     
-                    </h1>
+
+                      </h1>
+                    </div>
                   </div>
-                </div>
                 ) : (
                   <>
                     <p className={styles.info}>Without Membership: Only you can book</p>
                   </>
-                )}  
+                )}
               </div>
-              
+
 
               <div className={styles.alert}>
                 <span className={styles.alertImage}>
@@ -334,7 +329,7 @@ const CheckOut = () => {
 
             <div className="col-lg-6">
               <div className={styles.checkOutBtn}>
-                <div className="py-3">
+                {/* <div className="py-3">
                   {sub && sub ? (
                     <>
                       {striptoken ? (
@@ -357,12 +352,28 @@ const CheckOut = () => {
                   ) : (
                     <CommanButton onClick={HandleSubmit} label="Checkout" />
                   )}
-                </div>
+                </div> */}
+
+                <CommanButton onClick={(e) => !error ? HandleSubmit(e) : setOpen(true)} className={styles.payNow} label="check out" />
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
+      <Elements stripe={stripePromise}>
+        <Modal
+          centered
+          open={open}
+          onOk={() => setOpen(false)}
+          onCancel={() => setOpen(false)}
+          width={555}
+          footer={false}
+        >
+          <AppointmentForm checkOutField={checkOutField} />
+        </Modal>
+      </Elements>
     </>
   );
 };

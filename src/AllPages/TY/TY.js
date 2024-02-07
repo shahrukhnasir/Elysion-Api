@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "../TY/TY.module.css";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 const TY = () => {
+  const user = useSelector((state) => state?.ProfileSlice?.profile?.user?.first_name);
+
   const thankYou = [
     {
       id: 1,
@@ -58,7 +61,7 @@ const TY = () => {
 
 
 
-                <h1 className={styles.topHeading}>Thank You</h1>
+                <h1 className={styles.topHeading}>Thank You <b>{user}</b></h1>
 
                 <p className={styles.topSubDecs}>
                   The form was  Submitted successfully

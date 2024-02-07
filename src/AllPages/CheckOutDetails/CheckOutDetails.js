@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "../CheckOutDetails/CheckOutDetails.module.css";
-
+import { toast } from "react-toastify";
+import { Modal } from "antd";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import CommanButton from "../../components/CommanButton/CommanButton";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -13,20 +16,23 @@ import {
   GuestCartLists,
   GuestCheckOutHandler,
 } from "../../Service/GuestService";
-import StripeCheckout from "react-stripe-checkout";
+import ProductForm from "../../components/ProductForm/ProductForm";
+import Swal from "sweetalert2";
 const CheckOutDetails = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const [open, setOpen] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cartList, setAddCartList] = useState([]);
   const token = useSelector((state) => state?.authSlice?.authToken);
-  const [striptoken, setStriptoken] = useState();
   const session_id = useSelector((state) => state?.sessionSlice?.session);
 
-  const onToken = (token) => {
-    setStriptoken(token?.id);
-  };
+
+  // Stripe Elems 
+  const stripePromise = loadStripe(`pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3`);
+
+
 
   const [checkOutField, setCheckOutFields] = useState({
     fName: "",
@@ -54,70 +60,30 @@ const CheckOutDetails = () => {
   };
 
   const HandleSubmit = async (e) => {
+    setOpen(false)
     e.preventDefault();
     setError(false);
     setLoading(true);
     try {
-      if (striptoken) {
-        let data = new FormData();
-        data.append("shipper_first_name", checkOutField?.fName);
-        data.append("shipper_last_name", checkOutField?.lName);
-        data.append("shipper_email", checkOutField?.email);
-        data.append("shipper_phone", checkOutField?.phone);
-        data.append("shipper_address", checkOutField?.address);
-        data.append("shipper_country", checkOutField?.country);
-        data.append("shipper_city", checkOutField?.address);
-        data.append("shipper_state", checkOutField?.address);
-        data.append("shipper_zip", checkOutField?.zip);
-        data.append("billing_first_name", checkOutField?.bName);
-        data.append("billing_last_name", checkOutField?.bLName);
-        data.append("billing_email", checkOutField?.bEmail);
-        data.append("billing_phone", checkOutField?.bPhone);
-        data.append("billing_address", checkOutField?.bAddress);
-        data.append("billing_country", checkOutField?.country);
-        data.append("billing_city", checkOutField?.city);
-        data.append("billing_state", checkOutField?.state);
-        data.append("billing_zip", checkOutField?.zip);
-        data.append("total_discount", "10%");
-        data.append("total_amount", finalTotal);
-        data.append("stripe_Token", striptoken);
-
-        cartList?.map((i, cart) => {
-          data.append(`cart[${cart?.id}]`, i.id);
+      // Phone validation
+      if (
+        !checkOutField.phone ||
+        checkOutField.phone.length < 10 ||
+        checkOutField.phone.length > 20
+      ) {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title:
+            (checkOutField.phone.length < 10 &&
+              "Phone number must be between 10 to 20 digits") ||
+            (checkOutField.phone.length > 20 && "Phone number is too long"),
+          showConfirmButton: false,
+          timer: 1500,
         });
-        if (token) {
-          dispatch(CheckOutHandler(token, data, setLoading, router));
-        } else if (!token) {
-          let data = new FormData();
-          data.append("shipper_first_name", checkOutField?.fName);
-          data.append("shipper_last_name", checkOutField?.lName);
-          data.append("shipper_email", checkOutField?.email);
-          data.append("shipper_phone", checkOutField?.phone);
-          data.append("shipper_address", checkOutField?.address);
-          data.append("shipper_country", checkOutField?.country);
-          data.append("shipper_city", checkOutField?.address);
-          data.append("shipper_state", checkOutField?.address);
-          data.append("shipper_zip", checkOutField?.zip);
-          data.append("billing_first_name", checkOutField?.bName);
-          data.append("billing_last_name", checkOutField?.bLName);
-          data.append("billing_email", checkOutField?.bEmail);
-          data.append("billing_phone", checkOutField?.bPhone);
-          data.append("billing_address", checkOutField?.bAddress);
-          data.append("billing_country", checkOutField?.country);
-          data.append("billing_city", checkOutField?.city);
-          data.append("billing_state", checkOutField?.state);
-          data.append("billing_zip", checkOutField?.zip);
-          data.append("total_discount", "10%");
-          data.append("total_amount", finalTotal);
-          data.append("stripe_Token", striptoken);
-          data.append("session_id", session_id);
-          cartList?.map((i, cart) => {
-            data.append(`cart[${cart?.id}]`, i.id);
-          });
-          dispatch(GuestCheckOutHandler(data, setLoading, router));
-        }
+        setError(true);
+        return;
       }
-
       // Validate form fields
       if (
         checkOutField.fName.length === 0 ||
@@ -151,11 +117,11 @@ const CheckOutDetails = () => {
   useEffect(() => {
     if (token) {
       dispatch(
-        AddToCartListHandler(token,  setLoading,setAddCartList, dispatch)
+        AddToCartListHandler(token, setLoading, setAddCartList, dispatch)
       );
     } else if (!token) {
       dispatch(
-        GuestCartLists(session_id,  setLoading,setAddCartList, dispatch)
+        GuestCartLists(session_id, setLoading, setAddCartList, dispatch)
       );
     }
   }, [token]);
@@ -400,7 +366,7 @@ const CheckOutDetails = () => {
                 </div>
 
                 <div className="col-lg-6">
-                  <div className="form-check float-end">
+                  {/* <div className="form-check float-end">
                     <input
                       className="form-check-input"
                       type="checkbox"
@@ -410,7 +376,7 @@ const CheckOutDetails = () => {
                     <label className={styles.checkLabel} for="flexCheckDefault">
                       Same as Billing Details
                     </label>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               {/* Add Shipping Details */}
@@ -636,7 +602,7 @@ const CheckOutDetails = () => {
               </div> */}
               {/* Enter Card Details */}
 
-              <div className="py-3">
+              {/* <div className="py-3">
                 {striptoken ? (
                   ""
                 ) : (
@@ -653,8 +619,8 @@ const CheckOutDetails = () => {
                     />
                   </StripeCheckout>
                 )}
-              </div>
-              <div className="col-lg-12">
+              </div> */}
+              {/* <div className="col-lg-12">
                 <div className={styles.checkOutLast}>
                   {striptoken ? (
                     <>
@@ -668,7 +634,21 @@ const CheckOutDetails = () => {
                     ""
                   )}
                 </div>
+              </div> */}
+              <div className="col-lg-12 text-center">
+
+                {/* {
+
+                  !error ? (
+                    <CommanButton onClick={HandleSubmit} className={styles.payNow} label="Check Out" />
+                  ) : (
+                    <CommanButton onClick={() => setOpen(true)} className={styles.payNow} label="PayNow" />
+                  )
+                } */}
+
+                <CommanButton onClick={(e) =>  !error ?  HandleSubmit(e) : setOpen(true)} className={styles.payNow} label="check out" />
               </div>
+
             </div>
 
             <div className="col-lg-6">
@@ -759,30 +739,21 @@ const CheckOutDetails = () => {
           </div>
         </div>
       </div>
+
+      <Elements stripe={stripePromise}>
+        <Modal
+          centered
+          open={open}
+          onOk={() => setOpen(false)}
+          onCancel={() => setOpen(false)}
+          width={555}
+          footer={false}
+        >
+          <ProductForm checkOutField={checkOutField} />
+        </Modal>
+      </Elements>
     </>
   );
 };
 
 export default CheckOutDetails;
-// if (
-//   checkOutField.fName.length === 0 ||
-//   checkOutField.lName.length === 0 ||
-//   checkOutField.email.length === 0 ||
-//   checkOutField.phone.length === 0 ||
-//   checkOutField.bName.length === 0 ||
-//   checkOutField.bLName.length === 0 ||
-//   checkOutField.bEmail.length === 0 ||
-//   checkOutField.bPhone.length === 0 ||
-//   checkOutField.bAddress.length === 0 ||
-//   checkOutField.bOaddress.length === 0 ||
-//   checkOutField.cartNumber.length === 0 ||
-//   checkOutField.expirDate.length === 0 ||
-//   checkOutField.cvv.length === 0 ||
-//   checkOutField.country.length === 0 ||
-//   checkOutField.city.length === 0 ||
-//   checkOutField.state.length === 0 ||
-//   checkOutField.zip.length === 0
-// ) {
-//   setError(true);
-//   return;
-// }

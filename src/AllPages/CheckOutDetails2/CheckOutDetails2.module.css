@@ -45,7 +45,13 @@
 .checkbox input[type="checkbox"] {
     background-color: #1C3247;
 }
+.payBtn button{
+    width: 100% !important;
+}
 
+.payBtn button:hover{
+    width: 100% !important;
+}
 .checkbox input:checked {
     border-color: red;
     background-color: red;

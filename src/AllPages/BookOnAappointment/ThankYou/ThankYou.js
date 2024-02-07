@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "../ThankYou/ThankYou.module.css";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 const ThankYou = () => {
+
+  const user = useSelector((state) => state?.ProfileSlice?.profile?.user?.first_name);
   const thankYou = [
     {
       id: 1,
@@ -35,11 +38,10 @@ const ThankYou = () => {
         <div className={`${styles.container} container py-lg-5`}>
           <div className="row d-flex justify-content-center">
             <div className={styles.tYouCard}>
-              <h1 className={styles.topHeading}>Thank You</h1>
+              <h1 className={styles.topHeading}>Thank You <b>{user}</b></h1>
               <p className={styles.topSubDecs}>
-                For {filterData && filterData?.title} has been successfully.
-              </p>
-              <div className={styles.card}>
+              Thank you for your request has been successfully processed.              </p>
+              {/* <div className={styles.card}>
 
                 <div className="row">
                   <div className="col-lg-6">
@@ -104,7 +106,7 @@ const ThankYou = () => {
                     <h1 className={styles.cardLastPrice}>$170.0</h1>
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="py-3"></div>
             </div>
           </div>

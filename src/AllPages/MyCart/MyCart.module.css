@@ -161,8 +161,18 @@
     padding: 35px 0px 0px 0px !important;
     text-align: center;
     border-bottom: 1px solid #D6D6D6;
+    /* display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+    -webkit-line-clamp: 1; */
 
 }
+/* #cartTittle{
+    display: -webkit-box;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+    -webkit-line-clamp: 1;
+} */
 
 .tDataImage{
     font-family: var(--main-font-regular);

@@ -68,6 +68,7 @@ export const SITE_SETTINGS = `site-setting`;
 // Guest
 export const GUEST_CART_CREATE = `guest-cart/create`;
 export const GUEST_CART_LIST = `guest-cart`;
+export const GUEST_CART_UPDATE = `guest-cart/update`;
 export const GUEST_CART_REMOVE = `guest-cart/delete`;
 export const GUEST_CART_ALL_REMOVE = `guest-cart/delete-all`;
 export const GUEST_CHECK_OUT = `guest-checkout`;

@@ -9,27 +9,13 @@ export const UserSubscriptionCreate =
     Subscription(token, data)
       .then((res) => {
         setLoading(false);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "MemberShip Purchased Successfully Done",
-          text: res?.data?.response?.data?.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        toast.success("MemberShip Purchased Successfully Done")
         router.push("/my-memberships");
       })
       .catch((error) => {
         console.log(error);
         setLoading(false);
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          title: error.response?.data?.message,
-          text: error.response?.data?.message ,
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        toast.error(error.response?.data?.message)
       });
   };
 

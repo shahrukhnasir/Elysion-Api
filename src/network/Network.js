@@ -22,6 +22,7 @@ import {
   GUEST_CART_CREATE,
   GUEST_CART_LIST,
   GUEST_CART_REMOVE,
+  GUEST_CART_UPDATE,
   GUEST_CHECK_OUT,
   HERO_SECTION,
   INSURANCE,
@@ -70,6 +71,7 @@ import {
   WISHLIST_DELETE_BY_ID,
 } from "./EndPoint";
 import { deleteMethod, getMethod, postMethod } from "./Config";
+
 
 export const ContactApi = (data) => {
   return postMethod(`${CONTACT_US}`, data);
@@ -366,4 +368,8 @@ export const GuestCartCount = (session_id, data) => {
 
 export const UpdateCart = (data,token) => {
   return postMethod(`${UPDATE_CART}`, data,token);
+};
+
+export const UpdateGuestCart = (session_id,data) => {
+  return postMethod(`${GUEST_CART_UPDATE}?session_id=${session_id}`, data);
 };

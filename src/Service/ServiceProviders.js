@@ -7,6 +7,7 @@ import {
   SlotCreateCheckOut,
   SlotsAvailable,
 } from "../network/Network";
+import { toast } from "react-toastify";
 
 // ServiceProvider
 export const SelectServiceProvider = (token, setLoading, setService) => () => {
@@ -84,8 +85,8 @@ export const CheckSlotsHandler =
         position: "center",
         icon: "error",
         title:
-          error.response?.data?.message ,
-        text:"Select another Date",
+          error.response?.data?.message,
+        text: "Select another Date",
         showConfirmButton: true,
         customClass: {
           confirmButton: "theme-button-bg",
@@ -139,13 +140,8 @@ export const SlotCheckOutHandler =
 
       // if (res?.data?.message === "success") {
       setLoading(false);
-      await Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Appointment successfully Done",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      await
+        toast.success("Appointment successfully Done")
       route.push("/appointments");
       // }
     } catch (error) {
@@ -167,6 +163,6 @@ export const SlotCheckOutHandler =
           confirmButton: "theme-button-bg",
         },
       });
-      // setLoading(false);
+      setLoading(false);
     }
   };

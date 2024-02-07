@@ -72,13 +72,26 @@ const SubscriptionForm = ({ type, slug }) => {
             {paymentError && (
                 <div style={{ color: "red" }}>{paymentError}</div>
             )}
-            <CommanButton
+            {!loading ? (
+                <CommanButton
                 type="submit"
                 disabled={!stripe}
                 style={{ marginTop: "1rem" }}
                 label=" Pay Now"
                 className={styles.payNow}
             />
+            ) :
+            (
+                <button className={styles.payNow} type="button">
+                    <span
+                        class="spinner-border spinner-border-sm"
+                        role="status"
+                        aria-hidden="true"
+                    ></span>
+                    Sending...
+                </button>
+            )}
+            
                
             
         </form>
