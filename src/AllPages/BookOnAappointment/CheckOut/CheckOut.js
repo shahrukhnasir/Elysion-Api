@@ -12,6 +12,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import AppointmentForm from "../../../components/AppointmentForm/AppointmentForm";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 const CheckOut = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -41,13 +42,13 @@ const CheckOut = () => {
     setCheckOutFields((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const HandleSubmit = async (e) => {
-    e.preventDefault();
+  const HandleSubmit = async () => {
+    // e.preventDefault();
     setError(false);
     setLoading(true);
     try {
-      // Phone validation
-      if (
+       // Phone validation
+       if (
         !checkOutField.phone ||
         checkOutField.phone.length < 10 ||
         checkOutField.phone.length > 20
@@ -65,6 +66,11 @@ const CheckOut = () => {
         setError(true);
         return;
       }
+      if (!error) {
+        toast.info('please accepte term and condition.');
+        return;
+      }
+     
       // Validate form fields
       if (
         checkOutField.fName.length === 0 ||
@@ -102,6 +108,13 @@ const CheckOut = () => {
       return (total * 20) / 100;
     }
   };
+
+  // const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setError(!error);
+  };
+
   console.log(sub, "sub");
   return (
     <>
@@ -312,9 +325,10 @@ const CheckOut = () => {
               <span>
                 {" "}
                 <input
-                  class="form-check-input me-2"
+                  className="form-check-input me-2"
                   type="checkbox"
-                  value=""
+                  checked={error}
+                  onChange={handleCheckboxChange}
                   id="flexCheckDefault"
                 />
               </span>
@@ -329,32 +343,9 @@ const CheckOut = () => {
 
             <div className="col-lg-6">
               <div className={styles.checkOutBtn}>
-                {/* <div className="py-3">
-                  {sub && sub ? (
-                    <>
-                      {striptoken ? (
-                        <CommanButton onClick={HandleSubmit} label="Checkout" />
-                      ) : (
-                        <StripeCheckout
-                          token={onToken}
-                          stripeKey="pk_test_51NGLfkGkpmR3H6bhJIi1KM0UENfGLz60ljwZgPXyETmJ2oKvnglKjduymjrr80E4WjE245p5g1DlnEIncmhmEK68009TIOvbF3"
-                          amount={calculatePrice}
-                          currency="USD"
-                          email={userEmail}
-                        >
-                          <CommanButton
-                            label="Send to"
-                            className={styles.cartButton}
-                          />
-                        </StripeCheckout>
-                      )}
-                    </>
-                  ) : (
-                    <CommanButton onClick={HandleSubmit} label="Checkout" />
-                  )}
-                </div> */}
+                
 
-                <CommanButton onClick={(e) => !error ? HandleSubmit(e) : setOpen(true)} className={styles.payNow} label="check out" />
+                <CommanButton onClick={() => !error ? HandleSubmit() : setOpen(true)} className={styles.payNow} label="check out" />
               </div>
             </div>
           </div>

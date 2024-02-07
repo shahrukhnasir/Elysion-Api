@@ -60,30 +60,36 @@ const CheckOutDetails = () => {
   };
 
   const HandleSubmit = async (e) => {
-    setOpen(false)
     e.preventDefault();
     setError(false);
     setLoading(true);
     try {
-      // Phone validation
-      if (
-        !checkOutField.phone ||
-        checkOutField.phone.length < 10 ||
-        checkOutField.phone.length > 20
-      ) {
-        Swal.fire({
-          position: "center",
-          icon: "error",
-          title:
-            (checkOutField.phone.length < 10 &&
-              "Phone number must be between 10 to 20 digits") ||
-            (checkOutField.phone.length > 20 && "Phone number is too long"),
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setError(true);
+      
+         // Phone validation
+         if (
+          !checkOutField.phone ||
+          checkOutField.phone.length < 10 ||
+          checkOutField.phone.length > 20
+          
+        ) {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title:
+              (checkOutField.phone.length < 10 &&
+                "Phone number must be between 10 to 20 digits") ||
+              (checkOutField.phone.length > 20 && "Phone number is too long"),
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setError(true);
+          return;
+        }
+      if (!isChecked) {
+        toast.info('please accepte term and condition.');
         return;
       }
+   
       // Validate form fields
       if (
         checkOutField.fName.length === 0 ||
@@ -134,7 +140,11 @@ const CheckOutDetails = () => {
     const subTotal = cart?.sub_total || 0;
     return total + subTotal;
   }, 0);
-
+  const [isChecked, setIsChecked] = useState(false);
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+   
+  };
   return (
     <>
       <div className="container-fluid p-0">
@@ -646,7 +656,7 @@ const CheckOutDetails = () => {
                   )
                 } */}
 
-                <CommanButton onClick={(e) =>  !error ?  HandleSubmit(e) : setOpen(true)} className={styles.payNow} label="check out" />
+                <CommanButton onClick={(e) => !error ?  HandleSubmit(e) : setOpen(true)} className={styles.payNow} label="check out" />
               </div>
 
             </div>
@@ -720,15 +730,14 @@ const CheckOutDetails = () => {
 
           <div className="row">
             <div className="col-lg-5 offset-lg-1">
-              <span>
-                {" "}
                 <input
-                  class="form-check-input me-2"
+                  className="form-check-input me-2"
                   type="checkbox"
-                  value=""
+                  checked={isChecked}
+                  onChange={handleCheckboxChange}
                   id="flexCheckDefault"
                 />
-              </span>
+            
               <span className={styles.tCheckBoxText}>
                 I hereby agree to the
                 <Link href="/termservice">

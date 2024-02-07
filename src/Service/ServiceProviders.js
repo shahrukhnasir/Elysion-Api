@@ -104,14 +104,8 @@ export const LastVisit = (token, setLoading, setLastVisit) => () => {
 
       setLoading(false);
       if (res == 404) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Successfully Done",
-          text: res?.data?.response?.data?.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
+        toast.success("Successfully Done")
+       
       }
     })
     .catch((error) => {

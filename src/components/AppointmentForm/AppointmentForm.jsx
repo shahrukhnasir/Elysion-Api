@@ -106,7 +106,7 @@ const AppointmentForm = ({ checkOutField }) => {
           type="submit"
           disabled={!stripe}
           style={{ marginTop: "1rem" }}
-          label=" Pay Now"
+          label="Pay Now"
           className={styles.payNow}
         />
       ) :

@@ -9,6 +9,7 @@ import Shadow from "../../components/Shadow/Shadow";
 import { LoginHandler } from "../../Service/AuthService";
 import { useDispatch } from "react-redux";
 import { removedAllCart } from "../../Redux/CartList/CartList";
+import { toast } from "react-toastify";
 // import { removedAllCart } from ".";
 const SigninScreen = () => {
   const dispatch = useDispatch();
@@ -16,9 +17,13 @@ const SigninScreen = () => {
   const [passwordType, setPasswordType] = useState("password");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [chatFields, setChatFields] = useState({ email: "",password: "",device_id:"random$"});
+  const [chatFields, setChatFields] = useState({ email: "", password: "", device_id: "random$" });
   const HandleSubmit = (e) => {
     e.preventDefault();
+    if (!isChecked) {
+      toast.info('please accepte remember me.');
+      return;
+    }
     dispatch(removedAllCart())
     setLoading(true);
     if (
@@ -35,7 +40,7 @@ const SigninScreen = () => {
     data.append("device_id", chatFields?.device_id);
     data.append("email", chatFields?.email);
     data.append("password", chatFields?.password);
-    dispatch(LoginHandler(data, setLoading, setChatFields,router,dispatch));
+    dispatch(LoginHandler(data, setLoading, setChatFields, router, dispatch));
   };
 
 
@@ -54,7 +59,11 @@ const SigninScreen = () => {
     }
     setPasswordType("password");
   };
-
+  const [isChecked, setIsChecked] = useState(false);
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+   
+  };
   return (
     <>
       <div className="container-fluid p-0">
@@ -64,10 +73,10 @@ const SigninScreen = () => {
           image="/images/new/registe-now.webp"
         />
         <div className="container py-5">
-        <div className={styles.setShaowRight}>
-          <Shadow />
-          
-        </div>
+          <div className={styles.setShaowRight}>
+            <Shadow />
+
+          </div>
           <div className="row py-5">
             <div className="col-lg-6 my-auto">
               <div className="">
@@ -138,9 +147,11 @@ const SigninScreen = () => {
                 <div class="col-6">
                   <div class="form-check">
                     <input
-                      class="form-check-input"
+                      className="form-check-input me-2"
                       type="checkbox"
-                      id="gridCheck"
+                      checked={isChecked}
+                      onChange={handleCheckboxChange}
+                      id="flexCheckDefault"
                     />
                     <label
                       class={`${styles.labelCheckBox} form-check-label`}
@@ -159,18 +170,18 @@ const SigninScreen = () => {
                 </div>
               </div>
               {!loading ? (
-                  <CommanButton
-                    onClick={HandleSubmit}
-                    className={styles.FromBtn}
-                    label="Sign In"
-                  />
-                ) : (
-                  <CommanButton
-                    onClick={HandleSubmit}
-                    className={styles.FromBtn}
-                    label="Signing..."
-                  />
-                )}
+                <CommanButton
+                  onClick={HandleSubmit}
+                  className={styles.FromBtn}
+                  label="Sign In"
+                />
+              ) : (
+                <CommanButton
+                  onClick={HandleSubmit}
+                  className={styles.FromBtn}
+                  label="Signing..."
+                />
+              )}
             </div>
           </div>
         </div>
