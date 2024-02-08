@@ -18,6 +18,7 @@ import {
 } from "../../Service/GuestService";
 import ProductForm from "../../components/ProductForm/ProductForm";
 import Swal from "sweetalert2";
+import withAuth from "../../pages/utils/withAuth";
 const CheckOutDetails = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -765,4 +766,4 @@ const CheckOutDetails = () => {
   );
 };
 
-export default CheckOutDetails;
+export default withAuth(CheckOutDetails);

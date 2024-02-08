@@ -8,6 +8,7 @@ import CommanButton from "../../../components/CommanButton/CommanButton";
 import { Skeleton } from "antd";
 import { Subscriptions } from "../../../Service/Subscription";
 import { getServicesById } from "../../../Redux/AllService/serviceById";
+import withAuth from "../../../pages/utils/withAuth";
 const ConfirmService = () => {
   const dispacth = useDispatch();
   const [sub, setSubscription] = useState([]);
@@ -151,4 +152,4 @@ console.log(service,"serviceservice");
   );
 };
 
-export default ConfirmService;
+export default withAuth(ConfirmService);

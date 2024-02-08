@@ -13,6 +13,7 @@ import {
 } from "../../../Service/ServiceProviders";
 import { setSelectService } from "../../../Redux/Appoinment/selectService";
 import Skeleton from "react-loading-skeleton";
+import withAuth from "../../../pages/utils/withAuth";
 
 const NewPatient = () => {
   const token = useSelector((state) => state?.authSlice?.authToken);
@@ -277,4 +278,4 @@ const NewPatient = () => {
   );
 };
 
-export default NewPatient;
+export default withAuth(NewPatient);

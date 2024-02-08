@@ -3,6 +3,7 @@ import NewPatientLayout from "../../../layout/NewPatientLayout/NewPatientLayout"
 import styles from "../BookOnAappointment/BookOnAppointment.module.css";
 import { useRouter } from "next/router";
 import TopLayout from "../../../components/TopLayout/TopLayout";
+import withAuth from "../../../pages/utils/withAuth";
 
 
 const BookOnAappointment = () => {
@@ -70,4 +71,4 @@ const BookOnAappointment = () => {
     )
 }
 
-export default BookOnAappointment;
+export default withAuth(BookOnAappointment);

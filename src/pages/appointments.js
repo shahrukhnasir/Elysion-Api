@@ -1,6 +1,5 @@
 import React from 'react'
 import MyAppointments from '../AllPages/Profile/MyAppointments/MyAppointments'
-import withAuth from '../../WithAuth'
 
 const appointments =() => {
   return (
@@ -10,4 +9,4 @@ const appointments =() => {
   )
 }
 
-export default withAuth(appointments)
+export default appointments

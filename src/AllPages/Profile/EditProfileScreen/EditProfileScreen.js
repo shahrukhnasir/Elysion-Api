@@ -10,6 +10,7 @@ import {
   MyUpdateProfile,
 } from "../../../Service/PatientPortal";
 import Swal from "sweetalert2";
+import withAuth from "../../../pages/utils/withAuth";
 const EditProfileScreen = () => {
   const router = useRouter();
   const token = useSelector((state) => state?.authSlice?.authToken);
@@ -175,4 +176,4 @@ const EditProfileScreen = () => {
   );
 };
 
-export default EditProfileScreen;
+export default withAuth(EditProfileScreen);

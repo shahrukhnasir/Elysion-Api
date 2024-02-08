@@ -1,6 +1,5 @@
 import React from 'react'
 import MyWishlist from '../AllPages/Profile/MyWishlist/MyWishlist'
-import withAuth from '../../WithAuth'
 
 const mywishlist = () => {
     return (
@@ -11,4 +10,4 @@ const mywishlist = () => {
     )
 }
 
-export default withAuth(mywishlist)
+export default mywishlist

@@ -10,6 +10,7 @@ import {
   MyAppointment,
 } from "../../../Service/PatientPortal";
 import { Skeleton } from "antd";
+import withAuth from "../../../pages/utils/withAuth";
 const MyAppointments = () => {
   const [getCat, setCat] = useState("");
   const [loading, setLoading] = useState(false);
@@ -299,4 +300,4 @@ const MyAppointments = () => {
   );
 };
 
-export default MyAppointments;
+export default withAuth(MyAppointments);

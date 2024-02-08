@@ -13,6 +13,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import AppointmentForm from "../../../components/AppointmentForm/AppointmentForm";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import withAuth from "../../../pages/utils/withAuth";
 const CheckOut = () => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -368,4 +369,4 @@ const CheckOut = () => {
     </>
   );
 };
-export default CheckOut;
+export default withAuth(CheckOut);

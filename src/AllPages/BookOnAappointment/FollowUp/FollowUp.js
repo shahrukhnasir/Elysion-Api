@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import removeDate from "../../../Redux/Appoinment/appointDate";
 import { Skeleton } from "antd";
+import withAuth from "../../../pages/utils/withAuth";
 const FollowUp = () => {
   const token = useSelector((state) => state?.authSlice?.authToken);
   const currentDate = useSelector((state) => state?.currentDate?.currentDate);
@@ -243,4 +244,4 @@ const FollowUp = () => {
   );
 };
 
-export default FollowUp;
+export default withAuth(FollowUp);

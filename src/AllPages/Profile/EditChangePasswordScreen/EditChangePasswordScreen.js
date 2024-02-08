@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Skeleton } from "antd";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import withAuth from "../../../pages/utils/withAuth";
 const EditChangePasswordScreen = () => {
   const token = useSelector((state) => state?.authSlice?.authToken);
   const dispatch = useDispatch();
@@ -214,4 +215,4 @@ const EditChangePasswordScreen = () => {
   );
 };
 
-export default EditChangePasswordScreen;
+export default withAuth(EditChangePasswordScreen);

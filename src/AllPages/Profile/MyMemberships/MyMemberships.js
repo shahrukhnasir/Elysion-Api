@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { IoIosCall } from "react-icons/io";
 import { Subscriptions } from "../../../Service/Subscription";
 import Link from "next/link";
+import withAuth from "../../../pages/utils/withAuth";
 const MyMemberships = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state?.authSlice?.authToken);
@@ -197,4 +198,4 @@ const MyMemberships = () => {
   );
 };
 
-export default MyMemberships;
+export default withAuth(MyMemberships);

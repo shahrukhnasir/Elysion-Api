@@ -1,6 +1,5 @@
 import React from 'react'
 import MyOrdersScreen from '../AllPages/Profile/MyOrders/MyOrdersScreen'
-import withAuth from '../../WithAuth'
 
 const myorders =() => {
   return (
@@ -11,4 +10,4 @@ const myorders =() => {
   )
 }
 
-export default withAuth(myorders)
+export default myorders

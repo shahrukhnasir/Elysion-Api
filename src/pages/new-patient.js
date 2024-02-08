@@ -1,6 +1,5 @@
 import React from 'react'
 import NewPatient from '../AllPages/BookOnAappointment/New-patient/NewPatient'
-import withAuth from '../../WithAuth'
 
 const newpatient = () => {
   return (
@@ -9,4 +8,4 @@ const newpatient = () => {
   )
 }
 
-export default withAuth(newpatient)
+export default newpatient

@@ -4,6 +4,7 @@ import styles from "../PaymentTransactions/PaymentTransactions.module.css";
 import { PaymentTransaction } from "../../../Service/PatientPortal";
 import { useDispatch, useSelector } from "react-redux";
 import { Skeleton } from "antd";
+import withAuth from "../../../pages/utils/withAuth";
 const PaymentTransactions = () => {
   const Data = [
     {
@@ -209,4 +210,4 @@ const PaymentTransactions = () => {
     </>
   );
 };
-export default PaymentTransactions;
+export default withAuth(PaymentTransactions);

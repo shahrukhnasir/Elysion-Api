@@ -1,6 +1,5 @@
 import React from 'react'
 import MyMemberships from '../AllPages/Profile/MyMemberships/MyMemberships'
-import withAuth from '../../WithAuth'
 
 const mymemberships =() => {
   return (
@@ -10,4 +9,4 @@ const mymemberships =() => {
   )
 }
 
-export default withAuth(mymemberships)
+export default mymemberships

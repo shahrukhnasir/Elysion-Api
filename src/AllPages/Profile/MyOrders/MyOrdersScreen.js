@@ -8,6 +8,7 @@ import CommonModal from "../../../components/CommanModal/CommanModal";
 import { useDispatch, useSelector } from "react-redux";
 import { OrderList } from "../../../Service/PatientPortal";
 import { Skeleton } from "antd";
+import withAuth from "../../../pages/utils/withAuth";
 const MyOrdersScreen = () => {
   const token = useSelector((state) => state?.authSlice?.authToken);
   const [orderFinished, setOrderFinished] = useState("");
@@ -390,4 +391,4 @@ const MyOrdersScreen = () => {
   );
 };
 
-export default MyOrdersScreen;
+export default withAuth(MyOrdersScreen);

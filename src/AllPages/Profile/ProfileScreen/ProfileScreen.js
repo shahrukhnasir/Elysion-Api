@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MyProfileImageUpload, Profile } from "../../../Service/PatientPortal";
 import Link from "next/link";
 import { Skeleton } from "antd";
+import withAuth from "../../../pages/utils/withAuth";
 const ProfileScreen = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state?.authSlice?.authToken);
@@ -81,4 +82,4 @@ const ProfileScreen = () => {
   );
 };
 
-export default ProfileScreen;
+export default withAuth(ProfileScreen);

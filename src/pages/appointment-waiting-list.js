@@ -1,6 +1,5 @@
 import React from 'react'
 import WaitingList from '../AllPages/Profile/WaitingList/WaitingList'
-import withAuth from './utils/withAuth'
 const AppointmentWaitinglist =()=> {
   return (
     <>
@@ -15,4 +14,4 @@ const AppointmentWaitinglist =()=> {
   )
 }
 
-export default withAuth(AppointmentWaitinglist)
+export default AppointmentWaitinglist

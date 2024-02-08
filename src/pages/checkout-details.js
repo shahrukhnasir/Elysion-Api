@@ -1,6 +1,5 @@
 import React from 'react'
 import CheckOutDetails from '../AllPages/CheckOutDetails/CheckOutDetails'
-import withAuth from '../../WithAuth'
 
 const checkoutDetails = () => {
   return (
@@ -8,4 +7,4 @@ const checkoutDetails = () => {
   )
 }
 
-export default withAuth(checkoutDetails)
+export default checkoutDetails

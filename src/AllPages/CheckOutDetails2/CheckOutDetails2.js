@@ -16,6 +16,7 @@ import { Modal } from "antd";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import SubscriptionForm from "../../components/SubscriptionForm/SubscriptionForm";
+import withAuth from "../../pages/utils/withAuth";
 const CheckOutDetails2 = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -203,4 +204,4 @@ const CheckOutDetails2 = () => {
   );
 };
 
-export default CheckOutDetails2;
+export default withAuth(CheckOutDetails2);

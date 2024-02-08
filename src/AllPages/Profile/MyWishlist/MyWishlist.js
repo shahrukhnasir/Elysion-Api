@@ -12,6 +12,7 @@ import {
 } from "../../../Service/PatientPortal";
 import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
+import withAuth from "../../../pages/utils/withAuth";
 const MyWishlist = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -226,4 +227,4 @@ const MyWishlist = () => {
   );
 };
 
-export default MyWishlist;
+export default withAuth(MyWishlist);
