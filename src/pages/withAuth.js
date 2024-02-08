@@ -9,7 +9,7 @@ const withAuth = (WrappedComponent) => {
     const router = useRouter();
 
     useEffect(() => {
-      const isAuthenticated =  Cookies.get('authToken');
+      const isAuthenticated = Cookies.get('authToken');
       if (!isAuthenticated) {
         router.push('/signin');
       }
