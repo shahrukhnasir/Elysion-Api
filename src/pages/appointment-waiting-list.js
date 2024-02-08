@@ -1,6 +1,6 @@
 import React from 'react'
 import WaitingList from '../AllPages/Profile/WaitingList/WaitingList'
-import withAuth from '../components/withAuth'
+import withAuth from './utils/withAuth'
 const AppointmentWaitinglist =()=> {
   return (
     <>
