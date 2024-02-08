@@ -186,7 +186,7 @@ const ProductDetailsComponent = () => {
     );
   }, [slug, setProductVariants]);
 
-  const [varPrice, setVariantSelectPrice] = useState(productDetail?.unit_price);
+  const [varPrice, setVariantSelectPrice] = useState(variant?.[0]?.price);
   const [variantMili, setVariantMiligram] = useState([]);
   const handleVariantClick = (selectedVariant) => {
     console.log(selectedVariant, 'selectedVariant');
@@ -201,7 +201,7 @@ const ProductDetailsComponent = () => {
   };
 
   useEffect(() => {
-    setVariantSelectPrice(productDetail?.unit_price);
+    setVariantSelectPrice(variant?.[0]?.price);
     console.log(variant, "variantPricevariantPrice");
   }, [productDetail]);
   useEffect(() => {
@@ -228,8 +228,9 @@ const ProductDetailsComponent = () => {
     }));
   }, [productDetail, varPrice, steps, variantMili]);
 
+  
  
-  console.log(productDetails, "productDetailsisisi");
+  console.log(variant?.[0]?.price, "variantvariant");
   //Product Details 
 
 
@@ -357,6 +358,7 @@ const ProductDetailsComponent = () => {
                             key={i}
                             onClick={() => handleVariantClick(vari)}
                             variant={vari.variant}
+                            
 
                           />
 

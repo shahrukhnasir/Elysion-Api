@@ -1,5 +1,6 @@
 import React from 'react'
 import ConfirmService from '../AllPages/BookOnAappointment/ConfirmService/ConfirmService'
+import withAuth from '../../WithAuth'
 
 const confirmservice =() =>{
   return (
@@ -11,4 +12,4 @@ const confirmservice =() =>{
   )
 }
 
-export default confirmservice
+export default withAuth(confirmservice)

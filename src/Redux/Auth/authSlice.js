@@ -1,6 +1,6 @@
 // authSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-
+import Cookies from 'js-cookie';
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -10,10 +10,12 @@ const authSlice = createSlice({
     setAuthToken: (state, action) => {
       state.authToken = action.payload;
       localStorage.setItem('authToken', action.payload);
+      Cookies.set('authToken', action.payload)
     },
     logout: (state) => {
       state.authToken = null;
       localStorage.removeItem('authToken');
+      Cookies.remove('authToken')
     },
   },
 });

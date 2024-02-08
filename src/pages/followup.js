@@ -1,5 +1,6 @@
 import React from 'react'
 import FollowUp from '../AllPages/BookOnAappointment/FollowUp/FollowUp'
+import withAuth from '../../WithAuth'
 
 const followup =() => {
   return (
@@ -10,4 +11,4 @@ const followup =() => {
   )
 }
 
-export default followup
+export default withAuth(followup)
