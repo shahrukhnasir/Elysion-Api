@@ -41,6 +41,11 @@ const Back1 = () => {
   return (
     <>
       <div className={styles.flipcardfront}>
+
+      {!loading ? (
+          <>
+            {list && list.length > 0 ? (
+              <>
         <div>
           <div className={`${styles.cardBody} card-body`}>
             <h6 className={`${styles.carTitle}`}>{mem?.name}</h6>
@@ -87,6 +92,27 @@ const Back1 = () => {
             />
           </div>
         </div>
+
+        </>
+            ) : (
+              <>
+                <div className={styles.dataNotFound}>
+
+
+                  <img src="/images/No-data.svg" alt='' />
+                </div>
+              </>
+
+            )}
+          </>
+        ) : (
+          <>
+           <div className={`${styles.cardBody} card-body`}>
+
+            <Skeleton />
+           </div>
+          </>
+        )}
       </div>
     </>
   );

@@ -303,6 +303,7 @@ export const OfficePolicyContent = (setLoading, setData) => () => {
   OfficePolicy()
     .then((res) => {
       setData(res?.data?.response?.data);
+      console.log(res?.data?.response?.data,"Office");
       // setFaqAns(res?.data?.response?.data?.[0]?.name);
       setLoading(false);
     })

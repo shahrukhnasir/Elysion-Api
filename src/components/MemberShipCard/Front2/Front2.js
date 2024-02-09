@@ -38,33 +38,38 @@ const Front2 = () => {
   return (
     <>
       <div className={styles.flipcardfront}>
-        <div>
-          <div className={`${styles.cardBody} card-body`}>
-          <div className={styles.labelBlue}>Most Popular</div>
-            <h6 className={`${styles.carTitle}`}>{mem?.name}</h6>
-            <hr className="m-0"/>
-            <h6 className={`${styles.SubTitle}`}>
-              <sup className={styles.card3SmText}>$</sup>{" "}
-              <span className={styles.BigText}> {mem?.price && mem.price}</span> /{mem?.type}
-            </h6>
 
-            <ul className={styles.pricingListOverFlow}>
-            {!loading ? (
+        {!loading ? (
+          <>
+            {list && list.length > 0 ? (
               <>
-              {list?.map((memList, i) => (
-                <li key={i}>
-                  {memList.split(",").map((word, i) => (
-                    <span key={i}>{word.trim()}</span>
-                    ))}
-                </li>
-              ))}
-              </>
-            ) : (
-              <>
-                <Skeleton />
-              </>
-            )}
-              {/* <li>Annual executive physical</li>
+                <div>
+                  <div className={`${styles.cardBody} card-body`}>
+                    <div className={styles.labelBlue}>Most Popular</div>
+                    <h6 className={`${styles.carTitle}`}>{mem?.name}</h6>
+                    <hr className="m-0" />
+                    <h6 className={`${styles.SubTitle}`}>
+                      <sup className={styles.card3SmText}>$</sup>{" "}
+                      <span className={styles.BigText}> {mem?.price && mem.price}</span> /{mem?.type}
+                    </h6>
+
+                    <ul className={styles.pricingListOverFlow}>
+                      {!loading ? (
+                        <>
+                          {list?.map((memList, i) => (
+                            <li key={i}>
+                              {memList.split(",").map((word, i) => (
+                                <span key={i}>{word.trim()}</span>
+                              ))}
+                            </li>
+                          ))}
+                        </>
+                      ) : (
+                        <>
+                          <Skeleton />
+                        </>
+                      )}
+                      {/* <li>Annual executive physical</li>
               <li>Tailored weight management</li>
               <li>
                 Nutritional optimization for disease prevention and treatment
@@ -75,16 +80,37 @@ const Front2 = () => {
                 goals Telemedicine visits
               </li>
               <li>Access to direct text messaging with physician</li> */}
-            </ul>
+                    </ul>
 
-           
-              <MemberButton label="BUY NOW" 
-              className={styles.lightBtn}
-              onClick={() => getId(mem?.id)}
-              />
-           
-          </div>
-        </div>
+
+                    <MemberButton label="BUY NOW"
+                      className={styles.lightBtn}
+                      onClick={() => getId(mem?.id)}
+                    />
+
+                  </div>
+                </div>
+
+              </>
+            ) : (
+              <>
+                <div className={styles.dataNotFound}>
+
+
+                  <img src="/images/No-data.svg" alt='' />
+                </div>
+              </>
+
+            )}
+          </>
+        ) : (
+          <>
+            <div className={`${styles.cardBody} card-body`}>
+
+              <Skeleton />
+            </div>
+          </>
+        )}
       </div>
     </>
   );

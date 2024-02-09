@@ -39,45 +39,78 @@ const Front1 = ({ className }) => {
   return (
     <>
       <div className={styles.flipcardfront}>
-        <div>
-          <div className={`${styles.cardBody} card-body`}>
-            <h6 className={`${styles.carTitle}`}>{mem?.name}</h6>
-            <hr />
-            <h6 className={`${styles.SubTitle}`}>
-              <sup className={styles.card3SmText}>$</sup>
-              <span className={styles.BigText}>
-                {mem?.price && mem.price}
-              </span>
-              /{mem?.type}
-            </h6>
+        {!loading ? (
+          <>
+            {list && list.length > 0 ? (
+              <>
+                <div>
+                  <div className={`${styles.cardBody} card-body`}>
+                    <h6 className={`${styles.carTitle}`}>{mem?.name}</h6>
+                    <hr />
+                    <h6 className={`${styles.SubTitle}`}>
+                      <sup className={styles.card3SmText}>$</sup>
+                      <span className={styles.BigText}>
+                        {mem?.price && mem.price}
+                      </span>
+                      /{mem?.type}
+                    </h6>
 
-            <ul className={styles.pricingListOverFlow}>
-              {!loading ? (
-                <>
-                  {list?.map((memList, i) => (
-                    <li key={i}>
-                      {memList.split(",").map((word, i) => (
-                        <span key={i}>{word.trim()}</span>
-                      ))}
-                    </li>
-                  ))}
-                </>
-              ) : (
-                <>
-                  <Skeleton />
-                </>
-              )}
-            </ul>
+                    <ul className={styles.pricingListOverFlow}>
+                      {!loading ? (
+                        <>
+                          {list && list.length > 0 ? (
+                            <>
+                              {list.map((memList, i) => (
+                                <li key={i}>
+                                  {memList.split(",").map((word, j) => (
+                                    <span key={j}>{word.trim()}</span>
+                                  ))}
+                                </li>
+                              ))}
+                            </>
+                          ) : (
+                            <span className={styles.card3SmText}>Data not available</span>
 
-            <div>
-              <MemberButton
-                label="BUY NOW" 
-                onClick={() => getId(mem?.id)}
-                className={className}
-              />
-            </div>
-          </div>
-        </div>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <Skeleton />
+                        </>
+                      )}
+
+                    </ul>
+
+                    <div>
+                      <MemberButton
+                        label="BUY NOW"
+                        onClick={() => getId(mem?.id)}
+                        className={className}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className={styles.dataNotFound}>
+
+
+                  <img src="/images/No-data.svg" alt='' />
+                </div>
+              </>
+
+            )}
+          </>
+        ) : (
+          <>
+           <div className={`${styles.cardBody} card-body`}>
+
+            <Skeleton />
+           </div>
+          </>
+        )}
+
       </div>
     </>
   );

@@ -14,7 +14,15 @@
     font-family: "Poppins-SemiBold";
     cursor: pointer;
 }
-
+.dataNotFound {
+    
+    display: flex;
+    justify-content: center;
+}
+.dataNotFound img{
+    height: 300px !important;
+    width: 100% !important;
+}
 .Desc {
     font-family: var(--main-font-regular);
     font-size: 13px;
